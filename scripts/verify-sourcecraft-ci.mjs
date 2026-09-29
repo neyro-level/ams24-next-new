@@ -18,7 +18,7 @@ function hasLineMatching(lines, pattern) {
 }
 
 function hasBlock(text, workflowName) {
-  return new RegExp(`^  ${workflowName}:\\n[\\s\\S]*?(?=^  [a-zA-Z0-9_-]+:|\\z)`, 'm').test(text)
+  return new RegExp(`^  ${workflowName}:\\r?\\n[\\s\\S]*?(?=^  [a-zA-Z0-9_-]+:|(?![\\s\\S]))`, 'm').test(text)
 }
 
 async function main() {
@@ -42,9 +42,11 @@ async function main() {
       continue
     }
 
-    const block = source.match(new RegExp(`^  ${workflow}:\\n([\\s\\S]*?)(?=^  [a-zA-Z0-9_-]+:|\\z)`, 'm'))?.[1] ?? ''
+    const block = source.match(
+      new RegExp(`^  ${workflow}:\\r?\\n([\\s\\S]*?)(?=^  [a-zA-Z0-9_-]+:|(?![\\s\\S]))`, 'm'),
+    )?.[1] ?? ''
 
-    if (!/inputs:\n[\s\S]*expected_commit_sha:\n[\s\S]*required:\s*true/.test(block)) {
+    if (!/inputs:\r?\n[\s\S]*expected_commit_sha:\r?\n[\s\S]*required:\s*true/.test(block)) {
       errors.push(`${workflow} must require expected_commit_sha input`)
     }
 

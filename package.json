@@ -8,10 +8,11 @@
     "build": "next build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "test:content": "vitest run tests/content",
     "guard:static": "node scripts/verify-static-next.mjs",
     "guard:static:self-test": "node scripts/verify-static-next.mjs --self-test",
     "verify:sourcecraft": "node scripts/verify-sourcecraft-ci.mjs",
-    "verify": "pnpm typecheck && pnpm lint && pnpm verify:sourcecraft && pnpm guard:static && pnpm guard:static:self-test && pnpm build"
+    "verify": "pnpm typecheck && pnpm lint && pnpm test:content && pnpm verify:sourcecraft && pnpm guard:static && pnpm guard:static:self-test && pnpm build"
   },
   "dependencies": {
     "@tailwindcss/postcss": "4.3.3",
