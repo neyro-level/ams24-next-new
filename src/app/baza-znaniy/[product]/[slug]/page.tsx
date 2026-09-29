@@ -1,16 +1,18 @@
 import {
-  buildDetailFixtureMetadata,
-  detailFixtures,
-  getDetailFixture,
-} from '@/project/detail-fixtures'
-import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
+  buildKnowledgeEditorialMetadata,
+  representativeKnowledgeContract,
+} from '@/project/editorial-contracts'
+import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
 
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return detailFixtures
-    .filter((fixture) => fixture.type === 'knowledge' && fixture.product)
-    .map((fixture) => ({ product: fixture.product, slug: fixture.slug }))
+  return [
+    {
+      product: representativeKnowledgeContract.product,
+      slug: representativeKnowledgeContract.slug,
+    },
+  ]
 }
 
 export async function generateMetadata({
@@ -19,7 +21,11 @@ export async function generateMetadata({
   params: Promise<{ product: string; slug: string }>
 }) {
   const { product, slug } = await params
-  return buildDetailFixtureMetadata(getDetailFixture('knowledge', slug, product))
+  if (product !== representativeKnowledgeContract.product || slug !== representativeKnowledgeContract.slug) {
+    throw new Error(`Unknown knowledge contract: ${product}/${slug}`)
+  }
+
+  return buildKnowledgeEditorialMetadata(representativeKnowledgeContract)
 }
 
 export default async function KnowledgeDetailPage({
@@ -28,5 +34,9 @@ export default async function KnowledgeDetailPage({
   params: Promise<{ product: string; slug: string }>
 }) {
   const { product, slug } = await params
-  return <DetailFixturePage fixture={getDetailFixture('knowledge', slug, product)} />
+  if (product !== representativeKnowledgeContract.product || slug !== representativeKnowledgeContract.slug) {
+    throw new Error(`Unknown knowledge contract: ${product}/${slug}`)
+  }
+
+  return <KnowledgeEditorialTemplate contract={representativeKnowledgeContract} />
 }
