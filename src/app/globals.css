@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+:root {
+  --ams-bg: #f6f8fb;
+  --ams-fg: #111827;
+  --ams-muted: #5b6678;
+  --ams-accent: #315f86;
+}
+
+html {
+  background: var(--ams-bg);
+  color: var(--ams-fg);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family:
+    Manrope,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+a {
+  color: inherit;
+}

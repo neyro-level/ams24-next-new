@@ -50,7 +50,20 @@ CMS, PostgreSQL, Prisma, Payload, auth, worker, Redis и Docker не входя�
 | analytics | Яндекс Метрика, typed events, no PII |
 | forms | relative `/api/leads` -> Nginx -> AMS Leads API |
 
-Exact Node/Next/React/Tailwind versions are `TODO` until scaffold. They must be verified against current official documentation before foundation is accepted.
+Exact foundation versions pinned during EPIC-01.2:
+
+```text
+Node: 24.20.0
+pnpm: 12.8.1
+Next.js: 16.3.7
+React / React DOM: 19.3.0
+TypeScript: 6.0.3
+Tailwind CSS / @tailwindcss/postcss: 4.3.3
+ESLint: 9.39.5
+Zod: 4.6.5
+```
+
+`typescript@7.0.2` and `eslint@10.11.0` were checked as latest registry versions on 2026-09-29 but rejected for foundation because the current Next ESLint toolchain depends on peer ranges that require TypeScript `<6.1.0` and ESLint 9-compatible plugins. The project therefore uses latest compatible stable versions rather than incompatible latest majors.
 
 ## 4. Next.js Static Contract
 
@@ -262,6 +275,7 @@ Reusable UI emits semantic callbacks/events and does not own provider-specific b
 
 - typecheck;
 - lint;
+- static Next guard self-test with seeded invalid fixture;
 - relevant unit tests;
 - content/schema validation;
 - link/ref/route/redirect validation;
@@ -276,6 +290,8 @@ Critical browser checks: home/navigation, representative product page, article, 
 `DELIVERY_PROFILE=CRITICAL`:
 
 - zero automatic paid CI on branch push/PR;
+- `.sourcecraft/ci.yaml` defines manual-only `merge-standard` and `merge-risky` workflows, with no `on.push`, `on.pull_request` or `on.schedule` triggers;
+- each manual gate requires `expected_commit_sha` and fails closed unless `SOURCECRAFT_EVENT=manual` and `SOURCECRAFT_COMMIT_SHA` equals that input;
 - one exact-head risk-classified SourceCraft Merge Gate before merge;
 - review is mandatory and separate from CI;
 - production only from clean canonical `main` and only by explicit owner command;
@@ -319,14 +335,26 @@ Growth in the number of ordinary articles alone does not justify CMS migration.
 ## 19. Current Readiness
 
 ```text
-Repository: not initialized
-Canonical remote: SourceCraft `integrator-p/ams24-next-new` created
-Package/lockfile: missing
-On-demand SourceCraft gate: missing
+Repository: initialized
+Canonical remote: SourceCraft `integrator-p/ams24-next-new`, `origin/main` verified at `073d5689d956c15481a690dc7ef2a4e2f6730fb4`
+Package/lockfile: pinned and verified
+On-demand SourceCraft gate: manual-only workflow placeholder present; paid run not executed
 Release runbook: missing
 Durable artifact store: unknown
 Production identity: not recorded
 Local database: not needed
 ```
 
-These gaps are expected before foundation and release epics; they block production, not documentation.
+The remaining gaps are expected before foundation and release epics; they block production, not repository foundation work.
+
+## 20. External Preflight Register
+
+Source of evidence: `docs/research/EXTERNAL_PREFLIGHT_EPIC_01_5.md`.
+
+| External input | Current status | Owner | Blocks |
+|---|---|---|---|
+| AMS Leads API safe test endpoint/schema | TODO, not available in repo | owner + implementation | EPIC-08.2 and public release |
+| Legal reviewer | OPEN, OD-03 unresolved | owner | EPIC-05 claim approval, EPIC-08 legal acceptance, release |
+| Yandex Metrica account/config | TODO | owner + implementation | EPIC-08.4 and release measurement |
+| CAPTCHA/anti-spam provider/public key | TODO | owner + implementation | EPIC-08.2 live form hardening |
+| Current public `ams24.ru` redirect inventory | partial public inventory captured | implementation + SEO | EPIC-08.5 and release SEO |

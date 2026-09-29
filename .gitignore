@@ -13,6 +13,9 @@ out/
 # Logs
 *.log
 
+# TypeScript
+tsconfig.tsbuildinfo
+
 # Task Manager local store
 .beads/
 

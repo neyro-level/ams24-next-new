@@ -164,6 +164,8 @@ Supporting actions:
 
 - `TODO`: названия трёх ниш и приоритет первой ниши.
 - `TODO`: подтверждённые тарифы и коммерческие ограничения.
-- `TODO`: перечень CRM/каналов доставки лидов.
-- `TODO`: кто проводит юридическую проверку публичных формулировок.
+- `TODO`: перечень CRM/каналов доставки лидов; EPIC-01.5 preflight confirms this is not available in the repository yet.
+- `TODO`: кто проводит юридическую проверку публичных формулировок; EPIC-01.5 preflight keeps OD-03 open.
+- `TODO`: Яндекс Метрика account/config and CAPTCHA/anti-spam provider decision for live forms.
+- `TODO`: approved redirect inventory from the current public `ams24.ru` URL set.
 - Минимальный набор первого release утверждён в разделе 9; требуется только инвентаризация конкретных материалов.

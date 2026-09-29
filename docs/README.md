@@ -19,6 +19,7 @@ Updated: 2026-09-29
 | release gate, rollout, live proof и rollback | `05_RELEASE_CHECKLIST.md` |
 | визуальная система и UI-policy | `06_DESIGN_SYSTEM.md` |
 | конкурентное и SEO-evidence | `research/COMPETITOR_SEO_BASELINE.md` |
+| external preflight: leads/legal/analytics/CAPTCHA/current URLs | `research/EXTERNAL_PREFLIGHT_EPIC_01_5.md` |
 
 ## Статус комплекта
 
@@ -26,7 +27,7 @@ Updated: 2026-09-29
 |---|---|---|
 | `01_PRD.md` | Draft | требует подтверждения продуктовых формулировок и KPI |
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
-| `03_ARCHITECTURE.md` | Draft | platform contract определён; exact package versions появятся после scaffold |
+| `03_ARCHITECTURE.md` | Draft | platform contract, pinned foundation stack and delivery policy recorded |
 | `04_BACKLOG.md` | Approved | canonical master plan v4 утверждён владельцем; AH-01 выполняет Task Manager import и Developer handoff |
 | `05_RELEASE_CHECKLIST.md` | Draft | уточняется до первого release |
 | `06_DESIGN_SYSTEM.md` | Draft | Northline принят как input; intake завершается после token fixture и representative page |

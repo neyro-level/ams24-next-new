@@ -1,0 +1,62 @@
+# Manual-only SourceCraft CI policy for DELIVERY_PROFILE=CRITICAL.
+# Intentionally no `on:` section: branch push and pull request update must not
+# start paid CI automatically. Workflows are launched explicitly by the merge
+# session for an exact head SHA.
+
+workflows:
+  merge-standard:
+    inputs:
+      expected_commit_sha:
+        type: string
+        required: true
+        description: Exact PR head SHA that this manual gate is allowed to verify.
+    settings:
+      max_cube_duration: 10m
+    checkout:
+      enabled: true
+      fetch_depth: 1
+      remove_credentials: true
+    tasks:
+      - name: verify
+        cubes:
+          - name: static-site-standard
+            image: docker.io/library/node:24-alpine
+            script:
+              - |
+                set -eu
+                test "$SOURCECRAFT_EVENT" = "manual"
+                test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
+                corepack enable
+                corepack pnpm install --frozen-lockfile
+                corepack pnpm verify
+
+  merge-risky:
+    inputs:
+      expected_commit_sha:
+        type: string
+        required: true
+        description: Exact PR head SHA that this manual gate is allowed to verify.
+      risk_reason:
+        type: string
+        required: true
+        description: Human-readable reason why this head needs the RISKY gate.
+    settings:
+      max_cube_duration: 10m
+    checkout:
+      enabled: true
+      fetch_depth: 1
+      remove_credentials: true
+    tasks:
+      - name: verify
+        cubes:
+          - name: static-site-risky
+            image: docker.io/library/node:24-alpine
+            script:
+              - |
+                set -eu
+                test "$SOURCECRAFT_EVENT" = "manual"
+                test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
+                test -n "${{ inputs.risk_reason }}"
+                corepack enable
+                corepack pnpm install --frozen-lockfile
+                corepack pnpm verify
