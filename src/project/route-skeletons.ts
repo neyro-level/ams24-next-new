@@ -10,34 +10,6 @@ export type RouteSkeleton = {
 
 export const staticRouteSkeletons: RouteSkeleton[] = [
   {
-    path: '/tarify/',
-    title: 'Тарифы',
-    role: 'сравнение условий',
-    intent: 'понять модель цены и состав услуги',
-    nextStep: 'EPIC-06 наполнит тарифные карточки и ограничения публикации.',
-  },
-  {
-    path: '/keisy/',
-    title: 'Кейсы',
-    role: 'доказательства',
-    intent: 'найти опыт в своей нише',
-    nextStep: 'EPIC-06 добавит publishable case inventory.',
-  },
-  {
-    path: '/otzyvy/',
-    title: 'Отзывы',
-    role: 'social proof',
-    intent: 'проверить доверие к исполнителю',
-    nextStep: 'EPIC-06 добавит отзывы с permission status.',
-  },
-  {
-    path: '/raschety/',
-    title: 'Расчёты',
-    role: 'экономика',
-    intent: 'понять принцип расчёта и диапазоны',
-    nextStep: 'EPIC-06 добавит проверяемые расчётные примеры.',
-  },
-  {
     path: '/stati/',
     title: 'Статьи',
     role: 'editorial hub',

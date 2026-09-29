@@ -4,6 +4,11 @@ import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
 
 export function DetailFixturePage({ fixture }: { fixture: DetailFixture }) {
+  const sections =
+    fixture.type === 'case'
+      ? ['Задача', 'Источник', 'Период', 'Методика расчёта', 'Метрики', 'Разрешение на публикацию', 'Ограничения', 'Следующий шаг']
+      : ['Задача', 'Метод', 'Ограничения', 'Следующий шаг']
+
   return (
     <main>
       <Breadcrumbs items={fixture.breadcrumbs} />
@@ -14,7 +19,7 @@ export function DetailFixturePage({ fixture }: { fixture: DetailFixture }) {
           <p className="mt-6 text-body-lg text-muted-foreground">{fixture.summary}</p>
 
           <div className="mt-10 grid gap-4">
-            {['Задача', 'Метод', 'Ограничения', 'Следующий шаг'].map((title) => (
+            {sections.map((title) => (
               <section className="rounded-card border border-border bg-surface-elevated p-5" key={title}>
                 <h2 className="font-display text-h3 font-bold">{title}</h2>
                 <p className="mt-3 text-body text-muted-foreground">
