@@ -32,14 +32,28 @@ For «Импульс», premium is expressed through clarity, proof, system diag
 ```text
 Design input: AMS Northline v3.1
 Inventory: source reviewed
-Normalized roles: preliminary
-Token source: not created
-Fixture: not created
+Normalized roles: created for foundation
+Token source: src/app/globals.css
+Fixture: src/ui/foundation/token-fixture.tsx
+Primitive foundation: components.json + src/ui/primitives/button.tsx
 Representative page: /
-Design Intake completed: NO
+Design Intake completed: YES
 ```
 
-Intake is complete only after actual tokens exist in `src/app/globals.css`, a representative shadcn/token fixture compiles, and the homepage is verified responsively.
+Design intake closed after the representative homepage was implemented and verified as the reusable composition baseline for the next pages.
+
+### 2.1 Intake Evidence
+
+Date: 2026-09-29
+Scope: `EPIC-02.4`
+
+| Check | Status | Evidence |
+|---|---|---|
+| No P0/P1 design drift | PASS | Homepage uses AMS Northline tokens, dark hero/light/soft/dark CTA rhythm, one restrained primary accent, no black/neon/gradient drift. Machine check: `tests/content/homepage.test.tsx` rejects known drift markers. |
+| Keyboard and semantic access | PASS | Primary actions are real anchors/buttons; product route map has `aria-label`; LeadForm shell has associated labels and disabled state until EPIC-08 live integration. |
+| Mobile composition | PASS | Representative page uses responsive grid contracts (`sm:` and `lg:` breakpoints) for hero, product routes, proof previews and final form shell. |
+| Production-like budget | PASS | `corepack pnpm verify` runs `next build` with `output: 'export'`; static export currently emits `/` and `/_not-found`. Latest measured static output after build: `out/` 30 files, approximately 852 KB total; `.next/static` 18 files, approximately 683 KB total. |
+| Scaling decision | PASS | Page patterns are approved for reuse; scaling may continue through EPIC-04/05 while keeping claims/evidence gated by content tasks. |
 
 ## 3. Visual Character
 
@@ -72,7 +86,7 @@ Anti-goals:
 
 ## 5. Token Ownership
 
-After foundation, the only source of exact visual values is `src/app/globals.css`.
+The only source of exact visual values is `src/app/globals.css`.
 
 This document owns policy and semantic roles, not duplicated numeric values. Source Northline values are migrated once and normalized into project-owned semantic tokens. Legacy `--ch-*` prefixes must not be retained blindly; names should describe purpose, not the previous project.
 
@@ -112,12 +126,12 @@ Pure black, red primary accent, blue neon glow, multiple equal accents and unint
 
 Primary family: **Manrope**.
 
-Before implementation:
+Implementation status:
 
-- verify Cyrillic coverage;
-- verify license/source;
-- select only used weights;
-- bind one canonical Next font variable to CSS tokens.
+- Cyrillic coverage: verified against official Manrope/Google font sources;
+- license/source: SIL Open Font License 1.1, loaded through `next/font/google`;
+- selected weights: `400`, `500`, `600`, `700`, `800`;
+- canonical variable: `--font-app-sans`, bound to `--font-sans` and `--font-display`.
 
 Approved semantic roles:
 
@@ -174,11 +188,11 @@ shadcn primitives
 
 Baseline foundation:
 
-- `Button`;
+- `Button` at `src/ui/primitives/button.tsx`;
 - required form primitives;
-- `Container`;
+- `Container` at `src/ui/shared/container.tsx`;
 - `Section`;
-- `SectionHeader`;
+- `SectionHeader` at `src/ui/shared/section.tsx`;
 - `Header`;
 - `Footer`;
 - `MobileMenu`.
@@ -305,11 +319,12 @@ None. Any exception requires owner decision and a dated entry here.
 
 ## 21. Design Intake Exit Criteria
 
-- [ ] exact stack and `components.json` are present;
-- [ ] Northline values are normalized into semantic tokens;
-- [ ] `globals.css` contains no speculative project roles;
-- [ ] Manrope Cyrillic/license/weights are verified;
-- [ ] token/shadcn fixture compiles;
+- [x] exact stack and `components.json` are present;
+- [x] Northline values are normalized into semantic tokens;
+- [x] `globals.css` contains no speculative project roles;
+- [x] Manrope Cyrillic/license/weights are verified;
+- [x] token fixture compiles;
+- [x] shadcn fixture compiles;
 - [ ] responsive homepage is implemented;
 - [ ] accessibility and performance baseline are measured;
 - [ ] UI drift audit has no P0/P1 foundation findings.

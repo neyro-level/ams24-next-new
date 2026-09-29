@@ -61,6 +61,8 @@ TypeScript: 6.0.3
 Tailwind CSS / @tailwindcss/postcss: 4.3.3
 ESLint: 9.39.5
 Zod: 4.6.5
+shadcn/ui: 4.21.0 CLI, radix-nova config
+Radix Slot: @radix-ui/react-slot 1.3.3
 ```
 
 `typescript@7.0.2` and `eslint@10.11.0` were checked as latest registry versions on 2026-09-29 but rejected for foundation because the current Next ESLint toolchain depends on peer ranges that require TypeScript `<6.1.0` and ESLint 9-compatible plugins. The project therefore uses latest compatible stable versions rather than incompatible latest majors.
@@ -201,12 +203,13 @@ Only directories required by an accepted task are created.
 
 ```text
 Design system: AMS Northline adapted for Impulse
-Token source: src/app/globals.css after EPIC-02
+Token source: src/app/globals.css
 Server Components: default
 Client leaves: mobile menu, forms, accordion, optional calculator/filter
 Dark mode: DISABLED as a theme; intentional dark sections are supported
-Primary font: Manrope, Cyrillic/license/weights to be verified
+Primary font: Manrope via next/font/google; subsets latin/cyrillic; weights 400/500/600/700/800; variable --font-app-sans; OFL 1.1 verified
 Icons: Lucide only
+Primitive base: shadcn/ui radix-nova, project-owned source in src/ui/primitives
 Primary locale: ru-RU
 Performance budget: mobile LCP <= 2.5s, CLS <= 0.1 on production-like build
 ```
