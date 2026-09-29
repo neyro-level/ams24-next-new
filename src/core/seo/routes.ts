@@ -5,11 +5,12 @@ type RouteEntity = {
   seo: {
     robots: 'index' | 'noindex'
   }
-  status: 'draft' | 'published' | 'hidden'
+  status: 'active' | 'draft' | 'published' | 'hidden' | 'planned'
 }
 
 export function buildSitemapPaths(repository: ContentRepository) {
   const entities: RouteEntity[] = [
+    ...repository.products,
     ...repository.pages,
     ...repository.cases,
     ...repository.articles,
@@ -17,7 +18,7 @@ export function buildSitemapPaths(repository: ContentRepository) {
   ]
 
   return entities
-    .filter((entity) => entity.status === 'published' && entity.seo.robots === 'index')
+    .filter((entity) => ['active', 'published'].includes(entity.status) && entity.seo.robots === 'index')
     .map((entity) => entity.path)
     .sort()
 }

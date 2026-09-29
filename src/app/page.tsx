@@ -1,5 +1,6 @@
 import { getContentRepository } from '@/core/content/services/repository'
 import { Button } from '@/ui/primitives/button'
+import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
@@ -207,45 +208,7 @@ export default function HomePage() {
                 согласия и точку подключения к `/api/leads` без отправки персональных данных.
               </p>
             </div>
-            <form
-              aria-label="Форма расчёта"
-              className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-5 shadow-panel sm:p-7"
-            >
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block text-body-sm">
-                  <span className="text-surface-dark-muted">Имя</span>
-                  <input
-                    className="mt-2 h-12 w-full rounded-lg border border-surface-dark-faint bg-surface-dark px-3 text-surface-dark-foreground outline-none focus:border-primary focus:ring-3 focus:ring-primary/30"
-                    disabled
-                    placeholder="На этапе shell"
-                    type="text"
-                  />
-                </label>
-                <label className="block text-body-sm">
-                  <span className="text-surface-dark-muted">Контакт</span>
-                  <input
-                    className="mt-2 h-12 w-full rounded-lg border border-surface-dark-faint bg-surface-dark px-3 text-surface-dark-foreground outline-none focus:border-primary focus:ring-3 focus:ring-primary/30"
-                    disabled
-                    placeholder="Подключим в EPIC-08"
-                    type="text"
-                  />
-                </label>
-              </div>
-              <label className="mt-4 block text-body-sm">
-                <span className="text-surface-dark-muted">Какая задача сейчас важнее?</span>
-                <textarea
-                  className="mt-2 min-h-28 w-full rounded-lg border border-surface-dark-faint bg-surface-dark p-3 text-surface-dark-foreground outline-none focus:border-primary focus:ring-3 focus:ring-primary/30"
-                  disabled
-                  placeholder="Привлечение, пиксель или защита"
-                />
-              </label>
-              <p className="mt-4 text-caption text-surface-dark-faint">
-                Consent target and live submit are intentionally disabled until legal/API tasks.
-              </p>
-              <Button className="mt-6 h-12 w-full" disabled type="submit">
-                Получить расчёт
-              </Button>
-            </form>
+            <LeadForm context={{ product: 'site', route: '/', ctaId: 'home-calculation' }} />
           </div>
         </Container>
       </Section>

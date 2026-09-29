@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { getContentRepository } from '@/core/content/services/repository'
 import { getClaimsForProduct } from '@/project/product-claims'
 import { Button } from '@/ui/primitives/button'
+import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
@@ -219,25 +220,11 @@ export default function ImpulsProductPage() {
                 `/api/leads`, а сейчас страница фиксирует продуктовый CTA и контекст заявки.
               </p>
             </div>
-            <div
-              aria-label="Контекст будущей заявки"
-              className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-6 shadow-panel"
-            >
-              <p className="text-label font-bold uppercase text-surface-dark-faint">Lead context</p>
-              <dl className="mt-5 grid gap-4 text-body-sm sm:grid-cols-2">
-                <div>
-                  <dt className="text-surface-dark-faint">product</dt>
-                  <dd className="mt-1">impuls</dd>
-                </div>
-                <div>
-                  <dt className="text-surface-dark-faint">cta</dt>
-                  <dd className="mt-1">calculate-launch</dd>
-                </div>
-              </dl>
-              <Button className="mt-6 h-12 w-full" disabled>
-                Рассчитать запуск
-              </Button>
-            </div>
+            <LeadForm
+              context={{ product: 'impuls', route: '/impuls/', ctaId: 'calculate-launch' }}
+              title="Рассчитать запуск Импульса"
+              description="Форма сохраняет контекст продукта и будущего обращения, но не отправляет персональные данные до утверждения API и consent-текста."
+            />
           </div>
         </Container>
       </Section>

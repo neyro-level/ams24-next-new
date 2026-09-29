@@ -39,7 +39,7 @@ describe('SEO, routes and redirects', () => {
       ],
     })
 
-    expect(buildSitemapPaths(repository)).toEqual(['/'])
+    expect(buildSitemapPaths(repository)).toEqual(['/', '/impuls/', '/pixel/', '/zashchita/'])
   })
 
   it('builds static params from canonical paths', () => {

@@ -70,7 +70,8 @@ describe('homepage and product intent review', () => {
       expect(html).toContain(page.expectedCta)
       expect(html).toContain(page.uniqueIntentMarker)
       expect(html).not.toContain('Главная не дублирует продуктовые страницы')
-      expect(html).not.toContain('Получить расчёт')
+      expect(html).not.toContain('href="#products"')
+      expect(html).not.toContain('Три маршрута')
       expect(page.metadata.alternates?.canonical).toBe(page.path)
       expect(page.metadata.robots).toMatchObject({ index: true, follow: true })
     }

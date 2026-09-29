@@ -13,7 +13,8 @@ describe('representative homepage', () => {
     expect(html).toContain('href="/zashchita/"')
     expect(html).toContain('Proof preview')
     expect(html).toContain('aria-label="Форма расчёта"')
-    expect(html).toContain('Подключим в EPIC-08')
+    expect(html).toContain('data-form-id="ams24-lead-form"')
+    expect(html).toContain('data-analytics-event="lead_form_view"')
   })
 
   it('keeps design-intake accessibility and mobile invariants measurable', () => {

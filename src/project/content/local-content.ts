@@ -267,6 +267,7 @@ export const localContent = {
       intent: 'понять линейку продуктов и выбрать подходящий маршрут',
       h1: 'Импульс',
       seo: productSeo,
+      status: 'published' as const,
       blocks: [
         {
           type: 'hero',

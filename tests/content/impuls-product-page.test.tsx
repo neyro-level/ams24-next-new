@@ -31,7 +31,8 @@ describe('/impuls/ product page', () => {
     const html = renderToStaticMarkup(<ImpulsProductPage />)
 
     expect(html).toContain('aria-label="Краткая карточка продукта Импульс"')
-    expect(html).toContain('aria-label="Контекст будущей заявки"')
+    expect(html).toContain('aria-label="Форма расчёта"')
+    expect(html).toContain('data-product="impuls"')
     expect(html).toContain('sm:grid-cols')
     expect(html).toContain('lg:grid-cols')
     expect(html.match(/disabled=""/g)?.length ?? 0).toBeGreaterThanOrEqual(1)

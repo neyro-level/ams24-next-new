@@ -1,10 +1,7 @@
-import { buildSkeletonMetadata, getStaticRouteSkeleton } from '@/project/route-skeletons'
-import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
+import { buildLegalMetadata, LegalPage } from '@/ui/legal/legal-page'
 
-const route = getStaticRouteSkeleton('/obrabotka-dannyh/')
+export const metadata = buildLegalMetadata('data-processing')
 
-export const metadata = buildSkeletonMetadata(route)
-
-export default function Page() {
-  return <RouteSkeletonPage route={route} />
+export default function DataProcessingPage() {
+  return <LegalPage kind="data-processing" />
 }

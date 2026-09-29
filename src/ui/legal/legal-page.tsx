@@ -1,0 +1,116 @@
+import type { Metadata } from 'next'
+
+import { Container } from '@/ui/shared/container'
+import { Section, SectionHeader } from '@/ui/shared/section'
+
+export const legalDraftVersion = 'legal-draft-2026-09-29'
+
+export type LegalPageKind = 'policy' | 'consent' | 'data-processing'
+
+const legalPages = {
+  policy: {
+    path: '/politika/',
+    title: 'Политика обработки данных',
+    h1: 'Политика обработки данных',
+    intent: 'показать место будущей утверждённой политики и не подменять юридический текст заглушкой',
+    requiredBeforeRelease: ['утверждённая редакция политики', 'реквизиты оператора', 'контакты для обращений'],
+  },
+  consent: {
+    path: '/soglasie/',
+    title: 'Согласие на обработку данных',
+    h1: 'Согласие на обработку данных',
+    intent: 'показать целевую страницу согласия для формы заявки до подключения live-submit',
+    requiredBeforeRelease: ['утверждённая редакция согласия', 'состав полей заявки', 'сроки и цели обработки'],
+  },
+  'data-processing': {
+    path: '/obrabotka-dannyh/',
+    title: 'Обработка данных',
+    h1: 'Обработка данных',
+    intent: 'зафиксировать границы будущего описания обработки данных без юридических обещаний',
+    requiredBeforeRelease: ['утверждённый порядок обработки', 'основания обработки', 'роль AMS24 в сценарии заявки'],
+  },
+} as const satisfies Record<
+  LegalPageKind,
+  {
+    path: string
+    title: string
+    h1: string
+    intent: string
+    requiredBeforeRelease: readonly string[]
+  }
+>
+
+export function buildLegalMetadata(kind: LegalPageKind): Metadata {
+  const page = legalPages[kind]
+
+  return {
+    title: `${page.title} — черновая страница`,
+    description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию. До legal review она не индексируется.`,
+    alternates: {
+      canonical: page.path,
+    },
+    robots: {
+      index: false,
+      follow: true,
+    },
+  }
+}
+
+export function LegalPage({ kind }: { kind: LegalPageKind }) {
+  const page = legalPages[kind]
+
+  return (
+    <main>
+      <Section spacing="hero" className="bg-surface-dark text-surface-dark-foreground">
+        <Container>
+          <SectionHeader
+            eyebrow="Legal guard"
+            title={page.h1}
+            lead="Это не финальный юридический текст. Страница создана как безопасная цель для ссылок согласия и будет наполнена после OD-03 legal review."
+          />
+        </Container>
+      </Section>
+
+      <Section className="bg-background">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+            <aside className="rounded-large border border-border bg-surface-elevated p-6 shadow-card">
+              <p className="text-label font-bold uppercase text-primary">Версия</p>
+              <dl className="mt-5 space-y-4 text-body-sm text-muted-foreground">
+                <div>
+                  <dt className="font-semibold text-foreground">status</dt>
+                  <dd className="mt-1">draft / noindex / public release blocked</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-foreground">version</dt>
+                  <dd className="mt-1">{legalDraftVersion}</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-foreground">canonical</dt>
+                  <dd className="mt-1">{page.path}</dd>
+                </div>
+              </dl>
+            </aside>
+
+            <div className="rounded-large border border-border bg-surface p-6">
+              <p className="text-label font-bold uppercase text-primary">Назначение страницы</p>
+              <h2 className="mt-5 font-display text-h2 font-extrabold">Что уже можно проверять</h2>
+              <p className="mt-5 text-body text-muted-foreground">{page.intent}.</p>
+              <h2 className="mt-8 font-display text-h3 font-bold">Что нужно до публичного релиза</h2>
+              <ul className="mt-4 space-y-3 text-body text-muted-foreground">
+                {page.requiredBeforeRelease.map((item) => (
+                  <li key={item}>• {item}</li>
+                ))}
+              </ul>
+              <p className="mt-6 rounded-card border border-dashed border-border bg-surface-elevated p-4 text-body-sm text-muted-foreground">
+                Пока OD-03 не закрыт, формы остаются в disabled-состоянии, а страница не попадает в
+                индексируемый sitemap.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+    </main>
+  )
+}
+
