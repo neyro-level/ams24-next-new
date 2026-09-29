@@ -30,6 +30,12 @@ const knowledgePreviews = [
   'Как читать кейс: задача, метод, метрики, ограничения',
 ] as const
 
+const productRouteSummaries = {
+  impuls: 'Маршрут для компаний, которым нужен новый поток обращений и расчёт запуска по нише, региону и ограничениям.',
+  pixel: 'Маршрут для бизнеса с собственным сайтом: сначала проверяем трафик, важные страницы и готовность передачи результата в продажи.',
+  zashchita: 'Маршрут для ситуации, где нужно оценить риск утечки лидов, собрать симптомы и перейти к безопасному аудиту.',
+} as const
+
 export default function HomePage() {
   const repository = getContentRepository()
   const products = repository.products
@@ -77,7 +83,9 @@ export default function HomePage() {
                   >
                     <span className="text-caption text-surface-dark-faint">0{index + 1}</span>
                     <span className="mt-2 block font-display text-h3 font-bold">{product.shortName}</span>
-                    <span className="mt-2 block text-body-sm text-surface-dark-muted">{product.promise}</span>
+                    <span className="mt-2 block text-body-sm text-surface-dark-muted">
+                      {productRouteSummaries[product.id]}
+                    </span>
                   </a>
                 ))}
               </div>
@@ -114,7 +122,7 @@ export default function HomePage() {
               >
                 <p className="text-label font-bold uppercase text-primary">{product.name}</p>
                 <h2 className="mt-5 font-display text-h3 font-extrabold text-foreground">{product.shortName}</h2>
-                <p className="mt-4 text-body text-muted-foreground">{product.promise}</p>
+                <p className="mt-4 text-body text-muted-foreground">{productRouteSummaries[product.id]}</p>
                 <div className="mt-6 rounded-card bg-surface-muted p-4 text-body-sm text-muted-foreground">
                   Подходит, когда нужна понятная проверка применимости, входных данных и следующего
                   коммерческого шага.
