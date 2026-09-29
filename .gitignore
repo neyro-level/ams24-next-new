@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Task Manager local store
+.beads/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
