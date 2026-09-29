@@ -2,9 +2,33 @@
 
 Status: Draft  
 Version: 0.1  
-Updated: 2026-09-29
+Updated: 2026-09-30
 
 Release is allowed only after an explicit owner command. This checklist does not authorize merge or production.
+
+## 0. EPIC-09 readiness snapshot
+
+Evidence: `docs/research/RELEASE_READINESS_EPIC_09.md`.
+
+Repository-ready:
+
+- static Next artifact builds through `pnpm verify`;
+- `out/` exists after build and passes static artifact secret scan;
+- SourceCraft manual gate policy is preserved;
+- index/noindex, sitemap and redirect rules have tests;
+- lead, legal and analytics release blockers are explicit and guarded.
+
+Production-only blockers:
+
+- no explicit owner production command;
+- final target server/path/artifact store not confirmed for rollout;
+- live AMS Leads API endpoint/schema not approved;
+- legal text/reviewer not approved;
+- analytics provider account/config not approved;
+- complete current `ams24.ru` redirect inventory not approved;
+- Nginx/security headers, live smoke and rollback rehearsal not performed.
+
+This means the repository may be reviewed and merged, but public production release is still blocked.
 
 ## 1. Release Identity
 
