@@ -37,6 +37,7 @@ Token source: src/app/globals.css
 Fixture: src/ui/foundation/token-fixture.tsx
 Primitive foundation: components.json + src/ui/primitives/button.tsx
 Duplication inventory: docs/research/UI_PRIMITIVE_TOKEN_DUPLICATION_INVENTORY_CR_11_1.md
+Token drift exceptions: docs/research/TOKEN_DRIFT_EXCEPTION_REGISTER_CR_11_3.md
 Representative page: /
 Design Intake completed: FOUNDATION ONLY
 ```
