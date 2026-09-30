@@ -5,6 +5,7 @@ import {
   indexPolicySchema,
   isoDateSchema,
   localeSchema,
+  navigationHrefSchema,
   pathSchema,
   productRefSchema,
   richTextSchema,
@@ -154,7 +155,7 @@ export const navigationSchema = z.object({
   locale: localeSchema,
   header: z.array(linkSchema).min(1),
   footer: z.record(z.string().min(1), z.array(linkSchema).min(1)),
-  primaryCta: ctaSchema.extend({ path: pathSchema }),
+  primaryCta: ctaSchema.extend({ path: navigationHrefSchema }),
 })
 
 export const siteSettingsSchema = z.object({
@@ -180,6 +181,8 @@ export type ArticleDTO = z.infer<typeof articleSchema>
 export type KnowledgeArticleDTO = z.infer<typeof knowledgeArticleSchema>
 export type PageBlockDTO = z.infer<typeof pageBlockSchema>
 export type PageDTO = z.infer<typeof pageSchema>
+export type NavigationInput = z.input<typeof navigationSchema>
 export type NavigationDTO = z.infer<typeof navigationSchema>
+export type SiteSettingsInput = z.input<typeof siteSettingsSchema>
 export type SiteSettingsDTO = z.infer<typeof siteSettingsSchema>
 export type LeadIntentDTO = z.infer<typeof leadIntentSchema>

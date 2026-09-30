@@ -1,3 +1,5 @@
+import type { NavigationInput } from '@/core/content/schemas'
+
 export type NavigationLink = {
   label: string
   path: string
@@ -74,3 +76,12 @@ export const firstLevelRoutes: NavigationLink[] = [
   { label: 'О компании', path: '/o-kompanii/' },
   { label: 'Контакты', path: '/kontakty/' },
 ]
+
+export const navigationContent = {
+  header: headerLinks,
+  footer: Object.fromEntries(footerGroups.map((group) => [group.title, group.links])),
+  primaryCta: {
+    id: 'lead-form',
+    ...primaryCta,
+  },
+} satisfies NavigationInput
