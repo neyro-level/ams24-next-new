@@ -2,6 +2,21 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
 const ciPath = path.join(process.cwd(), '.sourcecraft', 'ci.yaml')
+const workflowNames = ['merge-standard', 'merge-risky']
+
+async function readRuntimeContract() {
+  const [nodeVersion, packageJsonSource] = await Promise.all([
+    readFile(path.join(process.cwd(), '.node-version'), 'utf8'),
+    readFile(path.join(process.cwd(), 'package.json'), 'utf8'),
+  ])
+  const packageManager = JSON.parse(packageJsonSource).packageManager
+
+  return {
+    nodeVersion: nodeVersion.trim(),
+    packageManager,
+    pnpmVersion: packageManager.replace(/^pnpm@/, ''),
+  }
+}
 
 function stripComments(line) {
   const hashIndex = line.indexOf('#')
@@ -21,8 +36,7 @@ function hasBlock(text, workflowName) {
   return new RegExp(`^  ${workflowName}:\\r?\\n[\\s\\S]*?(?=^  [a-zA-Z0-9_-]+:|(?![\\s\\S]))`, 'm').test(text)
 }
 
-async function main() {
-  const source = await readFile(ciPath, 'utf8')
+function analyzeSourcecraftCi(source, contract) {
   const lines = source.split(/\r?\n/)
   const errors = []
 
@@ -36,7 +50,7 @@ async function main() {
     }
   }
 
-  for (const workflow of ['merge-standard', 'merge-risky']) {
+  for (const workflow of workflowNames) {
     if (!hasBlock(source, workflow)) {
       errors.push(`manual workflow is missing: ${workflow}`)
       continue
@@ -57,7 +71,118 @@ async function main() {
     if (!/test "\$SOURCECRAFT_COMMIT_SHA" = "\$\{\{ inputs\.expected_commit_sha \}\}"/.test(block)) {
       errors.push(`${workflow} must compare SOURCECRAFT_COMMIT_SHA to expected_commit_sha`)
     }
+
+    if (!/test "\$\(git rev-parse HEAD\)" = "\$\{\{ inputs\.expected_commit_sha \}\}"/.test(block)) {
+      errors.push(`${workflow} must compare checked-out Git HEAD to expected_commit_sha`)
+    }
+
+    if (!block.includes(`image: docker.io/library/node:${contract.nodeVersion}-alpine`)) {
+      errors.push(`${workflow} must use pinned Node image docker.io/library/node:${contract.nodeVersion}-alpine`)
+    }
+
+    if (!block.includes(`corepack prepare ${contract.packageManager} --activate`)) {
+      errors.push(`${workflow} must activate exact ${contract.packageManager} before install`)
+    }
+
+    if (!/corepack pnpm install --frozen-lockfile/.test(block)) {
+      errors.push(`${workflow} must install with --frozen-lockfile`)
+    }
+
+    if (!/node scripts\/verify-runtime-versions\.mjs/.test(block)) {
+      errors.push(`${workflow} must run the runtime version guard`)
+    }
   }
+
+  return errors
+}
+
+function buildValidFixture(contract) {
+  return `workflows:
+  merge-standard:
+    inputs:
+      expected_commit_sha:
+        required: true
+    tasks:
+      - name: verify
+        cubes:
+          - name: static-site-standard
+            image: docker.io/library/node:${contract.nodeVersion}-alpine
+            script:
+              - |
+                test "$SOURCECRAFT_EVENT" = "manual"
+                test "$SOURCECRAFT_COMMIT_SHA" = "\${{ inputs.expected_commit_sha }}"
+                test "$(git rev-parse HEAD)" = "\${{ inputs.expected_commit_sha }}"
+                corepack prepare ${contract.packageManager} --activate
+                node scripts/verify-runtime-versions.mjs
+                corepack pnpm install --frozen-lockfile
+  merge-risky:
+    inputs:
+      expected_commit_sha:
+        required: true
+      risk_reason:
+        required: true
+    tasks:
+      - name: verify
+        cubes:
+          - name: static-site-risky
+            image: docker.io/library/node:${contract.nodeVersion}-alpine
+            script:
+              - |
+                test "$SOURCECRAFT_EVENT" = "manual"
+                test "$SOURCECRAFT_COMMIT_SHA" = "\${{ inputs.expected_commit_sha }}"
+                test "$(git rev-parse HEAD)" = "\${{ inputs.expected_commit_sha }}"
+                corepack prepare ${contract.packageManager} --activate
+                node scripts/verify-runtime-versions.mjs
+                corepack pnpm install --frozen-lockfile
+`
+}
+
+async function runSelfTest() {
+  const contract = await readRuntimeContract()
+  const valid = buildValidFixture(contract)
+  const cases = [
+    ['valid baseline', valid, 0],
+    ['automatic trigger', `on:\n  push:\n${valid}`, 2],
+    ['floating node image', valid.replaceAll(`node:${contract.nodeVersion}-alpine`, 'node:24-alpine'), 2],
+    ['missing frozen install', valid.replaceAll('corepack pnpm install --frozen-lockfile', 'corepack pnpm install'), 2],
+    ['missing git head check', valid.replaceAll('test "$(git rev-parse HEAD)" = "${{ inputs.expected_commit_sha }}"', ''), 2],
+    [
+      'wrong package manager activation',
+      valid.replaceAll(`corepack prepare ${contract.packageManager} --activate`, `corepack prepare pnpm@${Number(contract.pnpmVersion.split('.')[0]) - 1}.0.0 --activate`),
+      2,
+    ],
+  ]
+
+  const failures = []
+  for (const [name, source, expectedErrors] of cases) {
+    const errors = analyzeSourcecraftCi(source, contract)
+    if (errors.length !== expectedErrors) {
+      failures.push(`${name}: expected ${expectedErrors} errors, got ${errors.length}: ${errors.join('; ')}`)
+      continue
+    }
+    console.log(`SourceCraft CI policy self-test fixture "${name}": PASS (${errors.length} expected findings)`)
+  }
+
+  if (failures.length > 0) {
+    console.error('SourceCraft CI policy self-test: FAIL')
+    for (const failure of failures) {
+      console.error(`- ${failure}`)
+    }
+    process.exitCode = 1
+    return
+  }
+
+  console.log('SourceCraft CI policy self-test: PASS')
+}
+
+async function main() {
+  if (process.argv.includes('--self-test')) {
+    await runSelfTest()
+    return
+  }
+
+  const [source, contract] = await Promise.all([readFile(ciPath, 'utf8'), readRuntimeContract()])
+  const errors = analyzeSourcecraftCi(source, contract)
 
   if (errors.length > 0) {
     console.error('SourceCraft CI policy: FAIL')

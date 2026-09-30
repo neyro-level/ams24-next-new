@@ -20,13 +20,16 @@ workflows:
       - name: verify
         cubes:
           - name: static-site-standard
-            image: docker.io/library/node:24-alpine
+            image: docker.io/library/node:24.20.0-alpine
             script:
               - |
                 set -eu
                 test "$SOURCECRAFT_EVENT" = "manual"
                 test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
+                test "$(git rev-parse HEAD)" = "${{ inputs.expected_commit_sha }}"
                 corepack enable
+                corepack prepare pnpm@12.8.1 --activate
+                node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
                 corepack pnpm verify
 
@@ -50,13 +53,16 @@ workflows:
       - name: verify
         cubes:
           - name: static-site-risky
-            image: docker.io/library/node:24-alpine
+            image: docker.io/library/node:24.20.0-alpine
             script:
               - |
                 set -eu
                 test "$SOURCECRAFT_EVENT" = "manual"
                 test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
+                test "$(git rev-parse HEAD)" = "${{ inputs.expected_commit_sha }}"
                 test -n "${{ inputs.risk_reason }}"
                 corepack enable
+                corepack prepare pnpm@12.8.1 --activate
+                node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
                 corepack pnpm verify
