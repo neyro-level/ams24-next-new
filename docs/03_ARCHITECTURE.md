@@ -177,6 +177,124 @@ ui reusable layers -> DTO/ViewModel only
 
 Reusable UI must not depend on raw Markdown, file system, analytics provider or lead persistence.
 
+### 7.1 Current Source Inventory and Import Baseline
+
+Status: factual baseline captured for `AMS24-CONSTITUTION-REMEDIATION-2026`
+CR-04.1 on 2026-09-30. It records the current repository state; it is not a
+permission to keep drift permanently.
+
+Current source directories:
+
+| Current path | Current owner | Current role | Public boundary / consumers |
+|---|---|---|---|
+| `src/app` | Next route layer | route entrypoints, route-level metadata, static params and composition | public routes; may call services and render UI |
+| `src/core/content/schemas` | content core | Zod DTO schemas and shared content types | imported by repository, project content and tests |
+| `src/core/content/repository` | content core | repository contract and local adapter validation | `ContentRepository`, `createContentRepository()` |
+| `src/core/content/services` | content service | singleton repository service over project local content | `getContentRepository()` for routes/tests |
+| `src/core/content/block-registry` | content core | typed block registry parsing | content validation/tests |
+| `src/core/content/services/rich-text.tsx` | content rendering service | RichText rendering from DTOs | UI/templates/tests |
+| `src/core/seo` | SEO core | metadata, route/sitemap helpers and redirect validation | app/project/tests; not yet full SEO implementation |
+| `src/core/lib` | shared utility core | small framework-agnostic utilities | UI primitives/shared |
+| `src/project` | project data/config | site settings, navigation, redirects, claims, evidence, editorial contracts and lead contract | app, UI shell/content, core adapters |
+| `src/project/content` | project content source | local content input for repository adapter | `core/content/services/repository.ts` |
+| `src/ui/primitives` | UI foundation | project-owned primitives | shared/shell/content UI |
+| `src/ui/shared` | reusable UI | section/container shared layout primitives | routes and shell/content UI |
+| `src/ui/shell` | UI shell | header/footer/breadcrumbs/skeleton/detail page shells | app routes |
+| `src/ui/content` | content presentation UI | article/knowledge editorial templates | dynamic editorial routes/tests |
+| `src/ui/forms` | form UI | disabled-safe lead form presentation | app routes/tests |
+
+Current import evidence:
+
+| Edge | Current evidence | Baseline decision |
+|---|---|---|
+| `app -> core/content/services` | `src/app/page.tsx`, `/impuls/`, `/pixel/`, `/zashchita/` import `getContentRepository()` | factual drift from target page-service composition; allowed only as current baseline until CR-04.2/CR-06 |
+| `app -> project` | route files import `site`, skeleton metadata, proof inventory, product claims and editorial contracts | current direct route data usage; must not expand silently |
+| `app -> ui` | route files render `ui/shell`, `ui/shared`, `ui/content`, `ui/forms` | expected composition boundary |
+| `core/content/services -> project/content` | `repository.ts` imports `localContent` | current local adapter seam; future repository contract should avoid broad project coupling |
+| `core/seo -> project/redirects` | `redirects.ts` imports `RedirectRule` type | type-level coupling only in current baseline |
+| `project -> core` | project content/evidence/link graph imports DTO/repository types | expected because project data conforms to core schemas |
+| `ui -> project` | shell/content/form components import navigation, skeletons, detail fixtures, editorial contracts and lead contract | factual drift: presentation UI consumes project data directly |
+| `ui -> core/lib` | primitives/shared import `cn()` | acceptable utility edge |
+| `project -> ui/app` | none found in current scan | required invariant remains intact |
+| non-`app` -> `app` | none found in current scan | required invariant remains intact |
+
+Target-only names not currently present as directories: `ui/layout`, `ui/domain`,
+`ui/pages`, `core/leads` and `core/analytics`. Their responsibilities are
+partly represented today by `ui/shell`, `ui/content`, `ui/forms`,
+`project/lead-contract.ts` and `project/analytics.ts`.
+
+Dependency evidence used for this baseline:
+
+- `rg --files src tests` inventory found the current source/test file set.
+- Import scan found `app, core: 4`, `app, project: 12`, `app, ui: 44`,
+  `core, project: 2`, `project, core: 3`, `ui, project: 8`, `ui, core: 3`,
+  and no `project -> ui/app` or non-`app -> app` imports.
+- Graphify `explain getContentRepository()` found route callers in
+  `src/app/page.tsx`, `src/app/impuls/page.tsx`, `src/app/pixel/page.tsx` and
+  `src/app/zashchita/page.tsx`.
+- Graphify `path HomePage() getContentRepository()` confirmed a direct
+  `HomePage() -> getContentRepository()` call.
+
+### 7.2 Frozen Ownership and Dependency Direction
+
+Each runtime concern has one owning module. Other modules may consume the
+owner's public boundary, but they must not recreate the same concern locally.
+
+| Concern | Single owner | Allowed consumers | Competing owner is forbidden in |
+|---|---|---|---|
+| Route entrypoint, `generateMetadata`, `generateStaticParams` and route composition | `src/app` | none as implementation owner; UI/core/project supply inputs | `ui`, `project`, `core` |
+| Content DTO schemas and validation | `src/core/content/schemas` | repository, project content, tests | `project`, `ui`, `app` |
+| Repository contract and local adapter validation | `src/core/content/repository` | content services and tests | `project/content`, routes |
+| Repository runtime service | `src/core/content/services` | routes/tests until CR-06 refactor | route-local singleton factories |
+| Project content source | `src/project/content` | content service/local adapter | `app`, `ui`, `core` outside the adapter seam |
+| SEO artifact contracts and helpers | `src/core/seo` plus `docs/07_SEO_SYSTEM.md` | routes, project data and tests | route-local duplicated SEO systems |
+| Redirect source data | `src/project/redirects.ts` | `core/seo/redirects.ts`, release validation | route files and ad-hoc config |
+| Product claims and proof inventory | `src/project/product-claims.ts`, `src/project/proof-inventory.ts` | routes, tests and future publication gate | page components or metadata strings |
+| Navigation and site settings | `src/project/navigation.ts`, `src/project/site.ts` | shell/layout/routes | hardcoded route lists in UI/routes |
+| Lead contract and consent context | `src/project/lead-contract.ts` until core lead module exists | form UI, routes and tests | UI-only validation or analytics payloads |
+| Analytics event contract | `src/project/analytics.ts` until core analytics module exists | future provider adapter and UI callbacks | provider-specific UI/page code |
+| UI primitives | `src/ui/primitives` | shared/shell/content/form UI and routes | route-local primitive variants |
+| Shared layout primitives | `src/ui/shared` | shell/content/form UI and routes | page-local duplicate containers/sections |
+| Shell and route skeleton presentation | `src/ui/shell` | routes | project data modules |
+| Editorial/content presentation templates | `src/ui/content` | dynamic editorial routes/tests | project content source |
+| Form presentation | `src/ui/forms` | routes | lead transport or persistence |
+
+Allowed dependency direction after this freeze:
+
+```text
+src/app -> src/ui | src/core | src/project
+src/ui -> src/ui | src/core/lib | DTO/ViewModel types
+src/ui/shell|content|forms -> src/project only for current baseline seams listed in 7.1
+src/project -> src/core types/schemas only
+src/core/content/services -> src/project/content only for the current local adapter seam
+src/core/seo -> src/project/redirects type only for the current redirect validator seam
+tests -> any public runtime boundary
+```
+
+Forbidden dependency direction:
+
+```text
+src/core -> src/app
+src/project -> src/app | src/ui
+src/ui -> src/app
+src/core/content/schemas -> src/project | src/ui | src/app
+src/core/content/repository -> src/project/content except through an explicit adapter/service seam
+route-local copies of content, SEO, redirect, navigation, lead, analytics or proof contracts
+```
+
+Current exceptions are bounded and must shrink, not grow:
+
+| Exception | Current files | Owner of future remediation |
+|---|---|---|
+| routes call `getContentRepository()` directly | `src/app/page.tsx`, `/impuls/`, `/pixel/`, `/zashchita/` | CR-06 content boundary |
+| `ui/shell` consumes navigation/skeleton/detail project data | `src/ui/shell/*` | CR-10 composition or later UI boundary cleanup |
+| `ui/content` consumes editorial contracts | `src/ui/content/*` | CR-12 rich content/rendering |
+| `ui/forms` consumes lead contract | `src/ui/forms/lead-form.tsx` | CR-13 leads/legal/analytics |
+| `core/content/services` imports project local content | `src/core/content/services/repository.ts` | CR-06 repository/service split |
+| `core/seo/redirects.ts` imports project redirect type | `src/core/seo/redirects.ts` | CR-08 SEO implementation or CR-17 ops redirect contract |
+
+No new exception may be added without updating this table and the owning task.
+
 ## 8. Target Project Structure
 
 ```text
