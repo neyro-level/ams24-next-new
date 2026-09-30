@@ -7,6 +7,17 @@ import { LegalPage } from '@/ui/legal/legal-page'
 import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
 
 const count = (html: string, pattern: RegExp) => html.match(pattern)?.length ?? 0
+const forbiddenToneUtilities = ['bg-black', 'text-white']
+
+function assertOneH1(html: string) {
+  expect(count(html, /<h1\b/g)).toBe(1)
+}
+
+function assertNoToneDrift(html: string) {
+  for (const utility of forbiddenToneUtilities) {
+    expect(html).not.toContain(utility)
+  }
+}
 
 describe('standalone/legal/contact route headings', () => {
   it.each([
@@ -25,11 +36,10 @@ describe('standalone/legal/contact route headings', () => {
       'Реквизиты',
     ],
   ])('%s has one h1 and no accidental dark utility drift', (_name, html, h1Text) => {
-    expect(count(html, /<h1\b/g)).toBe(1)
+    assertOneH1(html)
     expect(html).toContain(`<h1`)
     expect(html).toContain(h1Text)
-    expect(html).not.toContain('bg-black')
-    expect(html).not.toContain('text-white')
+    assertNoToneDrift(html)
   })
 
   it.each([
@@ -39,5 +49,14 @@ describe('standalone/legal/contact route headings', () => {
     expect(html).toContain('bg-surface-dark')
     expect(html).toContain('text-surface-dark-foreground')
     expect(html).toContain('bg-background')
+  })
+
+  it('fails negative heading hierarchy fixtures', () => {
+    expect(() => assertOneH1('<main><h1>One</h1><h1>Two</h1></main>')).toThrow()
+    expect(() => assertOneH1('<main><h2>No page title</h2></main>')).toThrow()
+  })
+
+  it('fails negative tone drift fixture', () => {
+    expect(() => assertNoToneDrift('<main class="bg-black text-white"><h1>Unsafe tone</h1></main>')).toThrow()
   })
 })
