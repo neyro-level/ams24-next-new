@@ -1,4 +1,5 @@
 import type { NavigationLink } from '@/project/navigation'
+import type { RichTextDTO } from '@/core/content/schemas'
 import { buildNoindexMetadata } from '@/core/seo'
 
 type SourceLedgerItem = {
@@ -27,6 +28,7 @@ export type ArticleEditorialContract = {
   }>
   cta: NavigationLink
   related: NavigationLink[]
+  body: RichTextDTO
 }
 
 export type KnowledgeEditorialContract = {
@@ -43,6 +45,7 @@ export type KnowledgeEditorialContract = {
   }>
   nextAction: NavigationLink
   related: NavigationLink[]
+  body: RichTextDTO
 }
 
 export const representativeArticleContract: ArticleEditorialContract = {
@@ -88,6 +91,22 @@ export const representativeArticleContract: ArticleEditorialContract = {
     { label: 'Импульс Пиксель', path: '/pixel/' },
     { label: 'Импульс Защита', path: '/zashchita/' },
   ],
+  body: {
+    kind: 'markdown',
+    value: `
+## Короткий ответ
+
+Импульс подходит, когда бизнесу нужен новый поток обращений и уже понятны ниша, регион и сценарий обработки результата.
+
+## Как выбрать маршрут
+
+- если нужен запуск привлечения — начните с Импульса;
+- если есть свой сайт и трафик — проверьте Пиксель;
+- если есть признаки риска утечки лидов — начните с Защиты.
+
+Следующий шаг — перейти на [страницу продукта](/impuls/) и запросить расчёт.
+`,
+  },
 }
 
 export const representativeKnowledgeContract: KnowledgeEditorialContract = {
@@ -117,6 +136,22 @@ export const representativeKnowledgeContract: KnowledgeEditorialContract = {
     { label: 'Тарифы', path: '/tarify/' },
     { label: 'Контакты', path: '/kontakty/' },
   ],
+  body: {
+    kind: 'markdown',
+    value: `
+## Шаг 1
+
+Опишите нишу, регион и цель запуска без персональных данных.
+
+## Шаг 2
+
+Соберите ограничения: сроки, формат передачи результата и готовность отдела продаж.
+
+## Следующий шаг
+
+Передайте вводные через [форму расчёта](/#lead-form).
+`,
+  },
 }
 
 export function buildArticleEditorialMetadata(contract: ArticleEditorialContract) {

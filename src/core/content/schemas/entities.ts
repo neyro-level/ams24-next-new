@@ -116,26 +116,34 @@ export const knowledgeArticleSchema = z.object({
   status: z.enum(['draft', 'published', 'hidden']).default('draft'),
 })
 
+export const heroPageBlockSchema = z.object({
+  type: z.literal('hero'),
+  eyebrow: z.string().optional(),
+  title: z.string().trim().min(5),
+  lead: z.string().trim().min(20).optional(),
+  cta: ctaSchema.optional(),
+})
+
+export const productRoutesPageBlockSchema = z.object({
+  type: z.literal('product-routes'),
+  productRefs: z.array(productRefSchema).min(1),
+})
+
+export const richTextPageBlockSchema = z.object({
+  type: z.literal('rich-text'),
+  body: richTextSchema,
+})
+
+export const leadFormShellPageBlockSchema = z.object({
+  type: z.literal('lead-form-shell'),
+  intentId: idSchema,
+})
+
 export const pageBlockSchema = z.discriminatedUnion('type', [
-  z.object({
-    type: z.literal('hero'),
-    eyebrow: z.string().optional(),
-    title: z.string().trim().min(5),
-    lead: z.string().trim().min(20).optional(),
-    cta: ctaSchema.optional(),
-  }),
-  z.object({
-    type: z.literal('product-routes'),
-    productRefs: z.array(productRefSchema).min(1),
-  }),
-  z.object({
-    type: z.literal('rich-text'),
-    body: richTextSchema,
-  }),
-  z.object({
-    type: z.literal('lead-form-shell'),
-    intentId: idSchema,
-  }),
+  heroPageBlockSchema,
+  productRoutesPageBlockSchema,
+  richTextPageBlockSchema,
+  leadFormShellPageBlockSchema,
 ])
 
 export const pageSchema = z.object({
