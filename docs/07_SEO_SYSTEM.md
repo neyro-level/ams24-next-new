@@ -1,7 +1,7 @@
 # SEO System
 
-Status: Active  
-Version: 1.0  
+Status: Active
+Version: 1.0
 Updated: 2026-09-30
 
 ## 1. Purpose
