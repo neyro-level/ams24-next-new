@@ -1,9 +1,9 @@
 # UI Primitive / Token Duplication Inventory — CR-11.1
 
-Status: Complete inventory  
-Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`  
-Task: `CR-11.1`  
-Date: 2026-09-30  
+Status: Complete inventory
+Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`
+Task: `CR-11.1`
+Date: 2026-09-30
 Mode: READ-ONLY audit inventory; no UI remediation in this task.
 
 ## Scope

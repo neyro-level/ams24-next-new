@@ -1,9 +1,9 @@
 # Token Drift Exception Register — CR-11.3
 
-Status: Complete classification  
-Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`  
-Task: `CR-11.3`  
-Date: 2026-09-30  
+Status: Complete classification
+Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`
+Task: `CR-11.3`
+Date: 2026-09-30
 Mode: mechanical scan + exception list; no browser or production proof.
 
 ## Result
