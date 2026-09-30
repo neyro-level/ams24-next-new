@@ -1,0 +1,43 @@
+{
+  "task_id": "ams24r-cr-20-2",
+  "plan_version": "v3",
+  "plan_id": "AMS24-CONSTITUTION-REMEDIATION-2026",
+  "implemented_main_sha_after_epic_19": "b1027ae635a41648b3a5981b8b574ce5f7a161af",
+  "documentation_reconciliation_commit": "b0aee482a1c1371f2ddbb42be94d3094d142edeb",
+  "production": "not run",
+  "release_authorized": false,
+  "proof_index": {
+    "browser_e2e": "docs/research/BROWSER_E2E_CR_18_1.md",
+    "accessibility": "docs/research/ACCESSIBILITY_CR_18_2.md",
+    "performance": "docs/research/PERFORMANCE_CR_18_3.md",
+    "seo_audit": "docs/research/SEO_FINAL_AUDIT_CR_19_1.md",
+    "seo_artifacts": "docs/research/SEO_CRAWL_ARTIFACTS_CR_19_1.json",
+    "ui_drift_audit": "docs/research/UI_DRIFT_AUDIT_CR_19_2.md",
+    "ui_drift_artifacts": "docs/research/UI_DRIFT_AUDIT_ARTIFACTS_CR_19_2.json",
+    "p0_p1_disposition": "docs/research/EPIC_19_P0_P1_DISPOSITION_CR_19_3.md",
+    "doc_runtime_traceability": "docs/research/CANONICAL_DOC_RUNTIME_TRACEABILITY_CR_20_1.md",
+    "release_checklist": "docs/05_RELEASE_CHECKLIST.md"
+  },
+  "sourcecraft_delivery": [
+    { "scope": "EPIC-18", "pull_request": "30", "gate_run": "34", "merge_commit": "b0735dfc384572d70e33ea07fc9a8ff291ea923e" },
+    { "scope": "EPIC-19", "pull_request": "31", "gate_run": "35", "merge_commit": "b1027ae635a41648b3a5981b8b574ce5f7a161af" }
+  ],
+  "external_blockers": [
+    "explicit owner production command is absent",
+    "final production target server/path/artifact store not confirmed",
+    "live AMS Leads API endpoint/schema not approved",
+    "legal text/reviewer not approved",
+    "analytics provider account/config not approved",
+    "CAPTCHA/anti-spam provider/public key not approved",
+    "complete current ams24.ru redirect inventory not approved",
+    "production Nginx/security headers, live smoke and rollback rehearsal not performed"
+  ],
+  "non_blocking_tracked_items": [
+    "SEO-19-001 P2 legacy redirect inventory remains release prerequisite",
+    "SEO-19-002 P3 noindex duplicate 404 static artifacts",
+    "UI-19-001 P2 repeated arbitrary grid ratios",
+    "UI-19-002 P2 long route-owned page composition modules",
+    "UI-19-003 P3 Button primitive internals recorded as KEEP_EXCEPTION"
+  ],
+  "closeout_verdict": "REMEDIATION PROOF COMPLETE THROUGH EPIC-19; PRODUCTION BLOCKED"
+}
