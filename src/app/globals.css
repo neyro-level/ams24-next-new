@@ -11,7 +11,7 @@
   --card-foreground: var(--foreground);
   --popover: #ffffff;
   --popover-foreground: var(--foreground);
-  --primary: #5f7fae;
+  --primary: #4f6f9b;
   --primary-foreground: #f8fafc;
   --secondary: #eef2f6;
   --secondary-foreground: #111827;
@@ -22,7 +22,7 @@
   --destructive: #b42318;
   --border: #d9e1e8;
   --input: #d9e1e8;
-  --ring: #5f7fae;
+  --ring: #4f6f9b;
 
   --surface: #fafbfc;
   --surface-muted: #eef2f6;
@@ -31,8 +31,8 @@
   --surface-dark-elevated: #1b2633;
   --surface-dark-hover: #223142;
   --surface-dark-foreground: #f8fafc;
-  --surface-dark-muted: rgb(248 250 252 / 62%);
-  --surface-dark-faint: rgb(248 250 252 / 38%);
+  --surface-dark-muted: rgb(248 250 252 / 74%);
+  --surface-dark-faint: rgb(248 250 252 / 62%);
 
   --success: #1d7a46;
   --warning: #b9831d;

@@ -60,6 +60,7 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
             eyebrow="Юридическая страница"
             title={page.h1}
             level={1}
+            tone="dark"
             lead="Это не финальный юридический текст. Страница создана как безопасная цель для ссылок согласия и будет наполнена после юридического согласования."
           />
         </Container>
