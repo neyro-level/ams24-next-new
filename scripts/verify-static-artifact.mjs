@@ -10,15 +10,40 @@ const expectedSitemapUrls = [
   'https://ams24.ru/pixel/',
   'https://ams24.ru/zashchita/',
 ]
-const excludedSitemapUrls = [
-  'https://ams24.ru/tarify/',
-  'https://ams24.ru/raschety/',
-  'https://ams24.ru/keisy/',
-  'https://ams24.ru/otzyvy/',
-  'https://ams24.ru/kontakty/',
-  'https://ams24.ru/politika/',
-  'https://ams24.ru/soglasie/',
-  'https://ams24.ru/obrabotka-dannyh/',
+const expectedIndexableHtml = [
+  { path: '/', url: 'https://ams24.ru/', h1: 'Импульс' },
+  {
+    path: '/impuls/',
+    url: 'https://ams24.ru/impuls/',
+    h1: 'Импульс — лидогенерация для бизнеса',
+  },
+  {
+    path: '/pixel/',
+    url: 'https://ams24.ru/pixel/',
+    h1: 'Импульс Пиксель — определить заинтересованных посетителей сайта',
+  },
+  {
+    path: '/zashchita/',
+    url: 'https://ams24.ru/zashchita/',
+    h1: 'Импульс Защита — аудит риска перехвата лидов',
+  },
+]
+const expectedNoindexHtml = [
+  '/tarify/',
+  '/raschety/',
+  '/keisy/',
+  '/keisy/medical-case/',
+  '/otzyvy/',
+  '/kontakty/',
+  '/politika/',
+  '/soglasie/',
+  '/obrabotka-dannyh/',
+  '/stati/',
+  '/stati/kak-vybrat-produkt/',
+  '/baza-znaniy/',
+  '/baza-znaniy/impuls/kak-podgotovit-raschet/',
+  '/o-kompanii/',
+  '/rekvizity/',
 ]
 
 const forbiddenPatterns = [
@@ -80,6 +105,20 @@ if (!existsSync(sitemapPath)) {
   findings.push('out/sitemap.xml is required for static SEO artifact proof')
 }
 
+function htmlPathFor(routePath) {
+  if (routePath === '/') {
+    return join(artifactDir, 'index.html')
+  }
+
+  return join(artifactDir, ...routePath.split('/').filter(Boolean), 'index.html')
+}
+
+function requireHtmlContains(filePath, html, expected) {
+  if (!html.includes(expected)) {
+    findings.push(`${filePath} is missing expected HTML fragment: ${expected}`)
+  }
+}
+
 if (!existsSync(robotsPath)) {
   findings.push('out/robots.txt is required for static SEO artifact proof')
 }
@@ -103,7 +142,9 @@ if (existsSync(sitemapPath)) {
     }
   }
 
-  for (const url of excludedSitemapUrls) {
+  for (const routePath of expectedNoindexHtml) {
+    const url = new URL(routePath, 'https://ams24.ru').toString()
+
     if (sitemap.includes(`<loc>${url}</loc>`)) {
       findings.push(`out/sitemap.xml must not include noindex or unfinished URL ${url}`)
     }
@@ -118,6 +159,41 @@ if (existsSync(robotsPath)) {
       findings.push(`out/robots.txt is missing "${line}"`)
     }
   }
+}
+
+for (const page of expectedIndexableHtml) {
+  const filePath = htmlPathFor(page.path)
+
+  if (!existsSync(filePath)) {
+    findings.push(`${filePath} is required for indexable route ${page.path}`)
+    continue
+  }
+
+  const html = readFileSync(filePath, 'utf8')
+
+  requireHtmlContains(filePath, html, `<link rel="canonical" href="${page.url}"/>`)
+  requireHtmlContains(filePath, html, '<meta name="robots" content="index, follow"/>')
+  requireHtmlContains(filePath, html, `<meta property="og:url" content="${page.url}"/>`)
+  requireHtmlContains(filePath, html, '<meta property="og:site_name" content="Импульс"/>')
+  requireHtmlContains(filePath, html, '<meta property="og:type" content="website"/>')
+  requireHtmlContains(filePath, html, page.h1)
+}
+
+for (const routePath of expectedNoindexHtml) {
+  const filePath = htmlPathFor(routePath)
+  const url = new URL(routePath, 'https://ams24.ru').toString()
+
+  if (!existsSync(filePath)) {
+    findings.push(`${filePath} is required for noindex route ${routePath}`)
+    continue
+  }
+
+  const html = readFileSync(filePath, 'utf8')
+
+  requireHtmlContains(filePath, html, `<link rel="canonical" href="${url}"/>`)
+  requireHtmlContains(filePath, html, '<meta name="robots" content="noindex, follow"/>')
+  requireHtmlContains(filePath, html, `<meta property="og:url" content="${url}"/>`)
+  requireHtmlContains(filePath, html, '<meta property="og:site_name" content="Импульс"/>')
 }
 
 if (findings.length > 0) {
