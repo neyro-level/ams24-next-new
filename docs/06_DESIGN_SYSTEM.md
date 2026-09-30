@@ -42,9 +42,10 @@ Representative page: /
 Design Intake completed: FOUNDATION ONLY
 ```
 
-Design intake closed for the representative foundation only. Full semantic
-heading, accessibility, performance and UI drift proof remains open in the
-approved remediation graph.
+Design intake closed for the representative foundation only. The later
+remediation graph has now added full semantic heading, accessibility,
+performance and UI drift proof for the current static site scope. P2/P3 cleanup
+items remain tracked, but EPIC-19 closed with zero unresolved P0/P1 UI drift.
 
 ### 2.1 Intake Evidence
 
@@ -53,10 +54,10 @@ Scope: `EPIC-02.4`
 
 | Check | Status | Evidence |
 |---|---|---|
-| No P0/P1 design drift | FOUNDATION PASS / FINAL OPEN | Homepage uses AMS Northline tokens and local tests rejected known foundation drift markers. Full site UI drift is still owned by `CR-19.*`. |
-| Keyboard and semantic access | PARTIAL / FINAL OPEN | Primary actions and form shell have baseline semantics, but `CR-00.1` confirms `SectionHeader` heading-level drift; full accessibility proof is owned by `CR-05.*` and `CR-18.*`. |
-| Mobile composition | FOUNDATION PASS / FINAL OPEN | Representative page uses responsive grid contracts. Full responsive route proof remains in browser/integrated proof tasks. |
-| Production-like budget | HISTORICAL / REVALIDATE | Historical v4 `pnpm verify` evidence exists, but remediation changed the compliance target; release proof must be rerun after `CR-15.*` and `CR-18.*`. |
+| No P0/P1 design drift | FINAL PASS WITH FINDINGS | `docs/research/UI_DRIFT_AUDIT_CR_19_2.md` and `docs/research/EPIC_19_P0_P1_DISPOSITION_CR_19_3.md` record zero P0/P1; P2/P3 cleanup remains tracked. |
+| Keyboard and semantic access | FINAL PASS | `docs/research/ACCESSIBILITY_CR_18_2.md` records semantics, H1 count, labels, focus, contrast, touch and reduced-motion evidence. |
+| Mobile composition | FINAL PASS | `docs/research/BROWSER_E2E_CR_18_1.md` covers representative route/mobile behavior; `docs/research/UI_DRIFT_AUDIT_CR_19_2.md` records rendered HTML and responsive/code evidence. |
+| Production-like budget | FINAL PASS / RELEASE REVALIDATE | `docs/research/PERFORMANCE_CR_18_3.md` records mobile LCP/CLS within thresholds on production-like static export. Production release must still re-smoke exact deployed artifact. |
 | Scaling decision | ALLOWED WITH GUARDS | Page patterns may scale only through the approved remediation graph and claim/evidence gates. |
 
 ## 3. Visual Character
@@ -330,5 +331,5 @@ None. Any exception requires owner decision and a dated entry here.
 - [x] token fixture compiles;
 - [x] shadcn fixture compiles;
 - [x] representative responsive homepage foundation is implemented;
-- [ ] accessibility and performance baseline are measured;
-- [ ] UI drift audit has no P0/P1 foundation findings.
+- [x] accessibility and performance baseline are measured;
+- [x] UI drift audit has no P0/P1 foundation findings.

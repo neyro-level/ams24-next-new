@@ -29,15 +29,15 @@ Updated: 2026-09-30
 |---|---|---|
 | `01_PRD.md` | Draft | продуктовые формулировки, KPI, тарифы, кейсы и юридические claims требуют подтверждения владельца |
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
-| `03_ARCHITECTURE.md` | Active / Drift recorded | статический Next.js contract и pinned stack recorded; текущие boundary/SEO/leads drift зафиксированы в CR-00.1 |
+| `03_ARCHITECTURE.md` | Active | статический Next.js contract, pinned stack, SEO artifacts, Nginx/rollout repository contracts and remaining production blockers recorded |
 | `04_BACKLOG.md` | Approved | remediation plan `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем; прежний v4 завершён и сохранён в Git/закрытом Task Manager |
-| `05_RELEASE_CHECKLIST.md` | Draft / Blocked | единственный release/runbook checklist; release-ready claims требуют повторного proof после remediation; production требует отдельной команды |
-| `06_DESIGN_SYSTEM.md` | Active / Foundation only | Northline адаптирован; полный accessibility/performance/UI drift proof ещё не закрыт |
-| `07_SEO_SYSTEM.md` | Active / Partial | source priority and intent ownership defined; indexability, artifact and release proof rules continue in CR-03.2/CR-03.3 |
+| `05_RELEASE_CHECKLIST.md` | Draft / Blocked | remediation proof through EPIC-19 recorded; production still requires explicit command and release-only checks |
+| `06_DESIGN_SYSTEM.md` | Active | Northline адаптирован; CR-18/CR-19 record accessibility, performance and zero-P0/P1 UI drift proof |
+| `07_SEO_SYSTEM.md` | Active | source priority, intent ownership, indexability, sitemap/robots/metadata artifact proof and release crawl rules recorded |
 
 ## Текущий фокус
 
-Предыдущий execution graph `AMS24-IMPULSE-2026 v4` закрыт: 57/57 задач завершены, production не выполнялся. Remediation-план `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем и импортирован в Task Manager cleanly. Текущий фокус — Developer ready-loop; baseline drift классифицирован в `research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`. Production пока не разрешён.
+Предыдущий execution graph `AMS24-IMPULSE-2026 v4` закрыт: 57/57 задач завершены, production не выполнялся. Remediation-план `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем и импортирован в Task Manager cleanly. Текущий фокус — Wave 20 final documentation reconciliation and closeout. EPIC-18/EPIC-19 integrated proof merged to `main`; production пока не разрешён.
 
 ## Как читать
 
@@ -61,7 +61,7 @@ Updated: 2026-09-30
 
 - `03_ARCHITECTURE.md` owns production topology, release-directory model, rollback contract and open production identity gaps;
 - `05_RELEASE_CHECKLIST.md` owns the executable release/runbook checklist, rollout proof, live smoke and rollback evidence;
-- future `ops/nginx/*` files own only validated Nginx configuration artifacts when CR-17.2 creates them.
+- `ops/nginx/*` files own only validated Nginx configuration artifacts.
 
 Until an explicit production command, operations work remains repository-side
 planning/validation only and must not require server or secret access.

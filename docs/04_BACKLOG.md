@@ -6,7 +6,7 @@ Version: v3
 
 Status: APPROVED
 
-Phase: `APPROVAL_HANDOFF`
+Phase: `EXECUTION_CLOSEOUT`
 
 Input: owner-supplied `AMS24 CONSTITUTION REMEDIATION MASTER PLAN V2`
 
@@ -17,6 +17,8 @@ Updated: 2026-09-30
 This is the single active master-plan Markdown for the remediation program. The previous `AMS24-IMPULSE-2026 v4` remains a completed historical snapshot in Git and in the closed Task Manager graph. It is not rewritten or silently re-imported.
 
 `v3 APPROVED` was approved by the owner on 2026-09-30 with the phrase `План утверждён`. Task Manager import and Developer handoff are authorized for this exact plan snapshot. Production remains unauthorized.
+
+Execution status after EPIC-19: remediation implementation and delivery streams through `CR-19.D` are merged to canonical `main`; Wave 20 owns final documentation reconciliation and closeout. The baseline section below intentionally preserves the original `bef0a51` audit facts for traceability and is not a current-runtime status section.
 
 ## 1. Primary Goal
 
@@ -50,7 +52,7 @@ Production deployment is outside this plan.
 | Active remediation graph | `docs/04_BACKLOG.md` |
 | Release proof, rollout, rollback | `docs/05_RELEASE_CHECKLIST.md` |
 | UI policy and AMS Northline | `docs/06_DESIGN_SYSTEM.md` |
-| SEO policy/publication contract | proposed `docs/07_SEO_SYSTEM.md`, subject to OD-R02 |
+| SEO policy/publication contract | `docs/07_SEO_SYSTEM.md` |
 | Actual content | validated content repository |
 | Research/audit evidence | `docs/research/*`; evidence, not normative truth |
 

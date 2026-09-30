@@ -7,14 +7,22 @@ Updated: 2026-09-30
 Release is allowed only after an explicit owner command. This checklist does not authorize merge or production.
 
 This file is the single executable release/runbook checklist for the repository.
-Architecture owns the production topology and invariants; future `ops/nginx/*`
-files own only validated Nginx config artifacts. Do not create a second release
+Architecture owns the production topology and invariants; `ops/nginx/*` files
+own only validated Nginx config artifacts. Do not create a second release
 runbook or duplicate these gates in another docs file without a later explicit
 architecture decision.
 
 ## 0. Current Readiness Snapshot
 
-Current evidence: `docs/research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`.
+Current evidence:
+
+- baseline classification: `docs/research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`;
+- integrated browser proof: `docs/research/BROWSER_E2E_CR_18_1.md`;
+- accessibility proof: `docs/research/ACCESSIBILITY_CR_18_2.md`;
+- mobile performance proof: `docs/research/PERFORMANCE_CR_18_3.md`;
+- final SEO audit: `docs/research/SEO_FINAL_AUDIT_CR_19_1.md`;
+- final UI drift audit: `docs/research/UI_DRIFT_AUDIT_CR_19_2.md`;
+- zero-P0/P1 disposition: `docs/research/EPIC_19_P0_P1_DISPOSITION_CR_19_3.md`.
 
 Historical evidence from the completed v4 graph remains in
 `docs/research/RELEASE_READINESS_EPIC_09.md`, but the approved remediation plan
@@ -24,10 +32,10 @@ authorization.
 Current repository state:
 
 - static export configuration and pinned package versions are proven;
-- app-level sitemap/robots files and exported `out/sitemap.xml` / `out/robots.txt` are not present in the current worktree;
-- content-boundary, heading, public-copy and lead-endpoint drift is recorded in CR-00.1;
+- app-level sitemap/robots files exist and `corepack pnpm build` generates `out/sitemap.xml` / `out/robots.txt`;
+- content-boundary, public-copy and lead-endpoint remediation evidence is recorded by the approved remediation graph; final SEO/UI audit has zero P0/P1 findings;
 - SourceCraft Git push and REST automation work after the Secret Master token-precedence repair in global skills;
-- release readiness must be re-proven by the remediation graph before any production command.
+- production readiness still requires the explicit release command and the production-only checks below.
 
 Production-only blockers:
 
@@ -39,8 +47,8 @@ Production-only blockers:
 - complete current `ams24.ru` redirect inventory not approved;
 - Nginx/security headers, live smoke and rollback rehearsal not performed.
 
-This means the repository is approved for remediation work, but public
-production release is still blocked.
+This means the repository is approved for remediation work and has completed
+remediation proof through EPIC-19, but production release is still blocked.
 
 ## 1. Release Identity
 
