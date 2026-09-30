@@ -1,0 +1,108 @@
+{
+  "task_id": "ams24r-cr-19-1",
+  "plan_version": "v3",
+  "audit_stage": "AUDIT",
+  "coverage": "FULL",
+  "profile": "SITE",
+  "environment": "local static export",
+  "domain": "https://ams24.ru/",
+  "timestamp": "2026-09-30",
+  "git_sha": "b0735dfc384572d70e33ea07fc9a8ff291ea923e",
+  "tools": {
+    "build": "corepack pnpm build",
+    "content_graph": "corepack pnpm verify:content-graph",
+    "artifact_guard": "corepack pnpm guard:artifact",
+    "structural_crawl": "local Node.js parser over out/**/*.html, out/sitemap.xml and out/robots.txt"
+  },
+  "scope": {
+    "html_pages_checked": 22,
+    "next_static_routes_generated": 23,
+    "sitemap_urls_checked": 4,
+    "robots_checked": true,
+    "excluded": [
+      "production deploy",
+      "live ams24.ru replacement crawl",
+      "Yandex Webmaster and GSC evidence",
+      "field Core Web Vitals",
+      "auth/admin/API surfaces"
+    ]
+  },
+  "robots_txt": [
+    "User-Agent: *",
+    "Allow: /",
+    "Host: https://ams24.ru",
+    "Sitemap: https://ams24.ru/sitemap.xml"
+  ],
+  "sitemap_urls": [
+    "https://ams24.ru/",
+    "https://ams24.ru/impuls/",
+    "https://ams24.ru/pixel/",
+    "https://ams24.ru/zashchita/"
+  ],
+  "route_matrix": [
+    { "route": "/", "robots": "index, follow", "canonical": "https://ams24.ru/", "sitemap": true, "h1_count": 1, "og_count": 6, "json_ld_count": 0, "title": "Импульс — маркетинговые продукты AMS24" },
+    { "route": "/impuls/", "robots": "index, follow", "canonical": "https://ams24.ru/impuls/", "sitemap": true, "h1_count": 1, "og_count": 6, "json_ld_count": 0, "title": "Импульс — лидогенерация для бизнеса через целевые аудитории | Импульс" },
+    { "route": "/pixel/", "robots": "index, follow", "canonical": "https://ams24.ru/pixel/", "sitemap": true, "h1_count": 1, "og_count": 6, "json_ld_count": 0, "title": "Импульс Пиксель — идентификация посетителей сайта | Импульс" },
+    { "route": "/zashchita/", "robots": "index, follow", "canonical": "https://ams24.ru/zashchita/", "sitemap": true, "h1_count": 1, "og_count": 6, "json_ld_count": 0, "title": "Импульс Защита — аудит риска перехвата лидов | Импульс" },
+    { "route": "/baza-znaniy/", "robots": "noindex, follow", "canonical": "https://ams24.ru/baza-znaniy/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/baza-znaniy/impuls/kak-podgotovit-raschet/", "robots": "noindex, follow", "canonical": "https://ams24.ru/baza-znaniy/impuls/kak-podgotovit-raschet/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/keisy/", "robots": "noindex, follow", "canonical": "https://ams24.ru/keisy/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/keisy/medical-case/", "robots": "noindex, follow", "canonical": "https://ams24.ru/keisy/medical-case/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/kontakty/", "robots": "noindex, follow", "canonical": "https://ams24.ru/kontakty/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/o-kompanii/", "robots": "noindex, follow", "canonical": "https://ams24.ru/o-kompanii/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/obrabotka-dannyh/", "robots": "noindex, follow", "canonical": "https://ams24.ru/obrabotka-dannyh/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/otzyvy/", "robots": "noindex, follow", "canonical": "https://ams24.ru/otzyvy/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/politika/", "robots": "noindex, follow", "canonical": "https://ams24.ru/politika/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/raschety/", "robots": "noindex, follow", "canonical": "https://ams24.ru/raschety/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/rekvizity/", "robots": "noindex, follow", "canonical": "https://ams24.ru/rekvizity/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/soglasie/", "robots": "noindex, follow", "canonical": "https://ams24.ru/soglasie/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/stati/", "robots": "noindex, follow", "canonical": "https://ams24.ru/stati/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/stati/kak-vybrat-produkt/", "robots": "noindex, follow", "canonical": "https://ams24.ru/stati/kak-vybrat-produkt/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/tarify/", "robots": "noindex, follow", "canonical": "https://ams24.ru/tarify/", "sitemap": false, "h1_count": 1, "og_count": 6, "json_ld_count": 0 },
+    { "route": "/404", "robots": "noindex", "canonical": "", "sitemap": false, "h1_count": 1, "og_count": 0, "json_ld_count": 0 },
+    { "route": "/404/", "robots": "noindex", "canonical": "", "sitemap": false, "h1_count": 1, "og_count": 0, "json_ld_count": 0 },
+    { "route": "/_not-found/", "robots": "noindex", "canonical": "", "sitemap": false, "h1_count": 1, "og_count": 0, "json_ld_count": 0 }
+  ],
+  "duplicates": {
+    "indexable_title_duplicates": [],
+    "indexable_h1_duplicates": [],
+    "noindex_duplicates": [
+      {
+        "value": "Страница не найдена",
+        "routes": ["/_not-found/", "/404", "/404/"],
+        "impact": "No sitemap or indexability impact; recorded as artifact hygiene only."
+      }
+    ]
+  },
+  "internal_links": {
+    "broken_internal_links": [],
+    "api_links_excluded_by_policy": ["/api/leads"]
+  },
+  "redirect_inventory": [
+    { "source": "/identifikatsiya-posetiteley-sayta/", "destination": "/pixel/", "permanent": true, "status": "repository rule present" },
+    { "source": "/zashchita-ot-perekhvata-lidov/", "destination": "/zashchita/", "permanent": true, "status": "repository rule present" }
+  ],
+  "findings": [
+    {
+      "id": "SEO-19-001",
+      "priority": "P2",
+      "layer": "release redirects",
+      "root_cause": "complete current ams24.ru legacy redirect inventory remains an external release prerequisite",
+      "evidence": "src/project/redirects.ts contains two approved long-product redirects; docs/research/EXTERNAL_PREFLIGHT_EPIC_01_5.md records legacy URL inventory as partial and EXT-05 says no production migration without final redirect inventory.",
+      "impact": "Could lose legacy search traffic during production replacement if release proceeds without the external inventory. Does not block local static artifact correctness.",
+      "safe_next_step": "Keep production blocked until EXT-05/final redirect inventory is approved; do not invent mass redirects."
+    },
+    {
+      "id": "SEO-19-002",
+      "priority": "P3",
+      "layer": "artifact hygiene",
+      "root_cause": "Next static export emits noindex 404 variants with duplicated title and H1",
+      "evidence": "out/_not-found/index.html, out/404.html and out/404/index.html all have noindex and H1 'Страница не найдена'. They are absent from sitemap and not broken internal targets.",
+      "impact": "No confirmed indexability or cannibalization impact; keep monitored during release redirect proof.",
+      "safe_next_step": "Accept as noindex static-export behavior or normalize 404 exposure at server release layer."
+    }
+  ],
+  "verdict": "PASS WITH FINDINGS",
+  "p0_count": 0,
+  "p1_count": 0
+}
