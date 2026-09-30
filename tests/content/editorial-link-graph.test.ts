@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
 
 import { createContentRepository } from '@/core/content/repository'
-import { validateEditorialLinkGraph } from '@/project/editorial-link-graph'
+import { validateContentGraph } from '@/core/content/validation'
 import { localContent } from '@/project/content/local-content'
 
 describe('editorial related-content graph', () => {
   it('has no broken links, orphan products, duplicate intent or unsupported topic hubs', () => {
     const repository = createContentRepository(localContent)
 
-    expect(validateEditorialLinkGraph(repository)).toEqual([])
+    expect(validateContentGraph(repository)).toEqual([])
   })
 
   it('detects broken links and duplicate article intent', () => {
@@ -29,7 +29,7 @@ describe('editorial related-content graph', () => {
       ],
     })
 
-    expect(validateEditorialLinkGraph(repository)).toEqual(
+    expect(validateContentGraph(repository)).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ code: 'duplicate-intent' }),
         expect.objectContaining({ code: 'broken-link' }),
