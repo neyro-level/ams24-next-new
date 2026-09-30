@@ -22,10 +22,10 @@ describe('/impuls/ product page', () => {
     expect(html).toContain('Импульс — лидогенерация для бизнеса')
     expect(html).toContain('href="#calculation"')
     expect(html).toContain('Рассчитать запуск')
-    expect(html).toContain('Claim guard')
-    expect(html).toContain('legal-review:OD-03')
+    expect(html).toContain('Ограничения')
+    expect(html).toContain('Проверено по утверждённым материалам проекта.')
     expect(html).not.toContain('Route skeleton')
-    expect(html).not.toContain('Publication guard')
+    expect(html).not.toContain('Публикационный контроль')
     expect(html).not.toContain('Платформа маркетинговых продуктов, которая помогает привлекать')
   })
 

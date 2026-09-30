@@ -7,7 +7,7 @@ import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
 export const metadata = buildNoindexMetadata({
-  title: 'Кейсы Импульс — evidence guard',
+  title: 'Кейсы Импульс — материалы готовятся',
   description:
     'Кейсы Импульс остаются скрыты до подтверждения ниши, периода, методики, метрик и разрешения на публикацию.',
   canonicalPath: '/keisy/',
@@ -24,8 +24,8 @@ export default function CasesPage() {
             <p className="mb-5 text-label font-bold uppercase text-surface-dark-faint">Доказательства</p>
             <h1 className="font-display text-display font-extrabold">Кейсы Импульс</h1>
             <p className="mt-7 text-body-lg text-surface-dark-muted">
-              Хаб кейсов готовит release-minimum набор, но не публикует неподтверждённые истории.
-              Каждый кейс должен иметь нишу, период, источник, методику, метрики и permission state.
+              Хаб кейсов готовит набор первого релиза, но не публикует неподтверждённые истории.
+              Каждый кейс должен иметь нишу, период, источник, методику, метрики и разрешение на публикацию.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 px-5">
@@ -47,9 +47,9 @@ export default function CasesPage() {
       <Section className="bg-background">
         <Container>
           <SectionHeader
-            eyebrow="Evidence contract"
-            title="Неполные кейсы остаются hidden"
-            lead="OD-01 ещё открыт, поэтому страница сохраняет слоты первого релиза, но не делает их indexable или публичным доказательством."
+            eyebrow="Требования к кейсам"
+            title="Неполные кейсы остаются скрыты"
+            lead="Пока нет подтверждённых материалов, страница сохраняет будущие темы первого релиза, но не выдаёт их за публичное доказательство."
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {caseItems.map((item) => (
@@ -59,16 +59,16 @@ export default function CasesPage() {
                 <p className="mt-4 text-body-sm text-muted-foreground">{item.hiddenReason}</p>
                 <dl className="mt-6 grid gap-3 text-caption text-muted-foreground">
                   <div>
-                    <dt className="font-bold text-foreground">publicationStatus</dt>
-                    <dd>{item.publicationStatus}</dd>
+                    <dt className="font-bold text-foreground">Статус</dt>
+                    <dd>скрыто до подтверждения</dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-foreground">permissionState</dt>
-                    <dd>{item.permissionState}</dd>
+                    <dt className="font-bold text-foreground">Разрешение</dt>
+                    <dd>требуется перед публикацией</dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-foreground">required</dt>
-                    <dd>source, period, methodology, metrics, publication permission</dd>
+                    <dt className="font-bold text-foreground">Что требуется</dt>
+                    <dd>источник, период, методика, метрики и разрешение на публикацию</dd>
                   </div>
                 </dl>
               </article>

@@ -20,7 +20,7 @@ const routeFileByPath = new Map([
   ...staticRouteSkeletons.map((route) => [route.path, `src/app/${route.path.replace(/^\/|\/$/g, '')}/page.tsx`] as const),
 ])
 
-describe('route skeleton publication guard', () => {
+describe('route skeleton visibility controls', () => {
   it('has a build route file for each agreed static route skeleton', () => {
     for (const [route, file] of routeFileByPath) {
       expect(existsSync(join(process.cwd(), file)), `${route} -> ${file}`).toBe(true)
@@ -37,7 +37,8 @@ describe('route skeleton publication guard', () => {
 
       expect(metadata.robots).toMatchObject({ index: false, follow: true })
       expect(sitemapPaths).not.toContain(route.path)
-      expect(html).toContain('Publication guard')
+      expect(html).toContain('Страница готовится')
+      expect(html).toContain('Публикация')
     }
   })
 

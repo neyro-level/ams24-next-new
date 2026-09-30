@@ -1,5 +1,11 @@
 type ProductId = 'platform' | 'impuls' | 'pixel' | 'zashchita'
 
+import {
+  isPublicationAllowed,
+  validatePublicationGateMatrix,
+  type PublicationGateInput,
+} from '@/core/content/services/publication-gate'
+
 type EvidenceStatus =
   | 'project-verified'
   | 'owner-provided-needs-evidence'
@@ -20,6 +26,16 @@ export type ProductClaim = {
   legalReviewRoute: string
   publicationStatus: PublicationStatus
   risk: ClaimRisk
+}
+
+export function toClaimPublicationGateInput(claim: ProductClaim): PublicationGateInput {
+  return {
+    id: claim.id,
+    entity: 'claim',
+    publicationStatus: claim.publicationStatus,
+    evidenceState: claim.evidenceStatus,
+    evidenceRefs: claim.evidence,
+  }
 }
 
 export const productClaims: ProductClaim[] = [
@@ -146,14 +162,19 @@ export const productClaims: ProductClaim[] = [
   },
 ]
 
-export function getClaimsForProduct(product: ProductId) {
-  return productClaims.filter((claim) => claim.product === product)
+export function getClaimsForProduct(product: ProductId, claims: ProductClaim[] = productClaims) {
+  return claims.filter((claim) => claim.product === product)
 }
 
-export function validateProductClaimRegister() {
-  const issues: string[] = []
+export function getPublicClaimsForProduct(product: ProductId, claims: ProductClaim[] = productClaims) {
+  return getClaimsForProduct(product, claims).filter((claim) => isPublicationAllowed(toClaimPublicationGateInput(claim)))
+}
 
-  for (const claim of productClaims) {
+export function validateProductClaimRegister(claims: ProductClaim[] = productClaims) {
+  const issues: string[] = []
+  issues.push(...validatePublicationGateMatrix(claims.map(toClaimPublicationGateInput)))
+
+  for (const claim of claims) {
     if (claim.evidence.length === 0) {
       issues.push(`${claim.id}: missing evidence`)
     }

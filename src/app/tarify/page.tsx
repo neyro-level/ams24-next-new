@@ -24,8 +24,8 @@ export default function TariffsPage() {
             <p className="mb-5 text-label font-bold uppercase text-surface-dark-faint">Коммерческий контур</p>
             <h1 className="font-display text-display font-extrabold">Тарифы Импульс</h1>
             <p className="mt-7 text-body-lg text-surface-dark-muted">
-              Публичные тарифы не публикуются до решения OD-02. Сейчас страница фиксирует
-              структуру будущих условий: состав, ограничения, допущения и персональный расчёт.
+              Публичные тарифы не публикуются до утверждения коммерческих правил. Сейчас страница
+              фиксирует структуру будущих условий: состав, ограничения, допущения и персональный расчёт.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 px-5">
@@ -47,24 +47,24 @@ export default function TariffsPage() {
       <Section className="bg-background">
         <Container>
           <SectionHeader
-            eyebrow="OD-02"
+            eyebrow="Правила расчёта"
             title="Цена не раскрывается без утверждённых правил"
             lead="Для каждого продукта нужен подтверждённый состав услуги, единица расчёта, ограничения и список того, что считается индивидуально."
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {tariffItems.map((item) => (
               <article className="rounded-card border border-border bg-surface-elevated p-6 shadow-card" key={item.id}>
-                <p className="text-label font-bold uppercase text-primary">Hidden tariff slot</p>
+                <p className="text-label font-bold uppercase text-primary">Готовится</p>
                 <h2 className="mt-5 font-display text-h3 font-bold">{item.title}</h2>
                 <p className="mt-4 text-body-sm text-muted-foreground">{item.hiddenReason}</p>
                 <dl className="mt-6 grid gap-3 text-caption text-muted-foreground">
                   <div>
-                    <dt className="font-bold text-foreground">publicationStatus</dt>
-                    <dd>{item.publicationStatus}</dd>
+                    <dt className="font-bold text-foreground">Статус</dt>
+                    <dd>скрыто до утверждения условий</dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-foreground">blockers</dt>
-                    <dd>{item.blockers.join(', ')}</dd>
+                    <dt className="font-bold text-foreground">Что требуется</dt>
+                    <dd>состав услуги, ограничения и порядок расчёта</dd>
                   </div>
                 </dl>
               </article>

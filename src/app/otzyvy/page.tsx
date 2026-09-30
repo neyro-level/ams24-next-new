@@ -7,7 +7,7 @@ import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
 export const metadata = buildNoindexMetadata({
-  title: 'Отзывы Импульс — permission guard',
+  title: 'Отзывы Импульс — материалы готовятся',
   description:
     'Отзывы Импульс остаются скрыты до подтверждения источника, идентификации или обезличивания и разрешения на публикацию.',
   canonicalPath: '/otzyvy/',
@@ -21,7 +21,7 @@ export default function ReviewsPage() {
       <Section spacing="hero" className="bg-surface-dark text-surface-dark-foreground">
         <Container>
           <div className="max-w-4xl">
-            <p className="mb-5 text-label font-bold uppercase text-surface-dark-faint">Social proof</p>
+            <p className="mb-5 text-label font-bold uppercase text-surface-dark-faint">Отзывы</p>
             <h1 className="font-display text-display font-extrabold">Отзывы Импульс</h1>
             <p className="mt-7 text-body-lg text-surface-dark-muted">
               Отзывы будут опубликованы только после проверки источника, способа идентификации или
@@ -47,9 +47,9 @@ export default function ReviewsPage() {
       <Section className="bg-background">
         <Container>
           <SectionHeader
-            eyebrow="Permission contract"
-            title="Отзывы скрыты до source и permission state"
-            lead="Пока нет источника, статуса идентификации или прозрачного обезличивания и разрешения, отзыв не становится публичным social proof."
+            eyebrow="Требования к отзывам"
+            title="Отзывы скрыты до подтверждения источника"
+            lead="Пока нет источника, прозрачного обезличивания или идентификации и разрешения, отзыв не становится публичным доказательством."
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {reviewItems.map((item) => (
@@ -59,16 +59,16 @@ export default function ReviewsPage() {
                 <p className="mt-4 text-body-sm text-muted-foreground">{item.hiddenReason}</p>
                 <dl className="mt-6 grid gap-3 text-caption text-muted-foreground">
                   <div>
-                    <dt className="font-bold text-foreground">publicationStatus</dt>
-                    <dd>{item.publicationStatus}</dd>
+                    <dt className="font-bold text-foreground">Статус</dt>
+                    <dd>скрыто до подтверждения</dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-foreground">permissionState</dt>
-                    <dd>{item.permissionState}</dd>
+                    <dt className="font-bold text-foreground">Разрешение</dt>
+                    <dd>требуется перед публикацией</dd>
                   </div>
                   <div>
-                    <dt className="font-bold text-foreground">required</dt>
-                    <dd>source, identity or anonymization, publication permission</dd>
+                    <dt className="font-bold text-foreground">Что требуется</dt>
+                    <dd>источник, идентификация или обезличивание и разрешение на публикацию</dd>
                   </div>
                 </dl>
               </article>

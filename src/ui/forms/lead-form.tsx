@@ -12,10 +12,17 @@ type LeadFormProps = {
 const inputBase =
   'mt-2 h-12 w-full rounded-lg border px-3 outline-none focus:border-primary focus:ring-3 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-70'
 
+const productCopy = {
+  site: 'по общей задаче',
+  impuls: 'по запуску Импульса',
+  pixel: 'по проверке Пикселя',
+  zashchita: 'по аудиту защиты',
+} as const
+
 export function LeadForm({
   context,
   title = 'Опишите задачу — подготовим маршрут запуска',
-  description = 'Форма уже фиксирует будущий состав заявки, контекст продукта и юридические цели согласия. Live-отправка отключена до утверждения API и legal-текста.',
+  description = 'Форма показывает будущий состав заявки и цели согласия. Отправка отключена до финального подключения и утверждения юридического текста.',
   surface = 'dark',
 }: LeadFormProps) {
   const availability = getLeadFormAvailability()
@@ -28,6 +35,7 @@ export function LeadForm({
     : `${inputBase} border-border bg-background text-foreground`
   const mutedClass = isDark ? 'text-surface-dark-muted' : 'text-muted-foreground'
   const faintClass = isDark ? 'text-surface-dark-faint' : 'text-muted-foreground'
+  const contextCopy = productCopy[context.product]
 
   return (
     <form
@@ -55,7 +63,7 @@ export function LeadForm({
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         <label className="block text-body-sm">
           <span className={mutedClass}>Имя</span>
-          <input className={inputClass} disabled name="name" placeholder="Заполним после legal/API" type="text" />
+          <input className={inputClass} disabled name="name" placeholder="Заполним после подключения формы" type="text" />
         </label>
         <label className="block text-body-sm">
           <span className={mutedClass}>Контакт</span>
@@ -89,7 +97,7 @@ export function LeadForm({
       </label>
 
       <p className={`mt-4 text-caption ${faintClass}`} id={`${availability.formId}-status`}>
-        Отправка отключена: {availability.disabledReason}. Контекст заявки: {context.product} · {context.ctaId}.
+        Отправка отключена: {availability.disabledReason}. Вы можете заранее подготовить задачу {contextCopy}.
       </p>
 
       <Button

@@ -1,5 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
-import { getClaimsForProduct } from '@/core/content/services/product-claims'
+import { getPublicClaimsForProduct } from '@/core/content/services/product-claims'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
@@ -21,7 +21,7 @@ const launchSteps = [
   },
   {
     title: 'Проверка применимости',
-    text: 'Отделяем подтверждённые вводные от гипотез и отмечаем формулировки, которые требуют legal review.',
+    text: 'Отделяем подтверждённые вводные от гипотез и заранее согласуем чувствительные формулировки.',
   },
   {
     title: 'Расчёт запуска',
@@ -38,20 +38,19 @@ const faqs = [
   {
     question: 'Почему нет точной цены на этой странице?',
     answer:
-      'Коммерческие правила и тарифы проходят отдельное подтверждение. До OD-02 страница ведёт к персональному расчёту, а не публикует ложную точность.',
+      'Коммерческие правила и тарифы проходят отдельное подтверждение. До этого страница ведёт к персональному расчёту, а не публикует ложную точность.',
   },
   {
     question: 'Что с юридическими формулировками?',
     answer:
-      'Чувствительные формулировки про данные, согласия и операторские аудитории отмечены в claim register и проходят маршрут legal-review:OD-03.',
+      'Чувствительные формулировки про данные, согласия и аудитории проходят отдельное согласование перед публикацией.',
   },
 ] as const
 
 export default function ImpulsProductPage() {
   const repository = getContentRepository()
   const product = repository.assertProductRef('impuls')
-  const allowedClaims = getClaimsForProduct('impuls').filter((claim) => claim.publicationStatus === 'allowed')
-  const reviewClaims = getClaimsForProduct('impuls').filter((claim) => claim.publicationStatus === 'needs-review')
+  const allowedClaims = getPublicClaimsForProduct('impuls')
 
   return (
     <main>
@@ -92,11 +91,11 @@ export default function ImpulsProductPage() {
               <p className="mt-4 text-body-sm text-surface-dark-muted">{product.promise}</p>
               <dl className="mt-6 space-y-4 text-body-sm">
                 <div>
-                  <dt className="text-surface-dark-faint">Primary intent</dt>
+                  <dt className="text-surface-dark-faint">Основная задача</dt>
                   <dd className="mt-1">получить лиды через целевые аудитории</dd>
                 </div>
                 <div>
-                  <dt className="text-surface-dark-faint">CTA</dt>
+                  <dt className="text-surface-dark-faint">Следующий шаг</dt>
                   <dd className="mt-1">{product.primaryCta.label}</dd>
                 </div>
               </dl>
@@ -158,19 +157,13 @@ export default function ImpulsProductPage() {
               </ul>
             </div>
             <div id="limits" className="rounded-large border border-border bg-surface p-6">
-              <p className="text-label font-bold uppercase text-primary">Claim guard</p>
-              <h2 className="mt-5 font-display text-h2 font-extrabold">Ограничения видны до CTA</h2>
+              <p className="text-label font-bold uppercase text-primary">Ограничения</p>
+              <h2 className="mt-5 font-display text-h2 font-extrabold">Что можно обещать до расчёта</h2>
               <div className="mt-6 space-y-4">
                 {allowedClaims.map((claim) => (
                   <div className="rounded-card bg-surface-elevated p-4" key={claim.id}>
                     <p className="text-body-sm font-semibold">{claim.claim}</p>
-                    <p className="mt-2 text-caption text-muted-foreground">{claim.legalReviewRoute}</p>
-                  </div>
-                ))}
-                {reviewClaims.map((claim) => (
-                  <div className="rounded-card border border-dashed border-border bg-surface-muted p-4" key={claim.id}>
-                    <p className="text-body-sm font-semibold">Требует проверки перед публикацией</p>
-                    <p className="mt-2 text-caption text-muted-foreground">{claim.legalReviewRoute}</p>
+                    <p className="mt-2 text-caption text-muted-foreground">Проверено по утверждённым материалам проекта.</p>
                   </div>
                 ))}
               </div>
@@ -204,14 +197,14 @@ export default function ImpulsProductPage() {
               <p className="text-label font-bold uppercase text-surface-dark-faint">Следующий шаг</p>
               <h2 className="mt-5 font-display text-h2 font-extrabold">Рассчитать запуск Импульса</h2>
               <p className="mt-5 text-body-lg text-surface-dark-muted">
-                Подготовьте нишу, регион и ограничения. Live-форма будет подключена в EPIC-08 через
-                `/api/leads`, а сейчас страница фиксирует продуктовый CTA и контекст заявки.
+                Подготовьте нишу, регион и ограничения. Сейчас форма не отправляет персональные
+                данные и помогает заранее собрать контекст задачи.
               </p>
             </div>
             <LeadForm
               context={{ product: 'impuls', route: '/impuls/', ctaId: 'calculate-launch' }}
               title="Рассчитать запуск Импульса"
-              description="Форма сохраняет контекст продукта и будущего обращения, но не отправляет персональные данные до утверждения API и consent-текста."
+              description="Форма сохраняет контекст продукта и будущего обращения, но не отправляет персональные данные до финального согласования."
             />
           </div>
         </Container>

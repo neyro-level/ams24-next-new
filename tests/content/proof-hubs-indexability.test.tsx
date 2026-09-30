@@ -74,7 +74,7 @@ describe('proof hubs indexability guard', () => {
 
       for (const item of inventoryItems) {
         expect(hub.html).toContain(item.title)
-        expect(hub.html).toContain('hidden')
+        expect(hub.html).toContain('скрыто')
       }
 
       for (const expectedLink of hub.expectedLinks) {
