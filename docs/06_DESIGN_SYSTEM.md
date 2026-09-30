@@ -37,10 +37,12 @@ Token source: src/app/globals.css
 Fixture: src/ui/foundation/token-fixture.tsx
 Primitive foundation: components.json + src/ui/primitives/button.tsx
 Representative page: /
-Design Intake completed: YES
+Design Intake completed: FOUNDATION ONLY
 ```
 
-Design intake closed after the representative homepage was implemented and verified as the reusable composition baseline for the next pages.
+Design intake closed for the representative foundation only. Full semantic
+heading, accessibility, performance and UI drift proof remains open in the
+approved remediation graph.
 
 ### 2.1 Intake Evidence
 
@@ -49,11 +51,11 @@ Scope: `EPIC-02.4`
 
 | Check | Status | Evidence |
 |---|---|---|
-| No P0/P1 design drift | PASS | Homepage uses AMS Northline tokens, dark hero/light/soft/dark CTA rhythm, one restrained primary accent, no black/neon/gradient drift. Machine check: `tests/content/homepage.test.tsx` rejects known drift markers. |
-| Keyboard and semantic access | PASS | Primary actions are real anchors/buttons; product route map has `aria-label`; LeadForm shell has associated labels and disabled state until EPIC-08 live integration. |
-| Mobile composition | PASS | Representative page uses responsive grid contracts (`sm:` and `lg:` breakpoints) for hero, product routes, proof previews and final form shell. |
-| Production-like budget | PASS | `corepack pnpm verify` runs `next build` with `output: 'export'`; current static export emits 21 pages, and artifact guard scans 135 text files successfully. |
-| Scaling decision | PASS | Page patterns are approved for reuse; scaling may continue through EPIC-04/05 while keeping claims/evidence gated by content tasks. |
+| No P0/P1 design drift | FOUNDATION PASS / FINAL OPEN | Homepage uses AMS Northline tokens and local tests rejected known foundation drift markers. Full site UI drift is still owned by `CR-19.*`. |
+| Keyboard and semantic access | PARTIAL / FINAL OPEN | Primary actions and form shell have baseline semantics, but `CR-00.1` confirms `SectionHeader` heading-level drift; full accessibility proof is owned by `CR-05.*` and `CR-18.*`. |
+| Mobile composition | FOUNDATION PASS / FINAL OPEN | Representative page uses responsive grid contracts. Full responsive route proof remains in browser/integrated proof tasks. |
+| Production-like budget | HISTORICAL / REVALIDATE | Historical v4 `pnpm verify` evidence exists, but remediation changed the compliance target; release proof must be rerun after `CR-15.*` and `CR-18.*`. |
+| Scaling decision | ALLOWED WITH GUARDS | Page patterns may scale only through the approved remediation graph and claim/evidence gates. |
 
 ## 3. Visual Character
 
@@ -325,6 +327,6 @@ None. Any exception requires owner decision and a dated entry here.
 - [x] Manrope Cyrillic/license/weights are verified;
 - [x] token fixture compiles;
 - [x] shadcn fixture compiles;
-- [ ] responsive homepage is implemented;
+- [x] representative responsive homepage foundation is implemented;
 - [ ] accessibility and performance baseline are measured;
 - [ ] UI drift audit has no P0/P1 foundation findings.
