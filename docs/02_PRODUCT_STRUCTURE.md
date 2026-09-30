@@ -133,6 +133,12 @@ route entrypoints own composition, while `LeadForm`, legal templates, shell
 templates, shared layout primitives and content services remain read-only
 boundaries unless their owning epic explicitly changes them.
 
+Shared component reuse evidence is fixed in
+`docs/research/SHARED_COMPONENT_REUSE_INVENTORY_CR_10_3.md`. The current product
+routes may use local semantic section functions, but they must not introduce a
+generic page builder, product builder or section registry without a new
+architecture decision.
+
 ## 7. Главная `/`
 
 ### Page brief
