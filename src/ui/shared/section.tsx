@@ -23,6 +23,7 @@ type SectionHeaderProps = ComponentProps<'div'> & {
   lead?: string
   level?: 1 | 2 | 3 | 4 | 5 | 6
   visualRole?: 'h1' | 'h2' | 'h3'
+  tone?: 'light' | 'dark'
 }
 
 const titleClass = {
@@ -38,15 +39,20 @@ export function SectionHeader({
   lead,
   level = 2,
   visualRole = 'h2',
+  tone = 'light',
   ...props
 }: SectionHeaderProps) {
   const Heading = `h${level}` as const
+  const isDark = tone === 'dark'
+  const eyebrowClass = `mb-4 text-label font-bold uppercase ${isDark ? 'text-surface-dark-faint' : 'text-primary'}`
+  const headingClass = `${titleClass[visualRole]}${isDark ? ' text-surface-dark-foreground' : ''}`
+  const leadClass = `mt-5 text-body-lg ${isDark ? 'text-surface-dark-muted' : 'text-muted-foreground'}`
 
   return (
     <div className={cn('max-w-3xl', className)} {...props}>
-      {eyebrow ? <p className="mb-4 text-label font-bold uppercase text-primary">{eyebrow}</p> : null}
-      <Heading className={titleClass[visualRole]}>{title}</Heading>
-      {lead ? <p className="mt-5 text-body-lg text-muted-foreground">{lead}</p> : null}
+      {eyebrow ? <p className={eyebrowClass}>{eyebrow}</p> : null}
+      <Heading className={headingClass}>{title}</Heading>
+      {lead ? <p className={leadClass}>{lead}</p> : null}
     </div>
   )
 }
