@@ -52,7 +52,7 @@ rg -n 'ContentRepository|@/project|src/project|local-adapter|buildSitemapPaths' 
 | Live lead submission is enabled. | FALSE / DRIFT | `src/project/lead-contract.ts` sets `submissionEnabled: false` and records approval blockers. |
 | Design System completion claims are fully proven by current accessibility/performance/browser evidence. | UNKNOWN / BLOCKED | `docs/06_DESIGN_SYSTEM.md` records foundation-level PASS evidence, while `docs/05_RELEASE_CHECKLIST.md` still has unchecked accessibility, performance, release and live-proof items. |
 | Production release is authorized. | FALSE / DRIFT | `docs/05_RELEASE_CHECKLIST.md` states release requires explicit owner command and lists production-only blockers; the approved plan also says production is outside authorization. |
-| SourceCraft API is currently usable for PR/gate/merge automation. | UNKNOWN / BLOCKED | Git push to a feature branch succeeded, but SourceCraft REST helper returned HTTP 401 during `TestAccess`; delivery tasks may need credential repair before PR/gate/merge. |
+| SourceCraft API is currently usable for PR/gate/merge automation. | PASS | SourceCraft REST credential routing was repaired in global skills at `020e6095767ae2ecd7492d90afadff779efc022c`; `TestAccess` passes for `integrator-p/ams24-next-new` without browser fallback. |
 
 ## Result
 

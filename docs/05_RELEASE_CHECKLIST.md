@@ -20,7 +20,7 @@ Current repository state:
 - static export configuration and pinned package versions are proven;
 - app-level sitemap/robots files and exported `out/sitemap.xml` / `out/robots.txt` are not present in the current worktree;
 - content-boundary, heading, public-copy and lead-endpoint drift is recorded in CR-00.1;
-- SourceCraft Git push works, but REST automation returned HTTP 401 and may block PR/gate/merge until credentials are repaired;
+- SourceCraft Git push and REST automation work after the Secret Master token-precedence repair in global skills;
 - release readiness must be re-proven by the remediation graph before any production command.
 
 Production-only blockers:
@@ -33,8 +33,8 @@ Production-only blockers:
 - complete current `ams24.ru` redirect inventory not approved;
 - Nginx/security headers, live smoke and rollback rehearsal not performed.
 
-This means the repository is approved for remediation work, not for public
-production release.
+This means the repository is approved for remediation work, but public
+production release is still blocked.
 
 ## 1. Release Identity
 

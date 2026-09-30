@@ -361,7 +361,7 @@ Approval checkpoint: local commit `514b731814836d38b2f4aba3e46b004f94dacac6`; re
 Package/lockfile: pinned and verified by baseline classification
 Current baseline evidence: `docs/research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`
 Known drift: heading semantics, content boundary, SEO app artifacts, public internal vocabulary and lead endpoint
-SourceCraft REST automation: blocked by HTTP 401 during TestAccess; Git push works
+SourceCraft REST automation: repaired via global skills Secret Master token-precedence fix; TestAccess passes
 Durable artifact store: unresolved; blocks production release
 Production identity: candidate AMS Main Server contour documented read-only; owner confirmation required before release
 Local database: not needed

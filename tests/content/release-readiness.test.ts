@@ -20,11 +20,11 @@ describe('release readiness guard', () => {
   it('keeps release checklist explicit about repository-ready versus production-only blockers', () => {
     const checklist = readFileSync(join(process.cwd(), 'docs/05_RELEASE_CHECKLIST.md'), 'utf8')
 
-    expect(checklist).toContain('## 0. EPIC-09 readiness snapshot')
-    expect(checklist).toContain('docs/research/RELEASE_READINESS_EPIC_09.md')
-    expect(checklist).toContain('Repository-ready')
+    expect(checklist).toContain('## 0. Current Readiness Snapshot')
+    expect(checklist).toContain('docs/research/BASELINE_CLAIMS_REGISTER_CR_00_1.md')
+    expect(checklist).toContain('approved for remediation work')
     expect(checklist).toContain('Production-only blockers')
-    expect(checklist).toContain('public production release is still blocked')
+    expect(checklist).toContain('production release is still blocked')
     expect(checklist).toContain('no explicit owner production command')
     expect(checklist).toContain('live AMS Leads API endpoint/schema not approved')
   })
