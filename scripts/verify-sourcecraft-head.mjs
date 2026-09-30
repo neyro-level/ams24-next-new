@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
 
 const fullShaPattern = /^[a-f0-9]{40}$/
@@ -13,6 +13,10 @@ function readGitDirectory() {
 
   if (!existsSync(dotGitPath)) {
     throw new Error('.git is missing')
+  }
+
+  if (statSync(dotGitPath).isDirectory()) {
+    return dotGitPath
   }
 
   const dotGitContent = readFileSync(dotGitPath, 'utf8').trim()
@@ -37,13 +41,17 @@ function readGitHeadSha() {
   }
 
   const refName = head.slice('ref: '.length).trim()
-  const refPath = path.join(gitDirectory, refName)
+  const commonDirectoryPath = path.join(gitDirectory, 'commondir')
+  const commonDirectory = existsSync(commonDirectoryPath)
+    ? path.resolve(gitDirectory, readFileSync(commonDirectoryPath, 'utf8').trim())
+    : gitDirectory
+  const refPath = path.join(commonDirectory, refName)
 
   if (existsSync(refPath)) {
     return readFileSync(refPath, 'utf8').trim()
   }
 
-  const packedRefsPath = path.join(gitDirectory, 'packed-refs')
+  const packedRefsPath = path.join(commonDirectory, 'packed-refs')
   if (existsSync(packedRefsPath)) {
     const packedRef = readFileSync(packedRefsPath, 'utf8')
       .split(/\r?\n/)
