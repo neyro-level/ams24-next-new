@@ -401,6 +401,10 @@ Typed events include at minimum:
 - form validation failure without field value;
 - form submit success/failure without PII.
 
+Analytics events accept only safe route/product/context identifiers and legal targets.
+Raw lead fields, wrapped form payloads, contact values, consent payloads and
+idempotency keys are rejected by contract tests.
+
 Reusable UI emits semantic callbacks/events and does not own provider-specific business dispatch.
 
 ## 13. Security

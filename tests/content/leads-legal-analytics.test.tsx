@@ -161,7 +161,7 @@ describe('lead form, legal guard and analytics hardening', () => {
         product: 'impuls',
         route: '/impuls/',
         email: 'person@example.com',
-      } as never),
+      }),
     ).toThrow(/Unrecognized key|PII-like key/)
   })
 })
