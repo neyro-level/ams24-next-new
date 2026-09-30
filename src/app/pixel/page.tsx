@@ -1,5 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
-import { getClaimsForProduct } from '@/core/content/services/product-claims'
+import { getClaimsForProduct, getPublicClaimsForProduct } from '@/core/content/services/product-claims'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
@@ -22,7 +22,7 @@ const boundaries = [
 export default function PixelProductPage() {
   const repository = getContentRepository()
   const product = repository.assertProductRef('pixel')
-  const allowedClaims = getClaimsForProduct('pixel').filter((claim) => claim.publicationStatus === 'allowed')
+  const allowedClaims = getPublicClaimsForProduct('pixel')
   const reviewClaims = getClaimsForProduct('pixel').filter((claim) => claim.publicationStatus === 'needs-review')
 
   return (

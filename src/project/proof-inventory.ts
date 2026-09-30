@@ -1,4 +1,9 @@
 import type { ProductDTO } from '@/core/content/schemas'
+import {
+  isPublicationAllowed,
+  validatePublicationGateMatrix,
+  type PublicationGateInput,
+} from '@/core/content/services/publication-gate'
 
 type ProductId = ProductDTO['id']
 
@@ -25,6 +30,18 @@ export type ProofInventoryItem = {
   blockers: string[]
   publicationStatus: ProofPublicationStatus
   hiddenReason?: string
+}
+
+export function toProofPublicationGateInput(item: ProofInventoryItem): PublicationGateInput {
+  return {
+    id: item.id,
+    entity: 'proof',
+    publicationStatus: item.publicationStatus,
+    evidenceState: item.evidenceState,
+    evidenceRefs: item.evidenceRefs,
+    permissionState: item.permissionState,
+    blockers: item.blockers,
+  }
 }
 
 export const proofEvidenceInventory: ProofInventoryItem[] = [
@@ -169,6 +186,7 @@ export const proofEvidenceInventory: ProofInventoryItem[] = [
 export function validateProofEvidenceInventory(items: ProofInventoryItem[] = proofEvidenceInventory) {
   const issues: string[] = []
   const ids = new Set<string>()
+  issues.push(...validatePublicationGateMatrix(items.map(toProofPublicationGateInput)))
 
   for (const item of items) {
     if (ids.has(item.id)) {
@@ -208,4 +226,8 @@ export function validateProofEvidenceInventory(items: ProofInventoryItem[] = pro
   }
 
   return issues
+}
+
+export function getPublicProofEvidence(items: ProofInventoryItem[] = proofEvidenceInventory) {
+  return items.filter((item) => isPublicationAllowed(toProofPublicationGateInput(item)))
 }

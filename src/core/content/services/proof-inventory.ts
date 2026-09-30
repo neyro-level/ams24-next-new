@@ -1,5 +1,7 @@
 export {
+  getPublicProofEvidence,
   proofEvidenceInventory,
+  toProofPublicationGateInput,
   validateProofEvidenceInventory,
   type EvidenceState,
   type PermissionState,

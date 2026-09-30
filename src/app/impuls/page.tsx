@@ -1,5 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
-import { getClaimsForProduct } from '@/core/content/services/product-claims'
+import { getClaimsForProduct, getPublicClaimsForProduct } from '@/core/content/services/product-claims'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
@@ -50,7 +50,7 @@ const faqs = [
 export default function ImpulsProductPage() {
   const repository = getContentRepository()
   const product = repository.assertProductRef('impuls')
-  const allowedClaims = getClaimsForProduct('impuls').filter((claim) => claim.publicationStatus === 'allowed')
+  const allowedClaims = getPublicClaimsForProduct('impuls')
   const reviewClaims = getClaimsForProduct('impuls').filter((claim) => claim.publicationStatus === 'needs-review')
 
   return (

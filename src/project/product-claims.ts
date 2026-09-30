@@ -1,5 +1,11 @@
 type ProductId = 'platform' | 'impuls' | 'pixel' | 'zashchita'
 
+import {
+  isPublicationAllowed,
+  validatePublicationGateMatrix,
+  type PublicationGateInput,
+} from '@/core/content/services/publication-gate'
+
 type EvidenceStatus =
   | 'project-verified'
   | 'owner-provided-needs-evidence'
@@ -20,6 +26,16 @@ export type ProductClaim = {
   legalReviewRoute: string
   publicationStatus: PublicationStatus
   risk: ClaimRisk
+}
+
+export function toClaimPublicationGateInput(claim: ProductClaim): PublicationGateInput {
+  return {
+    id: claim.id,
+    entity: 'claim',
+    publicationStatus: claim.publicationStatus,
+    evidenceState: claim.evidenceStatus,
+    evidenceRefs: claim.evidence,
+  }
 }
 
 export const productClaims: ProductClaim[] = [
@@ -150,8 +166,13 @@ export function getClaimsForProduct(product: ProductId) {
   return productClaims.filter((claim) => claim.product === product)
 }
 
+export function getPublicClaimsForProduct(product: ProductId) {
+  return getClaimsForProduct(product).filter((claim) => isPublicationAllowed(toClaimPublicationGateInput(claim)))
+}
+
 export function validateProductClaimRegister() {
   const issues: string[] = []
+  issues.push(...validatePublicationGateMatrix(productClaims.map(toClaimPublicationGateInput)))
 
   for (const claim of productClaims) {
     if (claim.evidence.length === 0) {
