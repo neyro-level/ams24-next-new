@@ -114,8 +114,12 @@ function analyzeSourcecraftCi(source, contract) {
       errors.push(`${workflow} must compare SOURCECRAFT_COMMIT_SHA to expected_commit_sha`)
     }
 
-    if (!/test "\$\(git rev-parse HEAD\)" = "\$\{\{ inputs\.expected_commit_sha \}\}"/.test(block)) {
-      errors.push(`${workflow} must compare checked-out Git HEAD to expected_commit_sha`)
+    if (!/EXPECTED_COMMIT_SHA="\$\{\{ inputs\.expected_commit_sha \}\}"/.test(block)) {
+      errors.push(`${workflow} must export expected_commit_sha for the exact-head guard`)
+    }
+
+    if (!/node scripts\/verify-sourcecraft-head\.mjs/.test(block)) {
+      errors.push(`${workflow} must compare checked-out Git HEAD to expected_commit_sha without requiring git in the container`)
     }
 
     if (!block.includes(`image: docker.io/library/node:${contract.nodeVersion}-alpine`)) {
@@ -153,7 +157,9 @@ function buildValidFixture(contract) {
               - |
                 test "$SOURCECRAFT_EVENT" = "manual"
                 test "$SOURCECRAFT_COMMIT_SHA" = "\${{ inputs.expected_commit_sha }}"
-                test "$(git rev-parse HEAD)" = "\${{ inputs.expected_commit_sha }}"
+                EXPECTED_COMMIT_SHA="\${{ inputs.expected_commit_sha }}"
+                export EXPECTED_COMMIT_SHA
+                node scripts/verify-sourcecraft-head.mjs
                 corepack prepare ${contract.packageManager} --activate
                 node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
@@ -172,7 +178,9 @@ function buildValidFixture(contract) {
               - |
                 test "$SOURCECRAFT_EVENT" = "manual"
                 test "$SOURCECRAFT_COMMIT_SHA" = "\${{ inputs.expected_commit_sha }}"
-                test "$(git rev-parse HEAD)" = "\${{ inputs.expected_commit_sha }}"
+                EXPECTED_COMMIT_SHA="\${{ inputs.expected_commit_sha }}"
+                export EXPECTED_COMMIT_SHA
+                node scripts/verify-sourcecraft-head.mjs
                 corepack prepare ${contract.packageManager} --activate
                 node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
@@ -187,7 +195,7 @@ async function runSelfTest() {
     ['automatic trigger', `on:\n  push:\n${valid}`, 2],
     ['floating node image', valid.replaceAll(`node:${contract.nodeVersion}-alpine`, 'node:24-alpine'), 2],
     ['missing frozen install', valid.replaceAll('corepack pnpm install --frozen-lockfile', 'corepack pnpm install'), 2],
-    ['missing git head check', valid.replaceAll('test "$(git rev-parse HEAD)" = "${{ inputs.expected_commit_sha }}"', ''), 2],
+    ['missing exact-head script', valid.replaceAll('node scripts/verify-sourcecraft-head.mjs', ''), 2],
     [
       'wrong package manager activation',
       valid.replaceAll(`corepack prepare ${contract.packageManager} --activate`, `corepack prepare pnpm@${Number(contract.pnpmVersion.split('.')[0]) - 1}.0.0 --activate`),

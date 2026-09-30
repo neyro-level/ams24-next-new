@@ -26,7 +26,9 @@ workflows:
                 set -eu
                 test "$SOURCECRAFT_EVENT" = "manual"
                 test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
-                test "$(git rev-parse HEAD)" = "${{ inputs.expected_commit_sha }}"
+                EXPECTED_COMMIT_SHA="${{ inputs.expected_commit_sha }}"
+                export EXPECTED_COMMIT_SHA
+                node scripts/verify-sourcecraft-head.mjs
                 corepack enable
                 corepack prepare pnpm@12.8.1 --activate
                 node scripts/verify-runtime-versions.mjs
@@ -59,7 +61,9 @@ workflows:
                 set -eu
                 test "$SOURCECRAFT_EVENT" = "manual"
                 test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
-                test "$(git rev-parse HEAD)" = "${{ inputs.expected_commit_sha }}"
+                EXPECTED_COMMIT_SHA="${{ inputs.expected_commit_sha }}"
+                export EXPECTED_COMMIT_SHA
+                node scripts/verify-sourcecraft-head.mjs
                 test -n "${{ inputs.risk_reason }}"
                 corepack enable
                 corepack prepare pnpm@12.8.1 --activate
