@@ -118,7 +118,7 @@ production release is still blocked.
 
 ## 9. Deployment
 
-- [ ] Nginx config validates.
+- [ ] `ops/nginx/ams24-site.conf.template` validates through `pnpm verify:nginx`.
 - [ ] Security headers/CSP validated against exact artifact.
 - [ ] `/api/leads` proxy target is correct without exposing credentials.
 - [ ] Release directory uploaded before symlink switch.

@@ -19,6 +19,8 @@ const requiredDailyVerifySteps = [
   'pnpm test:content',
   'pnpm verify:sourcecraft:self-test',
   'pnpm verify:sourcecraft',
+  'pnpm verify:nginx:self-test',
+  'pnpm verify:nginx',
   'pnpm guard:static:self-test',
   'pnpm guard:static',
 ] as const
@@ -57,7 +59,7 @@ describe('daily verification command trace', () => {
     const verify = packageJson.scripts.verify
     const chainedStepCount = verify.split(' && ').length
 
-    expect(chainedStepCount).toBe(10)
+    expect(chainedStepCount).toBe(12)
     expect(verify).not.toMatch(/(?:^|[^&]);/)
     expect(verify).not.toContain(' & ')
   })
