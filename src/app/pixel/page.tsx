@@ -1,23 +1,11 @@
-import type { Metadata } from 'next'
-
 import { getContentRepository } from '@/core/content/services/repository'
 import { getClaimsForProduct } from '@/core/content/services/product-claims'
+import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
-  title: 'Импульс Пиксель — идентификация посетителей сайта',
-  description:
-    'Продукт Импульс Пиксель помогает проверить применимость определения заинтересованных посетителей собственного сайта.',
-  alternates: {
-    canonical: '/pixel/',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+export const metadata = buildMetadata(getContentRepository().assertProductRef('pixel').seo)
 
 const requirements = [
   'сайт получает собственный релевантный трафик',

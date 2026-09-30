@@ -1,5 +1,5 @@
-import type { Metadata } from 'next'
 import type { NavigationLink } from '@/project/navigation'
+import { buildNoindexMetadata } from '@/core/seo'
 
 export type DetailFixture = {
   type: 'case' | 'article' | 'knowledge'
@@ -77,16 +77,10 @@ export function getDetailFixture(type: DetailFixture['type'], slug: string, prod
   return item
 }
 
-export function buildDetailFixtureMetadata(fixture: DetailFixture): Metadata {
-  return {
+export function buildDetailFixtureMetadata(fixture: DetailFixture) {
+  return buildNoindexMetadata({
     title: `${fixture.title} — skeleton`,
     description: fixture.summary,
-    alternates: {
-      canonical: fixture.path,
-    },
-    robots: {
-      index: false,
-      follow: true,
-    },
-  }
+    canonicalPath: fixture.path,
+  })
 }

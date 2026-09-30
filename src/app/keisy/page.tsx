@@ -1,23 +1,17 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { proofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
+export const metadata = buildNoindexMetadata({
   title: 'Кейсы Импульс — evidence guard',
   description:
     'Кейсы Импульс остаются скрыты до подтверждения ниши, периода, методики, метрик и разрешения на публикацию.',
-  alternates: {
-    canonical: '/keisy/',
-  },
-  robots: {
-    index: false,
-    follow: true,
-  },
-}
+  canonicalPath: '/keisy/',
+})
 
 const caseItems = proofEvidenceInventory.filter((item) => item.kind === 'case')
 

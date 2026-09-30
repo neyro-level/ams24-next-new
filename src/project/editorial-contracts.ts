@@ -1,6 +1,5 @@
-import type { Metadata } from 'next'
-
 import type { NavigationLink } from '@/project/navigation'
+import { buildNoindexMetadata } from '@/core/seo'
 
 type SourceLedgerItem = {
   url: string
@@ -120,24 +119,18 @@ export const representativeKnowledgeContract: KnowledgeEditorialContract = {
   ],
 }
 
-export function buildArticleEditorialMetadata(contract: ArticleEditorialContract): Metadata {
-  return {
+export function buildArticleEditorialMetadata(contract: ArticleEditorialContract) {
+  return buildNoindexMetadata({
     title: `${contract.h1} — статья`,
     description: contract.jtbd,
-    robots: {
-      index: false,
-      follow: true,
-    },
-  }
+    canonicalPath: `/stati/${contract.slug}/`,
+  }, { type: 'article' })
 }
 
-export function buildKnowledgeEditorialMetadata(contract: KnowledgeEditorialContract): Metadata {
-  return {
+export function buildKnowledgeEditorialMetadata(contract: KnowledgeEditorialContract) {
+  return buildNoindexMetadata({
     title: `${contract.h1} — база знаний`,
     description: contract.expectedOutcome,
-    robots: {
-      index: false,
-      follow: true,
-    },
-  }
+    canonicalPath: `/baza-znaniy/${contract.product}/${contract.slug}/`,
+  }, { type: 'article' })
 }

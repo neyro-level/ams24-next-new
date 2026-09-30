@@ -1,5 +1,4 @@
-import type { Metadata } from 'next'
-
+import { buildNoindexMetadata } from '@/core/seo'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
@@ -40,20 +39,14 @@ const legalPages = {
   }
 >
 
-export function buildLegalMetadata(kind: LegalPageKind): Metadata {
+export function buildLegalMetadata(kind: LegalPageKind) {
   const page = legalPages[kind]
 
-  return {
+  return buildNoindexMetadata({
     title: `${page.title} — черновая страница`,
     description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию. До legal review она не индексируется.`,
-    alternates: {
-      canonical: page.path,
-    },
-    robots: {
-      index: false,
-      follow: true,
-    },
-  }
+    canonicalPath: page.path,
+  })
 }
 
 export function LegalPage({ kind }: { kind: LegalPageKind }) {

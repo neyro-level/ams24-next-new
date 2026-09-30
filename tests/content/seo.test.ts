@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest'
 
 import { createContentRepository } from '@/core/content/repository'
 import { buildMetadata, buildSitemapPaths, buildStaticParams, validateRedirects } from '@/core/seo'
+import robots from '@/app/robots'
+import sitemap from '@/app/sitemap'
 import { localContent } from '@/project/content/local-content'
 import { redirects } from '@/project/redirects'
 
@@ -40,6 +42,24 @@ describe('SEO, routes and redirects', () => {
     })
 
     expect(buildSitemapPaths(repository)).toEqual(['/', '/impuls/', '/pixel/', '/zashchita/'])
+  })
+
+  it('generates app sitemap and robots from repository-owned SEO facts', () => {
+    expect(sitemap()).toEqual([
+      { url: 'https://ams24.ru/' },
+      { url: 'https://ams24.ru/impuls/' },
+      { url: 'https://ams24.ru/pixel/' },
+      { url: 'https://ams24.ru/zashchita/' },
+    ])
+
+    expect(robots()).toEqual({
+      rules: {
+        userAgent: '*',
+        allow: '/',
+      },
+      sitemap: 'https://ams24.ru/sitemap.xml',
+      host: 'https://ams24.ru',
+    })
   })
 
   it('builds static params from canonical paths', () => {

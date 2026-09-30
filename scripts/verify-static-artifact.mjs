@@ -2,6 +2,49 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
 const artifactDir = join(process.cwd(), 'out')
+const sitemapPath = join(artifactDir, 'sitemap.xml')
+const robotsPath = join(artifactDir, 'robots.txt')
+const expectedSitemapUrls = [
+  'https://ams24.ru/',
+  'https://ams24.ru/impuls/',
+  'https://ams24.ru/pixel/',
+  'https://ams24.ru/zashchita/',
+]
+const expectedIndexableHtml = [
+  { path: '/', url: 'https://ams24.ru/', h1: 'Импульс' },
+  {
+    path: '/impuls/',
+    url: 'https://ams24.ru/impuls/',
+    h1: 'Импульс — лидогенерация для бизнеса',
+  },
+  {
+    path: '/pixel/',
+    url: 'https://ams24.ru/pixel/',
+    h1: 'Импульс Пиксель — определить заинтересованных посетителей сайта',
+  },
+  {
+    path: '/zashchita/',
+    url: 'https://ams24.ru/zashchita/',
+    h1: 'Импульс Защита — аудит риска перехвата лидов',
+  },
+]
+const expectedNoindexHtml = [
+  '/tarify/',
+  '/raschety/',
+  '/keisy/',
+  '/keisy/medical-case/',
+  '/otzyvy/',
+  '/kontakty/',
+  '/politika/',
+  '/soglasie/',
+  '/obrabotka-dannyh/',
+  '/stati/',
+  '/stati/kak-vybrat-produkt/',
+  '/baza-znaniy/',
+  '/baza-znaniy/impuls/kak-podgotovit-raschet/',
+  '/o-kompanii/',
+  '/rekvizity/',
+]
 
 const forbiddenPatterns = [
   /SOURCECRAFT_PAT\s*=/i,
@@ -58,6 +101,28 @@ if (!existsSync(artifactDir)) {
 const textFiles = walk(artifactDir).filter((file) => textExtensions.has(extensionOf(file)))
 const findings = []
 
+if (!existsSync(sitemapPath)) {
+  findings.push('out/sitemap.xml is required for static SEO artifact proof')
+}
+
+function htmlPathFor(routePath) {
+  if (routePath === '/') {
+    return join(artifactDir, 'index.html')
+  }
+
+  return join(artifactDir, ...routePath.split('/').filter(Boolean), 'index.html')
+}
+
+function requireHtmlContains(filePath, html, expected) {
+  if (!html.includes(expected)) {
+    findings.push(`${filePath} is missing expected HTML fragment: ${expected}`)
+  }
+}
+
+if (!existsSync(robotsPath)) {
+  findings.push('out/robots.txt is required for static SEO artifact proof')
+}
+
 for (const file of textFiles) {
   const content = readFileSync(file, 'utf8')
 
@@ -66,6 +131,69 @@ for (const file of textFiles) {
       findings.push(`${file}: ${pattern}`)
     }
   }
+}
+
+if (existsSync(sitemapPath)) {
+  const sitemap = readFileSync(sitemapPath, 'utf8')
+
+  for (const url of expectedSitemapUrls) {
+    if (!sitemap.includes(`<loc>${url}</loc>`)) {
+      findings.push(`out/sitemap.xml is missing expected indexable URL ${url}`)
+    }
+  }
+
+  for (const routePath of expectedNoindexHtml) {
+    const url = new URL(routePath, 'https://ams24.ru').toString()
+
+    if (sitemap.includes(`<loc>${url}</loc>`)) {
+      findings.push(`out/sitemap.xml must not include noindex or unfinished URL ${url}`)
+    }
+  }
+}
+
+if (existsSync(robotsPath)) {
+  const robots = readFileSync(robotsPath, 'utf8')
+
+  for (const line of ['User-Agent: *', 'Allow: /', 'Sitemap: https://ams24.ru/sitemap.xml', 'Host: https://ams24.ru']) {
+    if (!robots.includes(line)) {
+      findings.push(`out/robots.txt is missing "${line}"`)
+    }
+  }
+}
+
+for (const page of expectedIndexableHtml) {
+  const filePath = htmlPathFor(page.path)
+
+  if (!existsSync(filePath)) {
+    findings.push(`${filePath} is required for indexable route ${page.path}`)
+    continue
+  }
+
+  const html = readFileSync(filePath, 'utf8')
+
+  requireHtmlContains(filePath, html, `<link rel="canonical" href="${page.url}"/>`)
+  requireHtmlContains(filePath, html, '<meta name="robots" content="index, follow"/>')
+  requireHtmlContains(filePath, html, `<meta property="og:url" content="${page.url}"/>`)
+  requireHtmlContains(filePath, html, '<meta property="og:site_name" content="Импульс"/>')
+  requireHtmlContains(filePath, html, '<meta property="og:type" content="website"/>')
+  requireHtmlContains(filePath, html, page.h1)
+}
+
+for (const routePath of expectedNoindexHtml) {
+  const filePath = htmlPathFor(routePath)
+  const url = new URL(routePath, 'https://ams24.ru').toString()
+
+  if (!existsSync(filePath)) {
+    findings.push(`${filePath} is required for noindex route ${routePath}`)
+    continue
+  }
+
+  const html = readFileSync(filePath, 'utf8')
+
+  requireHtmlContains(filePath, html, `<link rel="canonical" href="${url}"/>`)
+  requireHtmlContains(filePath, html, '<meta name="robots" content="noindex, follow"/>')
+  requireHtmlContains(filePath, html, `<meta property="og:url" content="${url}"/>`)
+  requireHtmlContains(filePath, html, '<meta property="og:site_name" content="Импульс"/>')
 }
 
 if (findings.length > 0) {

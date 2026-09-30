@@ -10,7 +10,7 @@ describe('reviews permission page', () => {
     const html = renderToStaticMarkup(<ReviewsPage />)
     const reviewItems = proofEvidenceInventory.filter((item) => item.kind === 'review')
 
-    expect(reviewsMetadata.alternates?.canonical).toBe('/otzyvy/')
+    expect(reviewsMetadata.alternates?.canonical).toBe('https://ams24.ru/otzyvy/')
     expect(reviewsMetadata.robots).toMatchObject({ index: false, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/otzyvy/')).toBe(false)
     expect(html.match(/<h1\b/g)).toHaveLength(1)

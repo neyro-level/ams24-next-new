@@ -1,4 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
+import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
@@ -9,6 +10,8 @@ const trustFacts = [
   'Кейсы в трёх нишах',
   'Три продукта в одной системе',
 ] as const
+
+export const metadata = buildMetadata(getContentRepository().getPageByPath('/')!.seo)
 
 const proofPreviews = [
   {

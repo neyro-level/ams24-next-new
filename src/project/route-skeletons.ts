@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import { buildNoindexMetadata } from '@/core/seo'
 
 export type RouteSkeleton = {
   path: string
@@ -83,16 +83,10 @@ export function getStaticRouteSkeleton(path: string): RouteSkeleton {
   return route
 }
 
-export function buildSkeletonMetadata(route: RouteSkeleton): Metadata {
-  return {
+export function buildSkeletonMetadata(route: RouteSkeleton) {
+  return buildNoindexMetadata({
     title: `${route.title} — скоро`,
     description: `${route.role}: ${route.intent}. Страница готовится к наполнению.`,
-    alternates: {
-      canonical: route.path,
-    },
-    robots: {
-      index: false,
-      follow: true,
-    },
-  }
+    canonicalPath: route.path,
+  })
 }

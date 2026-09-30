@@ -1,23 +1,17 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { proofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
+export const metadata = buildNoindexMetadata({
   title: 'Тарифы Импульс — условия готовятся',
   description:
     'Тарифы Импульс остаются скрыты до утверждения коммерческих правил, состава услуги, ограничений и допущений расчёта.',
-  alternates: {
-    canonical: '/tarify/',
-  },
-  robots: {
-    index: false,
-    follow: true,
-  },
-}
+  canonicalPath: '/tarify/',
+})
 
 const tariffItems = proofEvidenceInventory.filter((item) => item.kind === 'tariff')
 

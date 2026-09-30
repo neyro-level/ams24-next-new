@@ -11,7 +11,7 @@ describe('tariffs and calculations pages', () => {
     const html = renderToStaticMarkup(<TariffsPage />)
     const tariffItems = proofEvidenceInventory.filter((item) => item.kind === 'tariff')
 
-    expect(tariffsMetadata.alternates?.canonical).toBe('/tarify/')
+    expect(tariffsMetadata.alternates?.canonical).toBe('https://ams24.ru/tarify/')
     expect(tariffsMetadata.robots).toMatchObject({ index: false, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/tarify/')).toBe(false)
     expect(html.match(/<h1\b/g)).toHaveLength(1)
@@ -31,7 +31,7 @@ describe('tariffs and calculations pages', () => {
     const html = renderToStaticMarkup(<CalculationsPage />)
     const calculationItems = proofEvidenceInventory.filter((item) => item.kind === 'calculation')
 
-    expect(calculationsMetadata.alternates?.canonical).toBe('/raschety/')
+    expect(calculationsMetadata.alternates?.canonical).toBe('https://ams24.ru/raschety/')
     expect(calculationsMetadata.robots).toMatchObject({ index: false, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/raschety/')).toBe(false)
     expect(html.match(/<h1\b/g)).toHaveLength(1)

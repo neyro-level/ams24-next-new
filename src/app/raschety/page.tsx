@@ -1,23 +1,17 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { proofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
+export const metadata = buildNoindexMetadata({
   title: 'Расчёты Импульс — допущения и ограничения',
   description:
     'Расчёты Импульс показывают будущую структуру входных данных и ограничений без неподтверждённых цен, диапазонов и гарантий.',
-  alternates: {
-    canonical: '/raschety/',
-  },
-  robots: {
-    index: false,
-    follow: true,
-  },
-}
+  canonicalPath: '/raschety/',
+})
 
 const calculationItems = proofEvidenceInventory.filter((item) => item.kind === 'calculation')
 
