@@ -129,6 +129,38 @@ Supporting actions:
 
 Успешная отправка формы по умолчанию показывается inline. Отдельная thank-you page создаётся только при доказанной аналитической или рекламной необходимости.
 
+## 10.1 Primary Commercial Route Contracts
+
+Этот раздел задаёт бизнес-контракт основных коммерческих маршрутов. Он не
+публикует неподтверждённые тарифы, кейсы, метрики или legal claims. Если
+доказательство не приложено, маршрут обязан показывать безопасную формулировку,
+`TODO`-статус, draft/hidden/noindex-состояние либо вести к расчёту без ложной
+точности.
+
+| Route | WHO / audience | PROBLEM | OFFER / VALUE | MECHANISM | PROOF dependency | LIMITS / objection | NEXT ACTION / CTA | Lead context |
+|---|---|---|---|---|---|---|---|---|
+| `/` | владелец, маркетинг, продажи, подрядчик, который ещё выбирает продукт | неясно, какой продукт «Импульс» подходит под задачу роста или защиты лидов | единая карта трёх продуктов и короткий путь к расчёту | маршрутные карточки: лидогенерация, пиксель, защита; далее переход на продуктовую страницу | общие факты из PRD, route map и только publishable proof | не раскрывает полный механизм каждого продукта; не обещает KPI | `Получить расчёт` / выбрать продукт | `product=site`, `sourcePath=/`, `ctaId=home-primary` |
+| `/impuls/` | бизнесу нужны новые лиды без самостоятельного тестирования множества каналов | текущих лидов недостаточно или канал привлечения не даёт нужного объёма/качества | таргетированная лидогенерация по релевантным аудиториям | подбор аудитории, запуск кампании, передача результата через approved lead flow | кейсы/ниши/метрики только после evidence inventory и owner approval | тарифы, сроки, объём и операторская/юридическая формулировка требуют подтверждения; без гарантии числа лидов | `Рассчитать запуск` | `product=impuls`, `sourcePath=/impuls/`, `ctaId=impuls-primary` |
+| `/pixel/` | компания уже имеет сайт и хочет понять часть заинтересованной аудитории | посетители уходят без заявки, и бизнес не понимает, кого можно вернуть в коммуникацию | идентификация заинтересованных посетителей после установки пикселя | установка пикселя, фиксация интереса, передача разрешённого результата через безопасный контур | proof зависит от legal/data wording и технического контракта пикселя | не раскрывает персональные/операторские данные автоматически; применимость зависит от трафика и legal review | `Проверить применимость пикселя` | `product=pixel`, `sourcePath=/pixel/`, `ctaId=pixel-primary` |
+| `/zashchita/` | бизнес подозревает потерю заявок, перехват или неэффективность рекламного трафика | часть лидов или рекламных касаний может уходить конкурентам либо не доходить до продаж | аудит и меры снижения риска перехвата лидов | диагностика воронки/каналов, фиксация риска, план защиты и проверяемые меры | доказательства требуют legal/security wording, источника и методики | не обещает абсолютную невозможность перехвата; результат описывается через границы и проверяемые меры | `Провести аудит` | `product=zashchita`, `sourcePath=/zashchita/`, `ctaId=zashchita-primary` |
+| `/tarify/` | покупатель сравнивает условия до обращения | непонятно, из чего складывается цена и что входит в запуск | безопасное объяснение модели цены и факторов расчёта | показать факторы стоимости без неподтверждённых чисел | OD-02: тарифы и коммерческие правила | до OD-02 не публиковать цены, диапазоны и обещания результата | `Получить персональный расчёт` | `product=site`, `sourcePath=/tarify/`, `ctaId=tariffs-primary` |
+| `/raschety/` | покупатель хочет оценить сценарий запуска до звонка | без вводных сложно понять порядок работ и применимость продукта | расчётная модель с явными assumptions | собрать нишу, регион, продукт, ограничения и передать в расчёт | OD-02 + approved calculation examples | расчётные примеры скрыты до подтверждения коммерческих правил | `Разобрать задачу` | `product=site`, `sourcePath=/raschety/`, `ctaId=calculations-primary` |
+| `/keisy/` | пользователь ищет подтверждённый опыт в похожей нише | без кейсов обещание выглядит недоказанным | доказательный слой по нишам и продуктам | фильтрация/карточки кейсов только после evidence permission | OD-01, case source, period, method, permission | неполные кейсы draft/hidden/noindex; не выдумывать результаты | `Посмотреть релевантный кейс` / `Получить расчёт` | `product=site`, `sourcePath=/keisy/`, `ctaId=cases-primary` |
+| `/otzyvy/` | пользователь проверяет доверие и качество работы | отзыв без источника и разрешения не является proof | отдельная модель отзывов, не смешанная с кейсами | показывать quote/source/permission only when approved | review source + permission status | непроверенные отзывы не публикуются | `Обсудить похожую задачу` | `product=site`, `sourcePath=/otzyvy/`, `ctaId=reviews-primary` |
+| `/kontakty/` | пользователь готов связаться без чтения всех материалов | нужен короткий безопасный контактный путь | контактная страница и disabled-safe lead form | относительный frontend route; live submit только после AMS Leads API/legal approval | EXT-01..04 | live lead submission disabled until approvals; no PII in analytics | `Разобрать задачу` | `product=site`, `sourcePath=/kontakty/`, `ctaId=contacts-primary` |
+
+### Route Contract Invariants
+
+- Each route has one primary audience, one primary problem and one primary next action.
+- Public copy must use only `allowed` or otherwise approved evidence. `needs-review`,
+  `hidden`, `unsupported-hidden`, draft and internal workflow terms are not public proof.
+- CTA context must include `product`, `sourcePath` and `ctaId`; analytics events must
+  not include PII or raw form values.
+- SEO goals for these routes remain `REQUIRES_MEASUREMENT` or
+  `OWNER_DECISION` until measurement baseline and intent ownership are proven.
+- `/impuls/` and `/` must avoid paragraph-level duplication: `/` routes the user,
+  `/impuls/` explains the main product in depth.
+
 ## 11. Success Metrics
 
 До публикации baseline метрик требует проверки. Не выдумывать целевые значения.
