@@ -121,11 +121,109 @@ promise or pricing intent.
 | `/baza-znaniy/pixel/ustanovka/` with current setup steps | `PASS` or `NOINDEX` by usefulness | support task differs from commercial product intent |
 | legal synonym page for privacy wording | `MERGE` | legal/trust route already owns that function |
 
-## 8. Handoff to Later CR-03 Tasks
+## 8. Indexability Policy
 
-This task freezes source priority and intent ownership only.
+Indexability is decided before implementation. A route cannot appear in sitemap
+or claim indexable metadata unless this policy returns `index`.
 
-CR-03.2 must add deterministic rules for indexability, metadata, H1, canonical,
-robots and sitemap. CR-03.3 must add linking, structured data, media, redirects
-and release proof. Until those tasks are complete, this document is the
-ownership contract but not a full SEO release checklist.
+| Page state | Examples | Robots | Sitemap | Canonical | Required action |
+|---|---|---|---|---|---|
+| Approved canonical route with unique intent and useful static content | `/`, `/impuls/`, approved `/stati/[slug]/` | `index, follow` | included | self canonical with trailing slash | publish metadata from validated content |
+| Useful public page without unique search intent | temporary support detail, utility filter, legal duplicate candidate | `noindex, follow` | excluded | self canonical unless merged | publish for users only; do not target search demand |
+| Thin placeholder or unresolved proof | empty article, unapproved case, tariff skeleton before owner decision | `noindex, follow` or not published | excluded | self canonical only if public | block index until content/proof gate closes |
+| Legal consent/policy pages | `/politika/`, `/soglasie/`, `/obrabotka-dannyh/` | `noindex, follow` by default | excluded | self canonical | index only after explicit owner decision |
+| System/recovery route | `/404` | `noindex, follow` | excluded | no canonical required beyond runtime default | keep recovery links safe |
+| Staging/private build | any route | `noindex, nofollow` via headers or robots | excluded from public sitemap | production canonical must not be advertised | release blocker if public indexing is possible |
+| Duplicate or cannibalizing proposal | `/stoimost-lidogeneratsii/`, unsupported niche landing | not published | excluded | merge into owner route | reject or merge before implementation |
+
+`index` means the route may be included in the generated sitemap and may emit
+normal search metadata. `noindex` means the route can be useful for humans but
+must not appear in sitemap or search-targeted internal linking blocks.
+
+## 9. Metadata and H1 Policy
+
+Every indexable route must have:
+
+- one factual title;
+- one factual description;
+- one visible H1 in static HTML;
+- one canonical URL with leading and trailing slash;
+- Open Graph values derived from the same validated content;
+- robots policy consistent with indexability;
+- no unsupported KPI, legal, pricing, availability or performance claim.
+
+Metadata cannot introduce facts that are absent from PRD, Product Structure,
+approved content or evidence registers. If a page has useful content but lacks
+approved metadata facts, the page remains `noindex` until the facts are
+approved.
+
+H1 ownership follows the route's primary intent. Supporting sections can use
+lower headings, but must not create a second H1 or restate another route's H1
+with synonym-only wording.
+
+## 10. Canonical URL Policy
+
+Canonical URLs are the public production URLs from `02_PRODUCT_STRUCTURE.md`.
+They must:
+
+1. use `https://ams24.ru`;
+2. include a leading slash and trailing slash for routes;
+3. point to the single route that owns the primary intent;
+4. never point a `noindex` duplicate to itself when the content should be
+   merged into an owner route;
+5. avoid query, tag, filter and UTM variants.
+
+If a route is renamed or merged, canonical ownership moves only after redirect
+rules are documented and release proof shows no conflicting index target.
+
+## 11. Robots Policy
+
+Production robots defaults:
+
+- public indexable routes: `index, follow`;
+- legal consent/policy and system routes: `noindex, follow`;
+- staging/private routes: `noindex, nofollow`;
+- rejected, duplicate, draft or thin routes: not published, or `noindex,
+  follow` if they must remain user-accessible.
+
+Robots policy must agree across page metadata, robots file, sitemap inclusion
+and any `X-Robots-Tag` configured outside the app. A disagreement is a release
+blocker.
+
+## 12. Sitemap Policy
+
+The sitemap contains only production URLs that are:
+
+1. published;
+2. canonical;
+3. `index, follow`;
+4. not thin placeholders;
+5. not duplicate/cannibalizing variants;
+6. backed by validated content and approved evidence where required.
+
+Sitemap generation must consume the same route/content repository as page
+metadata. Handwritten URLs, private/staging URLs, `noindex` URLs and unresolved
+redirect sources are forbidden.
+
+## 13. Policy Decision Table
+
+| Scenario | Index decision | Metadata/H1 decision | Canonical decision | Sitemap decision |
+|---|---|---|---|---|
+| Approved `/impuls/` product page with unique content | `index, follow` | unique product title, description and one H1 | `https://ams24.ru/impuls/` | include |
+| `/raschety/` before calculation examples are owner-approved | `noindex, follow` or not published | factual skeleton only; no invented numbers | self canonical only if public | exclude |
+| `/stati/operatornye-auditorii/` with approved article and links to `/impuls/` | `index, follow` | article metadata owns informational intent | article self canonical | include |
+| Empty `/stati/[slug]/` placeholder | `noindex, follow` or not published | no search-targeted metadata | self canonical only if public | exclude |
+| `/keisy/[slug]/` with source, period, method and permission | `index, follow` | evidence-specific title/H1 with limitations | case self canonical | include |
+| `/keisy/meditsina/` without niche gate evidence | reject or `noindex, follow` | no niche SEO targeting | merge/link to `/keisy/` | exclude |
+| `/politika/` legal page | `noindex, follow` by default | legal factual H1 | `https://ams24.ru/politika/` | exclude |
+| `/404` recovery route | `noindex, follow` | recovery H1 only | no search canonical requirement | exclude |
+| staging export accidentally reachable | `noindex, nofollow` | production SEO metadata must not be advertised | production canonical forbidden on private host | exclude |
+
+## 14. Handoff to Later CR-03 Tasks
+
+CR-03.1 freezes source priority and intent ownership. CR-03.2 freezes
+indexability, metadata, H1, canonical, robots and sitemap rules.
+
+CR-03.3 must add linking, structured data, media, redirects and release proof.
+Until CR-03.3 is complete, this document does not yet define the full SEO
+release checklist.
