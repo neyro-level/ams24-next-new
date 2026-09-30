@@ -1,11 +1,17 @@
 export {
-  buildLeadTestRequest,
+  buildDisabledLeadRequest,
+  buildLeadRequest,
   getLeadFormAvailability,
+  leadConsentContract,
   leadConsentTargets,
   leadContextSchema,
+  leadRequestBoundary,
   leadDraftSchema,
   leadFormRuntime,
+  validateLeadRequestPayload,
   validateLeadDraft,
+  type LeadConsent,
   type LeadContext,
   type LeadDraft,
+  type LeadRequestPayload,
 } from '@/project/lead-contract'

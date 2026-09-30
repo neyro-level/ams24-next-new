@@ -1,10 +1,20 @@
 import { z } from 'zod'
 
-const forbiddenPiiKeys = [
+export const analyticsForbiddenPayloadKeys = [
+  'acceptedAt',
+  'consent',
+  'consentAccepted',
   'phone',
   'email',
   'contact',
+  'formData',
+  'fullName',
+  'idempotencyKey',
+  'lead',
   'message',
+  'payload',
+  'task',
+  'text',
   'comment',
   'utm_term',
   'query',
@@ -30,7 +40,7 @@ export const analyticsEventSchema = z
   })
   .strict()
   .superRefine((event, context) => {
-    for (const key of forbiddenPiiKeys) {
+    for (const key of analyticsForbiddenPayloadKeys) {
       if (key in event) {
         context.addIssue({
           code: 'custom',
@@ -49,11 +59,11 @@ export const analyticsProviderStatus = {
   releaseBlocker: 'approved analytics scope is required before public release',
 } as const
 
-export function createAnalyticsEvent(input: AnalyticsEvent): AnalyticsEvent {
+export function createAnalyticsEvent(input: unknown): AnalyticsEvent {
   return analyticsEventSchema.parse(input)
 }
 
-export function trackAnalyticsEvent(input: AnalyticsEvent) {
+export function trackAnalyticsEvent(input: unknown) {
   const event = createAnalyticsEvent(input)
 
   return {
