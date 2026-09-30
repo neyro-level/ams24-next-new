@@ -10,8 +10,30 @@ const packageJson = JSON.parse(readFileSync('package.json', 'utf8')) as {
   scripts: Record<string, string>
 }
 
+const requiredDailyVerifySteps = [
+  'pnpm typecheck',
+  'pnpm lint',
+  'pnpm verify:content-graph',
+  'pnpm test:content',
+  'pnpm verify:sourcecraft',
+  'pnpm guard:static:self-test',
+  'pnpm guard:static',
+] as const
+
+const requiredReleaseVerifySteps = ['pnpm verify', 'pnpm build', 'pnpm guard:artifact'] as const
+
 function invalidRepository(input: unknown): ContentRepository {
   return input as ContentRepository
+}
+
+function validateChainedScript(script: string, requiredSteps: readonly string[]) {
+  const steps = script.split(' && ')
+
+  return {
+    hasExactSteps: JSON.stringify(steps) === JSON.stringify(requiredSteps),
+    hasFailClosedChain: !/(?:^|[^&]);/.test(script) && !script.includes(' & '),
+    missingSteps: requiredSteps.filter((step) => !steps.includes(step)),
+  }
 }
 
 describe('daily verification command trace', () => {
@@ -22,15 +44,7 @@ describe('daily verification command trace', () => {
     expect(packageJson.scripts['verify:content-graph']).toBe(
       'vitest run tests/verification/content-graph-daily.test.ts',
     )
-    expect(steps).toEqual([
-      'pnpm typecheck',
-      'pnpm lint',
-      'pnpm verify:content-graph',
-      'pnpm test:content',
-      'pnpm verify:sourcecraft',
-      'pnpm guard:static:self-test',
-      'pnpm guard:static',
-    ])
+    expect(steps).toEqual(requiredDailyVerifySteps)
     expect(verify.match(/pnpm verify:content-graph/g) ?? []).toHaveLength(1)
     expect(verify).not.toContain('pnpm build')
     expect(verify).not.toContain('pnpm guard:artifact')
@@ -49,12 +63,44 @@ describe('daily verification command trace', () => {
     const release = packageJson.scripts['verify:release']
     const steps = release.split(' && ')
 
-    expect(steps).toEqual(['pnpm verify', 'pnpm build', 'pnpm guard:artifact'])
+    expect(steps).toEqual(requiredReleaseVerifySteps)
     expect(release.match(/pnpm verify/g) ?? []).toHaveLength(1)
     expect(release.match(/pnpm build/g) ?? []).toHaveLength(1)
     expect(release.match(/pnpm guard:artifact/g) ?? []).toHaveLength(1)
     expect(release).not.toMatch(/(?:^|[^&]);/)
     expect(release).not.toContain(' & ')
+  })
+
+  it('rejects seeded omissions from daily and release verification scripts', () => {
+    for (const omitted of requiredDailyVerifySteps) {
+      const mutated = requiredDailyVerifySteps.filter((step) => step !== omitted).join(' && ')
+      const result = validateChainedScript(mutated, requiredDailyVerifySteps)
+
+      expect(result.hasExactSteps, `daily omitted ${omitted}`).toBe(false)
+      expect(result.missingSteps, `daily omitted ${omitted}`).toEqual([omitted])
+    }
+
+    for (const omitted of requiredReleaseVerifySteps) {
+      const mutated = requiredReleaseVerifySteps.filter((step) => step !== omitted).join(' && ')
+      const result = validateChainedScript(mutated, requiredReleaseVerifySteps)
+
+      expect(result.hasExactSteps, `release omitted ${omitted}`).toBe(false)
+      expect(result.missingSteps, `release omitted ${omitted}`).toEqual([omitted])
+    }
+  })
+
+  it('rejects seeded non-fail-closed separators in verification scripts', () => {
+    const dailyWithSoftSeparator = requiredDailyVerifySteps.join('; ')
+    const releaseWithBackgroundSeparator = requiredReleaseVerifySteps.join(' & ')
+
+    expect(validateChainedScript(dailyWithSoftSeparator, requiredDailyVerifySteps)).toMatchObject({
+      hasExactSteps: false,
+      hasFailClosedChain: false,
+    })
+    expect(validateChainedScript(releaseWithBackgroundSeparator, requiredReleaseVerifySteps)).toMatchObject({
+      hasExactSteps: false,
+      hasFailClosedChain: false,
+    })
   })
 
   it('propagates graph validation failures through the assertion API', () => {
