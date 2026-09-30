@@ -6,6 +6,12 @@ Updated: 2026-09-30
 
 Release is allowed only after an explicit owner command. This checklist does not authorize merge or production.
 
+This file is the single executable release/runbook checklist for the repository.
+Architecture owns the production topology and invariants; future `ops/nginx/*`
+files own only validated Nginx config artifacts. Do not create a second release
+runbook or duplicate these gates in another docs file without a later explicit
+architecture decision.
+
 ## 0. Current Readiness Snapshot
 
 Current evidence: `docs/research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`.

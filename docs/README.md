@@ -31,7 +31,7 @@ Updated: 2026-09-30
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
 | `03_ARCHITECTURE.md` | Active / Drift recorded | статический Next.js contract и pinned stack recorded; текущие boundary/SEO/leads drift зафиксированы в CR-00.1 |
 | `04_BACKLOG.md` | Approved | remediation plan `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем; прежний v4 завершён и сохранён в Git/закрытом Task Manager |
-| `05_RELEASE_CHECKLIST.md` | Draft / Blocked | release-ready claims требуют повторного proof после remediation; production требует отдельной команды |
+| `05_RELEASE_CHECKLIST.md` | Draft / Blocked | единственный release/runbook checklist; release-ready claims требуют повторного proof после remediation; production требует отдельной команды |
 | `06_DESIGN_SYSTEM.md` | Active / Foundation only | Northline адаптирован; полный accessibility/performance/UI drift proof ещё не закрыт |
 | `07_SEO_SYSTEM.md` | Active / Partial | source priority and intent ownership defined; indexability, artifact and release proof rules continue in CR-03.2/CR-03.3 |
 
@@ -54,3 +54,14 @@ Updated: 2026-09-30
 - AMS Northline v3.1 — визуальный input от действующего `ams24.ru`.
 
 Входные нормативы не являются проектными задачами и не подменяют файлы Source of Truth выше.
+
+## Operations ownership
+
+Операционный контракт не дублируется отдельным runbook-файлом:
+
+- `03_ARCHITECTURE.md` owns production topology, release-directory model, rollback contract and open production identity gaps;
+- `05_RELEASE_CHECKLIST.md` owns the executable release/runbook checklist, rollout proof, live smoke and rollback evidence;
+- future `ops/nginx/*` files own only validated Nginx configuration artifacts when CR-17.2 creates them.
+
+Until an explicit production command, operations work remains repository-side
+planning/validation only and must not require server or secret access.
