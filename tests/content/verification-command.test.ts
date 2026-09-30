@@ -11,6 +11,8 @@ const packageJson = JSON.parse(readFileSync('package.json', 'utf8')) as {
 }
 
 const requiredDailyVerifySteps = [
+  'pnpm verify:runtime:self-test',
+  'pnpm verify:runtime',
   'pnpm typecheck',
   'pnpm lint',
   'pnpm verify:content-graph',
@@ -54,7 +56,7 @@ describe('daily verification command trace', () => {
     const verify = packageJson.scripts.verify
     const chainedStepCount = verify.split(' && ').length
 
-    expect(chainedStepCount).toBe(7)
+    expect(chainedStepCount).toBe(9)
     expect(verify).not.toMatch(/(?:^|[^&]);/)
     expect(verify).not.toContain(' & ')
   })
