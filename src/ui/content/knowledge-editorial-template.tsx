@@ -1,4 +1,5 @@
 import type { KnowledgeEditorialContract } from '@/core/content/services/editorial-contracts'
+import { RichText } from '@/core/content/services/rich-text'
 import { Breadcrumbs } from '@/ui/shell/breadcrumbs'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
@@ -35,6 +36,9 @@ export function KnowledgeEditorialTemplate({ contract }: { contract: KnowledgeEd
               </li>
             ))}
           </ol>
+          <article className="mt-10 space-y-4 rounded-large border border-border bg-surface-elevated p-6 shadow-card">
+            <RichText content={contract.body} />
+          </article>
         </Container>
       </Section>
     </main>
