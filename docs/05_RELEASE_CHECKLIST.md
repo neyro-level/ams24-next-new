@@ -47,8 +47,8 @@ Production-only blockers:
 - complete current `ams24.ru` redirect inventory not approved;
 - Nginx/security headers, live smoke and rollback rehearsal not performed.
 
-This means the repository has completed remediation proof through EPIC-19, but
-public production release is still blocked.
+This means the repository is approved for remediation work and has completed
+remediation proof through EPIC-19, but production release is still blocked.
 
 ## 1. Release Identity
 
