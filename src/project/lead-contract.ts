@@ -26,7 +26,7 @@ export const leadRequestBoundary = {
 
 export const leadFormRuntime = {
   formId: 'ams24-lead-form',
-  endpoint: '/api/leads/test',
+  endpoint: leadRequestBoundary.endpoint,
   submissionEnabled: false,
   disabledReason:
     'форма ждёт финального подключения, юридического текста и антиспам-защиты',
@@ -87,7 +87,7 @@ export function validateLeadRequestPayload(input: unknown) {
   return leadRequestPayloadSchema.safeParse(input)
 }
 
-export function buildLeadTestRequest(input: LeadDraft) {
+export function buildDisabledLeadRequest(input: LeadDraft) {
   const lead = leadDraftSchema.parse(input)
 
   return {

@@ -48,7 +48,7 @@ CMS, PostgreSQL, Prisma, Payload, auth, worker, Redis и Docker не входя�
 | deployment | `output: "export"`, `trailingSlash: true`, Nginx static hosting |
 | images | preoptimized assets, `images.unoptimized: true` baseline |
 | analytics | Яндекс Метрика, typed events, no PII |
-| forms | target contract: relative `/api/leads` -> Nginx -> AMS Leads API; current code still uses disabled `/api/leads/test` and is tracked by remediation |
+| forms | target contract: relative `/api/leads` -> Nginx -> AMS Leads API; current frontend renders this canonical relative endpoint while live submission remains disabled |
 
 Exact foundation versions pinned during EPIC-01.2:
 
@@ -373,8 +373,9 @@ Frontend responsibilities:
 
 AMS Leads API owns authoritative validation, normalization, rate limit, CAPTCHA secret, idempotency, storage and external delivery.
 
-Current remediation baseline: the target frontend endpoint is `/api/leads`, but
-`src/project/lead-contract.ts` currently uses disabled `/api/leads/test`.
+Current remediation baseline: the frontend renders the relative `/api/leads`
+boundary, but `submissionEnabled=false` keeps live submission disabled until
+AMS Leads API, legal text and anti-spam approvals are complete.
 `submissionEnabled` remains `false`; live lead submission is not claimed.
 
 ## 11. SEO Contract

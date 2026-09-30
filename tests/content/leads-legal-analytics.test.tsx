@@ -7,8 +7,8 @@ import ConsentPage, { metadata as consentMetadata } from '@/app/soglasie/page'
 import DataProcessingPage, { metadata as dataProcessingMetadata } from '@/app/obrabotka-dannyh/page'
 import { analyticsProviderStatus, createAnalyticsEvent, trackAnalyticsEvent } from '@/project/analytics'
 import {
+  buildDisabledLeadRequest,
   buildLeadRequest,
-  buildLeadTestRequest,
   getLeadFormAvailability,
   leadConsentContract,
   leadConsentTargets,
@@ -25,14 +25,37 @@ describe('lead form, legal guard and analytics hardening', () => {
 
     expect(contactsMetadata.robots).toMatchObject({ index: false, follow: true })
     expect(availability.submissionEnabled).toBe(false)
-    expect(availability.endpoint).toBe('/api/leads/test')
+    expect(availability.endpoint).toBe('/api/leads')
     expect(availability.consentTargets).toEqual(leadConsentTargets)
     expect(html).toContain('aria-label="Форма расчёта"')
-    expect(html).toContain('action="/api/leads/test"')
+    expect(html).toContain('action="/api/leads"')
     expect(html).toContain('disabled=""')
     expect(html).toContain('href="/soglasie/"')
     expect(html).toContain('href="/politika/"')
     expect(html).toContain(leadFormRuntime.disabledReason)
+  })
+
+  it('renders the canonical form without network calls while submission is disabled', () => {
+    const originalFetch = globalThis.fetch
+    const calls: unknown[] = []
+
+    globalThis.fetch = ((...args: unknown[]) => {
+      calls.push(args)
+      return Promise.resolve(new Response(null, { status: 204 }))
+    }) as typeof fetch
+
+    try {
+      const html = renderToStaticMarkup(<ContactsPage />)
+
+      expect(calls).toHaveLength(0)
+      expect(leadFormRuntime.submissionEnabled).toBe(false)
+      expect(html).toContain('action="/api/leads"')
+      expect(html).toContain('method="post"')
+      expect(html).toContain('disabled=""')
+      expect(html).toContain('data-analytics-event="lead_form_submit_blocked"')
+    } finally {
+      globalThis.fetch = originalFetch
+    }
   })
 
   it('validates future lead payloads and keeps idempotency explicit', () => {
@@ -51,9 +74,9 @@ describe('lead form, legal guard and analytics hardening', () => {
 
     expect(validateLeadDraft(validLead).success).toBe(true)
 
-    const request = buildLeadTestRequest(validLead)
+    const request = buildDisabledLeadRequest(validLead)
     expect(request).toMatchObject({
-      endpoint: '/api/leads/test',
+      endpoint: '/api/leads',
       method: 'POST',
       idempotencyKey: validLead.idempotencyKey,
     })
