@@ -87,4 +87,3 @@ Forbidden in EPIC-10:
   - `RouteSkeletonPage()` consumers: `/stati/`, `/baza-znaniy/`, `/o-kompanii/`, `/rekvizity/` plus tests.
   - `LeadForm()` consumers: `/`, `/impuls/`, `/kontakty/` plus tests.
   - `SectionHeader()` consumers: primary commercial/proof pages and legal template.
-

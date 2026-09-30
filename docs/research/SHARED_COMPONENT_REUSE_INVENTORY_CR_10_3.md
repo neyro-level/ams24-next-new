@@ -1,7 +1,7 @@
 # CR-10.3 Shared Component Reuse Inventory
 
-Status: Complete  
-Plan: AMS24-CONSTITUTION-REMEDIATION-2026 v3  
+Status: Complete
+Plan: AMS24-CONSTITUTION-REMEDIATION-2026 v3
 Task: CR-10.3 — shared components exist only for proven reuse
 
 ## Decision
