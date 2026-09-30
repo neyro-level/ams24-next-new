@@ -126,6 +126,19 @@ Canonical owner values are limited to `product`, `owner`, `editorial`, `SEO`,
 `support`, `legal` and `implementation`. A route cannot have multiple owners; if
 two roles must approve a page, the second role is a release gate, not a co-owner.
 
+Implementation route-to-component ownership for the current codebase is fixed in
+`docs/research/ROUTE_COMPONENT_OWNERSHIP_MATRIX_CR_10_1.md`. That matrix is the
+CR-10 source for page-section decomposition and shared-component conflict checks:
+route entrypoints own composition, while `LeadForm`, legal templates, shell
+templates, shared layout primitives and content services remain read-only
+boundaries unless their owning epic explicitly changes them.
+
+Shared component reuse evidence is fixed in
+`docs/research/SHARED_COMPONENT_REUSE_INVENTORY_CR_10_3.md`. The current product
+routes may use local semantic section functions, but they must not introduce a
+generic page builder, product builder or section registry without a new
+architecture decision.
+
 ## 7. Главная `/`
 
 ### Page brief
