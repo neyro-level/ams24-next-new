@@ -1,9 +1,9 @@
 import Link from 'next/link'
 
-import type { NavigationLink } from '@/project/navigation'
+import type { NavigationLinkViewModel } from '@/core/content/services/view-models'
 
 type BreadcrumbsProps = {
-  items?: NavigationLink[]
+  items?: NavigationLinkViewModel[]
 }
 
 export function Breadcrumbs({ items = [] }: BreadcrumbsProps) {

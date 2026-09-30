@@ -1,4 +1,4 @@
-import type { RouteSkeleton } from '@/project/route-skeletons'
+import type { RouteSkeleton } from '@/core/content/services/route-skeletons'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
 

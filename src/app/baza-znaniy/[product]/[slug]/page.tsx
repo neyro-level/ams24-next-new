@@ -1,7 +1,7 @@
 import {
   buildKnowledgeEditorialMetadata,
   representativeKnowledgeContract,
-} from '@/project/editorial-contracts'
+} from '@/core/content/services/editorial-contracts'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
 
 export const dynamicParams = false

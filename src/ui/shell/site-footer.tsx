@@ -1,9 +1,11 @@
 import Link from 'next/link'
 
-import { footerGroups, primaryCta } from '@/project/navigation'
+import { getNavigationViewModel } from '@/core/content/services/view-models'
 import { Container } from '@/ui/shared/container'
 
 export function SiteFooter() {
+  const { footerGroups, primaryCta } = getNavigationViewModel()
+
   return (
     <footer className="bg-surface-dark text-surface-dark-foreground">
       <Container className="py-section-sm">

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { getContentRepository } from '@/core/content/services/repository'
-import { getClaimsForProduct } from '@/project/product-claims'
+import { getClaimsForProduct } from '@/core/content/services/product-claims'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'

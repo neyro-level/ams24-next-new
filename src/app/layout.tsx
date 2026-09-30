@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Manrope } from 'next/font/google'
 
-import { siteOrigin } from '@/project/site'
+import { getSiteSettingsViewModel } from '@/core/content/services/view-models'
 import { SiteShell } from '@/ui/shell/site-shell'
 
 import './globals.css'
@@ -14,7 +14,7 @@ const manrope = Manrope({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteOrigin),
+  metadataBase: new URL(getSiteSettingsViewModel().siteOrigin),
   title: {
     default: 'Импульс — маркетинговые продукты АМС',
     template: '%s | Импульс',

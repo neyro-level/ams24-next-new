@@ -1,7 +1,7 @@
 import {
   buildArticleEditorialMetadata,
   representativeArticleContract,
-} from '@/project/editorial-contracts'
+} from '@/core/content/services/editorial-contracts'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
 
 export const dynamicParams = false

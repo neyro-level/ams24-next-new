@@ -1,4 +1,4 @@
-import { buildSkeletonMetadata, getStaticRouteSkeleton } from '@/project/route-skeletons'
+import { buildSkeletonMetadata, getStaticRouteSkeleton } from '@/core/content/services/route-skeletons'
 import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
 
 const route = getStaticRouteSkeleton('/stati/')
