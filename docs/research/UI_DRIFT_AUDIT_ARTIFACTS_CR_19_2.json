@@ -1,0 +1,102 @@
+{
+  "task_id": "ams24r-cr-19-2",
+  "plan_version": "v3",
+  "mode": "READ-ONLY AUDIT",
+  "environment": "local production-like static export",
+  "timestamp": "2026-09-30",
+  "base_sha": "0b8d934a9e93c06d436a32caec7559bbaa26319e",
+  "tools": {
+    "build": "corepack pnpm build",
+    "code_search": "rg over src/app, src/ui, src/core, docs",
+    "rendered_html_summary": "local Node.js parser over out/**/*.html"
+  },
+  "checks": {
+    "raw_colors_in_tsx": "none",
+    "inline_styles": "none",
+    "project_dark_classes": "none",
+    "img_tags": "none",
+    "use_client": ["src/app/error.tsx:1"],
+    "primitive_files": [
+      "src/ui/primitives/button.tsx",
+      "src/ui/shared/container.tsx",
+      "src/ui/shared/section.tsx",
+      "src/ui/forms/lead-form.tsx"
+    ],
+    "components_json_aliases": {
+      "components": "@/ui",
+      "ui": "@/ui/primitives",
+      "utils": "@/core/lib/utils",
+      "lib": "@/core/lib",
+      "hooks": "@/core/hooks"
+    },
+    "rendered_html": {
+      "html_pages_checked": 22,
+      "main_count": "all pages have exactly one main",
+      "h1_count": "all pages have exactly one h1",
+      "positive_tabindex": 0,
+      "lead_form_pages": ["/", "/impuls/", "/kontakty/"],
+      "native_details_navigation_per_page": 2
+    },
+    "route_page_size_top": [
+      { "file": "src/app/page.tsx", "lines": 253 },
+      { "file": "src/app/impuls/page.tsx", "lines": 243 },
+      { "file": "src/app/zashchita/page.tsx", "lines": 233 },
+      { "file": "src/app/pixel/page.tsx", "lines": 196 }
+    ],
+    "repeated_arbitrary_grid_patterns": [
+      { "pattern": "lg:grid-cols-[0.8fr_1.2fr]", "count": 5, "status": "known P2 from CR-11 evidence" },
+      { "pattern": "lg:grid-cols-[0.95fr_1.05fr]", "count": 3, "status": "layout variant candidate" },
+      { "pattern": "lg:grid-cols-[1fr_1fr]", "count": 3, "status": "layout variant candidate" },
+      { "pattern": "lg:grid-cols-[0.9fr_1.1fr]", "count": 2, "status": "layout variant candidate" },
+      { "pattern": "hero minmax ratios", "count": 4, "status": "layout variant candidate" }
+    ],
+    "known_exception_sources": [
+      "docs/research/UI_PRIMITIVE_TOKEN_DUPLICATION_INVENTORY_CR_11_1.md",
+      "docs/research/TOKEN_DRIFT_EXCEPTION_REGISTER_CR_11_3.md",
+      "docs/research/ROUTE_COMPONENT_OWNERSHIP_MATRIX_CR_10_1.md"
+    ]
+  },
+  "findings": [
+    {
+      "id": "UI-19-001",
+      "priority": "P2",
+      "layer": "responsive layout tokens",
+      "files": [
+        "src/app/page.tsx",
+        "src/app/impuls/page.tsx",
+        "src/app/pixel/page.tsx",
+        "src/app/zashchita/page.tsx",
+        "src/app/raschety/page.tsx",
+        "src/app/kontakty/page.tsx",
+        "src/ui/legal/legal-page.tsx",
+        "src/ui/shell/site-footer.tsx"
+      ],
+      "evidence": "Repeated route-local arbitrary lg:grid-cols-[...] ratios remain. CR-11 already classified this as P2 layout variant candidate, not P0/P1.",
+      "recommended_action": "Consolidate into named layout variants only after route structures stabilize; no READ-ONLY remediation in CR-19.2."
+    },
+    {
+      "id": "UI-19-002",
+      "priority": "P2",
+      "layer": "page composition",
+      "files": [
+        "src/app/page.tsx",
+        "src/app/impuls/page.tsx",
+        "src/app/pixel/page.tsx",
+        "src/app/zashchita/page.tsx"
+      ],
+      "evidence": "Primary route files remain long page-composition modules, from 196 to 253 lines. CR-10 ownership matrix allows route-local composition and forbids premature generic page builders.",
+      "recommended_action": "Decompose only if future implementation needs repeated stable semantic sections; do not create a generic product builder now."
+    },
+    {
+      "id": "UI-19-003",
+      "priority": "P3",
+      "layer": "primitive internals",
+      "files": ["src/ui/primitives/button.tsx"],
+      "evidence": "Button keeps primitive-level arbitrary selectors and radius/color-mix internals already recorded in TOKEN_DRIFT_EXCEPTION_REGISTER_CR_11_3.md as KEEP_EXCEPTION.",
+      "recommended_action": "Revisit only during Button API/foundation review."
+    }
+  ],
+  "verdict": "PASS WITH FINDINGS",
+  "p0_count": 0,
+  "p1_count": 0
+}
