@@ -253,7 +253,83 @@ Editorial/SEO-контент: объяснение рынка, проблем, �
 | кейсы по нишам | `/keisy/` + detail | evidence intent |
 | настройка/интеграция | `/baza-znaniy/` | support intent |
 
-## 13. Entity Layer
+## 13. Route Expansion, Niche and Cannibalization Gates
+
+Новый публичный маршрут создаётся только как owner decision после прохождения
+всех gates ниже. Черновик без полного доказательства остаётся внутри
+существующего hub, получает `noindex` или не публикуется.
+
+### 13.1 Expansion gate
+
+Новый indexable route получает `PASS`, только если одновременно доказаны:
+
+1. **Distinct demand** — запрос или пользовательская задача не покрывается
+   текущими route intents из Page Role Map и Demand Cluster Map.
+2. **Distinct role** — route class и single owner определены до реализации.
+3. **Distinct content** — у страницы есть самостоятельная структура, H1,
+   title, description, CTA и evidence; она не является фильтром/тонкой копией.
+4. **Evidence source** — есть owner-approved факт, исследование,
+   case/review source или измеримый SEO baseline.
+5. **Cannibalization review** — выбран один primary target для intent, а все
+   соседние routes получают вспомогательные internal links, но не конкурируют
+   за тот же основной запрос.
+6. **Release state** — маршрут либо готов к index, либо явно скрыт как
+   `noindex` до закрытия недостающего gate.
+
+Если хотя бы один пункт отсутствует, результат gate = `FAIL` и новый маршрут
+запрещён.
+
+### 13.2 Niche route gate
+
+Нишевые страницы (`/keisy/<niche>/`, `/stati/<niche>/`,
+`/<product>/<niche>/` и похожие варианты) не входят в первый release. Они могут
+быть добавлены только после отдельного owner decision и такого minimum evidence:
+
+- подтверждённая ниша из case/evidence inventory;
+- минимум один publishable case или research item с source, period, method,
+  permission status and limitations;
+- distinct demand phrase, которая не должна вести на `/keisy/`, `/impuls/`,
+  `/pixel/` или `/zashchita/`;
+- уникальный next action и lead context;
+- explicit canonical target and internal-link source.
+
+Пример `PASS`: owner подтверждает нишу `медицина`, есть publishable case с
+периодом, методом и разрешением, demand phrase отличается от общего
+`кейсы по нишам`, а primary target не конфликтует с `/keisy/`.
+
+Пример `FAIL`: создать `/keisy/meditsina/` только потому, что в тексте кейса
+встречается слово `медицина`. Это фильтр без самостоятельного demand/evidence и
+он каннибализирует `/keisy/`.
+
+### 13.3 Forbidden overlap review
+
+Перед добавлением route нужно проверить forbidden overlaps:
+
+| Proposed route | Forbidden if it overlaps with | Required action |
+|---|---|---|
+| New product landing | `/`, `/impuls/`, `/pixel/`, `/zashchita/` | keep the existing product target unless owner creates a fourth product contract |
+| New price/calculation page | `/tarify/`, `/raschety/` | merge into the existing commercial route or mark noindex |
+| New case/niche page | `/keisy/` or `/keisy/[slug]/` | keep as hub filter/detail until niche gate passes |
+| New article topic hub | `/stati/` or `/stati/[slug]/` | defer until unique article set and demand baseline exist |
+| New support cluster | `/baza-znaniy/` or product KB details | keep as product KB detail unless it has standalone support demand |
+| Legal/company variant | `/politika/`, `/soglasie/`, `/obrabotka-dannyh/`, `/rekvizity/`, `/o-kompanii/` | do not create duplicate legal/trust routes |
+
+Forbidden overlap review passes only when the proposed route has one canonical
+primary intent and every related existing route has a different role. If two
+routes would answer the same primary question, the new route is rejected and the
+existing route is updated instead.
+
+### 13.4 Decision examples
+
+| Decision | Verdict | Reason |
+|---|---|---|
+| Add `/impuls/meditsina/` before owner-approved medical case evidence | FAIL | niche route lacks evidence and risks cannibalizing `/impuls/` |
+| Add `/keisy/[slug]/` for one approved case with method, period and permission | PASS | detail route has unique evidence and does not replace `/keisy/` hub |
+| Add `/stoimost-lidogeneratsii/` while `/tarify/` and `/raschety/` already own price intent | FAIL | price/calculation intent is already owned |
+| Add `/stati/operatornye-auditorii/` for a unique editorial explanation linked to `/impuls/` | PASS if article has unique intent and approved claims | article supports the product route without replacing it |
+| Add `/baza-znaniy/pixel/ustanovka/` for installation steps | PASS if instruction is current and useful standalone | support detail owns a task, not a commercial query |
+
+## 14. Entity Layer
 
 | Entity | Core attributes | Relations |
 |---|---|---|
@@ -268,7 +344,7 @@ Editorial/SEO-контент: объяснение рынка, проблем, �
 
 Relations use stable refs. Product pages never own duplicate embedded copies of case/article entities.
 
-## 14. Internal Linking Rules
+## 15. Internal Linking Rules
 
 - Главная ссылается на все продукты и основные trust-разделы.
 - Каждая статья ведёт на один primary product и 1–3 related materials.
@@ -278,7 +354,7 @@ Relations use stable refs. Product pages never own duplicate embedded copies of 
 - Footer обеспечивает постоянный доступ к legal и основным hubs.
 - Breadcrumbs обязательны для case/article/KB detail pages.
 
-## 15. Thin Content Guard
+## 16. Thin Content Guard
 
 Маршрут не становится indexable, пока у него нет:
 
@@ -290,7 +366,7 @@ Relations use stable refs. Product pages never own duplicate embedded copies of 
 
 Route skeleton во время разработки имеет `noindex` либо не включается в published content/sitemap.
 
-## 16. Open Decisions
+## 17. Open Decisions
 
 - Финальное коммерческое подназвание продукта «Импульс».
 - Названия и приоритет трёх ниш.
