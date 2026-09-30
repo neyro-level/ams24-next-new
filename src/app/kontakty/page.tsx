@@ -25,6 +25,7 @@ export default function ContactsPage() {
           <SectionHeader
             eyebrow="Контакты"
             title="Оставьте задачу для расчёта"
+            level={1}
             lead="Страница уже показывает будущий путь заявки, но live-отправка выключена: мы не отправляем персональные данные без утверждённого API, consent-текста и антиспам-решения."
           />
         </Container>

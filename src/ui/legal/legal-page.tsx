@@ -66,6 +66,7 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
           <SectionHeader
             eyebrow="Legal guard"
             title={page.h1}
+            level={1}
             lead="Это не финальный юридический текст. Страница создана как безопасная цель для ссылок согласия и будет наполнена после OD-03 legal review."
           />
         </Container>
