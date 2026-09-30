@@ -102,7 +102,8 @@ export function LeadForm({
 
       <Button
         aria-disabled="true"
-        className="mt-6 h-12 w-full"
+        className="mt-6 w-full"
+        size="xl"
         data-analytics-event="lead_form_submit_blocked"
         disabled={!availability.submissionEnabled}
         type="submit"
