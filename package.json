@@ -13,8 +13,11 @@
     "guard:static": "node scripts/verify-static-next.mjs",
     "guard:static:self-test": "node scripts/verify-static-next.mjs --self-test",
     "guard:artifact": "node scripts/verify-static-artifact.mjs",
+    "verify:runtime": "node scripts/verify-runtime-versions.mjs",
+    "verify:runtime:self-test": "node scripts/verify-runtime-versions.mjs --self-test",
     "verify:sourcecraft": "node scripts/verify-sourcecraft-ci.mjs",
-    "verify": "pnpm typecheck && pnpm lint && pnpm verify:content-graph && pnpm test:content && pnpm verify:sourcecraft && pnpm guard:static:self-test && pnpm guard:static",
+    "verify:sourcecraft:self-test": "node scripts/verify-sourcecraft-ci.mjs --self-test",
+    "verify": "pnpm verify:runtime:self-test && pnpm verify:runtime && pnpm typecheck && pnpm lint && pnpm verify:content-graph && pnpm test:content && pnpm verify:sourcecraft:self-test && pnpm verify:sourcecraft && pnpm guard:static:self-test && pnpm guard:static",
     "verify:release": "pnpm verify && pnpm build && pnpm guard:artifact"
   },
   "dependencies": {
