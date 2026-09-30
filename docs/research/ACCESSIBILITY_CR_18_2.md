@@ -1,8 +1,8 @@
 # CR-18.2 — Accessibility proof
 
-Date: 2026-09-30  
-Task: `ams24r-cr-18-2`  
-Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`  
+Date: 2026-09-30
+Task: `ams24r-cr-18-2`
+Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`
 Scope: semantics, keyboard, focus, labels, errors, contrast, alt, touch and reduced motion.
 
 ## Result

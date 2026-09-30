@@ -1,8 +1,8 @@
 # CR-18.3 — Mobile LCP/CLS performance proof
 
-Date: 2026-09-30  
-Task: `ams24r-cr-18-3`  
-Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`  
+Date: 2026-09-30
+Task: `ams24r-cr-18-3`
+Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`
 Scope: representative mobile LCP/CLS measurement against approved thresholds.
 
 ## Result

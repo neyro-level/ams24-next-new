@@ -1,7 +1,7 @@
 # Browser E2E Report — CR-18.1
 
-Date: 2026-09-30  
-Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`  
+Date: 2026-09-30
+Plan: `AMS24-CONSTITUTION-REMEDIATION-2026 v3`
 Task: `CR-18.1 — browser E2E covers representative route/navigation/404/lead surfaces`
 
 ## Scope
