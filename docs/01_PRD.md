@@ -161,17 +161,40 @@ Supporting actions:
 - `/impuls/` and `/` must avoid paragraph-level duplication: `/` routes the user,
   `/impuls/` explains the main product in depth.
 
+### Conversion and SEO Ownership Placeholders
+
+Пока нет подтверждённой аналитики, PRD фиксирует владельца измерения, а не
+числовую цель. Любой KPI, прогноз, тарифный эффект или SEO-обещание до
+baseline остаётся `REQUIRES_MEASUREMENT` либо `OWNER_DECISION`.
+
+| Route | Conversion owner | Primary conversion event | SEO intent owner | Measurable SEO placeholder | Release rule |
+|---|---|---|---|---|---|
+| `/` | owner + implementation | `lead_submit` with `sourcePath=/` or product selection click | SEO + product | `REQUIRES_MEASUREMENT: branded/platform intent baseline` | publishable after route/H1/metadata proof and no unsupported claims |
+| `/impuls/` | owner | `lead_submit` with `product=impuls` | SEO + product | `REQUIRES_MEASUREMENT: lead-generation product intent baseline` | publishable only with distinct intent from `/` and safe operator wording |
+| `/pixel/` | owner | `lead_submit` with `product=pixel` | SEO + product | `REQUIRES_MEASUREMENT: pixel/visitor-identification intent baseline` | publishable only after legal/data wording is approved |
+| `/zashchita/` | owner | `lead_submit` with `product=zashchita` | SEO + product | `REQUIRES_MEASUREMENT: lead-protection/problem intent baseline` | publishable only with bounded, non-absolute protection claims |
+| `/tarify/` | owner | `lead_submit` with `sourcePath=/tarify/` | SEO + commercial | `OWNER_DECISION: tariff intent terms and public price policy` | no public prices/ranges until OD-02 is resolved |
+| `/raschety/` | owner | `lead_submit` with `sourcePath=/raschety/` | SEO + commercial | `OWNER_DECISION: calculation scenario terms and assumptions` | examples hidden/noindex until calculation rules are approved |
+| `/keisy/` | owner + editorial | case detail view and `lead_submit` from cases context | SEO + editorial | `REQUIRES_MEASUREMENT: case/niche intent baseline` | only approved cases with source/period/method/permission |
+| `/otzyvy/` | owner + editorial | review-assisted `lead_submit` | SEO + editorial | `OWNER_DECISION: testimonial intent and permission model` | only approved testimonials with source/permission state |
+| `/kontakty/` | owner + implementation | `lead_submit` with `sourcePath=/kontakty/` | product | `REQUIRES_MEASUREMENT: contact-route assisted conversion baseline` | live submit only after AMS Leads API/legal/anti-spam approvals |
+
+Conversion ownership means responsibility for accepting public copy, CTA context
+and measurement evidence. SEO ownership means responsibility for intent,
+indexability, canonical and metadata decisions. Implementation may add guards and
+tests, but cannot invent commercial targets or approve claims.
+
 ## 11. Success Metrics
 
 До публикации baseline метрик требует проверки. Не выдумывать целевые значения.
 
-| Метрика | Baseline | Target | Owner |
-|---|---:|---:|---|
-| валидные заявки с сайта в месяц | TODO | TODO | owner |
-| конверсия ключевых продуктовых страниц | TODO | TODO | owner |
-| доля заявок с заполненным source/page context | TODO | TODO | implementation |
-| органические переходы на продуктовые кластеры | TODO | TODO | SEO |
-| индексируемые страницы без критических SEO-ошибок | TODO | 100% | implementation |
+| Метрика | Baseline | Target | Owner | Status |
+|---|---:|---:|---|---|
+| валидные заявки с сайта в месяц | TODO | TODO | owner | `OWNER_DECISION` |
+| конверсия ключевых продуктовых страниц | TODO | TODO | owner | `REQUIRES_MEASUREMENT` |
+| доля заявок с заполненным source/page context | TODO | TODO | implementation | `REQUIRES_MEASUREMENT` |
+| органические переходы на продуктовые кластеры | TODO | TODO | SEO | `REQUIRES_MEASUREMENT` |
+| индексируемые страницы без критических SEO-ошибок | TODO | 100% | implementation | mechanical release acceptance |
 
 ## 12. Business Rules
 
