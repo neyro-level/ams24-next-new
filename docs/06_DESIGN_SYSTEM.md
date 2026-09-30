@@ -36,6 +36,7 @@ Normalized roles: created for foundation
 Token source: src/app/globals.css
 Fixture: src/ui/foundation/token-fixture.tsx
 Primitive foundation: components.json + src/ui/primitives/button.tsx
+Duplication inventory: docs/research/UI_PRIMITIVE_TOKEN_DUPLICATION_INVENTORY_CR_11_1.md
 Representative page: /
 Design Intake completed: FOUNDATION ONLY
 ```
