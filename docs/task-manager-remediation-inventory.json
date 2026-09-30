@@ -1,0 +1,4899 @@
+{
+  "schema_version": 2,
+  "beads_prefix": "ams24r",
+  "source": {
+    "plan_id": "AMS24-CONSTITUTION-REMEDIATION-2026",
+    "path": "docs/04_BACKLOG.md",
+    "version": "v3",
+    "status": "APPROVED",
+    "approved_by": "owner",
+    "approved_at": "2026-09-30T11:18:31.4279665+03:00",
+    "sha256": "2c663f2fb01a4fa3f5e1c6ea6b25a8b227d1e74c559687fd54b05052018dbb43",
+    "epic_anchors": [
+      "EPIC-00",
+      "EPIC-01",
+      "EPIC-02",
+      "EPIC-03",
+      "EPIC-04",
+      "EPIC-05",
+      "EPIC-06",
+      "EPIC-07",
+      "EPIC-08",
+      "EPIC-09",
+      "EPIC-10",
+      "EPIC-11",
+      "EPIC-12",
+      "EPIC-13",
+      "EPIC-14",
+      "EPIC-15",
+      "EPIC-16",
+      "EPIC-17",
+      "EPIC-18",
+      "EPIC-19",
+      "EPIC-20"
+    ]
+  },
+  "repositories": [
+    {
+      "key": "control",
+      "remote": "https://git.sourcecraft.dev/integrator-p/ams24-next-new.git",
+      "default_branch": "main"
+    }
+  ],
+  "nodes": [
+    {
+      "key": "CR-EPIC-00",
+      "title": "EPIC-00 — Documentation Canon Repair",
+      "type": "epic",
+      "source_anchor": "EPIC-00",
+      "goal": "Deliver the approved outcome for EPIC-00 — Documentation Canon Repair.",
+      "scope": [
+        "Approved remediation scope for EPIC-00 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-00 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:00",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-01",
+      "title": "EPIC-01 — PRD and Commercial Page Contract",
+      "type": "epic",
+      "source_anchor": "EPIC-01",
+      "goal": "Deliver the approved outcome for EPIC-01 — PRD and Commercial Page Contract.",
+      "scope": [
+        "Approved remediation scope for EPIC-01 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-01 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:01",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-02",
+      "title": "EPIC-02 — Information Architecture Hardening",
+      "type": "epic",
+      "source_anchor": "EPIC-02",
+      "goal": "Deliver the approved outcome for EPIC-02 — Information Architecture Hardening.",
+      "scope": [
+        "Approved remediation scope for EPIC-02 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-02 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:02",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-03",
+      "title": "EPIC-03 — Canonical SEO System",
+      "type": "epic",
+      "source_anchor": "EPIC-03",
+      "goal": "Deliver the approved outcome for EPIC-03 — Canonical SEO System.",
+      "scope": [
+        "Approved remediation scope for EPIC-03 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-03 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:03",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-04",
+      "title": "EPIC-04 — Technical Architecture Reconciliation",
+      "type": "epic",
+      "source_anchor": "EPIC-04",
+      "goal": "Deliver the approved outcome for EPIC-04 — Technical Architecture Reconciliation.",
+      "scope": [
+        "Approved remediation scope for EPIC-04 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-04 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:04",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-05",
+      "title": "EPIC-05 — Accessibility Foundation Fix",
+      "type": "epic",
+      "source_anchor": "EPIC-05",
+      "goal": "Deliver the approved outcome for EPIC-05 — Accessibility Foundation Fix.",
+      "scope": [
+        "Approved remediation scope for EPIC-05 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-05 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:05",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-06",
+      "title": "EPIC-06 — Restore Content Boundary",
+      "type": "epic",
+      "source_anchor": "EPIC-06",
+      "goal": "Deliver the approved outcome for EPIC-06 — Restore Content Boundary.",
+      "scope": [
+        "Approved remediation scope for EPIC-06 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-06 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:06",
+        "risk:risky"
+      ]
+    },
+    {
+      "key": "CR-EPIC-07",
+      "title": "EPIC-07 — Content Graph Validation",
+      "type": "epic",
+      "source_anchor": "EPIC-07",
+      "goal": "Deliver the approved outcome for EPIC-07 — Content Graph Validation.",
+      "scope": [
+        "Approved remediation scope for EPIC-07 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-07 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:07",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-08",
+      "title": "EPIC-08 — SEO Implementation",
+      "type": "epic",
+      "source_anchor": "EPIC-08",
+      "goal": "Deliver the approved outcome for EPIC-08 — SEO Implementation.",
+      "scope": [
+        "Approved remediation scope for EPIC-08 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-08 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:08",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-09",
+      "title": "EPIC-09 — Evidence and Public Commercial Truth",
+      "type": "epic",
+      "source_anchor": "EPIC-09",
+      "goal": "Deliver the approved outcome for EPIC-09 — Evidence and Public Commercial Truth.",
+      "scope": [
+        "Approved remediation scope for EPIC-09 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-09 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:09",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-10",
+      "title": "EPIC-10 — UI Composition Remediation",
+      "type": "epic",
+      "source_anchor": "EPIC-10",
+      "goal": "Deliver the approved outcome for EPIC-10 — UI Composition Remediation.",
+      "scope": [
+        "Approved remediation scope for EPIC-10 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-10 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:10",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-11",
+      "title": "EPIC-11 — Canonical UI Primitives",
+      "type": "epic",
+      "source_anchor": "EPIC-11",
+      "goal": "Deliver the approved outcome for EPIC-11 — Canonical UI Primitives.",
+      "scope": [
+        "Approved remediation scope for EPIC-11 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-11 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:11",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-12",
+      "title": "EPIC-12 — Blocks and Rich Text",
+      "type": "epic",
+      "source_anchor": "EPIC-12",
+      "goal": "Deliver the approved outcome for EPIC-12 — Blocks and Rich Text.",
+      "scope": [
+        "Approved remediation scope for EPIC-12 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-12 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:12",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-13",
+      "title": "EPIC-13 — Leads, Legal and Analytics",
+      "type": "epic",
+      "source_anchor": "EPIC-13",
+      "goal": "Deliver the approved outcome for EPIC-13 — Leads, Legal and Analytics.",
+      "scope": [
+        "Approved remediation scope for EPIC-13 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-13 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:13",
+        "risk:risky"
+      ]
+    },
+    {
+      "key": "CR-EPIC-14",
+      "title": "EPIC-14 — Static Architecture Guards",
+      "type": "epic",
+      "source_anchor": "EPIC-14",
+      "goal": "Deliver the approved outcome for EPIC-14 — Static Architecture Guards.",
+      "scope": [
+        "Approved remediation scope for EPIC-14 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-14 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:14",
+        "risk:risky"
+      ]
+    },
+    {
+      "key": "CR-EPIC-15",
+      "title": "EPIC-15 — Verification Model",
+      "type": "epic",
+      "source_anchor": "EPIC-15",
+      "goal": "Deliver the approved outcome for EPIC-15 — Verification Model.",
+      "scope": [
+        "Approved remediation scope for EPIC-15 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-15 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:15",
+        "risk:risky"
+      ]
+    },
+    {
+      "key": "CR-EPIC-16",
+      "title": "EPIC-16 — SourceCraft Reproducibility",
+      "type": "epic",
+      "source_anchor": "EPIC-16",
+      "goal": "Deliver the approved outcome for EPIC-16 — SourceCraft Reproducibility.",
+      "scope": [
+        "Approved remediation scope for EPIC-16 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-16 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:16",
+        "risk:risky"
+      ]
+    },
+    {
+      "key": "CR-EPIC-17",
+      "title": "EPIC-17 — Operations and Nginx Contract",
+      "type": "epic",
+      "source_anchor": "EPIC-17",
+      "goal": "Deliver the approved outcome for EPIC-17 — Operations and Nginx Contract.",
+      "scope": [
+        "Approved remediation scope for EPIC-17 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-17 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:17",
+        "risk:risky"
+      ]
+    },
+    {
+      "key": "CR-EPIC-18",
+      "title": "EPIC-18 — Browser, Accessibility and Performance Proof",
+      "type": "epic",
+      "source_anchor": "EPIC-18",
+      "goal": "Deliver the approved outcome for EPIC-18 — Browser, Accessibility and Performance Proof.",
+      "scope": [
+        "Approved remediation scope for EPIC-18 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-18 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:18",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-19",
+      "title": "EPIC-19 — Final SEO and UI Drift Audit",
+      "type": "epic",
+      "source_anchor": "EPIC-19",
+      "goal": "Deliver the approved outcome for EPIC-19 — Final SEO and UI Drift Audit.",
+      "scope": [
+        "Approved remediation scope for EPIC-19 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-19 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:19",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-EPIC-20",
+      "title": "EPIC-20 — Final Documentation Reconciliation",
+      "type": "epic",
+      "source_anchor": "EPIC-20",
+      "goal": "Deliver the approved outcome for EPIC-20 — Final Documentation Reconciliation.",
+      "scope": [
+        "Approved remediation scope for EPIC-20 in docs/04_BACKLOG.md"
+      ],
+      "acceptance_criteria": [
+        "All implementation tasks and the terminal delivery task for EPIC-20 are completed with required evidence."
+      ],
+      "depends_on": [],
+      "propagate_dependencies_to_children": false,
+      "delivery_mode": "MERGE_AFTER_GATE",
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md"
+      ],
+      "allowed_actions": [
+        "plan",
+        "edit",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release",
+        "new secret or irreversible external action",
+        "conflict with approved Source of Truth"
+      ],
+      "priority": 1,
+      "labels": [
+        "wave:20",
+        "risk:standard"
+      ]
+    },
+    {
+      "key": "CR-00.1",
+      "title": "baseline claims are classified as proven, unknown or false",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-00",
+      "source_anchor": "CR-00.1",
+      "goal": "baseline claims are classified as proven, unknown or false",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: baseline claims are classified as proven, unknown or false"
+      ],
+      "acceptance_criteria": [
+        "exact-SHA evidence register and docs diff"
+      ],
+      "required_checks": [
+        "exact-SHA evidence register and docs diff"
+      ],
+      "depends_on": [],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:00",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-00.2",
+      "title": "docs map, Architecture, Design System and Release Checklist report current state",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-00",
+      "source_anchor": "CR-00.2",
+      "goal": "docs map, Architecture, Design System and Release Checklist report current state",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: docs map, Architecture, Design System and Release Checklist report current state"
+      ],
+      "acceptance_criteria": [
+        "cross-reference scan; no false PASS/DONE"
+      ],
+      "required_checks": [
+        "cross-reference scan; no false PASS/DONE"
+      ],
+      "depends_on": [
+        "CR-00.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:00",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-00.D",
+      "title": "EPIC-00 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-00",
+      "source_anchor": "CR-00.D",
+      "goal": "EPIC-00 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-00 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "PR source/target/head, review, green exact-head gate, merge SHA"
+      ],
+      "required_checks": [
+        "PR source/target/head, review, green exact-head gate, merge SHA"
+      ],
+      "depends_on": [
+        "CR-00.1",
+        "CR-00.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:00",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-01.1",
+      "title": "primary commercial routes have complete business contracts",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-01",
+      "source_anchor": "CR-01.1",
+      "goal": "primary commercial routes have complete business contracts",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: primary commercial routes have complete business contracts"
+      ],
+      "acceptance_criteria": [
+        "requirements matrix across named routes"
+      ],
+      "required_checks": [
+        "requirements matrix across named routes"
+      ],
+      "depends_on": [],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:01",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-01.2",
+      "title": "conversion ownership and measurable SEO goal placeholders are explicit",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-01",
+      "source_anchor": "CR-01.2",
+      "goal": "conversion ownership and measurable SEO goal placeholders are explicit",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: conversion ownership and measurable SEO goal placeholders are explicit"
+      ],
+      "acceptance_criteria": [
+        "PRD cross-check; no invented KPI"
+      ],
+      "required_checks": [
+        "PRD cross-check; no invented KPI"
+      ],
+      "depends_on": [
+        "CR-01.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:01",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-01.D",
+      "title": "EPIC-01 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-01",
+      "source_anchor": "CR-01.D",
+      "goal": "EPIC-01 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-01 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-01.1",
+        "CR-01.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:01",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-02.1",
+      "title": "route classes and expanded Page Role Map are canonical",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-02",
+      "source_anchor": "CR-02.1",
+      "goal": "route classes and expanded Page Role Map are canonical",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: route classes and expanded Page Role Map are canonical"
+      ],
+      "acceptance_criteria": [
+        "route inventory coverage and unique owner check"
+      ],
+      "required_checks": [
+        "route inventory coverage and unique owner check"
+      ],
+      "depends_on": [],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:02",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-02.2",
+      "title": "expansion, niche and cannibalization gates are deterministic",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-02",
+      "source_anchor": "CR-02.2",
+      "goal": "expansion, niche and cannibalization gates are deterministic",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: expansion, niche and cannibalization gates are deterministic"
+      ],
+      "acceptance_criteria": [
+        "decision examples and forbidden-overlap review"
+      ],
+      "required_checks": [
+        "decision examples and forbidden-overlap review"
+      ],
+      "depends_on": [
+        "CR-02.1",
+        "CR-01.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:02",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-02.D",
+      "title": "EPIC-02 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-02",
+      "source_anchor": "CR-02.D",
+      "goal": "EPIC-02 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-02 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-02.1",
+        "CR-02.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:02",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-03.1",
+      "title": "`07_SEO_SYSTEM.md` defines source priority and intent ownership",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-03",
+      "source_anchor": "CR-03.1",
+      "goal": "`07_SEO_SYSTEM.md` defines source priority and intent ownership",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: `07_SEO_SYSTEM.md` defines source priority and intent ownership"
+      ],
+      "acceptance_criteria": [
+        "duplicate-policy scan and cluster contract review"
+      ],
+      "required_checks": [
+        "duplicate-policy scan and cluster contract review"
+      ],
+      "depends_on": [
+        "CR-01.D",
+        "CR-02.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:03",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-03.2",
+      "title": "indexability, metadata, H1, canonical, robots and sitemap contracts are deterministic",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-03",
+      "source_anchor": "CR-03.2",
+      "goal": "indexability, metadata, H1, canonical, robots and sitemap contracts are deterministic",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: indexability, metadata, H1, canonical, robots and sitemap contracts are deterministic"
+      ],
+      "acceptance_criteria": [
+        "policy decision table with index/noindex examples"
+      ],
+      "required_checks": [
+        "policy decision table with index/noindex examples"
+      ],
+      "depends_on": [
+        "CR-03.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:03",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-03.3",
+      "title": "linking, schema, media, redirects and release proof are deterministic",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-03",
+      "source_anchor": "CR-03.3",
+      "goal": "linking, schema, media, redirects and release proof are deterministic",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: linking, schema, media, redirects and release proof are deterministic"
+      ],
+      "acceptance_criteria": [
+        "eligibility/redirect/proof matrices"
+      ],
+      "required_checks": [
+        "eligibility/redirect/proof matrices"
+      ],
+      "depends_on": [
+        "CR-03.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:03",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-03.D",
+      "title": "EPIC-03 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-03",
+      "source_anchor": "CR-03.D",
+      "goal": "EPIC-03 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-03 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-03.1",
+        "CR-03.2",
+        "CR-03.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:03",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-04.1",
+      "title": "actual module/import ownership baseline is documented",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-04",
+      "source_anchor": "CR-04.1",
+      "goal": "actual module/import ownership baseline is documented",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: actual module/import ownership baseline is documented"
+      ],
+      "acceptance_criteria": [
+        "source inventory plus targeted dependency evidence"
+      ],
+      "required_checks": [
+        "source inventory plus targeted dependency evidence"
+      ],
+      "depends_on": [
+        "CR-00.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:04",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-04.2",
+      "title": "allowed dependency direction and single owners are frozen",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-04",
+      "source_anchor": "CR-04.2",
+      "goal": "allowed dependency direction and single owners are frozen",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: allowed dependency direction and single owners are frozen"
+      ],
+      "acceptance_criteria": [
+        "ownership matrix; no competing owner"
+      ],
+      "required_checks": [
+        "ownership matrix; no competing owner"
+      ],
+      "depends_on": [
+        "CR-04.1",
+        "CR-03.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:04",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-04.D",
+      "title": "EPIC-04 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-04",
+      "source_anchor": "CR-04.D",
+      "goal": "EPIC-04 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-04 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-04.1",
+        "CR-04.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:04",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-05.1",
+      "title": "`SectionHeader` supports semantic heading level independent of visual role",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-05",
+      "source_anchor": "CR-05.1",
+      "goal": "`SectionHeader` supports semantic heading level independent of visual role",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: `SectionHeader` supports semantic heading level independent of visual role"
+      ],
+      "acceptance_criteria": [
+        "focused component tests and typecheck"
+      ],
+      "required_checks": [
+        "focused component tests and typecheck"
+      ],
+      "depends_on": [
+        "CR-04.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:05",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-05.2",
+      "title": "standalone/legal/contact routes have one H1 and correct dark/light tone",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-05",
+      "source_anchor": "CR-05.2",
+      "goal": "standalone/legal/contact routes have one H1 and correct dark/light tone",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: standalone/legal/contact routes have one H1 and correct dark/light tone"
+      ],
+      "acceptance_criteria": [
+        "rendered route matrix; H1/tone assertions"
+      ],
+      "required_checks": [
+        "rendered route matrix; H1/tone assertions"
+      ],
+      "depends_on": [
+        "CR-05.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:05",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-05.3",
+      "title": "heading hierarchy and tone regressions fail tests",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-05",
+      "source_anchor": "CR-05.3",
+      "goal": "heading hierarchy and tone regressions fail tests",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: heading hierarchy and tone regressions fail tests"
+      ],
+      "acceptance_criteria": [
+        "negative/representative fixtures"
+      ],
+      "required_checks": [
+        "negative/representative fixtures"
+      ],
+      "depends_on": [
+        "CR-05.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:05",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-05.D",
+      "title": "EPIC-05 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-05",
+      "source_anchor": "CR-05.D",
+      "goal": "EPIC-05 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-05 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-05.1",
+        "CR-05.2",
+        "CR-05.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:05",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-06.1",
+      "title": "repository contract is independent from Local Adapter",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-06",
+      "source_anchor": "CR-06.1",
+      "goal": "repository contract is independent from Local Adapter",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: repository contract is independent from Local Adapter"
+      ],
+      "acceptance_criteria": [
+        "typecheck, unit tests, dependency inspection"
+      ],
+      "required_checks": [
+        "typecheck, unit tests, dependency inspection"
+      ],
+      "depends_on": [
+        "CR-04.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:06",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-06.2",
+      "title": "services expose validated settings/navigation/content ViewModels",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-06",
+      "source_anchor": "CR-06.2",
+      "goal": "services expose validated settings/navigation/content ViewModels",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: services expose validated settings/navigation/content ViewModels"
+      ],
+      "acceptance_criteria": [
+        "service tests with invalid fixtures"
+      ],
+      "required_checks": [
+        "service tests with invalid fixtures"
+      ],
+      "depends_on": [
+        "CR-06.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:06",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-06.3",
+      "title": "routes/UI no longer import forbidden project implementations",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-06",
+      "source_anchor": "CR-06.3",
+      "goal": "routes/UI no longer import forbidden project implementations",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: routes/UI no longer import forbidden project implementations"
+      ],
+      "acceptance_criteria": [
+        "import guard plus targeted route tests"
+      ],
+      "required_checks": [
+        "import guard plus targeted route tests"
+      ],
+      "depends_on": [
+        "CR-06.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:06",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-06.D",
+      "title": "EPIC-06 PR reviewed, RISKY-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-06",
+      "source_anchor": "CR-06.D",
+      "goal": "EPIC-06 PR reviewed, RISKY-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-06 PR reviewed, RISKY-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "full diff review, boundary proof, exact-head gate, merge SHA"
+      ],
+      "required_checks": [
+        "full diff review, boundary proof, exact-head gate, merge SHA"
+      ],
+      "depends_on": [
+        "CR-06.1",
+        "CR-06.2",
+        "CR-06.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:06",
+        "risk:risky",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-09.1",
+      "title": "one publication/evidence gate controls public proof/claims",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-09",
+      "source_anchor": "CR-09.1",
+      "goal": "one publication/evidence gate controls public proof/claims",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: one publication/evidence gate controls public proof/claims"
+      ],
+      "acceptance_criteria": [
+        "allowed/denied fixtures and evidence matrix"
+      ],
+      "required_checks": [
+        "allowed/denied fixtures and evidence matrix"
+      ],
+      "depends_on": [
+        "CR-01.D",
+        "CR-04.D",
+        "CR-06.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/02_PRODUCT_STRUCTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:09",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-09.2",
+      "title": "public routes contain no internal implementation vocabulary",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-09",
+      "source_anchor": "CR-09.2",
+      "goal": "public routes contain no internal implementation vocabulary",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: public routes contain no internal implementation vocabulary"
+      ],
+      "acceptance_criteria": [
+        "rendered-copy scan and route tests"
+      ],
+      "required_checks": [
+        "rendered-copy scan and route tests"
+      ],
+      "depends_on": [
+        "CR-09.1",
+        "CR-05.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/02_PRODUCT_STRUCTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:09",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-09.3",
+      "title": "unsupported content cannot enter indexable UI",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-09",
+      "source_anchor": "CR-09.3",
+      "goal": "unsupported content cannot enter indexable UI",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: unsupported content cannot enter indexable UI"
+      ],
+      "acceptance_criteria": [
+        "negative regression fixtures"
+      ],
+      "required_checks": [
+        "negative regression fixtures"
+      ],
+      "depends_on": [
+        "CR-09.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/02_PRODUCT_STRUCTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:09",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-09.D",
+      "title": "EPIC-09 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-09",
+      "source_anchor": "CR-09.D",
+      "goal": "EPIC-09 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-09 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-09.1",
+        "CR-09.2",
+        "CR-09.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/02_PRODUCT_STRUCTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:09",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-11.1",
+      "title": "primitive/token duplication inventory is complete",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-11",
+      "source_anchor": "CR-11.1",
+      "goal": "primitive/token duplication inventory is complete",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: primitive/token duplication inventory is complete"
+      ],
+      "acceptance_criteria": [
+        "code/token inventory with reuse decisions"
+      ],
+      "required_checks": [
+        "code/token inventory with reuse decisions"
+      ],
+      "depends_on": [],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:11",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-11.2",
+      "title": "CTA/form visuals use canonical primitives without semantic link loss",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-11",
+      "source_anchor": "CR-11.2",
+      "goal": "CTA/form visuals use canonical primitives without semantic link loss",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: CTA/form visuals use canonical primitives without semantic link loss"
+      ],
+      "acceptance_criteria": [
+        "component/render/accessibility tests"
+      ],
+      "required_checks": [
+        "component/render/accessibility tests"
+      ],
+      "depends_on": [
+        "CR-11.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:11",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-11.3",
+      "title": "raw color, arbitrary value, dead token and dark-variant drift is classified/fixed",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-11",
+      "source_anchor": "CR-11.3",
+      "goal": "raw color, arbitrary value, dead token and dark-variant drift is classified/fixed",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: raw color, arbitrary value, dead token and dark-variant drift is classified/fixed"
+      ],
+      "acceptance_criteria": [
+        "mechanical scan plus exception list"
+      ],
+      "required_checks": [
+        "mechanical scan plus exception list"
+      ],
+      "depends_on": [
+        "CR-11.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:11",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-11.D",
+      "title": "EPIC-11 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-11",
+      "source_anchor": "CR-11.D",
+      "goal": "EPIC-11 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-11 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-11.1",
+        "CR-11.2",
+        "CR-11.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:11",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-14.1",
+      "title": "static-runtime violations are covered by guards",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-14",
+      "source_anchor": "CR-14.1",
+      "goal": "static-runtime violations are covered by guards",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: static-runtime violations are covered by guards"
+      ],
+      "acceptance_criteria": [
+        "seeded invalid fixtures per static rule"
+      ],
+      "required_checks": [
+        "seeded invalid fixtures per static rule"
+      ],
+      "depends_on": [
+        "CR-04.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:14",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-14.2",
+      "title": "boundary, CRM and public-secret violations are covered",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-14",
+      "source_anchor": "CR-14.2",
+      "goal": "boundary, CRM and public-secret violations are covered",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: boundary, CRM and public-secret violations are covered"
+      ],
+      "acceptance_criteria": [
+        "seeded invalid fixtures per boundary/security rule"
+      ],
+      "required_checks": [
+        "seeded invalid fixtures per boundary/security rule"
+      ],
+      "depends_on": [
+        "CR-06.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:14",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-14.3",
+      "title": "guard self-test proves every rule fails its fixture and passes repository",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-14",
+      "source_anchor": "CR-14.3",
+      "goal": "guard self-test proves every rule fails its fixture and passes repository",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: guard self-test proves every rule fails its fixture and passes repository"
+      ],
+      "acceptance_criteria": [
+        "self-test transcript"
+      ],
+      "required_checks": [
+        "self-test transcript"
+      ],
+      "depends_on": [
+        "CR-14.1",
+        "CR-14.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:14",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-14.D",
+      "title": "EPIC-14 PR reviewed, RISKY-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-14",
+      "source_anchor": "CR-14.D",
+      "goal": "EPIC-14 PR reviewed, RISKY-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-14 PR reviewed, RISKY-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "tooling review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "tooling review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-14.1",
+        "CR-14.2",
+        "CR-14.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:14",
+        "risk:risky",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-07.1",
+      "title": "one content-graph validator contract owns cross-entity validation",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-07",
+      "source_anchor": "CR-07.1",
+      "goal": "one content-graph validator contract owns cross-entity validation",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: one content-graph validator contract owns cross-entity validation"
+      ],
+      "acceptance_criteria": [
+        "validator API and ownership tests"
+      ],
+      "required_checks": [
+        "validator API and ownership tests"
+      ],
+      "depends_on": [
+        "CR-03.D",
+        "CR-06.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:07",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-07.2",
+      "title": "every declared invariant has a negative fixture",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-07",
+      "source_anchor": "CR-07.2",
+      "goal": "every declared invariant has a negative fixture",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: every declared invariant has a negative fixture"
+      ],
+      "acceptance_criteria": [
+        "parameterized negative-test matrix"
+      ],
+      "required_checks": [
+        "parameterized negative-test matrix"
+      ],
+      "depends_on": [
+        "CR-07.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:07",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-07.3",
+      "title": "daily verification invokes graph validation exactly once",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-07",
+      "source_anchor": "CR-07.3",
+      "goal": "daily verification invokes graph validation exactly once",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: daily verification invokes graph validation exactly once"
+      ],
+      "acceptance_criteria": [
+        "command trace and failure propagation test"
+      ],
+      "required_checks": [
+        "command trace and failure propagation test"
+      ],
+      "depends_on": [
+        "CR-07.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:07",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-07.D",
+      "title": "EPIC-07 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-07",
+      "source_anchor": "CR-07.D",
+      "goal": "EPIC-07 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-07 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-07.1",
+        "CR-07.2",
+        "CR-07.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:07",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-10.1",
+      "title": "page/section ownership map avoids shared-file conflicts",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-10",
+      "source_anchor": "CR-10.1",
+      "goal": "page/section ownership map avoids shared-file conflicts",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: page/section ownership map avoids shared-file conflicts"
+      ],
+      "acceptance_criteria": [
+        "route-to-component matrix"
+      ],
+      "required_checks": [
+        "route-to-component matrix"
+      ],
+      "depends_on": [
+        "CR-05.D",
+        "CR-06.D",
+        "CR-09.D",
+        "CR-11.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:10",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-10.2",
+      "title": "primary route entrypoints are composition-only",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-10",
+      "source_anchor": "CR-10.2",
+      "goal": "primary route entrypoints are composition-only",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: primary route entrypoints are composition-only"
+      ],
+      "acceptance_criteria": [
+        "dependency/readability review and route tests"
+      ],
+      "required_checks": [
+        "dependency/readability review and route tests"
+      ],
+      "depends_on": [
+        "CR-10.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:10",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-10.3",
+      "title": "shared components exist only for proven reuse",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-10",
+      "source_anchor": "CR-10.3",
+      "goal": "shared components exist only for proven reuse",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: shared components exist only for proven reuse"
+      ],
+      "acceptance_criteria": [
+        "reuse inventory; no universal builder"
+      ],
+      "required_checks": [
+        "reuse inventory; no universal builder"
+      ],
+      "depends_on": [
+        "CR-10.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:10",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-10.D",
+      "title": "EPIC-10 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-10",
+      "source_anchor": "CR-10.D",
+      "goal": "EPIC-10 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-10 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-10.1",
+        "CR-10.2",
+        "CR-10.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:10",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-12.1",
+      "title": "block/RichText inventory identifies reachable and speculative formats",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-12",
+      "source_anchor": "CR-12.1",
+      "goal": "block/RichText inventory identifies reachable and speculative formats",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: block/RichText inventory identifies reachable and speculative formats"
+      ],
+      "acceptance_criteria": [
+        "reachability inventory"
+      ],
+      "required_checks": [
+        "reachability inventory"
+      ],
+      "depends_on": [
+        "CR-06.D",
+        "CR-07.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:12",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-12.2",
+      "title": "supported blocks follow schema-to-component registry and unknown blocks fail",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-12",
+      "source_anchor": "CR-12.2",
+      "goal": "supported blocks follow schema-to-component registry and unknown blocks fail",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: supported blocks follow schema-to-component registry and unknown blocks fail"
+      ],
+      "acceptance_criteria": [
+        "registry tests and unknown-block negative fixture"
+      ],
+      "required_checks": [
+        "registry tests and unknown-block negative fixture"
+      ],
+      "depends_on": [
+        "CR-12.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:12",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-12.3",
+      "title": "one RichText DTO/renderer serves real consumers",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-12",
+      "source_anchor": "CR-12.3",
+      "goal": "one RichText DTO/renderer serves real consumers",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: one RichText DTO/renderer serves real consumers"
+      ],
+      "acceptance_criteria": [
+        "render tests and duplicate-contract scan"
+      ],
+      "required_checks": [
+        "render tests and duplicate-contract scan"
+      ],
+      "depends_on": [
+        "CR-12.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:12",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-12.D",
+      "title": "EPIC-12 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-12",
+      "source_anchor": "CR-12.D",
+      "goal": "EPIC-12 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-12 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-12.1",
+        "CR-12.2",
+        "CR-12.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:12",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-13.1",
+      "title": "lead request, consent, idempotency and analytics boundaries are canonical",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-13",
+      "source_anchor": "CR-13.1",
+      "goal": "lead request, consent, idempotency and analytics boundaries are canonical",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: lead request, consent, idempotency and analytics boundaries are canonical"
+      ],
+      "acceptance_criteria": [
+        "contract tests including denied/invalid inputs"
+      ],
+      "required_checks": [
+        "contract tests including denied/invalid inputs"
+      ],
+      "depends_on": [
+        "CR-01.D",
+        "CR-04.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:13",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-13.2",
+      "title": "frontend uses disabled-safe relative `/api/leads` and complete UI states",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-13",
+      "source_anchor": "CR-13.2",
+      "goal": "frontend uses disabled-safe relative `/api/leads` and complete UI states",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: frontend uses disabled-safe relative `/api/leads` and complete UI states"
+      ],
+      "acceptance_criteria": [
+        "rendered/network tests; zero request while disabled"
+      ],
+      "required_checks": [
+        "rendered/network tests; zero request while disabled"
+      ],
+      "depends_on": [
+        "CR-13.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:13",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-13.3",
+      "title": "analytics contract rejects PII/raw form values",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-13",
+      "source_anchor": "CR-13.3",
+      "goal": "analytics contract rejects PII/raw form values",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: analytics contract rejects PII/raw form values"
+      ],
+      "acceptance_criteria": [
+        "allowed/denied event fixtures"
+      ],
+      "required_checks": [
+        "allowed/denied event fixtures"
+      ],
+      "depends_on": [
+        "CR-13.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:13",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-13.D",
+      "title": "EPIC-13 PR reviewed, RISKY-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-13",
+      "source_anchor": "CR-13.D",
+      "goal": "EPIC-13 PR reviewed, RISKY-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-13 PR reviewed, RISKY-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "PII/security review, exact-head gate, merge SHA"
+      ],
+      "required_checks": [
+        "PII/security review, exact-head gate, merge SHA"
+      ],
+      "depends_on": [
+        "CR-13.1",
+        "CR-13.2",
+        "CR-13.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/01_PRD.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:13",
+        "risk:risky",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-08.1",
+      "title": "exported sitemap and robots are repository-driven",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-08",
+      "source_anchor": "CR-08.1",
+      "goal": "exported sitemap and robots are repository-driven",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: exported sitemap and robots are repository-driven"
+      ],
+      "acceptance_criteria": [
+        "build fixture and artifact assertions"
+      ],
+      "required_checks": [
+        "build fixture and artifact assertions"
+      ],
+      "depends_on": [
+        "CR-03.D",
+        "CR-06.D",
+        "CR-07.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:08",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-08.2",
+      "title": "static/dynamic routes use one metadata service with full OG",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-08",
+      "source_anchor": "CR-08.2",
+      "goal": "static/dynamic routes use one metadata service with full OG",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: static/dynamic routes use one metadata service with full OG"
+      ],
+      "acceptance_criteria": [
+        "metadata uniqueness/canonical/OG matrix"
+      ],
+      "required_checks": [
+        "metadata uniqueness/canonical/OG matrix"
+      ],
+      "depends_on": [
+        "CR-08.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:08",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-08.3",
+      "title": "only approved factual structured data is safely serialized",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-08",
+      "source_anchor": "CR-08.3",
+      "goal": "only approved factual structured data is safely serialized",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: only approved factual structured data is safely serialized"
+      ],
+      "acceptance_criteria": [
+        "schema eligibility and escaping tests"
+      ],
+      "required_checks": [
+        "schema eligibility and escaping tests"
+      ],
+      "depends_on": [
+        "CR-03.D",
+        "CR-07.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:08",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-08.4",
+      "title": "artifact validator proves SEO files/content and index exclusions",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-08",
+      "source_anchor": "CR-08.4",
+      "goal": "artifact validator proves SEO files/content and index exclusions",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: artifact validator proves SEO files/content and index exclusions"
+      ],
+      "acceptance_criteria": [
+        "exact `out/` inspection"
+      ],
+      "required_checks": [
+        "exact `out/` inspection"
+      ],
+      "depends_on": [
+        "CR-08.1",
+        "CR-08.2",
+        "CR-08.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:08",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-08.D",
+      "title": "EPIC-08 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-08",
+      "source_anchor": "CR-08.D",
+      "goal": "EPIC-08 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-08 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-08.1",
+        "CR-08.2",
+        "CR-08.3",
+        "CR-08.4"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:08",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-15.1",
+      "title": "`pnpm verify` is fast and covers types/lint/tests/content/guards",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-15",
+      "source_anchor": "CR-15.1",
+      "goal": "`pnpm verify` is fast and covers types/lint/tests/content/guards",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: `pnpm verify` is fast and covers types/lint/tests/content/guards"
+      ],
+      "acceptance_criteria": [
+        "command composition and fail propagation"
+      ],
+      "required_checks": [
+        "command composition and fail propagation"
+      ],
+      "depends_on": [
+        "CR-07.D",
+        "CR-14.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:15",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-15.2",
+      "title": "`pnpm verify:release` builds once and validates artifact/SEO/E2E",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-15",
+      "source_anchor": "CR-15.2",
+      "goal": "`pnpm verify:release` builds once and validates artifact/SEO/E2E",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: `pnpm verify:release` builds once and validates artifact/SEO/E2E"
+      ],
+      "acceptance_criteria": [
+        "clean release command transcript"
+      ],
+      "required_checks": [
+        "clean release command transcript"
+      ],
+      "depends_on": [
+        "CR-08.D",
+        "CR-15.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:15",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-15.3",
+      "title": "daily/release separation cannot silently omit required proof",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-15",
+      "source_anchor": "CR-15.3",
+      "goal": "daily/release separation cannot silently omit required proof",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: daily/release separation cannot silently omit required proof"
+      ],
+      "acceptance_criteria": [
+        "seeded failure matrix and package-script review"
+      ],
+      "required_checks": [
+        "seeded failure matrix and package-script review"
+      ],
+      "depends_on": [
+        "CR-15.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:15",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-15.D",
+      "title": "EPIC-15 PR reviewed, RISKY-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-15",
+      "source_anchor": "CR-15.D",
+      "goal": "EPIC-15 PR reviewed, RISKY-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-15 PR reviewed, RISKY-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "tooling review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "tooling review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-15.1",
+        "CR-15.2",
+        "CR-15.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:15",
+        "risk:risky",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-16.1",
+      "title": "runtime and package-manager versions fail closed on drift",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-16",
+      "source_anchor": "CR-16.1",
+      "goal": "runtime and package-manager versions fail closed on drift",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: runtime and package-manager versions fail closed on drift"
+      ],
+      "acceptance_criteria": [
+        "wrong-version negative fixture"
+      ],
+      "required_checks": [
+        "wrong-version negative fixture"
+      ],
+      "depends_on": [
+        "CR-15.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:16",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-16.2",
+      "title": "SourceCraft workflow is manual-only, frozen-install and exact-head",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-16",
+      "source_anchor": "CR-16.2",
+      "goal": "SourceCraft workflow is manual-only, frozen-install and exact-head",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: SourceCraft workflow is manual-only, frozen-install and exact-head"
+      ],
+      "acceptance_criteria": [
+        "workflow static verifier and trigger scan"
+      ],
+      "required_checks": [
+        "workflow static verifier and trigger scan"
+      ],
+      "depends_on": [
+        "CR-16.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:16",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-16.3",
+      "title": "paid-run duplication and floating image regressions fail checks",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-16",
+      "source_anchor": "CR-16.3",
+      "goal": "paid-run duplication and floating image regressions fail checks",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: paid-run duplication and floating image regressions fail checks"
+      ],
+      "acceptance_criteria": [
+        "CI policy self-tests"
+      ],
+      "required_checks": [
+        "CI policy self-tests"
+      ],
+      "depends_on": [
+        "CR-16.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:16",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-16.D",
+      "title": "EPIC-16 PR reviewed, RISKY-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-16",
+      "source_anchor": "CR-16.D",
+      "goal": "EPIC-16 PR reviewed, RISKY-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-16 PR reviewed, RISKY-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "CI-policy review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "CI-policy review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-16.1",
+        "CR-16.2",
+        "CR-16.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:16",
+        "risk:risky",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-17.1",
+      "title": "minimal operations/runbook ownership is fixed without duplicate docs",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-17",
+      "source_anchor": "CR-17.1",
+      "goal": "minimal operations/runbook ownership is fixed without duplicate docs",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: minimal operations/runbook ownership is fixed without duplicate docs"
+      ],
+      "acceptance_criteria": [
+        "docs ownership/cross-reference review"
+      ],
+      "required_checks": [
+        "docs ownership/cross-reference review"
+      ],
+      "depends_on": [
+        "CR-04.D",
+        "CR-13.D",
+        "CR-16.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:17",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-17.2",
+      "title": "project-owned Nginx config covers static/proxy/staging/security/rollback",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-17",
+      "source_anchor": "CR-17.2",
+      "goal": "project-owned Nginx config covers static/proxy/staging/security/rollback",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: project-owned Nginx config covers static/proxy/staging/security/rollback"
+      ],
+      "acceptance_criteria": [
+        "syntax/config tests without production access"
+      ],
+      "required_checks": [
+        "syntax/config tests without production access"
+      ],
+      "depends_on": [
+        "CR-17.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:17",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-17.3",
+      "title": "atomic rollout and rollback proof is deterministic",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-17",
+      "source_anchor": "CR-17.3",
+      "goal": "atomic rollout and rollback proof is deterministic",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: atomic rollout and rollback proof is deterministic"
+      ],
+      "acceptance_criteria": [
+        "local/staging-safe validation; no production mutation"
+      ],
+      "required_checks": [
+        "local/staging-safe validation; no production mutation"
+      ],
+      "depends_on": [
+        "CR-17.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:17",
+        "risk:risky",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-17.D",
+      "title": "EPIC-17 PR reviewed, RISKY-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-17",
+      "source_anchor": "CR-17.D",
+      "goal": "EPIC-17 PR reviewed, RISKY-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-17 PR reviewed, RISKY-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "ops review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "ops review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-17.1",
+        "CR-17.2",
+        "CR-17.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/03_ARCHITECTURE.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:17",
+        "risk:risky",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-18.1",
+      "title": "browser E2E covers representative route/navigation/404/lead surfaces",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-18",
+      "source_anchor": "CR-18.1",
+      "goal": "browser E2E covers representative route/navigation/404/lead surfaces",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: browser E2E covers representative route/navigation/404/lead surfaces"
+      ],
+      "acceptance_criteria": [
+        "production-like browser report"
+      ],
+      "required_checks": [
+        "production-like browser report"
+      ],
+      "depends_on": [
+        "CR-08.D",
+        "CR-10.D",
+        "CR-12.D",
+        "CR-13.D",
+        "CR-15.D",
+        "CR-17.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/05_RELEASE_CHECKLIST.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:18",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-18.2",
+      "title": "accessibility proof covers semantics, keyboard, focus, labels, errors, contrast, alt, touch and motion",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-18",
+      "source_anchor": "CR-18.2",
+      "goal": "accessibility proof covers semantics, keyboard, focus, labels, errors, contrast, alt, touch and motion",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: accessibility proof covers semantics, keyboard, focus, labels, errors, contrast, alt, touch and motion"
+      ],
+      "acceptance_criteria": [
+        "automated scan plus keyboard/manual matrix"
+      ],
+      "required_checks": [
+        "automated scan plus keyboard/manual matrix"
+      ],
+      "depends_on": [
+        "CR-05.D",
+        "CR-11.D",
+        "CR-18.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/05_RELEASE_CHECKLIST.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:18",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-18.3",
+      "title": "mobile LCP/CLS are measured against approved thresholds",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-18",
+      "source_anchor": "CR-18.3",
+      "goal": "mobile LCP/CLS are measured against approved thresholds",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: mobile LCP/CLS are measured against approved thresholds"
+      ],
+      "acceptance_criteria": [
+        "reproducible performance report or owner-approved P1 exception"
+      ],
+      "required_checks": [
+        "reproducible performance report or owner-approved P1 exception"
+      ],
+      "depends_on": [
+        "CR-18.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/05_RELEASE_CHECKLIST.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:18",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-18.D",
+      "title": "EPIC-18 evidence PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-18",
+      "source_anchor": "CR-18.D",
+      "goal": "EPIC-18 evidence PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-18 evidence PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-18.1",
+        "CR-18.2",
+        "CR-18.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/05_RELEASE_CHECKLIST.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:18",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-19.1",
+      "title": "final SEO audit covers all declared mechanical surfaces",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-19",
+      "source_anchor": "CR-19.1",
+      "goal": "final SEO audit covers all declared mechanical surfaces",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: final SEO audit covers all declared mechanical surfaces"
+      ],
+      "acceptance_criteria": [
+        "finding register and crawl artifacts"
+      ],
+      "required_checks": [
+        "finding register and crawl artifacts"
+      ],
+      "depends_on": [
+        "CR-18.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:19",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-19.2",
+      "title": "final UI drift audit covers all declared design/architecture surfaces",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-19",
+      "source_anchor": "CR-19.2",
+      "goal": "final UI drift audit covers all declared design/architecture surfaces",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: final UI drift audit covers all declared design/architecture surfaces"
+      ],
+      "acceptance_criteria": [
+        "finding register and visual/code evidence"
+      ],
+      "required_checks": [
+        "finding register and visual/code evidence"
+      ],
+      "depends_on": [
+        "CR-18.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:19",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-19.3",
+      "title": "all P0/P1 findings are resolved or validly dispositioned",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-19",
+      "source_anchor": "CR-19.3",
+      "goal": "all P0/P1 findings are resolved or validly dispositioned",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: all P0/P1 findings are resolved or validly dispositioned"
+      ],
+      "acceptance_criteria": [
+        "zero-P0 ledger; zero-P1 or owner exception ledger"
+      ],
+      "required_checks": [
+        "zero-P0 ledger; zero-P1 or owner exception ledger"
+      ],
+      "depends_on": [
+        "CR-19.1",
+        "CR-19.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:19",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-19.D",
+      "title": "EPIC-19 audit/closure PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-19",
+      "source_anchor": "CR-19.D",
+      "goal": "EPIC-19 audit/closure PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-19 audit/closure PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence"
+      ],
+      "depends_on": [
+        "CR-19.1",
+        "CR-19.2",
+        "CR-19.3"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/02_PRODUCT_STRUCTURE.md",
+        "docs/06_DESIGN_SYSTEM.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:19",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    },
+    {
+      "key": "CR-20.1",
+      "title": "every canonical document matches exact implemented main",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-20",
+      "source_anchor": "CR-20.1",
+      "goal": "every canonical document matches exact implemented main",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: every canonical document matches exact implemented main"
+      ],
+      "acceptance_criteria": [
+        "cross-doc/runtime traceability matrix"
+      ],
+      "required_checks": [
+        "cross-doc/runtime traceability matrix"
+      ],
+      "depends_on": [
+        "CR-19.D"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:20",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-20.2",
+      "title": "closeout report records exact SHA, proof and external blockers",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "implementation",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-20",
+      "source_anchor": "CR-20.2",
+      "goal": "closeout report records exact SHA, proof and external blockers",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: closeout report records exact SHA, proof and external blockers"
+      ],
+      "acceptance_criteria": [
+        "required report completeness check"
+      ],
+      "required_checks": [
+        "required report completeness check"
+      ],
+      "depends_on": [
+        "CR-20.1"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "edit",
+        "test",
+        "commit",
+        "push"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:20",
+        "risk:standard",
+        "work:implementation"
+      ]
+    },
+    {
+      "key": "CR-20.D",
+      "title": "EPIC-20 PR reviewed, STANDARD-gated and merged",
+      "type": "task",
+      "role": "implementation",
+      "work_kind": "delivery",
+      "repository_key": "control",
+      "parent_key": "CR-EPIC-20",
+      "source_anchor": "CR-20.D",
+      "goal": "EPIC-20 PR reviewed, STANDARD-gated and merged",
+      "scope": [
+        "Source of Truth: docs/04_BACKLOG.md",
+        "Planned scope: EPIC-20 PR reviewed, STANDARD-gated and merged"
+      ],
+      "acceptance_criteria": [
+        "review/gate/merge evidence; no production"
+      ],
+      "required_checks": [
+        "review/gate/merge evidence; no production"
+      ],
+      "depends_on": [
+        "CR-20.1",
+        "CR-20.2"
+      ],
+      "required_context": [
+        "AGENTS.md",
+        "docs/README.md",
+        "docs/04_BACKLOG.md",
+        "docs/05_RELEASE_CHECKLIST.md"
+      ],
+      "allowed_actions": [
+        "review",
+        "test",
+        "commit",
+        "push",
+        "create_pr",
+        "merge_after_gate"
+      ],
+      "stop_conditions": [
+        "production release is not authorized",
+        "scope expansion outside approved task",
+        "new secret or irreversible external action without owner decision"
+      ],
+      "priority": 1,
+      "labels": [
+        "role:implementation",
+        "wave:20",
+        "risk:standard",
+        "work:delivery",
+        "delivery:merge-after-gate"
+      ]
+    }
+  ]
+}

@@ -1,948 +1,622 @@
-# Master Plan / Backlog — ams24-next-new
+# Constitution Remediation Master Plan — ams24-next-new
 
-Plan ID: `AMS24-IMPULSE-2026`  
-Version: v4  
-Status: APPROVED  
-Phase: `IMPLEMENTED_WITH_PRODUCTION_BLOCKERS`  
+Plan ID: `AMS24-CONSTITUTION-REMEDIATION-2026`
+
+Version: v3
+
+Status: APPROVED
+
+Phase: `APPROVAL_HANDOFF`
+
+Input: owner-supplied `AMS24 CONSTITUTION REMEDIATION MASTER PLAN V2`
+
+Audit baseline: `main@bef0a51eecdbad8cd7af9b1d5ba1d609063b1c81`
+
 Updated: 2026-09-30
 
-This is the single canonical master plan and backlog. Exact v4 was approved by the owner on 2026-09-29 with the phrase `План утверждён`. Production remains outside this approval and requires a separate explicit release command.
+This is the single active master-plan Markdown for the remediation program. The previous `AMS24-IMPULSE-2026 v4` remains a completed historical snapshot in Git and in the closed Task Manager graph. It is not rewritten or silently re-imported.
 
-## Implementation Status — 2026-09-30
-
-- Implementation graph EPIC-01..09 is completed and merged into canonical `main@97800548162ec8384f9afebee2adec805a351bf4`.
-- Task Manager reconciliation is clean: 57/57 tasks closed, 0 open issues, 0 missing `EXECUTION_LEDGER_V1`, 0 delivery tasks without gate.
-- Final local proof: `corepack pnpm verify` PASS; 23 test files / 70 tests; static export emits 21 pages; artifact guard PASS.
-- Production was not executed. Remaining release blockers are external approvals/configuration: leads API, legal claims, analytics, CAPTCHA, redirect inventory, production identity/artifact storage.
+`v3 APPROVED` was approved by the owner on 2026-09-30 with the phrase `План утверждён`. Task Manager import and Developer handoff are authorized for this exact plan snapshot. Production remains unauthorized.
 
 ## 1. Primary Goal
 
-Create a new production-ready static commercial website on `ams24.ru` that clearly presents the «Импульс» platform and its three products, converts visitors into compliant leads, supports evidence-based sales through tariffs/cases/reviews, and grows organic demand through articles and a product knowledge base.
-
-## 2. Non-goals
-
-- CMS, database, auth, cabinet, payments or server-side application runtime.
-- Literal competitor cloning.
-- Full public content written before page roles and evidence are approved.
-- Production deployment inside implementation epics.
-- Import into Beads before owner approval.
-
-## 3. Major Outcomes
-
-1. Canonical project documentation and owner-approved execution graph.
-2. Reproducible static Next.js foundation in repository `ams24-next-new`.
-3. Verified AMS Northline design foundation and representative homepage.
-4. Validated content architecture with all agreed route skeletons.
-5. Three differentiated product pages.
-6. Evidence and commercial support pages: tariffs, cases, reviews, calculations.
-7. Articles and knowledge-base publishing system.
-8. Compliant lead, legal, analytics and SEO surface.
-9. Verified static artifact and separately authorized production release.
-
-## 4. Source of Truth
-
-- Product: `01_PRD.md`.
-- Routes/page roles/SEO: `02_PRODUCT_STRUCTURE.md`.
-- Technical contracts: `03_ARCHITECTURE.md`.
-- UI: `06_DESIGN_SYSTEM.md`.
-- Release: `05_RELEASE_CHECKLIST.md`.
-- Evidence: `research/COMPETITOR_SEO_BASELINE.md`.
-
-## 5. Owner Decisions Already Recorded
-
-- Brand and primary product: «Импульс».
-- Domain: `ams24.ru`.
-- Repository name: `ams24-next-new`.
-- Universal platform homepage plus separate product pages.
-- Three product routes: `/impuls/`, `/pixel/`, `/zashchita/`.
-- Top-level tariffs, cases, reviews, calculations, articles and knowledge base.
-- LEADLIFE architecture may inform roles, but competitor content/design is not copied.
-- Existing AMS Northline system is the visual input.
-
-## 6. Delivery Strategy
-
-The program uses contract-first waves. A dependency blocks only the tasks that need its merged canonical contract. Each independent implementation epic uses its own branch/worktree and one terminal delivery task. Production requires separate owner authorization.
-
-All implementation epics use `propagate_dependencies_to_children: false`. Every child task therefore declares exact stable task/decision dependencies; parent epic dependencies are descriptive and are not inherited automatically.
-
-### Waves
+Bring the repository into factual, mechanically verified conformance with AMS Static Site Core 1.1, AMS UI Core 5.0, the project docs-first architecture, one SEO policy, one content boundary, one UI foundation and a reproducible static release contract.
 
 ```text
-Wave 0: EPIC-00 documentation and plan
-Approval bootstrap: AH-01 Git/SourceCraft control repository + approved docs checkpoint + Task Manager import
-Wave 1: EPIC-01 repository/static foundation and early external preflights
-Wave 2: EPIC-02 design foundation || EPIC-03 content/SEO contracts
-Wave 3: EPIC-04 site shell and route skeleton || approved content/evidence preparation
-Wave 4: EPIC-05 product pages || EPIC-06 proof/commercial pages || EPIC-07 content publishing
-Wave 5: EPIC-08 kickoff after EPIC-05.D + EPIC-06.D + EPIC-07.D, then leads/legal/analytics/SEO hardening in one bounded stream
-Wave 6: EPIC-09 release readiness
-Production: separate explicit release command after implementation graph
+DOCUMENTED -> IMPLEMENTED -> MECHANICALLY VERIFIED -> RELEASE-READY
 ```
 
-## 7. EPIC-00 — Documentation Foundation
+Production deployment is outside this plan.
+
+## 2. Non-goals and Safety Boundaries
+
+- Do not add Payload, PostgreSQL, Prisma, auth, Redis, Docker, workers or server runtime.
+- Do not change the static-export project class.
+- Do not invent tariffs, cases, reviews, legal claims, metrics or evidence.
+- Do not enable live lead submission before AMS Leads API, legal and anti-spam contracts are approved.
+- Do not add programmatic SEO routes without current demand evidence and a separate owner decision.
+- Do not create a second UI foundation or universal page builder.
+- Do not report `PASS`, `DONE` or `COMPLIANT` without matching proof.
+- Do not change DNS, production Nginx or production state.
+- Keep unresolved external surfaces `draft`, `hidden`, `noindex` or disabled.
+
+## 3. Source of Truth
 
-Status: `DONE`
+| Scope | Canonical source |
+|---|---|
+| Product, audience, business scope, claims | `docs/01_PRD.md` |
+| Information architecture, URLs, page roles | `docs/02_PRODUCT_STRUCTURE.md` |
+| Runtime, boundaries, security, delivery | `docs/03_ARCHITECTURE.md` |
+| Active remediation graph | `docs/04_BACKLOG.md` |
+| Release proof, rollout, rollback | `docs/05_RELEASE_CHECKLIST.md` |
+| UI policy and AMS Northline | `docs/06_DESIGN_SYSTEM.md` |
+| SEO policy/publication contract | proposed `docs/07_SEO_SYSTEM.md`, subject to OD-R02 |
+| Actual content | validated content repository |
+| Research/audit evidence | `docs/research/*`; evidence, not normative truth |
 
-### Outcome
+## 4. Verified Baseline Evidence
 
-The project has one consistent AMS Product Development Standard 2.0 canon and one reviewable execution plan with no competing Source of Truth.
+Checked against exact baseline `bef0a51`:
 
-### Why
+- clean `main`; local `main`, `origin/main` and `github/main` point to the baseline;
+- static export, trailing slash and unoptimized images are configured;
+- Node `24.20.0`, pnpm `12.8.1`, Next `16.3.7`, React `19.3.0` and TypeScript `6.0.3` are pinned;
+- `SectionHeader` renders a fixed `h2` inside a `div` and is used by more than ten surfaces;
+- `/kontakty/` and three legal pages do not render a logical `h1` through `SectionHeader`;
+- `buildSitemapPaths()` exists and is tested, but `src/app/sitemap.ts`, `src/app/robots.ts`, `out/sitemap.xml` and `out/robots.txt` do not exist;
+- `ContentRepository` is declared inside `local-adapter.ts`; routes/reusable UI directly import several `src/project/*` implementations;
+- public UI contains `Claim guard`, `Proof preview`, `Data boundary` and `publicationStatus`;
+- the disabled lead form points to `/api/leads/test`, not the canonical `/api/leads` boundary;
+- Design System records `PASS` while accessibility, performance and drift exit items remain unchecked;
+- Architecture calls the repository implemented although SEO artifact and browser/performance proof are incomplete;
+- the previous Task Manager graph is closed: 57/57 closed, 0 open/in-progress/blocked.
 
-Foundation code must not encode unresolved product, URL, delivery or UI decisions.
+Unverified claims remain preflight items; they are not treated as facts merely because the input plan states them.
 
-### Scope in
+## 5. Delivery Contract
 
-- root `AGENTS.md` and `README.md`;
-- docs map, PRD, Product Structure, Architecture, Backlog, Release Checklist and Design System;
-- competitor/SEO evidence baseline;
-- owner-decision register and dependency waves;
-- initial Task Manager Architect assembly review.
+```text
+implementation
+-> relevant local proof
+-> commit and push
+-> Pull Request
+-> full diff review
+-> one risk-classified exact-head SourceCraft gate
+-> authorized merge to canonical main
+-> next dependent stream
+```
 
-### Scope out
+- Owner decision OD-R01 fixes `MERGE_AFTER_GATE` for each independent remediation epic because dependent work needs merged contracts.
+- No automatic paid CI on push or PR; production needs a separate explicit command.
+- One stream = one branch/worktree = one PR.
 
-- Git initialization/remote creation;
-- application code;
-- final audit, Beads import or Developer handoff without the required owner phrase.
+## 6. Preliminary Master Plan Map
 
-### Entry conditions
+### Outcomes
 
-- owner-approved high-level site architecture;
-- supplied static/UI/design standards.
+1. Docs report real repository state.
+2. Product, route, SEO and technical contracts have non-overlapping ownership.
+3. Accessibility, content and UI boundaries are enforced.
+4. SEO routes/metadata exist in the exported artifact.
+5. Public copy contains only customer-facing, evidenced language.
+6. Leads/legal/analytics stay safe while external approvals are open.
+7. Daily and release verification prove different promises.
+8. SourceCraft, static guards and operations are reproducible.
+9. Browser, accessibility, SEO and performance proof close P0/P1.
+10. Final docs are reconciled after implementation evidence.
 
-### Exit conditions
+### Assembly waves
 
-- all canonical documents exist and cross-reference correctly;
-- URL and product decisions are recorded once;
-- master plan is `REVIEW` after an assembly pass;
-- open owner decisions are explicit.
+```text
+Wave 0 contracts/baseline:  EPIC-00, 01, 02, 03, 04
+Wave 1 foundations:         EPIC-05 || 06 || 09 || 11 || 14
+Wave 2 boundary consumers:  EPIC-07 || 10 || 12 || 13
+Wave 3 artifact/delivery:   EPIC-08 || 15 || 16 || 17
+Wave 4 integrated proof:    EPIC-18 -> EPIC-19
+Wave 5 factual closeout:    EPIC-20
+```
 
-### Acceptance / verification
+These waves are backed by the v1 task-level dependency matrix below. Final audit must still independently check cycles, minimum blocking scope and autonomy.
 
-- file inventory matches `docs/README.md`;
-- no conflicting repository/product/URL/stack values;
-- every epic has observable outcome, scope, dependencies, acceptance and stop conditions;
-- no Task Manager import occurs.
+## 7. Candidate Epic Register
 
-### Delivery mode
+All supplied epics are accepted as candidate scope. Exact task contracts, dependencies, shared-file owners, rollback, stop conditions and terminal delivery tasks remain assembly work.
 
-Docs-only working change. No merge/release authority.
+### EPIC-00 — Documentation Canon Repair
 
-### Recovery
+Outcome: docs describe the baseline without false completion claims. Reconcile docs map, Architecture, Design System and Release Checklist; distinguish tests from generated-artifact proof. Do not write future implementation as achieved state.
 
-Git history after repository foundation; until then, changes are local files and can be corrected in place.
+Acceptance: no unchecked criterion is represented as passed; the plan remains `DRAFT`/`REVIEW` until the Architect gate.
 
-### Stop conditions
+### EPIC-01 — PRD and Commercial Page Contract
 
-Stop if a requested product/architecture decision contradicts an already approved owner decision and cannot be safely labelled TODO.
+Outcome: PRD remains business truth. Define `WHO`, `AUDIENCE`, `PROBLEM`, `OFFER`, `DIFFERENCE`, `VALUE`, `MECHANISM`, `PROOF`, `LIMITS`, `OBJECTION`, `NEXT ACTION`, CTA, proof dependency, lead context and event owner for primary commercial routes. SEO goals stay `REQUIRES_MEASUREMENT` / `OWNER_DECISION` until measured.
 
-## 8. EPIC-01 — Repository and Static Foundation
+### EPIC-02 — Information Architecture Hardening
 
-Status: `BACKLOG`
+Outcome: Product Structure becomes the canonical route/page-role model. Extend Page Role Map; define route classes; prohibit new indexable routes without distinct demand, intent, role, content, evidence and cannibalization proof; defer niche pages until owner/evidence gates close.
 
-### Outcome
+### EPIC-03 — Canonical SEO System
 
-`ams24-next-new` is a reproducible SourceCraft-first Next.js static-export project with pinned versions, local developer commands and architecture guards.
+Outcome: one SEO policy controls intent ownership, keyword revalidation, indexability, metadata/OG, one-H1 hierarchy, canonical URLs, robots/staging, sitemap, internal links, cannibalization, article-vs-KB roles, structured data, media, redirects and release crawl proof. Create `07_SEO_SYSTEM.md` only after OD-R02.
 
-### Scope in
+### EPIC-04 — Technical Architecture Reconciliation
 
-- verify the Git/SourceCraft control repository created by approval bootstrap and its canonical remotes;
-- scaffold Next.js App Router, TypeScript strict, pnpm, Tailwind 4;
-- verify and pin exact Node/Next/React/Tailwind versions from official docs;
-- configure `output: "export"`, trailing slash and static images;
-- configure lint/typecheck/test/build and `pnpm verify`;
-- create 404/error baseline and static guard scripts;
-- add root commands and version evidence to documentation;
-- establish zero-auto-CI policy and manual gate placeholder per project canon.
-- run early credential-free preflight for AMS Leads API contract availability, legal reviewer status, analytics/CAPTCHA inputs and old-site URL inventory.
+Outcome: Architecture matches code. Freeze boundaries for `app`, `core/content`, `core/seo`, `core/leads`, `core/analytics`, `project`, `ui`; assign one owner for metadata, robots, sitemap, redirects, structured data, navigation, repository, lead transport and analytics.
 
-### Scope out
+### EPIC-05 — Accessibility Foundation Fix
 
-- production server, secrets and deployment;
-- product page design;
-- CMS/database/auth.
+Outcome: headings and dark/light sections are semantic and legible. Make `SectionHeader` heading level independent from visual typography, preserve tone/`className`/`cn()`, fix dark sections, add one logical H1 to contacts/legal/standalone pages, and test H1 count/hierarchy/tone.
 
-### Dependencies
+### EPIC-06 — Restore Content Boundary
 
-- `AH-01` approval bootstrap and CLEAN Task Manager reconcile.
+Outcome: enforce `Page -> Content Service -> Repository -> Local Adapter -> Project Content`. Move `ContentRepository` out of Local Adapter, validate navigation/site settings, replace route/UI imports of raw project modules with service DTO/ViewModels, and add an import guard.
 
-### Parallel-safe with
+### EPIC-07 — Content Graph Validation
 
-None until repository and lockfile exist. After contract freeze it unlocks EPIC-02 and EPIC-03.
+Outcome: one `validateContentGraph()` rejects inconsistent content. Cover global IDs, locale/path uniqueness, canonical equality, slugs, entity refs, navigation, Markdown links, media, redirects, blocks, publication state, SEO completeness and contradictory index policy. Every guard gets a negative fixture.
 
-### Acceptance / verification
+### EPIC-08 — SEO Implementation
 
-- fresh frozen install succeeds;
-- `pnpm verify` succeeds;
-- static build produces `out/`;
-- guard confirms no dynamic runtime API or default image optimizer conflict;
-- custom 404 exists in export;
-- exact stack versions are recorded from actual package/lockfile.
+Outcome: SEO exists in the static artifact. Implement repository-driven `sitemap.ts`/`robots.ts`, one metadata service with full OG, repository-owned dynamic metadata, artifact checks and only approved safely serialized structured data.
 
-### Risk
+### EPIC-09 — Evidence and Public Commercial Truth
 
-Version-sensitive framework setup. Requires official-doc verification.
+Outcome: indexable UI contains no unsupported claim or internal vocabulary. Enforce evidence+permission+no-blocker+publishable, revalidate “cases in three niches”, remove `EPIC-*`, `OD-*`, `publicationStatus`, `Proof preview`, `Claim guard`, `Data boundary`, `unsupported-hidden`, `/api/leads/test`, `static Next export`, `foundation` and `publication guard` from customer copy; add regression tests.
 
-### Recovery
+### EPIC-10 — UI Composition Remediation
 
-Revert foundation commit/PR; no production or persistent data exists.
+Outcome: page entrypoints are composition-only and semantic sections have explicit ownership. Normalize page/domain/shared/primitive ownership only where evidence supports it; decompose primary routes by semantic section; prohibit premature shared components and a universal builder.
 
-### Stop conditions
+### EPIC-11 — Canonical UI Primitives
 
-Stop for owner decision if current official Next/Tailwind constraints make the supplied static standard incompatible or require changing the platform contract.
+Outcome: one project-owned primitive set. Remove competing CTA visuals, audit Button/Input/Textarea/Checkbox/Card/Dialog/Table, verify aliases, raw colors, arbitrary system values, dead tokens and dark variants; preserve necessary internal shadcn dark variants.
 
-## 9. EPIC-02 — Design Foundation and Representative Homepage
+### EPIC-12 — Blocks and Rich Text
 
-Status: `BACKLOG`
+Outcome: `blockType -> Zod schema -> DTO -> component`; unknown blocks hard-fail; one RichText DTO/renderer; no speculative blocks or Lexical without a real approved Payload migration.
 
-### Outcome
+### EPIC-13 — Leads, Legal and Analytics
 
-AMS Northline is normalized into a verified project-owned token/component system, and `/` proves the system across real responsive sections without visual drift.
+Outcome: disabled-safe frontend ready for later approval. Use relative `POST /api/leads`; keep `submissionEnabled=false`; define fields/context/consent/idempotency and UI states; keep authoritative validation/rate limit/CAPTCHA secret/persistence/integrations in AMS Leads API; never send PII to analytics.
 
-### Scope in
+### EPIC-14 — Static Architecture Guards
 
-- inventory/normalize Northline roles for Impulse;
-- configure shadcn/ui and aliases once;
-- create semantic tokens in `globals.css`;
-- verify Manrope Cyrillic, license, weights and CSS variable mapping;
-- build token/shadcn fixture;
-- implement Container, Section, SectionHeader, Button, form primitives, Header, Footer, MobileMenu;
-- implement representative homepage with approved content placeholders and all planned semantic section types;
-- responsive/accessibility/performance baseline;
-- design-system drift audit.
+Outcome: static/boundary violations fail fast. Cover middleware/proxy, Server Actions, dynamic APIs, route handlers, dynamic params, ISR/revalidate, runtime opt-ins, runtime redirects/rewrites/headers, raw content imports, frontend CRM integrations, suspicious public secrets and image configuration. Each guard needs a seeded invalid self-test.
 
-### Scope out
+### EPIC-15 — Verification Model
 
-- final marketing copy and unverified case metrics;
-- all secondary pages;
-- a second UI library or registry.
+Outcome: fast daily proof and complete release proof.
 
-### Dependencies
+```text
+pnpm verify
+  typecheck + lint + fast tests + content graph + architecture guards
 
-- HARD: EPIC-01 foundation and lockfile.
-- CONTRACT: homepage page brief from `02_PRODUCT_STRUCTURE.md` already available.
+pnpm verify:release
+  pnpm verify + next build + artifact/SEO validation + critical E2E
+```
 
-### Parallel-safe with
+### EPIC-16 — SourceCraft Reproducibility
 
-EPIC-03 after EPIC-01, provided shared paths are coordinated: EPIC-02 owns UI/token paths; EPIC-03 owns content/core/project paths.
+Outcome: manual exact-head gates use pinned Node `24.20.0`, pnpm `12.8.1`, frozen lockfile and runtime assertions; no floating runtime image, automatic paid CI or unbound SHA evidence.
 
-### Acceptance / verification
+### EPIC-17 — Operations and Nginx Contract
 
-- token fixture compiles and actual Tailwind utilities resolve;
-- no duplicate primitive foundation;
-- homepage has one H1 and correct semantic sections;
-- keyboard/mobile menu and form shell states work;
-- representative mobile check meets layout/accessibility baseline;
-- drift audit has no P0/P1 foundation finding;
-- design intake exit criteria in `06_DESIGN_SYSTEM.md` are evidenced.
+Outcome: repository-side contract covers static `out/`, release directories, `current` symlink, trailing slash, 404, `/api/leads` proxy, headers/CSP, immutable assets, HTML cache, staging protection, X-Robots-Tag, reload/cache and rollback without inventing credentials. Add `ops/nginx/` only when executable config is justified; avoid duplicating Architecture/Release Checklist in premature extra docs.
 
-### Recovery
+### EPIC-18 — Browser, Accessibility and Performance Proof
 
-Revert UI foundation PR. No production data.
+Outcome: production-like browser proof covers home/product/article/KB/case/navigation/mobile/404/trailing slash/lead form; accessibility covers semantics, headings, keyboard, focus, labels, errors, contrast, alt, touch, reduced motion; mobile LCP `<=2.5s` and CLS `<=0.1` or an approved evidence-backed exception.
 
-### Stop conditions
+### EPIC-19 — Final SEO and UI Drift Audit
 
-Stop for owner decision on a visual conflict that would materially change Northline or introduce a second visual language.
+Outcome: no unresolved P0/P1 SEO/UI drift. Mechanically inspect route/index policy, metadata, canonical, OG, H1, schema, sitemap, robots, redirects, links, orphans, cannibalization, thin routes, colors, arbitrary values, primitives, sections, composition, client/data boundaries, responsive, accessibility, motion, tokens and exceptions.
 
-## 10. EPIC-03 — Content, Routing and SEO Contracts
+### EPIC-20 — Final Documentation Reconciliation
 
-Status: `BACKLOG`
+Outcome: canonical docs describe only implementation/proof that actually exist. Reconcile README, PRD, Product Structure, Architecture, Backlog, Release Checklist, Design System and approved SEO extension after integrated proof.
 
-### Outcome
+## 8. External Prerequisites
 
-All site entities and routes are generated from validated content contracts, with stable IDs/paths, build-time indexes, central navigation/SEO and hard failure on invalid content.
-
-### Scope in
-
-- Zod-first schemas and inferred DTOs;
-- repository contract, Local Adapter, indexes and services;
-- typed block registry and RichText abstraction;
-- Site Settings, Navigation, Media, SEO and Redirect schemas/generators;
-- product/tariff/case/review/calculation/article/KB models;
-- published/hidden status and sitemap eligibility;
-- generateStaticParams helpers;
-- content validation tests for IDs, paths, refs, links, media, blocks and SEO.
-
-### Scope out
-
-- final content writing;
-- Payload adapter;
-- live lead submission.
-
-### Dependencies
-
-- HARD: EPIC-01 foundation.
-- CONTRACT: entity and URL map from `02_PRODUCT_STRUCTURE.md`.
-
-### Parallel-safe with
-
-EPIC-02 after ownership split. Contract freeze for Page/Product/SEO DTO unlocks EPIC-04 before every content type implementation is complete.
-
-### Acceptance / verification
-
-- invalid schema/duplicate ID/duplicate `(locale,path)`/broken ref/unknown block fails verification;
-- pages use services/repository, not raw content imports;
-- published route inventory exactly matches expected fixture;
-- metadata and sitemap generators consume the same validated data;
-- article Markdown renders only through canonical RichText.
-
-### Recovery
-
-Revert content foundation PR; local fixture content is reproducible.
-
-### Stop conditions
-
-Stop if an entity requires dynamic request-time behavior incompatible with static export.
-
-## 11. EPIC-04 — Site Shell and Complete Route Skeleton
-
-Status: `BACKLOG`
-
-### Outcome
-
-The complete agreed architecture is navigable as static routes with a production-shaped header/footer and at least one meaningful semantic block per route type, while unfinished pages remain non-indexable.
-
-### Scope in
-
-- global layout, header, footer, breadcrumbs and mobile navigation;
-- homepage composition from EPIC-02 integrated with content contracts;
-- route skeletons for products, tariffs, cases, reviews, calculations, articles, KB, company, contacts and legal;
-- one representative case/article/KB detail fixture;
-- 404 and error boundary-equivalent;
-- `noindex`/publication guards for unfinished routes.
-
-### Scope out
-
-- final page copy/design for every route;
-- live lead transport;
-- production deployment.
-
-### Dependencies
-
-- HARD: EPIC-02 shared UI foundation.
-- CONTRACT: EPIC-03 Page/Product/SEO DTO and route helpers frozen.
-
-### Acceptance / verification
-
-- every agreed route type builds and is reachable through navigation or fixture links;
-- unfinished routes do not enter sitemap/index;
-- canonical/trailing-slash policy is reflected in generated routes;
-- mobile and keyboard navigation cover all first-level destinations;
-- representative detail routes have breadcrumbs and related links.
-
-### Recovery
-
-Revert shell/route PR without affecting content contracts.
-
-### Stop conditions
-
-Stop if requested route changes contradict active `02_PRODUCT_STRUCTURE.md`; update/approve that Source of Truth first.
-
-## 12. EPIC-05 — Three Product Pages
-
-Status: `BACKLOG`
-
-### Outcome
-
-`/impuls/`, `/pixel/` and `/zashchita/` each answer a distinct commercial intent, explain mechanism/limitations and convert to a product-specific action without SEO cannibalization.
-
-### Scope in
-
-- page strategy and approved factual content for each product;
-- product-specific semantic sections, FAQ, evidence and CTA;
-- distinct metadata/H1/internal linking;
-- comparison/switcher between products;
-- legal/evidence review of terminology and claims.
-
-### Scope out
-
-- new unapproved product features;
-- absolute result/security guarantees;
-- mass niche landing pages.
-
-### Dependencies
-
-- HARD: EPIC-04 shell/routes.
-- EXTERNAL: owner-approved product facts and legal review for sensitive claims.
-- CONTRACT: case/tariff refs can use placeholders until EPIC-06 content is published.
-
-### Parallel-safe with
-
-EPIC-06 and EPIC-07 after route/UI/content contracts freeze. Each stream owns separate page/content files; shared component changes require coordination.
-
-### Acceptance / verification
-
-- unique role, H1, metadata and content depth for each route;
-- no paragraph-level duplicate between homepage and `/impuls/`;
-- every public claim maps to owner-provided evidence or is labelled explanatory;
-- responsive/accessibility/SEO page contract passes;
-- primary CTA carries correct product/source context.
-
-### Fallback
-
-If facts/legal review are incomplete, keep affected blocks hidden/noindex rather than inventing content.
-
-### Stop conditions
-
-Stop only the affected product task on missing factual/legal approval; continue other independent product work.
-
-## 13. EPIC-06 — Tariffs, Cases, Reviews and Calculations
-
-Status: `BACKLOG`
-
-### Outcome
-
-The site has a verifiable commercial proof layer that lets prospects understand pricing logic and evaluate relevant experience without fabricated precision.
-
-### Scope in
-
-- tariffs comparison and product relations;
-- cases hub plus complete detail template;
-- reviews hub and evidence fields;
-- calculation examples with explicit assumptions;
-- three-niche filtering only when sufficient unique content exists;
-- proof/evidence labels and permission/anonymization status.
-
-### Scope out
-
-- publishing unidentified metrics without source;
-- automated pricing engine unless separately approved;
-- thin niche pages.
-
-### Dependencies
-
-- HARD: EPIC-04 routes and shared UI.
-- EXTERNAL: owner inventory of tariffs, cases, reviews and permissions.
-
-### Parallel-safe with
-
-EPIC-05 and EPIC-07. Content preparation can start from templates even if some evidence is pending.
-
-### Acceptance / verification
-
-- every case satisfies the case evidence contract;
-- every review has permission/source status;
-- every calculation exposes assumptions and limitations;
-- filters/hubs contain no empty/thin indexable combination;
-- all entities cross-link to relevant products and CTA.
-
-### Fallback
-
-Launch with fewer complete items; incomplete entities stay unpublished and out of sitemap.
-
-### Stop conditions
-
-Missing evidence blocks only the affected entity, not the complete epic if a release-minimum set remains possible.
-
-## 14. EPIC-07 — Articles and Knowledge Base
-
-Status: `BACKLOG`
-
-### Outcome
-
-The site supports scalable static publication of SEO/editorial articles and separate product instructions with distinct templates, taxonomy and internal-link logic.
-
-### Scope in
-
-- article and KB hubs/templates;
-- product/topic relations and related-content rules;
-- author/date/update metadata policy;
-- editorial typography/media rules;
-- initial content set defined after semantic research;
-- optional topic hubs only with sufficient unique demand/content.
-
-### Scope out
-
-- CMS/editor roles;
-- arbitrary MDX components;
-- automatic AI publishing without review;
-- mass programmatic pages.
-
-### Dependencies
-
-- HARD: EPIC-04 representative routes.
-- CONTRACT: EPIC-03 Article/Knowledge DTO and RichText.
-- EXTERNAL: approved editorial briefs/evidence for initial content.
-
-### Parallel-safe with
-
-EPIC-05 and EPIC-06.
-
-### Acceptance / verification
-
-- article and KB templates are visibly and semantically distinct;
-- Markdown content validates and renders through canonical RichText;
-- each published item has unique metadata, breadcrumb and next action;
-- orphan detection and broken-link checks pass;
-- no unsupported topic hub is indexable.
-
-### Fallback
-
-Publish a smaller reviewed initial set; the content engine remains ready for future Git-based additions.
-
-### Stop conditions
-
-Stop an item if evidence, authorship or legal review is missing; continue other approved items.
-
-## 15. EPIC-08 — Leads, Legal, Analytics and SEO Hardening
-
-Status: `BACKLOG`
-
-### Outcome
-
-All published routes can convert and be measured without leaking PII, while legal, indexing, redirect and static-security requirements are enforced mechanically.
-
-### Scope in
-
-- canonical LeadForm and product/context variants;
-- `/api/leads` relative transport and Nginx contract fixture;
-- consent version/timestamp/source context;
-- anti-spam UX and AMS Leads API error handling;
-- legal pages and consent links;
-- typed analytics with no PII;
-- populate final metadata/robots/structured data values and run full-site crawl validation using EPIC-03 generators;
-- redirect inventory from current `ams24.ru` and final redirect validation using EPIC-03 contract;
-- content/security static guards.
-
-### Scope out
-
-- CRM secrets in frontend;
-- production credentials/server changes;
-- production release.
-
-### Dependencies
-
-- HARD: EPIC-04 shell and form UI baseline.
-- CONTRACT: page/product IDs from EPIC-03.
-- EXTERNAL: AMS Leads API contract, analytics account data, legal text/approval, old-site URL inventory.
-
-### Parallel-safe with
-
-Final tasks of EPIC-05/06/07 until full-site crawl and final metadata pass.
-
-### Acceptance / verification
-
-- allowed and invalid lead scenarios verified against a safe non-production target;
-- no PII appears in analytics/network logging beyond the approved lead request;
-- form states and consent payload verified;
-- sitemap/robots/canonical/redirect/404 checks pass;
-- static artifact scan finds no secret-like values;
-- staging protection contract is present.
-
-### Fallback
-
-If live lead integration is unavailable, keep forms disabled with a truthful contact alternative only for development/staging; public release remains blocked because working lead forms are part of the approved first-release PRD.
-
-### Stop conditions
-
-Stop live integration on missing safe test endpoint, secret boundary or legal consent approval; continue SEO/static checks. Public release is blocked by any missing working lead path, mandatory legal/consent target, approved redirect inventory or required analytics contract.
-
-## 16. EPIC-09 — Release Readiness and Artifact
-
-Status: `BACKLOG`
-
-### Outcome
-
-The exact approved `main` SHA produces a verified, rollback-ready static artifact and complete release evidence; production remains a separate owner-authorized action.
-
-### Scope in
-
-- full diff review and risk classification;
-- one exact-head SourceCraft Merge Gate appropriate for CRITICAL profile;
-- production-like build and artifact validation;
-- browser E2E/smoke against artifact/staging;
-- performance/accessibility/SEO final proof;
-- Nginx config, security headers, trailing slash and 404 validation;
-- artifact storage and rollback rehearsal/documentation;
-- final release checklist evidence.
-
-### Scope out
-
-- actual production rollout without explicit owner command.
-
-### Dependencies
-
-- HARD: all release-scope tasks in EPIC-05–08 complete.
-- EXTERNAL: production identity, server path, artifact store and DNS/TLS readiness.
-- PRODUCTION: owner release authorization for rollout only.
-
-### Acceptance / verification
-
-- PR head SHA, merged canonical `main` SHA and release artifact SHA are recorded separately;
-- no equivalent gate or build is repeated for the same SHA without a documented risk reason;
-- artifact is reproducible and stored;
-- critical flows pass on production-like surface;
-- rollback target/procedure is known;
-- `05_RELEASE_CHECKLIST.md` is complete except explicit production/post-deploy items.
-
-### Recovery
-
-Do not roll out failed artifact. If a staging rollout fails, restore previous staging release.
-
-### Stop conditions
-
-Any critical failure, unknown production identity, missing rollback or missing exact-head gate blocks release but not documentation/fix work.
-
-## 17. Dependency Matrix
-
-| Epic | Depends on | Type | Blocking scope | Can be softened? | Wave |
-|---|---|---|---|---|---:|
-| EPIC-00 | owner inputs | OWNER | governance only | completed nodes excluded from implementation import | 0 |
-| AH-01 | exact owner approval | OWNER/HARD | approval handoff | no | approval bootstrap |
-| EPIC-01 | AH-01 | HARD | foundation and preflight | no | 1 |
-| EPIC-03 | EPIC-01.D | HARD | content foundation | no | 2 |
-| EPIC-02 | EPIC-01.D and EPIC-03.D for homepage task | HARD | task-level | token work starts before content merge; homepage waits for 03.D | 2 |
-| EPIC-04 | EPIC-02.D + EPIC-03.D | HARD | shell/routes | no; both canonical foundations required | 3 |
-| EPIC-05 | EPIC-04.D + EPIC-01.D preflight | HARD/EXTERNAL | each product page | missing facts block only affected page | 4 |
-| EPIC-06 | EPIC-04.D + evidence inventory | HARD/EXTERNAL | each entity | incomplete entities stay hidden | 4 |
-| EPIC-07 | EPIC-04.D + approved briefs | HARD/EXTERNAL | each content item | smaller initial set | 4 |
-| EPIC-08 | EPIC-05.D + EPIC-06.D + EPIC-07.D + EPIC-01.D preflight | HARD/EXTERNAL | bounded Wave-5 stream | development fallbacks exist, but mandatory release scope cannot be omitted | 5 |
-| EPIC-09 | EPIC-05.D + EPIC-06.D + EPIC-07.D + EPIC-08.D | HARD/EXTERNAL/PRODUCTION | release readiness only | production authorization isolated | 6 |
-
-Cycles: none in v4.  
-Critical path: `AH-01 -> EPIC-01.D -> EPIC-03.D -> EPIC-02.D -> EPIC-04.D -> max(EPIC-05.D, EPIC-06.D, EPIC-07.D) -> EPIC-08.D -> EPIC-09.D`.
-
-## 18. Shared Ownership / Conflict Guards
-
-| Shared surface | Owner epic | Freeze point | Downstream rule |
+| ID | Prerequisite | Safe fallback | Stop condition |
 |---|---|---|---|
-| package/Next config | EPIC-01 | foundation acceptance | later changes require version-sensitive review |
-| semantic tokens/primitives | EPIC-02 | token fixture + representative page | use REUSE -> VARIANT -> CREATE |
-| DTO/repository/block registry | EPIC-03 | contract tests pass | downstream pages consume public contract only |
-| header/footer/navigation | EPIC-04 | shell acceptance | content changes through central navigation source |
-| lead schema/transport | EPIC-08 | safe integration test | forms do not invent fields/transport |
-| SEO/redirect schemas and generators | EPIC-03 | contract tests pass | pages consume generators, not ad-hoc logic |
-| final metadata/robots/redirect inventory/crawl | EPIC-08 | full-site validation | values use EPIC-03 contracts |
+| EXT-01 | Legal reviewer/texts/claims | legal routes noindex; forms disabled | no public lead release |
+| EXT-02 | Live AMS Leads API test contract | submission disabled | no live submission |
+| EXT-03 | Analytics config/event scope | provider disabled | no measurement claim |
+| EXT-04 | CAPTCHA/anti-spam decision | disabled submission | no live public form |
+| EXT-05 | Full legacy redirect inventory | no invented mass redirects | no production migration |
+| EXT-06 | Production identity/artifact store | repository/staging proof only | no production release |
 
-## 19. Delivery and SHA Policy
+These prerequisites must not block independent repository remediation.
 
-Approved implementation mode for `EPIC-01` through `EPIC-09`: `MERGE_AFTER_GATE`. Each epic is one independently reviewable stream/branch/worktree/PR and ends in exactly one `.D` delivery task.
+## 9. Initial Finding Register
+
+| ID | Severity | Finding | Triage / change |
+|---|---|---|---|
+| F-001 | BLOCKER | Input mixes `V2`, proposed `V5` and no valid lifecycle status. | Canonicalized as `v0 DRAFT`; increment only after a completed assembly round. |
+| F-002 | BLOCKER | `APPROVED_FOR_IMPLEMENTATION` bypasses owner approval. | Use `DRAFT -> REVIEW -> READY_FOR_OWNER_APPROVAL -> APPROVED`. |
+| F-003 | MAJOR | Input puts PR after review/gate. | Corrected to commit/push -> PR -> review -> exact-head gate -> authorized merge. |
+| F-004 | BLOCKER | 21 epics form one serial chain without task-level dependencies/bypass. | Build matrix and parallel-safe waves before readiness. |
+| F-005 | MAJOR | Several P0/P1 claims lacked exact evidence. | Core findings verified; remaining claims require task preflight. |
+| F-006 | MAJOR | Mandatory extra docs may duplicate canon. | Create extensions only when independent complexity warrants them. |
+| F-007 | BLOCKER | Closed v4 graph cannot be overwritten with a new Plan ID/node set. | Choose explicit new-graph/migration route after approval. |
+| F-008 | MAJOR | EPIC-00 and EPIC-20 can write contradictory future/past states. | EPIC-00 records baseline/target separately; EPIC-20 records achieved state. |
+| F-009 | MAJOR | Epic contracts lacked exact entry/exit/dependencies/rollback/stops/delivery tasks. | RESOLVED in v1 assembly; final audit pending. |
+| F-010 | MAJOR | `P0=0/P1=0` lacked one severity/exception policy. | RESOLVED by OD-R04 and v1 severity contract. |
+| F-011 | BLOCKER | v1 task IDs collided with 33 closed v4 node IDs. | RESOLVED in v2 with collision-safe `CR-*` task IDs and `CR-EPIC-*` inventory keys. |
+| F-012 | BLOCKER | Five cross-epic edges depended on unmerged intermediate tasks. | RESOLVED in v2: cross-epic edges target merged `.D` boundaries only. |
+| F-013 | BLOCKER | Delivery tasks did not directly depend on every implementation child. | RESOLVED in v2: all 21 `.D` tasks have complete direct child coverage. |
+| F-014 | MAJOR | v2 exposed only one initial ready task, creating an avoidable documentation bottleneck. | RESOLVED in v3: PRD, IA and primitive inventory start independently on the same frozen baseline and disjoint owned files. |
+
+## 10. Owner Decision Register
+
+### OD-R01 — Delivery mode
+
+Decision: `MERGE_AFTER_GATE` for each independent remediation epic; production remains separate. Accepted by owner: 2026-09-30. Status: `DECIDED`.
+
+### OD-R02 — Separate SEO Source of Truth
+
+Decision: create `docs/07_SEO_SYSTEM.md`; the domain is independently complex enough to warrant an extension. Accepted by owner: 2026-09-30. Status: `DECIDED`.
+
+### OD-R03 — Task Manager graph strategy
+
+Decision: create an explicitly validated new managed graph for this distinct Plan ID after approval, preserving closed v4 history. Accepted by owner: 2026-09-30. Status: `DECIDED`.
+
+### OD-R04 — Severity and exception policy
+
+Decision: only owner may accept an evidence-backed P1 exception; P0 cannot be waived. Accepted by owner: 2026-09-30. Status: `DECIDED`.
+
+## 11. Epic Contracts
+
+All epics use `MERGE_AFTER_GATE`. Gate risk is provisional and must be confirmed from the exact diff before merge. A failed check returns the epic to implementation; it never authorizes partial merge or production.
+
+| Epic | Entry condition | Exit condition | Parallel-safe with | Recovery / stop condition |
+|---|---|---|---|---|
+| EPIC-00 | v0 baseline and exact SHA recorded | truthful docs baseline merged | none at start | revert docs PR; stop on conflicting Source of Truth |
+| EPIC-01 | exact audit baseline recorded | commercial route contract merged | EPIC-00, EPIC-02, EPIC-11 | revert PR; stop rather than invent business facts |
+| EPIC-02 | exact audit baseline recorded | route classes and expansion policy merged | EPIC-00, EPIC-01, EPIC-11 | revert PR; stop on disputed canonical URL/role |
+| EPIC-03 | CR-01.D, CR-02.D, OD-R02 | canonical SEO policy merged | CR-04.1 after contract freeze | revert SEO doc; stop on duplicate route ownership |
+| EPIC-04 | CR-00.D; SEO ownership after CR-03.1 | architecture ownership/direction merged | EPIC-03 after CR-04.1 | revert docs PR; stop on platform-class change |
+| EPIC-05 | CR-04.D | heading/tone fixes and regressions merged | EPIC-06, 11, 14 | revert UI PR; stop on design-system conflict |
+| EPIC-06 | CR-04.D | content boundary and import guard merged | EPIC-05, 11 | revert refactor PR; stop on circular ownership or behavior drift |
+| EPIC-07 | CR-03.D, CR-06.D | graph validation wired into daily verification | EPIC-09 after service contract | revert validator; stop on false rejection of valid canonical content |
+| EPIC-08 | CR-03.D, 06.D, 07.D | SEO surfaces proven in static artifact | none on owned SEO/app files | revert SEO PR; stop on index leakage or artifact mismatch |
+| EPIC-09 | CR-01.D, 04.D, 06.2 | evidence gate and public-copy cleanup merged | EPIC-07 | revert copy/gate PR; hide disputed content |
+| EPIC-10 | CR-05.D, 06.D, 09.D, 11.D | route entrypoints are composition-only | EPIC-12 on disjoint files | revert page refactor; stop on content/SEO behavior drift |
+| EPIC-11 | exact audit baseline recorded | one primitive/token foundation merged | EPIC-00, 01, 02 | revert primitives PR; stop on accessibility regression |
+| EPIC-12 | CR-06.D, CR-07.1 | typed blocks/RichText merged | EPIC-10 on disjoint files | revert content-rendering PR; stop on unknown live block |
+| EPIC-13 | CR-01.D, CR-04.D | disabled-safe lead/legal/analytics contract merged | EPIC-07, 11, 14 | disable integration/revert PR; stop on PII leak or missing consent |
+| EPIC-14 | CR-04.D; boundary guard after CR-06.D | guards and seeded self-tests merged | EPIC-05, 11, 13 | revert guard PR; stop on material false positive |
+| EPIC-15 | CR-07.D, 08.D, 14.D | daily/release verification split merged | none on scripts/package files | revert tooling PR; stop if release proof can bypass artifact build |
+| EPIC-16 | CR-15.D | pinned manual exact-head workflow merged | none on SourceCraft files | revert CI PR; stop on automatic paid trigger or unbound SHA |
+| EPIC-17 | CR-04.D, 13.D, 16.D | repository-side Nginx/rollback contract validates | none on ops files | discard config/revert PR; stop on unknown production identity |
+| EPIC-18 | CR-05.D, 08.D, 09.D, 10.D, 11.D, 12.D, 13.D, 15.D, 17.D | browser/a11y/performance evidence complete | none | fix affected epic; stop on unavailable representative runtime surface |
+| EPIC-19 | CR-18.D | SEO/UI audit has P0=0 and P1=0 or owner-approved P1 exception | SEO/UI passes may run independently | reopen owning epic; P0 cannot be waived |
+| EPIC-20 | CR-19.D | docs and closeout evidence match exact main | none | revert docs PR; stop on any unsupported completion claim |
+
+## 12. Stable Task Inventory
+
+### Wave 0 — contracts and truthful baseline
+
+| ID | Observable outcome | Depends on | Verification / evidence |
+|---|---|---|---|
+| CR-00.1 | baseline claims are classified as proven, unknown or false | none | exact-SHA evidence register and docs diff |
+| CR-00.2 | docs map, Architecture, Design System and Release Checklist report current state | CR-00.1 | cross-reference scan; no false PASS/DONE |
+| CR-00.D | EPIC-00 PR reviewed, STANDARD-gated and merged | CR-00.1, CR-00.2 | PR source/target/head, review, green exact-head gate, merge SHA |
+| CR-01.1 | primary commercial routes have complete business contracts | none | requirements matrix across named routes |
+| CR-01.2 | conversion ownership and measurable SEO goal placeholders are explicit | CR-01.1 | PRD cross-check; no invented KPI |
+| CR-01.D | EPIC-01 PR reviewed, STANDARD-gated and merged | CR-01.1, CR-01.2 | review/gate/merge evidence |
+| CR-02.1 | route classes and expanded Page Role Map are canonical | none | route inventory coverage and unique owner check |
+| CR-02.2 | expansion, niche and cannibalization gates are deterministic | CR-02.1, CR-01.D | decision examples and forbidden-overlap review |
+| CR-02.D | EPIC-02 PR reviewed, STANDARD-gated and merged | CR-02.1, CR-02.2 | review/gate/merge evidence |
+| CR-03.1 | `07_SEO_SYSTEM.md` defines source priority and intent ownership | CR-01.D, CR-02.D | duplicate-policy scan and cluster contract review |
+| CR-03.2 | indexability, metadata, H1, canonical, robots and sitemap contracts are deterministic | CR-03.1 | policy decision table with index/noindex examples |
+| CR-03.3 | linking, schema, media, redirects and release proof are deterministic | CR-03.1 | eligibility/redirect/proof matrices |
+| CR-03.D | EPIC-03 PR reviewed, STANDARD-gated and merged | CR-03.1, CR-03.2, CR-03.3 | review/gate/merge evidence |
+| CR-04.1 | actual module/import ownership baseline is documented | CR-00.D | source inventory plus targeted dependency evidence |
+| CR-04.2 | allowed dependency direction and single owners are frozen | CR-04.1, CR-03.D | ownership matrix; no competing owner |
+| CR-04.D | EPIC-04 PR reviewed, STANDARD-gated and merged | CR-04.1, CR-04.2 | review/gate/merge evidence |
+
+### Wave 1 — independent foundations
+
+| ID | Observable outcome | Depends on | Verification / evidence |
+|---|---|---|---|
+| CR-05.1 | `SectionHeader` supports semantic heading level independent of visual role | CR-04.D | focused component tests and typecheck |
+| CR-05.2 | standalone/legal/contact routes have one H1 and correct dark/light tone | CR-05.1 | rendered route matrix; H1/tone assertions |
+| CR-05.3 | heading hierarchy and tone regressions fail tests | CR-05.2 | negative/representative fixtures |
+| CR-05.D | EPIC-05 PR reviewed, STANDARD-gated and merged | CR-05.1, CR-05.2, CR-05.3 | review/gate/merge evidence |
+| CR-06.1 | repository contract is independent from Local Adapter | CR-04.D | typecheck, unit tests, dependency inspection |
+| CR-06.2 | services expose validated settings/navigation/content ViewModels | CR-06.1 | service tests with invalid fixtures |
+| CR-06.3 | routes/UI no longer import forbidden project implementations | CR-06.2 | import guard plus targeted route tests |
+| CR-06.D | EPIC-06 PR reviewed, RISKY-gated and merged | CR-06.1, CR-06.2, CR-06.3 | full diff review, boundary proof, exact-head gate, merge SHA |
+| CR-09.1 | one publication/evidence gate controls public proof/claims | CR-01.D, CR-04.D, CR-06.D | allowed/denied fixtures and evidence matrix |
+| CR-09.2 | public routes contain no internal implementation vocabulary | CR-09.1, CR-05.D | rendered-copy scan and route tests |
+| CR-09.3 | unsupported content cannot enter indexable UI | CR-09.2 | negative regression fixtures |
+| CR-09.D | EPIC-09 PR reviewed, STANDARD-gated and merged | CR-09.1, CR-09.2, CR-09.3 | review/gate/merge evidence |
+| CR-11.1 | primitive/token duplication inventory is complete | none | code/token inventory with reuse decisions |
+| CR-11.2 | CTA/form visuals use canonical primitives without semantic link loss | CR-11.1 | component/render/accessibility tests |
+| CR-11.3 | raw color, arbitrary value, dead token and dark-variant drift is classified/fixed | CR-11.1 | mechanical scan plus exception list |
+| CR-11.D | EPIC-11 PR reviewed, STANDARD-gated and merged | CR-11.1, CR-11.2, CR-11.3 | review/gate/merge evidence |
+| CR-14.1 | static-runtime violations are covered by guards | CR-04.D | seeded invalid fixtures per static rule |
+| CR-14.2 | boundary, CRM and public-secret violations are covered | CR-06.D | seeded invalid fixtures per boundary/security rule |
+| CR-14.3 | guard self-test proves every rule fails its fixture and passes repository | CR-14.1, CR-14.2 | self-test transcript |
+| CR-14.D | EPIC-14 PR reviewed, RISKY-gated and merged | CR-14.1, CR-14.2, CR-14.3 | tooling review/gate/merge evidence |
+
+### Wave 2 — boundary consumers
+
+| ID | Observable outcome | Depends on | Verification / evidence |
+|---|---|---|---|
+| CR-07.1 | one content-graph validator contract owns cross-entity validation | CR-03.D, CR-06.D | validator API and ownership tests |
+| CR-07.2 | every declared invariant has a negative fixture | CR-07.1 | parameterized negative-test matrix |
+| CR-07.3 | daily verification invokes graph validation exactly once | CR-07.2 | command trace and failure propagation test |
+| CR-07.D | EPIC-07 PR reviewed, STANDARD-gated and merged | CR-07.1, CR-07.2, CR-07.3 | review/gate/merge evidence |
+| CR-10.1 | page/section ownership map avoids shared-file conflicts | CR-05.D, CR-06.D, CR-09.D, CR-11.D | route-to-component matrix |
+| CR-10.2 | primary route entrypoints are composition-only | CR-10.1 | dependency/readability review and route tests |
+| CR-10.3 | shared components exist only for proven reuse | CR-10.2 | reuse inventory; no universal builder |
+| CR-10.D | EPIC-10 PR reviewed, STANDARD-gated and merged | CR-10.1, CR-10.2, CR-10.3 | review/gate/merge evidence |
+| CR-12.1 | block/RichText inventory identifies reachable and speculative formats | CR-06.D, CR-07.D | reachability inventory |
+| CR-12.2 | supported blocks follow schema-to-component registry and unknown blocks fail | CR-12.1 | registry tests and unknown-block negative fixture |
+| CR-12.3 | one RichText DTO/renderer serves real consumers | CR-12.1 | render tests and duplicate-contract scan |
+| CR-12.D | EPIC-12 PR reviewed, STANDARD-gated and merged | CR-12.1, CR-12.2, CR-12.3 | review/gate/merge evidence |
+| CR-13.1 | lead request, consent, idempotency and analytics boundaries are canonical | CR-01.D, CR-04.D | contract tests including denied/invalid inputs |
+| CR-13.2 | frontend uses disabled-safe relative `/api/leads` and complete UI states | CR-13.1 | rendered/network tests; zero request while disabled |
+| CR-13.3 | analytics contract rejects PII/raw form values | CR-13.1 | allowed/denied event fixtures |
+| CR-13.D | EPIC-13 PR reviewed, RISKY-gated and merged | CR-13.1, CR-13.2, CR-13.3 | PII/security review, exact-head gate, merge SHA |
+
+### Wave 3 — artifact and delivery system
+
+| ID | Observable outcome | Depends on | Verification / evidence |
+|---|---|---|---|
+| CR-08.1 | exported sitemap and robots are repository-driven | CR-03.D, CR-06.D, CR-07.D | build fixture and artifact assertions |
+| CR-08.2 | static/dynamic routes use one metadata service with full OG | CR-08.1 | metadata uniqueness/canonical/OG matrix |
+| CR-08.3 | only approved factual structured data is safely serialized | CR-03.D, CR-07.D | schema eligibility and escaping tests |
+| CR-08.4 | artifact validator proves SEO files/content and index exclusions | CR-08.1, CR-08.2, CR-08.3 | exact `out/` inspection |
+| CR-08.D | EPIC-08 PR reviewed, STANDARD-gated and merged | CR-08.1, CR-08.2, CR-08.3, CR-08.4 | review/gate/merge evidence |
+| CR-15.1 | `pnpm verify` is fast and covers types/lint/tests/content/guards | CR-07.D, CR-14.D | command composition and fail propagation |
+| CR-15.2 | `pnpm verify:release` builds once and validates artifact/SEO/E2E | CR-08.D, CR-15.1 | clean release command transcript |
+| CR-15.3 | daily/release separation cannot silently omit required proof | CR-15.2 | seeded failure matrix and package-script review |
+| CR-15.D | EPIC-15 PR reviewed, RISKY-gated and merged | CR-15.1, CR-15.2, CR-15.3 | tooling review/gate/merge evidence |
+| CR-16.1 | runtime and package-manager versions fail closed on drift | CR-15.D | wrong-version negative fixture |
+| CR-16.2 | SourceCraft workflow is manual-only, frozen-install and exact-head | CR-16.1 | workflow static verifier and trigger scan |
+| CR-16.3 | paid-run duplication and floating image regressions fail checks | CR-16.2 | CI policy self-tests |
+| CR-16.D | EPIC-16 PR reviewed, RISKY-gated and merged | CR-16.1, CR-16.2, CR-16.3 | CI-policy review/gate/merge evidence |
+| CR-17.1 | minimal operations/runbook ownership is fixed without duplicate docs | CR-04.D, CR-13.D, CR-16.D | docs ownership/cross-reference review |
+| CR-17.2 | project-owned Nginx config covers static/proxy/staging/security/rollback | CR-17.1 | syntax/config tests without production access |
+| CR-17.3 | atomic rollout and rollback proof is deterministic | CR-17.2 | local/staging-safe validation; no production mutation |
+| CR-17.D | EPIC-17 PR reviewed, RISKY-gated and merged | CR-17.1, CR-17.2, CR-17.3 | ops review/gate/merge evidence |
+
+### Waves 4–5 — integrated proof and factual closeout
+
+| ID | Observable outcome | Depends on | Verification / evidence |
+|---|---|---|---|
+| CR-18.1 | browser E2E covers representative route/navigation/404/lead surfaces | CR-08.D, CR-10.D, CR-12.D, CR-13.D, CR-15.D, CR-17.D | production-like browser report |
+| CR-18.2 | accessibility proof covers semantics, keyboard, focus, labels, errors, contrast, alt, touch and motion | CR-05.D, CR-11.D, CR-18.1 | automated scan plus keyboard/manual matrix |
+| CR-18.3 | mobile LCP/CLS are measured against approved thresholds | CR-18.1 | reproducible performance report or owner-approved P1 exception |
+| CR-18.D | EPIC-18 evidence PR reviewed, STANDARD-gated and merged | CR-18.1, CR-18.2, CR-18.3 | review/gate/merge evidence |
+| CR-19.1 | final SEO audit covers all declared mechanical surfaces | CR-18.D | finding register and crawl artifacts |
+| CR-19.2 | final UI drift audit covers all declared design/architecture surfaces | CR-18.D | finding register and visual/code evidence |
+| CR-19.3 | all P0/P1 findings are resolved or validly dispositioned | CR-19.1, CR-19.2 | zero-P0 ledger; zero-P1 or owner exception ledger |
+| CR-19.D | EPIC-19 audit/closure PR reviewed, STANDARD-gated and merged | CR-19.1, CR-19.2, CR-19.3 | review/gate/merge evidence |
+| CR-20.1 | every canonical document matches exact implemented main | CR-19.D | cross-doc/runtime traceability matrix |
+| CR-20.2 | closeout report records exact SHA, proof and external blockers | CR-20.1 | required report completeness check |
+| CR-20.D | EPIC-20 PR reviewed, STANDARD-gated and merged | CR-20.1, CR-20.2 | review/gate/merge evidence; no production |
+
+## 13. Dependency Matrix
+
+Only minimum blocking scope is encoded. Edges not listed are `SOFT` ordering hints and must not block the ready queue.
+
+| Dependent scope | Prerequisite | Type | Why / blocking scope | Fallback or softening |
+|---|---|---|---|---|
+| CR-03.1 | CR-01.D, CR-02.D | CONTRACT | SEO policy needs frozen business/route roles | later SEO implementation remains blocked, not unrelated foundations |
+| CR-04.2 | CR-03.1 | CONTRACT | technical SEO ownership needs policy owner | CR-04.1 can run earlier |
+| CR-05.* | CR-04.D | CONTRACT | UI fix follows frozen ownership | no need to wait for SEO implementation |
+| CR-06.* | CR-04.D | HARD | refactor needs allowed dependency direction | none |
+| CR-09.1 | CR-06.2 | CONTRACT | publication gate consumes service/ViewModel boundary | other evidence inventory may prepare earlier |
+| CR-14.2 | CR-06.D | CONTRACT | boundary guard must target final allowed imports | CR-14.1 static guards run earlier |
+| CR-07.* | CR-03.D, CR-06.D | HARD | validator needs SEO/content contracts and repository boundary | none |
+| CR-10.* | CR-05.D, 06.D, 09.D, 11.D | HARD | same pages/components would otherwise conflict | task owns page composition only after foundations merge |
+| CR-12.1 | CR-07.1 | CONTRACT | block validation plugs into graph contract | inventory can start after CR-06.D |
+| EPIC-13 live enablement | EXT-01..04 | EXTERNAL/OWNER | PII/legal/anti-spam cannot be assumed | keep relative endpoint disabled; repository work continues |
+| CR-08.* | CR-03.D, 06.D, 07.D | HARD | artifact SEO must consume final contracts/validator | none |
+| CR-15.2 | CR-08.D | CONTRACT | release command validates actual SEO artifact | daily verification CR-15.1 runs earlier |
+| CR-16.* | CR-15.D | HARD | gate must call frozen release command | none |
+| CR-17.* | CR-13.D, CR-16.D | CONTRACT | Nginx/runbook needs lead boundary and delivery toolchain | production identity remains external |
+| CR-18.1 | listed implementation deliveries | HARD | integrated proof must exercise merged surfaces | individual epic proof remains useful earlier |
+| EPIC-18 production lead smoke | EXT-01..04 | EXTERNAL | live PII flow needs external approvals | test disabled/error path; mark live proof blocked |
+| CR-19.* | CR-18.D | HARD | final audit needs integrated evidence | SEO/UI audit passes run in parallel |
+| CR-20.* | CR-19.D | HARD | final docs may record only achieved state | none |
+| production release | EXT-01..06 and explicit owner command | PRODUCTION | outside implementation authority | no production action in this graph |
+
+Cycle check for the v1 designed graph: `0` by construction; final audit must independently verify inventory edges.
+
+## 14. Shared Ownership and Conflict Control
+
+| Surface | Primary owner | Freeze/unlock point | Parallel rule |
+|---|---|---|---|
+| `docs/01_PRD.md` | EPIC-01 | CR-01.D | later edits only EPIC-20 or explicit source correction |
+| `docs/02_PRODUCT_STRUCTURE.md` | EPIC-02 | CR-02.D | EPIC-03 references, does not duplicate |
+| `docs/07_SEO_SYSTEM.md` | EPIC-03 | CR-03.D | implementation epics consume policy read-only |
+| `docs/03_ARCHITECTURE.md` | EPIC-04 | CR-04.D | EPIC-17 adds only approved operations facts or defers to EPIC-20 |
+| `docs/06_DESIGN_SYSTEM.md` | EPIC-00 truth status, then EPIC-11 policy corrections | CR-11.D | EPIC-05 implements existing semantic contract |
+| `src/ui/shared/section.tsx` | EPIC-05 | CR-05.D | EPIC-10 consumes after merge |
+| content repository/services | EPIC-06 | CR-06.D | EPIC-07/08/09/12 consume frozen interfaces |
+| public route copy | EPIC-09 | CR-09.D | EPIC-10 composes afterward; does not reintroduce internal text |
+| page/section composition | EPIC-10 | CR-10.D | EPIC-13 owns form behavior, not route layout |
+| primitives/tokens | EPIC-11 | CR-11.D | page epics consume; no second primitive owner |
+| block registry/RichText | EPIC-12 | CR-12.D | EPIC-10 avoids these files |
+| lead form/contracts/analytics | EPIC-13 | CR-13.D | EPIC-10 treats form as component boundary |
+| static guard script | EPIC-14 | CR-14.D | EPIC-15 invokes, does not redefine rules |
+| package verification scripts | EPIC-15 | CR-15.D | EPIC-16 workflow invokes frozen command |
+| `.sourcecraft/ci.yaml` | EPIC-16 | CR-16.D | no other epic changes CI |
+| `ops/nginx/*` and operations section | EPIC-17 | CR-17.D | production identity remains external/read-only |
+
+## 15. Verification and Severity Contract
+
+Promise/evidence tiers:
+
+- `domain-model`: unit/property tests plus typecheck/static checks;
+- `wired`: domain-model proof plus a real route, build command, validator or workflow consumer;
+- `live`: browser/artifact/runtime surface proof;
+- `external-blocked`: deterministic safe fallback proven, live proof explicitly not claimed.
+
+Severity:
+
+- `P0`: security/PII exposure, invalid static architecture, index leakage, inaccessible critical path, corrupted content ownership or release/rollback hazard. No waiver.
+- `P1`: material commercial, SEO, accessibility, UI-system or reproducibility failure. Must be fixed; only owner may accept an evidence-backed exception with containment and follow-up.
+- `P2`: bounded quality/debt issue that does not invalidate epic outcome; record follow-up and owner.
+
+Each task ledger must include changed files, checks, artifact/browser evidence where required, exact commit/push SHA, deviations and discovered work. A test that only proves a helper exists cannot satisfy a `wired` or `live` promise.
+
+## 16. Task Manager Graph Strategy
+
+- Plan ID remains `AMS24-CONSTITUTION-REMEDIATION-2026`; inventory uses collision-safe epic keys `CR-EPIC-00`…`CR-EPIC-20`, task IDs `CR-*` and prefix `ams24r`.
+- Closed `AMS24-IMPULSE-2026 v4` nodes remain immutable historical records.
+- Approval handoff must validate the new inventory without mutating the store, then prove whether the supported helper can reconcile a second managed Plan ID in the existing store.
+- If helper validation reports old-graph collision or unsupported topology, stop. Do not delete/reinitialize `.beads`; prepare an explicit migration/rebuild operation that preserves closed evidence.
+- Import is allowed only after exact plan status is `APPROVED`, source SHA is frozen, coverage is complete, cycles are zero and every epic has one `.D` delivery task.
+- No production node belongs to the managed implementation graph.
+
+## 17. Final Audit Scorecard
+
+Final audit target: exact v3 execution design after findings F-011–F-014 were resolved.
+
+### Pass 1 — Logic / Completeness: PASS
+
+- primary goal, non-goals and ten outcomes map to 21 epics;
+- every epic has observable outcome, entry/exit, recovery and stop conditions;
+- external/legal/live/production work is isolated from repository remediation;
+- blockers: 0; major findings open: 0.
+
+### Pass 2 — Architecture / Data / Security: PASS
+
+- static-export platform and content boundary are preserved;
+- no database, CMS, auth, worker or server runtime is introduced;
+- PII/live submission remains disabled until external contracts close;
+- shared owners and freeze points are explicit;
+- blockers: 0; major findings open: 0.
+
+### Pass 3 — Dependencies / Autonomy: PASS
+
+- nodes visited by topological check: 80/80;
+- cycles: 0; unknown references: 0; old-node collisions: 0;
+- cross-epic dependencies on unmerged intermediate tasks: 0;
+- terminal delivery tasks: 21/21 with complete direct child coverage;
+- initial ready work: `CR-00.1`, `CR-01.1`, `CR-02.1`, `CR-11.1`;
+- maximum designed ready width: 5; critical path: 42 task levels;
+- significant dependency taxonomy: 9 HARD, 8 CONTRACT, external/owner and production gates isolated.
+
+### Pass 4 — Executability / Evidence / Delivery: PASS
+
+- all 59 implementation tasks have an observable outcome and required proof;
+- all 21 delivery tasks require review, exact-head gate and merged SHA evidence;
+- evidence tiers distinguish domain-model, wired, live and external-blocked promises;
+- `ValidateDraft` PASS: schema v2, coverage 21/21, 80 tasks, detected anchors, source review SHA `675675754830f6be503d7a4e7759f205032c456cca5c3472b5845c72b9446092`;
+- owner decisions before approval: 0;
+- production actions in implementation graph: 0.
+
+## 18. Night Run Readiness
 
 ```text
-implementation task commits
--> terminal EPIC-NN.D creates/updates epic PR
--> review + one exact-head SourceCraft gate owned by EPIC-NN.D
--> merge into canonical main
--> record resulting main SHA and mapping to PR head
--> release workflow builds exact main SHA once
--> artifact SHA/checksum recorded
--> production only by separate owner release command
-```
-
-Rules:
-
-- branch/PR push does not trigger paid CI automatically;
-- dependent epics consume merged canonical contracts, not an unapproved stacked-PR chain;
-- a changed PR head invalidates the previous gate evidence;
-- a merge-created main SHA is recorded separately and must contain the reviewed diff;
-- release does not repeat an equivalent development gate/build without a documented risk reason;
-- production is never implied by `MERGE_AFTER_GATE`.
-
-## 20. Approval Handoff Bootstrap
-
-`AH-01` is a post-approval governance operation, not an implementation task and not part of the Developer ready-loop.
-
-```text
-exact owner phrase «План утверждён»
--> mark exact plan APPROVED and compute SHA-256
--> create/verify Git + SourceCraft control repository ams24-next-new
--> commit and push approved docs snapshot
--> build inventory schema v2
--> Validate / Init / Import / Reconcile
--> require CLEAN coverage and dependency graph
--> start Task Manager Developer goal
-```
-
-If repository creation, docs checkpoint or reconcile fails, handoff stops before Developer. No production action is allowed.
-
-## 21. Stable Task Inventory v4
-
-All tasks inherit program non-goals and the Source of Truth hierarchy. Recovery means revert the task/epic change or keep incomplete content unpublished; no task may repair a failure by entering production. EPIC-00 governance nodes and AH-01 are excluded from the implementation ready-loop.
-
-### EPIC-00 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-00.1` | canonical docs and research baseline exist | all canonical docs | owner inputs | inventory, cross-reference and decision consistency checks pass | governance / closed before import | correct files in place; stop on unresolved contradiction |
-| `EPIC-00.2` | assembly reviews and accepted findings produce versioned REVIEW snapshots | `04_BACKLOG.md` | `EPIC-00.1` | finding triage and revision history exist; no import | governance / closed before import | revert semantic delta; stop on owner-only conflict |
-| `EPIC-00.3` | exact current plan passes final four-pass audit and readiness gate | `04_BACKLOG.md` | `EPIC-00.2`, explicit final-check command | blockers/cycles/before-approval decisions = 0; readiness verdict recorded | governance / closed before import | remain REVIEW on FAIL; approval handoff is separate AH-01 |
-
-### EPIC-01 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-01.1` | approved control repository contract and canonical remotes are verified | `03_ARCHITECTURE.md` | `AH-01` | root/default branch/remotes verified; no secret printed | implementation | stop on credential/provider mismatch; do not create second repo |
-| `EPIC-01.2` | pinned Next static scaffold builds reproducibly | `03_ARCHITECTURE.md` | `EPIC-01.1` | official-doc evidence, frozen install and `out/` build | implementation | revert scaffold commit; stop on platform incompatibility |
-| `EPIC-01.3` | fast `pnpm verify` and static architecture guards exist | `03_ARCHITECTURE.md` | `EPIC-01.2` | typecheck/lint/tests/guards detect seeded invalid fixture | implementation | revert guard change; stop if checks require dynamic runtime |
-| `EPIC-01.4` | manual-only SourceCraft workflow policy matches CRITICAL profile | `03_ARCHITECTURE.md`, global canon | `EPIC-01.2` | no push/PR auto-run; manual workflow definition validated | implementation | disable invalid workflow; stop before any paid run |
-| `EPIC-01.5` | external preflight records AMS Leads API contract availability, legal reviewer status, analytics/CAPTCHA inputs and old-site URL inventory | `01_PRD.md`, `03_ARCHITECTURE.md` | `EPIC-01.1` | credential-free statuses, fallbacks and owners recorded; no secret extracted | implementation | record known blocker and continue independent foundation work |
-| `EPIC-01.D` | foundation/preflight epic is reviewed, gated and merged to canonical main | delivery policy | `EPIC-01.2`, `EPIC-01.3`, `EPIC-01.4`, `EPIC-01.5` | epic PR head review + one exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | do not merge on failed review/gate; fix branch then rerun changed-head gate |
-
-### EPIC-02 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-02.1` | Northline inventory becomes normalized semantic tokens/fonts | `06_DESIGN_SYSTEM.md` | `EPIC-01.D` | token/font fixture compiles; Cyrillic/license/variables verified | implementation | revert tokens; stop on material visual conflict |
-| `EPIC-02.2` | one shadcn primitive and layout foundation exists | `06_DESIGN_SYSTEM.md` | `EPIC-02.1` | aliases and primitive paths verified; no duplicate Button/Input tree | implementation | revert component additions; stop on second UI library need |
-| `EPIC-02.3` | representative homepage proves all major composition patterns | `02_PRODUCT_STRUCTURE.md`, `06_DESIGN_SYSTEM.md` | `EPIC-02.2`, `EPIC-03.D` | one H1, three routes, proof previews and embedded LeadForm shell render responsively | implementation | keep page unpublished; stop on unapproved claims |
-| `EPIC-02.4` | design intake closes with accessibility/performance/drift evidence | `06_DESIGN_SYSTEM.md` | `EPIC-02.3` | no P0/P1 drift; keyboard/mobile/a11y and production-like budget measured | implementation | reopen intake; stop scaling pages on P0/P1 |
-| `EPIC-02.D` | design foundation/homepage epic is reviewed, gated and merged | delivery policy | `EPIC-02.1`, `EPIC-02.2`, `EPIC-02.3`, `EPIC-02.4` | epic PR head review + exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | do not merge on P0/P1 or failed gate |
-
-### EPIC-03 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-03.1` | stable Zod DTO contracts cover agreed entities | `02_PRODUCT_STRUCTURE.md`, `03_ARCHITECTURE.md` | `EPIC-01.D` | schema fixtures and inferred types pass; IDs/paths/locales normalized | implementation | revert contract; stop on request-time entity need |
-| `EPIC-03.2` | repository/local adapter loads and indexes once per build | `03_ARCHITECTURE.md` | `EPIC-03.1` | getter/ref/index tests pass; duplicate ID/path hard-fails | implementation | revert adapter; stop on hidden persistence requirement |
-| `EPIC-03.3` | typed block registry and canonical RichText work | `03_ARCHITECTURE.md` | `EPIC-03.1` | unknown block fails; Markdown renders without raw arbitrary HTML | implementation | revert registry; stop on arbitrary page-builder demand |
-| `EPIC-03.4` | SEO/route/redirect generators expose tested contracts | `02_PRODUCT_STRUCTURE.md`, `03_ARCHITECTURE.md` | `EPIC-03.1`, `EPIC-03.2`, `EPIC-03.3` | metadata/sitemap/params/redirect fixtures pass | implementation | revert generator; stop on dynamic runtime dependency |
-| `EPIC-03.D` | content/routing contract epic is reviewed, gated and merged | delivery policy | `EPIC-03.2`, `EPIC-03.3`, `EPIC-03.4` | epic PR head review + exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | do not merge incompatible contract |
-
-### EPIC-04 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-04.1` | accessible shell/navigation/footer/breadcrumbs cover the architecture | `02_PRODUCT_STRUCTURE.md` | `EPIC-02.D`, `EPIC-03.D` | keyboard/mobile path reaches all first-level routes | implementation | revert shell; stop on route conflict |
-| `EPIC-04.2` | every agreed route type has a static skeleton with publication guard | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.1` | build inventory matches map; unfinished routes absent from sitemap/index | implementation | hide route; stop on missing unique role |
-| `EPIC-04.3` | representative case/article/KB details plus 404/error recovery work | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.2` | breadcrumbs/related links/404 export browser checks pass | implementation | revert fixture; stop on broken content contract |
-| `EPIC-04.D` | shell/route skeleton epic is reviewed, gated and merged | delivery policy | `EPIC-04.1`, `EPIC-04.2`, `EPIC-04.3` | epic PR head review + exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | do not merge broken navigation/index guard |
-
-### EPIC-05 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-05.1` | product fact/claim register and legal brief are ready | `01_PRD.md` | `EPIC-01.D`, `OD-03` | every planned claim has evidence/status and named legal-review route | implementation | keep claim hidden; stop affected page only |
-| `EPIC-05.2` | `/impuls/` answers main commercial intent | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.D`, `EPIC-05.1`, `OD-07` | unique copy/metadata/CTA; responsive/a11y/SEO checks | implementation | unpublish page; stop on unapproved mechanism claim |
-| `EPIC-05.3` | `/pixel/` answers own-site visitor intent | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.D`, `EPIC-05.1` | requirements/data boundary/CTA are explicit and verified | implementation | unpublish page; stop on privacy ambiguity |
-| `EPIC-05.4` | `/zashchita/` explains audit/measures without absolute guarantee | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.D`, `EPIC-05.1` | threat/limits/evidence/CTA checks pass | implementation | unpublish page; stop on unsupported protection promise |
-| `EPIC-05.5` | homepage/products do not cannibalize or contradict | `02_PRODUCT_STRUCTURE.md` | `EPIC-05.2`, `EPIC-05.3`, `EPIC-05.4` | duplicate/intent/internal-link review passes | implementation | revert conflicting copy; stop on unresolved positioning |
-| `EPIC-05.D` | three-product epic is reviewed, gated and merged | delivery policy | `EPIC-05.2`, `EPIC-05.3`, `EPIC-05.4`, `EPIC-05.5` | epic PR head review + exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | do not merge unsupported claims or failed page contract |
-
-### EPIC-06 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-06.1` | tariff/case/review evidence inventory is classified publishable/hidden | `01_PRD.md` | `EPIC-01.D`, `OD-04` | every item has evidence and permission state | implementation | keep incomplete item hidden |
-| `EPIC-06.2` | tariff and calculation pages expose approved assumptions | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.D`, `EPIC-06.1`, `OD-02` | pricing/limits/assumptions cross-check passes | implementation | unpublish invalid item; stop on pricing ambiguity |
-| `EPIC-06.3` | cases hub/detail meet evidence contract | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.D`, `EPIC-06.1`, `OD-01` | minimum set complete; metrics/source/period/permission verified | implementation | remove incomplete case from published set |
-| `EPIC-06.4` | reviews hub keeps review separate from case evidence | `02_PRODUCT_STRUCTURE.md` | `EPIC-04.D`, `EPIC-06.1` | source/identity/anonymization/permission verified | implementation | hide review lacking permission |
-| `EPIC-06.5` | proof hubs have no empty/thin indexable states | `02_PRODUCT_STRUCTURE.md` | `EPIC-06.2`, `EPIC-06.3`, `EPIC-06.4`, `OD-01` | crawl/index/link checks pass | implementation | noindex or remove incomplete hub |
-| `EPIC-06.D` | proof/commercial epic is reviewed, gated and merged | delivery policy | `EPIC-06.2`, `EPIC-06.3`, `EPIC-06.4`, `EPIC-06.5` | epic PR head review + exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | do not merge incomplete release-minimum proof set |
-
-### EPIC-07 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-07.1` | article and KB editorial contracts/templates are distinct | `02_PRODUCT_STRUCTURE.md`, `06_DESIGN_SYSTEM.md` | `EPIC-04.D`, `EPIC-03.D` | template/metadata/editorial typography checks pass | implementation | revert template; stop on role overlap |
-| `EPIC-07.2` | initial briefs and evidence set satisfy approved release minimum | `01_PRD.md`, research | `EPIC-01.D`, `OD-04` | each brief has revalidated intent/source/product link | implementation | defer unsupported item |
-| `EPIC-07.3` | initial articles are substantive and reviewed | approved article briefs | `EPIC-07.1`, `EPIC-07.2` | metadata/body/links/editorial QA pass | implementation | keep draft/hidden |
-| `EPIC-07.4` | initial KB instructions are actionable and current | approved KB briefs | `EPIC-07.1`, `EPIC-07.2` | step/result/next-action checks pass | implementation | keep draft/hidden |
-| `EPIC-07.5` | related-content graph has no orphan or duplicate hub | `02_PRODUCT_STRUCTURE.md` | `EPIC-07.3`, `EPIC-07.4` | broken/orphan/duplicate-intent crawl passes | implementation | remove bad relation or noindex hub |
-| `EPIC-07.D` | article/knowledge epic is reviewed, gated and merged | delivery policy | `EPIC-07.3`, `EPIC-07.4`, `EPIC-07.5` | epic PR head review + exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | do not merge thin/orphan content set |
-
-### EPIC-08 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-08.1` | bounded Wave-5 stream starts from merged products, proof, content and external preflight | delivery strategy | `EPIC-05.D`, `EPIC-06.D`, `EPIC-07.D`, `EPIC-01.D` | worktree starts from current canonical main; prerequisite SHAs/status recorded | implementation | stop on main drift or missing prerequisite merge |
-| `EPIC-08.2` | LeadForm submits safely to test endpoint with consent/context | `03_ARCHITECTURE.md` | `EPIC-08.1`, `OD-08` | allowed/invalid/error/success/idempotency-safe scenarios; no analytics PII | implementation | disable submit for dev/staging only; public release blocked |
-| `EPIC-08.3` | legal pages and consent targets match reviewed version | `01_PRD.md`, `05_RELEASE_CHECKLIST.md` | `EPIC-08.1`, `OD-03` | links/version/payload/content review pass | implementation | forms stay disabled; public release blocked |
-| `EPIC-08.4` | typed analytics measures journeys without PII | `03_ARCHITECTURE.md` | `EPIC-08.1` | event schema and network inspection pass | implementation | provider adapter may be disabled in dev only; public release blocked by approved analytics scope |
-| `EPIC-08.5` | final metadata/robots/sitemap/redirect/security crawl passes | `02_PRODUCT_STRUCTURE.md`, `03_ARCHITECTURE.md` | `EPIC-08.1`, `EPIC-08.2`, `EPIC-08.3`, `EPIC-08.4` | full static crawl, redirect loop/chain, artifact-secret and schema checks pass | implementation | block failing routes; missing approved redirect inventory blocks public release |
-| `EPIC-08.D` | leads/legal/analytics/SEO epic is reviewed, gated and merged | delivery policy | `EPIC-08.2`, `EPIC-08.3`, `EPIC-08.4`, `EPIC-08.5` | epic PR head review + exact-head gate + merged main SHA mapping | delivery / MERGE_AFTER_GATE | no merge/public release with mandatory integration/legal/SEO failure |
-
-### EPIC-09 tasks
-
-| ID | Outcome / scope | Source of Truth | Depends on | Acceptance and verification | Delivery | Recovery / stop |
-|---|---|---|---|---|---|---|
-| `EPIC-09.1` | production identity/artifact store/Nginx/rollback preflight resolves OD-05 | `03_ARCHITECTURE.md`, `05_RELEASE_CHECKLIST.md` | `EPIC-05.D`, `EPIC-06.D`, `EPIC-07.D`, `EPIC-08.D` | target, artifact store and rollback proof exist without secret disclosure; OD-05 marked decided | implementation | no release; continue safe fixes |
-| `EPIC-09.2` | pre-production checklist and risk-specific evidence are complete before delivery | `05_RELEASE_CHECKLIST.md` | `EPIC-09.1` | all non-merge, non-live checks evidenced; release-only items explicit | implementation | keep epic branch unmerged; fix failed evidence |
-| `EPIC-09.D` | release-readiness epic is reviewed/gated/merged, then exact main builds one stored artifact with staging smoke | delivery policy, `03_ARCHITECTURE.md`, `05_RELEASE_CHECKLIST.md` | `EPIC-09.2` | one PR-head review/gate; merge SHA mapping; one exact-main artifact checksum; out validation and staging smoke; no production | delivery / MERGE_AFTER_GATE | do not merge on failed gate; discard bad artifact/restore staging; never issue production command |
-
-## 22. Owner Decision Register
-
-### OD-01 — Three priority niches
-
-- Context: cases and future niche content require exact verticals.
-- Recommendation: select one primary niche for the first complete case set, then two secondary niches.
-- Blocks: final EPIC-06 content scope and niche SEO research.
-- Deadline: before EPIC-06 content publication.
-- Status: OPEN.
-
-### OD-02 — Tariffs and pricing disclosure
-
-- Context: `/tarify/` and `/raschety/` need approved commercial rules.
-- Recommendation: publish a transparent pricing model/range and use personal calculation where inputs materially change price.
-- Blocks: final EPIC-06 tariff copy.
-- Deadline: before EPIC-06 content publication.
-- Status: OPEN.
-
-### OD-03 — Legal reviewer
-
-- Context: PII, operator-audience language and protection claims are sensitive.
-- Recommendation: name an external/legal reviewer before public release.
-- Blocks: EPIC-05 claim approval, EPIC-08 legal acceptance and release.
-- Deadline: before EPIC-05 public copy is marked approved.
-- Status: OPEN.
-
-### OD-04 — Initial release content minimum
-
-- Context: every planned hub should not become thin.
-- Recommendation: first public release includes at minimum 3 complete cases (one per confirmed niche), 3 attributable or transparently anonymized reviews, 3 substantive articles and 3 KB instructions (at least one content item tied to each product). Tariffs/calculations publish only after OD-02; incomplete hubs remain hidden/noindex.
-- Blocks: release scope and sitemap.
-- Deadline: before final audit/approval.
-- Decision: first public release uses the recommended minimum: 3 complete cases, 3 reviews, 3 substantive articles and 3 KB instructions; incomplete hubs remain hidden/noindex.
-- Decided by owner: 2026-09-29.
-- Status: DECIDED.
-
-### OD-05 — Production target identity
-
-- Context: deployment path/server/artifact store are unknown.
-- Recommendation: resolve only during EPIC-09 preflight through the canonical server/secret route.
-- Blocks: production release, not implementation.
-- Deadline: before EPIC-09 release gate.
-- Status: OPEN (later gate).
-
-### OD-06 — Epic delivery mode
-
-- Context: downstream work needs merged canonical contracts.
-- Recommendation: approve `MERGE_AFTER_GATE` for EPIC-01–09; each epic remains one PR by default and production stays separate.
-- Blocks: executable Beads inventory and autonomous downstream waves.
-- Deadline: before final audit/approval.
-- Decision: `MERGE_AFTER_GATE` for EPIC-01–09; production remains a separate explicit command.
-- Decided by owner: 2026-09-29.
-- Status: DECIDED.
-
-### OD-07 — Public subtitle for «Импульс»
-
-- Context: the brand can work without an additional commercial subtitle, but one may improve immediate clarity.
-- Recommendation: launch with brand «Импульс» plus descriptive value proposition in hero, without inventing a second formal product name.
-- Blocks: final hero copy only; does not block foundation.
-- Deadline: before EPIC-05.2 copy approval.
-- Status: OPEN (later gate).
-
-### OD-08 — CRM and delivery channels
-
-- Context: frontend posts to AMS Leads API, while actual CRM/email/webhook routing is server-owned.
-- Recommendation: keep frontend contract channel-agnostic; confirm live delivery destinations from the `EPIC-01.5` preflight before `EPIC-08.2`.
-- Blocks: live integration, not frontend foundation.
-- Deadline: before EPIC-08.2 live-safe test.
-- Status: OPEN (later gate).
-
-### DEC-01 — Homepage form
-
-- Decision: final homepage CTA contains embedded `LeadForm`.
-- Source: Architect recommendation accepted in v1.
-- Status: DECIDED.
-
-### DEC-02 — Topic hubs
-
-- Decision: `/stati/tema/[slug]/` is outside first release until unique content and demand justify it.
-- Status: DECIDED.
-
-### DEC-03 — Thank-you behavior
-
-- Decision: first release uses inline success; no separate thank-you route.
-- Status: DECIDED.
-
-## 23. Current NOW / NEXT / LATER
-
-### NOW
-
-- AH-01 approval handoff is active: Git/SourceCraft control repository, approved docs checkpoint, Task Manager import and Developer handoff.
-- No production action is authorized by plan approval.
-
-### NEXT
-
-- EPIC-01 starts after CLEAN Task Manager import and Developer handoff.
-- EPIC-01 runs foundation and early preflights; EPIC-02 token work and EPIC-03 content work open after `EPIC-01.D`.
-
-### LATER
-
-- Product/proof/content pages.
-- Leads/legal/SEO hardening.
-- Release readiness and separately authorized production.
-
-## 24. Technical Debt
-
-Not assessed before foundation. `TODO` decisions are not technical debt.
-
-## 25. Night Run Readiness — final audit result
-
-```text
-Independent ready waves: EPIC-02 token work || EPIC-03; after EPIC-04.D: EPIC-05 || EPIC-06 || EPIC-07 || EPIC-08
-Cycles: 0
-Terminal delivery tasks: 9/9
-Hard dependencies: stable task/decision IDs; merged-only cross-epic boundaries
-External prerequisites: isolated in EPIC-01.5 and later decision tasks with dev fallback/release stop
-Production-only stop: isolated in EPIC-09/release command
-Before-approval owner decisions: 0
+Independent initial work: CR-00.1 || CR-01.1 || CR-02.1 || CR-11.1
+Critical path: contracts -> architecture/content boundary -> SEO artifact
+  -> verification/CI/operations -> integrated proof -> final audits -> docs
+Single blocking points: integrated proof, final audit and factual closeout are
+  intentionally sequential after all contributing surfaces merge
+External prerequisites: EXT-01..06, each with safe fallback and stop condition
+Owner decisions remaining before approval: 0
+Production-only stops: isolated; production is not represented as a task
+Safe work if one stream blocks: other ready contract/foundation/consumer work
+Expected stop conditions: scope expansion, failed gate, new secret,
+  irreversible external action, PII risk or explicit production boundary
 Result: READY_WITH_LIMITS
-Limits: AH-01 must create/verify the control repository before import; later content/commercial/legal/integration decisions block only their declared tasks; EPIC-08 is intentionally serialized after the feature wave.
+Limits: the 42-level contract-first critical path and manual SourceCraft gates
+  cannot be safely removed without allowing shared-contract drift or unverified
+  merges. External live/production proof remains blocked but does not prevent
+  completion of safe repository remediation.
+Task Manager import: AUTHORIZED_AFTER_APPROVAL
+Developer handoff: AUTHORIZED_AFTER_CLEAN_RECONCILE
+Production: NOT AUTHORIZED
 ```
 
-## 26. Revision History
+## 19. Required Closeout Report
 
-### v4 — 2026-09-29 — READY_FOR_OWNER_APPROVAL
+```text
+BASELINE SHA:
+FINAL MAIN SHA:
+EPICS COMPLETED:
+DOCS CHANGED:
+SEO SYSTEM CREATED:
+ARCHITECTURE VIOLATIONS FIXED:
+UI VIOLATIONS FIXED:
+SEO VIOLATIONS FIXED:
+CONTENT BOUNDARY FIXED:
+P0 REMAINING:
+P1 REMAINING:
+P2 REMAINING:
+VERIFY:
+VERIFY:RELEASE:
+BUILD:
+E2E:
+ACCESSIBILITY:
+SEO CRAWL:
+PERFORMANCE:
+EXTERNAL BLOCKERS:
+PRODUCTION: NOT EXECUTED
+```
 
-- Revision input: exact v3 findings F3-01–F3-03.
-- Accepted: OD-04 minimum copied into PRD/Product Structure; OD-03/OD-07/OD-08 added as exact task gates; bounded EPIC-08 Wave-5 kickoff prevents a long-lived branch.
-- Task inventory: 50 tasks, 9 terminal delivery tasks.
-- Final audit input SHA-256: `B0DB27FAE7EE42996BC8A2FB5569CFA8F12646091A344F1FEEC650D4D67E69C3`.
-- Final audit: PASS — logic/completeness, architecture/data/security, dependencies/autonomy and executability/evidence/delivery.
-- Findings: 0 BLOCKER, 0 MAJOR; cycles: 0; undefined task refs: 0.
-- Night Run Readiness: `READY_WITH_LIMITS`; all limits have explicit gates, fallback/stop conditions and independent safe work.
+## 20. Revision History
 
-### v4 approval — 2026-09-29 — APPROVED
+### v3 final audit — 2026-09-30 — READY_FOR_OWNER_APPROVAL
+
+- Audit passes: logic/completeness PASS; architecture/data/security PASS; dependencies/autonomy PASS; executability/evidence/delivery PASS.
+- Findings: 0 BLOCKER open, 0 MAJOR open, 0 NEEDS_OWNER.
+- Graph: 21 epics, 80 tasks, 21 delivery tasks, 0 cycles, 0 unknown references, 0 collisions.
+- Night Run Readiness: `READY_WITH_LIMITS`; limits are explicit and do not block safe repository work.
+- Draft inventory validation: PASS 21/21 against exact REVIEW snapshot SHA `675675754830f6be503d7a4e7759f205032c456cca5c3472b5845c72b9446092`.
+- Approval/import/Developer: not allowed until the owner says `План утверждён` or `План утвержден` for exact v3.
+
+### v3 approval — 2026-09-30 — APPROVED
 
 - Approver: owner.
 - Approval phrase: `План утверждён`.
-- Result: exact v4 is approved for AH-01, Task Manager import and authorized implementation/delivery work only.
+- Result: exact v3 is approved for Task Manager import, safe implementation, authorized delivery tasks and Developer handoff.
 - Production: not authorized.
-- Approved source snapshot SHA-256 is recorded in the Task Manager inventory generated during AH-01.
+- Approved source snapshot SHA-256 is recorded in the Task Manager inventory generated during approval handoff.
 
-### v3 — 2026-09-29 — REVIEW / FINAL AUDIT RERUN
+### v3 — 2026-09-30 — REVIEW / AUTONOMY CORRECTION
 
-- Revision input: exact v2 final audit findings F-01–F-09.
-- Accepted: separate AH-01 approval bootstrap; governance-only EPIC-00; 9 terminal `.D` tasks; merged-only cross-epic dependencies; child dependency propagation disabled; early preflight moved into EPIC-01; EPIC-09 delivery lifecycle normalized; mandatory lead/legal/redirect/analytics release stops clarified.
-- Resolved tooling evidence: canonical helper Doctor PASS, `bd 1.2.2`, `bd prime` exit code 0.
-- Git checkout remains intentionally absent until AH-01 after exact approval.
-- Final audit: rerun pending against exact v3.
+- Final-audit finding F-014: v2 had one avoidable initial ready bottleneck.
+- Resolved: `CR-01.1`, `CR-02.1` and `CR-11.1` now start from the same exact baseline with disjoint file ownership; `CR-00.1` remains independently ready.
+- Cross-epic merged boundaries, collision-safe IDs and complete delivery coverage remain unchanged.
+- Final audit and `ValidateDraft` must rerun against exact v3.
 
-### v2 — 2026-09-29 — REVIEW / FINAL AUDIT
+### v2 — 2026-09-30 — REVIEW / FINAL AUDIT CORRECTIONS
 
-- Revision input: owner confirmation of OD-04 and OD-06 plus explicit transition to final check.
-- Accepted: first-release content minimum and `MERGE_AFTER_GATE` for EPIC-01–09.
-- Owner decisions before approval: 0.
-- Final audit: running against exact v2.
-- Beads import/Developer handoff: not allowed until exact owner approval.
+- Final-audit findings: F-011 ID collision, F-012 unmerged cross-epic boundaries and F-013 incomplete delivery coverage.
+- Resolved: all task IDs moved to collision-safe `CR-*`; inventory epic keys are `CR-EPIC-*`; cross-epic dependencies use merged `.D` tasks; every `.D` directly depends on all implementation children.
+- Added dependency: integrated browser proof `CR-18.1` waits for blocks/RichText delivery `CR-12.D`.
+- Owner decisions: unchanged and fully decided.
+- Final audit must rerun against exact v2 before readiness.
 
-### v1 — 2026-09-29 — REVIEW
+### v1 — 2026-09-30 — REVIEW / ASSEMBLY
 
-- Revision input: Task Manager Architect assembly review.
-- Accepted: stable task IDs/contracts, delivery/SHA policy, early external preflights, task-level dependency softening, SEO ownership split, embedded homepage form, expanded decision register and rollback/stop conditions.
-- Resolved: topic hubs excluded from first release; thank-you remains inline; technical debt status corrected.
-- Needs owner: OD-04 release content minimum and OD-06 `MERGE_AFTER_GATE` policy.
-- Tooling observation at v1: `bd` was not on PATH; v3 canonical helper later resolved it at the supported local path and passed Doctor/prime.
-- Final audit/readiness/import: not run.
+- Revision input: owner accepted OD-R01 through OD-R04.
+- Accepted decisions: `MERGE_AFTER_GATE`, separate SEO Source of Truth, explicit new managed graph, P0 non-waivable and owner-only P1 exception.
+- Added: 21 Epic Contracts, 80 stable task/delivery IDs, task-level dependency matrix, shared ownership, evidence tiers, severity policy and graph migration stop conditions.
+- Resolved: F-009 and F-010 at assembly level; final audit remains pending.
+- Dependency design: zero cycles by construction; blocking scope softened for EPIC-04, EPIC-12, EPIC-14 and EPIC-15 so independent work can open earlier.
+- Task Manager import and Developer handoff: not allowed before final audit and exact owner approval.
 
-### v0 — 2026-09-29 — DRAFT
+### v0 — 2026-09-30 — DRAFT / ASSEMBLY BASELINE
 
-- Source: owner decisions plus competitor/SEO research and supplied technical/UI standards.
-- Added: primary goal, nine implementation outcomes, dependency waves, epic contracts, owner decisions and release boundary.
-- Preserved: agreed short URLs and universal-homepage model.
-- Rejected: literal competitor copy; CMS/database baseline; long canonical product URLs.
-- Open: niches, tariffs, legal reviewer, initial content minimum, production identity.
+- Input: owner-supplied `AMS24 CONSTITUTION REMEDIATION MASTER PLAN V2`.
+- Accepted: remediation goal, 21 candidate epics, external-safe fallbacks and no-production boundary.
+- Corrected: lifecycle/version, Git delivery sequence, old-plan relationship and preliminary waves.
+- Confirmed: heading defect, absent sitemap/robots artifact, content-boundary violations, internal public vocabulary, lead endpoint mismatch and docs status drift.
+- Rejected: immediate approval, silent v4 graph reuse, fully serial chain and unconditional duplicating docs.
+- Owner decisions OD-R01 through OD-R04 were open at v0 and are resolved in v1.
+- Open: full Epic/Task Contracts, dependency matrix, shared-file ownership, delivery tasks, verification map and rollback/stop conditions.
 
-## 27. Approval Gate
+## 21. Next Step
 
-Current version is approved. Required sequence:
-
-```text
-v4 APPROVED
--> AH-01 Git/SourceCraft control repository + approved docs checkpoint
--> inventory v2 Validate / Init / Import / Reconcile CLEAN
--> Task Manager Developer goal
-```
-
-No production action is authorized by plan approval.
+Exact v3 is owner-approved. Approval handoff must generate and validate the exact approved inventory, reconcile the new managed graph and hand off to Task Manager Developer. Production remains outside that authorization.

@@ -28,13 +28,13 @@ Updated: 2026-09-30
 | `01_PRD.md` | Draft | продуктовые формулировки, KPI, тарифы, кейсы и юридические claims требуют подтверждения владельца |
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
 | `03_ARCHITECTURE.md` | Active | статический Next.js contract, pinned stack, delivery policy и release boundary recorded |
-| `04_BACKLOG.md` | Approved / Implemented | canonical master plan v4 утверждён владельцем и реализован до EPIC-09; production вне approval |
+| `04_BACKLOG.md` | Approved | remediation plan `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем; прежний v4 завершён и сохранён в Git/закрытом Task Manager |
 | `05_RELEASE_CHECKLIST.md` | Draft / Blocked | релиз требует отдельной команды и закрытия внешних production-блокеров |
 | `06_DESIGN_SYSTEM.md` | Active | Northline адаптирован в AMS Northline for Impulse и применён в UI foundation |
 
 ## Текущий фокус
 
-Implementation graph `AMS24-IMPULSE-2026 v4` реализован и смёржен в canonical `main@97800548162ec8384f9afebee2adec805a351bf4`. Production не выполнялся. Следующий безопасный фокус: подтвердить контент/юридические claims, leads API, аналитику, CAPTCHA, redirect inventory и затем отдельной командой запускать production release.
+Предыдущий execution graph `AMS24-IMPULSE-2026 v4` закрыт: 57/57 задач завершены, production не выполнялся. Remediation-план `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем; текущий фокус — approval handoff, Task Manager import и Developer ready-loop. Production пока не разрешён.
 
 ## Как читать
 
