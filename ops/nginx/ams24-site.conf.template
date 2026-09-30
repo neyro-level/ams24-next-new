@@ -1,0 +1,106 @@
+# AMS24 static site Nginx template.
+# Repository-side artifact only: replace placeholders during an explicitly
+# approved release. Do not commit real upstream URLs, credentials or host paths.
+
+server {
+  listen 80;
+  server_name {{PRODUCTION_SERVER_NAME}};
+
+  root {{RELEASE_CURRENT}}/out;
+  index index.html;
+
+  charset utf-8;
+  server_tokens off;
+
+  add_header Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' https://mc.yandex.ru; connect-src 'self' https://mc.yandex.ru; form-action 'self'; upgrade-insecure-requests" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()" always;
+
+  location = /api/leads {
+    proxy_pass {{LEADS_API_UPSTREAM}};
+    proxy_http_version 1.1;
+    proxy_set_header Host $proxy_host;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-AMS-Site "ams24";
+    proxy_request_buffering on;
+    client_max_body_size 128k;
+  }
+
+  location ^~ /_next/static/ {
+    try_files $uri =404;
+    add_header Cache-Control "public, max-age=31536000, immutable" always;
+  }
+
+  location = /404.html {
+    internal;
+    add_header Cache-Control "no-store" always;
+    add_header X-Robots-Tag "noindex, follow" always;
+  }
+
+  location ~ ^(.+[^/])$ {
+    return 308 $scheme://$host$1/;
+  }
+
+  location / {
+    try_files $uri $uri/ $uri/index.html /404.html;
+    add_header Cache-Control "public, max-age=60" always;
+  }
+
+  error_page 404 /404.html;
+}
+
+server {
+  listen 80;
+  server_name {{STAGING_SERVER_NAME}};
+
+  root {{RELEASE_CURRENT}}/out;
+  index index.html;
+
+  auth_basic "AMS24 staging";
+  auth_basic_user_file {{STAGING_BASIC_AUTH_FILE}};
+
+  add_header X-Robots-Tag "noindex, nofollow" always;
+  add_header Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' https://mc.yandex.ru; connect-src 'self' https://mc.yandex.ru; form-action 'self'; upgrade-insecure-requests" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()" always;
+
+  location = /api/leads {
+    proxy_pass {{LEADS_API_UPSTREAM}};
+    proxy_http_version 1.1;
+    proxy_set_header Host $proxy_host;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-AMS-Site "ams24-staging";
+    proxy_request_buffering on;
+    client_max_body_size 128k;
+  }
+
+  location ^~ /_next/static/ {
+    try_files $uri =404;
+    add_header Cache-Control "public, max-age=31536000, immutable" always;
+  }
+
+  location = /404.html {
+    internal;
+    add_header Cache-Control "no-store" always;
+    add_header X-Robots-Tag "noindex, follow" always;
+  }
+
+  location ~ ^(.+[^/])$ {
+    return 308 $scheme://$host$1/;
+  }
+
+  location / {
+    try_files $uri $uri/ $uri/index.html /404.html;
+    add_header Cache-Control "public, max-age=60" always;
+  }
+
+  error_page 404 /404.html;
+}

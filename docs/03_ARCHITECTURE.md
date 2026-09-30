@@ -461,6 +461,24 @@ Rollback switches `current` to the previous verified release without rebuild. Pr
 
 Production identity, server path, artifact store and Nginx configuration are `TODO` and must be recorded before release. No server/secret access is needed during documentation or implementation planning.
 
+### Operations/runbook ownership
+
+This project intentionally has no separate `RUNBOOK.md` while production
+identity is unresolved. Ownership is split as follows:
+
+| Surface | Owner | Not owned here |
+|---|---|---|
+| Production topology and invariants | `03_ARCHITECTURE.md` | step-by-step release proof |
+| Release gate, rollout proof, live smoke and rollback checklist | `05_RELEASE_CHECKLIST.md` | new architecture decisions |
+| Executable Nginx config, once justified | `ops/nginx/*` | product, SEO or release readiness claims |
+| External production identity, credentials and host paths | Secret Master / owner-approved release context | repository docs with secrets |
+
+CR-17 may add `ops/nginx/*` only for validated configuration artifacts. It must
+not create a second release checklist, duplicate production readiness claims or
+invent server identity. Production remains blocked until the owner explicitly
+starts release and the unresolved release identity fields are filled without
+exposing secrets.
+
 ## 17. Content Management Evolution
 
 Stage 1: local validated content in Git.  
