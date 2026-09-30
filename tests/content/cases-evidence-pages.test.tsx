@@ -12,7 +12,7 @@ describe('cases evidence pages', () => {
     const html = renderToStaticMarkup(<CasesPage />)
     const caseItems = proofEvidenceInventory.filter((item) => item.kind === 'case')
 
-    expect(casesMetadata.alternates?.canonical).toBe('/keisy/')
+    expect(casesMetadata.alternates?.canonical).toBe('https://ams24.ru/keisy/')
     expect(casesMetadata.robots).toMatchObject({ index: false, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/keisy/')).toBe(false)
     expect(html.match(/<h1\b/g)).toHaveLength(1)

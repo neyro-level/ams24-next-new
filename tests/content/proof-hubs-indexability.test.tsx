@@ -56,7 +56,7 @@ describe('proof hubs indexability guard', () => {
     const sitemapPaths = buildSitemapPaths(createContentRepository(localContent))
 
     for (const hub of proofHubs) {
-      expect(hub.metadata.alternates?.canonical).toBe(hub.path)
+      expect(hub.metadata.alternates?.canonical).toBe(new URL(hub.path, 'https://ams24.ru').toString())
       expect(hub.metadata.robots).toMatchObject({ index: false, follow: true })
       expect(sitemapPaths).not.toContain(hub.path)
       expect(staticRouteSkeletons.some((route) => route.path === hub.path)).toBe(false)

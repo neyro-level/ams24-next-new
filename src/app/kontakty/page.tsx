@@ -1,21 +1,14 @@
-import type { Metadata } from 'next'
-
+import { buildNoindexMetadata } from '@/core/seo'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
+export const metadata = buildNoindexMetadata({
   title: 'Контакты AMS24 — заявка на расчёт',
   description:
     'Контактная страница AMS24 с безопасной формой заявки. Live-отправка отключена до утверждения endpoint и юридического текста.',
-  alternates: {
-    canonical: '/kontakty/',
-  },
-  robots: {
-    index: false,
-    follow: true,
-  },
-}
+  canonicalPath: '/kontakty/',
+})
 
 export default function ContactsPage() {
   return (

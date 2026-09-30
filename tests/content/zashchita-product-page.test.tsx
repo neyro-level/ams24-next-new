@@ -8,7 +8,9 @@ describe('/zashchita/ product page', () => {
   it('has protection-risk SEO metadata and is no longer an unfinished skeleton', () => {
     expect(metadata.title).toBe('Импульс Защита — аудит риска перехвата лидов')
     expect(metadata.description).toContain('без абсолютных гарантий')
-    expect(metadata.alternates?.canonical).toBe('/zashchita/')
+    expect(metadata.alternates?.canonical).toBe('https://ams24.ru/zashchita/')
+    expect(metadata.openGraph?.url).toBe('https://ams24.ru/zashchita/')
+    expect(metadata.openGraph?.siteName).toBe('Импульс')
     expect(metadata.robots).toMatchObject({ index: true, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/zashchita/')).toBe(false)
   })

@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import HomePage from '@/app/page'
+import HomePage, { metadata as homeMetadata } from '@/app/page'
 import ImpulsProductPage, { metadata as impulsMetadata } from '@/app/impuls/page'
 import PixelProductPage, { metadata as pixelMetadata } from '@/app/pixel/page'
 import ZashchitaProductPage, { metadata as zashchitaMetadata } from '@/app/zashchita/page'
@@ -56,6 +56,9 @@ describe('homepage and product intent review', () => {
 
     expect(homePage?.role).toBe('платформа и маршрутизация')
     expect(homePage?.intent).toContain('выбрать подходящий маршрут')
+    expect(homeMetadata.alternates?.canonical).toBe('https://ams24.ru/')
+    expect(homeMetadata.openGraph?.url).toBe('https://ams24.ru/')
+    expect(homeMetadata.openGraph?.siteName).toBe('Импульс')
     expect(homeHtml).toContain('Главная не дублирует продуктовые страницы')
     expect(homeHtml).toContain('href="#lead-form"')
     expect(homeHtml).toContain('href="#products"')
@@ -72,7 +75,7 @@ describe('homepage and product intent review', () => {
       expect(html).not.toContain('Главная не дублирует продуктовые страницы')
       expect(html).not.toContain('href="#products"')
       expect(html).not.toContain('Три маршрута')
-      expect(page.metadata.alternates?.canonical).toBe(page.path)
+      expect(page.metadata.alternates?.canonical).toBe(new URL(page.path, 'https://ams24.ru').toString())
       expect(page.metadata.robots).toMatchObject({ index: true, follow: true })
     }
   })
@@ -93,7 +96,9 @@ describe('homepage and product intent review', () => {
     const ctas = new Set(productPages.map((page) => page.expectedCta))
 
     expect(titles.size).toBe(productPages.length)
-    expect(canonicalRoutes).toEqual(new Set(['/impuls/', '/pixel/', '/zashchita/']))
+    expect(canonicalRoutes).toEqual(
+      new Set(['https://ams24.ru/impuls/', 'https://ams24.ru/pixel/', 'https://ams24.ru/zashchita/']),
+    )
     expect(ctas).toEqual(new Set(['Рассчитать запуск', 'Проверить применимость', 'Провести аудит']))
   })
 })

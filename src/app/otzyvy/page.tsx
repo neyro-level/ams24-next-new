@@ -1,23 +1,17 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { proofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
+export const metadata = buildNoindexMetadata({
   title: 'Отзывы Импульс — permission guard',
   description:
     'Отзывы Импульс остаются скрыты до подтверждения источника, идентификации или обезличивания и разрешения на публикацию.',
-  alternates: {
-    canonical: '/otzyvy/',
-  },
-  robots: {
-    index: false,
-    follow: true,
-  },
-}
+  canonicalPath: '/otzyvy/',
+})
 
 const reviewItems = proofEvidenceInventory.filter((item) => item.kind === 'review')
 

@@ -1,23 +1,11 @@
-import type { Metadata } from 'next'
-
 import { getContentRepository } from '@/core/content/services/repository'
 import { getClaimsForProduct } from '@/core/content/services/product-claims'
+import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
-  title: 'Импульс Защита — аудит риска перехвата лидов',
-  description:
-    'Импульс Защита помогает оценить риск перехвата лидов, провести аудит и выбрать меры снижения риска без абсолютных гарантий.',
-  alternates: {
-    canonical: '/zashchita/',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+export const metadata = buildMetadata(getContentRepository().assertProductRef('zashchita').seo)
 
 const symptoms = [
   'резко меняется качество заявок без понятной причины',

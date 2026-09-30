@@ -1,24 +1,12 @@
-import type { Metadata } from 'next'
-
 import { getContentRepository } from '@/core/content/services/repository'
 import { getClaimsForProduct } from '@/core/content/services/product-claims'
+import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata: Metadata = {
-  title: 'Импульс — лидогенерация для бизнеса через целевые аудитории',
-  description:
-    'Продукт Импульс помогает оценить запуск лидогенерации: применимость, входные данные, процесс, ограничения и расчёт запуска.',
-  alternates: {
-    canonical: '/impuls/',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-}
+export const metadata = buildMetadata(getContentRepository().assertProductRef('impuls').seo)
 
 const criteria = [
   'понятна ниша и география запуска',

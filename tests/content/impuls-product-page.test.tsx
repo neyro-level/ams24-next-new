@@ -8,7 +8,9 @@ describe('/impuls/ product page', () => {
   it('has unique indexable SEO metadata and is no longer an unfinished skeleton', () => {
     expect(metadata.title).toBe('Импульс — лидогенерация для бизнеса через целевые аудитории')
     expect(metadata.description).toContain('применимость')
-    expect(metadata.alternates?.canonical).toBe('/impuls/')
+    expect(metadata.alternates?.canonical).toBe('https://ams24.ru/impuls/')
+    expect(metadata.openGraph?.url).toBe('https://ams24.ru/impuls/')
+    expect(metadata.openGraph?.siteName).toBe('Импульс')
     expect(metadata.robots).toMatchObject({ index: true, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/impuls/')).toBe(false)
   })
