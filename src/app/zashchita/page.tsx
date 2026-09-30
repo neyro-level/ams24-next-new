@@ -48,15 +48,10 @@ export default function ZashchitaProductPage() {
                 ухудшения качества заявок. Начинаем с аудита, затем выбираем меры снижения риска.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="h-12 px-5">
+                <Button asChild size="xl">
                   <a href="#audit">Провести аудит</a>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-12 border-surface-dark-faint bg-transparent px-5 text-surface-dark-foreground hover:bg-surface-dark-hover hover:text-surface-dark-foreground"
-                >
+                <Button asChild variant="outlineDark" size="xl">
                   <a href="#limits">Что нельзя гарантировать</a>
                 </Button>
               </div>
@@ -190,7 +185,7 @@ export default function ZashchitaProductPage() {
                   <dd className="mt-1">request-audit</dd>
                 </div>
               </dl>
-              <Button className="mt-6 h-12 w-full" disabled>
+              <Button className="mt-6 w-full" disabled size="xl">
                 Провести аудит
               </Button>
             </div>

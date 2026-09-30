@@ -28,15 +28,10 @@ export default function ReviewsPage() {
               обезличивания и разрешения на публикацию. Отзыв не заменяет кейс и не доказывает метрики.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="h-12 px-5">
+              <Button asChild size="xl">
                 <Link href="/#lead-form">Обсудить задачу</Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-12 border-surface-dark-faint bg-transparent px-5 text-surface-dark-foreground hover:bg-surface-dark-hover hover:text-surface-dark-foreground"
-              >
+              <Button asChild variant="outlineDark" size="xl">
                 <Link href="/keisy/">Как проверяются кейсы</Link>
               </Button>
             </div>

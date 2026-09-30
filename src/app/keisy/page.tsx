@@ -28,15 +28,10 @@ export default function CasesPage() {
               Каждый кейс должен иметь нишу, период, источник, методику, метрики и разрешение на публикацию.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="h-12 px-5">
+              <Button asChild size="xl">
                 <Link href="/#lead-form">Обсудить похожую задачу</Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-12 border-surface-dark-faint bg-transparent px-5 text-surface-dark-foreground hover:bg-surface-dark-hover hover:text-surface-dark-foreground"
-              >
+              <Button asChild variant="outlineDark" size="xl">
                 <Link href="/raschety/">Посмотреть допущения расчёта</Link>
               </Button>
             </div>

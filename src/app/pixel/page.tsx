@@ -40,15 +40,10 @@ export default function PixelProductPage() {
                 в согласованных границах.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="h-12 px-5">
+                <Button asChild size="xl">
                   <a href="#applicability">Проверить применимость</a>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-12 border-surface-dark-faint bg-transparent px-5 text-surface-dark-foreground hover:bg-surface-dark-hover hover:text-surface-dark-foreground"
-                >
+                <Button asChild variant="outlineDark" size="xl">
                   <a href="#data-boundary">Граница данных</a>
                 </Button>
               </div>
@@ -160,7 +155,7 @@ export default function PixelProductPage() {
                   <dd className="mt-1">check-pixel</dd>
                 </div>
               </dl>
-              <Button className="mt-6 h-12 w-full" disabled>
+              <Button className="mt-6 w-full" disabled size="xl">
                 Проверить применимость
               </Button>
             </div>

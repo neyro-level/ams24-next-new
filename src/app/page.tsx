@@ -59,15 +59,10 @@ export default function HomePage() {
                 защищать лиды: от первого выбора маршрута до расчёта запуска.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="h-12 px-5">
+                <Button asChild size="xl">
                   <a href="#lead-form">Получить расчёт</a>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-12 border-surface-dark-faint bg-transparent px-5 text-surface-dark-foreground hover:bg-surface-dark-hover hover:text-surface-dark-foreground"
-                >
+                <Button asChild variant="outlineDark" size="xl">
                   <a href="#products">Выбрать продукт</a>
                 </Button>
               </div>
