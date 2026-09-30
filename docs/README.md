@@ -2,7 +2,7 @@
 
 Status: Active  
 Version: 1.0  
-Updated: 2026-09-29
+Updated: 2026-09-30
 
 ## Назначение
 
@@ -25,16 +25,16 @@ Updated: 2026-09-29
 
 | Документ | Статус | Комментарий |
 |---|---|---|
-| `01_PRD.md` | Draft | требует подтверждения продуктовых формулировок и KPI |
+| `01_PRD.md` | Draft | продуктовые формулировки, KPI, тарифы, кейсы и юридические claims требуют подтверждения владельца |
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
-| `03_ARCHITECTURE.md` | Draft | platform contract, pinned foundation stack and delivery policy recorded |
-| `04_BACKLOG.md` | Approved | canonical master plan v4 утверждён владельцем; AH-01 выполняет Task Manager import и Developer handoff |
-| `05_RELEASE_CHECKLIST.md` | Draft | уточняется до первого release |
-| `06_DESIGN_SYSTEM.md` | Draft | Northline принят как input; intake завершается после token fixture и representative page |
+| `03_ARCHITECTURE.md` | Active | статический Next.js contract, pinned stack, delivery policy и release boundary recorded |
+| `04_BACKLOG.md` | Approved / Implemented | canonical master plan v4 утверждён владельцем и реализован до EPIC-09; production вне approval |
+| `05_RELEASE_CHECKLIST.md` | Draft / Blocked | релиз требует отдельной команды и закрытия внешних production-блокеров |
+| `06_DESIGN_SYSTEM.md` | Active | Northline адаптирован в AMS Northline for Impulse и применён в UI foundation |
 
 ## Текущий фокус
 
-`EPIC-00 — Documentation Foundation` завершён. Master plan v4 имеет статус `APPROVED`. Следующий шаг — AH-01: Git/SourceCraft checkpoint, Task Manager import/reconcile и Developer handoff. Production не входит в это approval.
+Implementation graph `AMS24-IMPULSE-2026 v4` реализован и смёржен в canonical `main@97800548162ec8384f9afebee2adec805a351bf4`. Production не выполнялся. Следующий безопасный фокус: подтвердить контент/юридические claims, leads API, аналитику, CAPTCHA, redirect inventory и затем отдельной командой запускать production release.
 
 ## Как читать
 

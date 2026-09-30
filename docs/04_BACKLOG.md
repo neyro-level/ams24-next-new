@@ -1,12 +1,19 @@
-# Master Plan / Backlog — ams24-next-newЧише танцкан 
+# Master Plan / Backlog — ams24-next-new
 
 Plan ID: `AMS24-IMPULSE-2026`  
 Version: v4  
 Status: APPROVED  
-Phase: `APPROVAL_HANDOFF`  
-Updated: 2026-09-29
+Phase: `IMPLEMENTED_WITH_PRODUCTION_BLOCKERS`  
+Updated: 2026-09-30
 
 This is the single canonical master plan and backlog. Exact v4 was approved by the owner on 2026-09-29 with the phrase `План утверждён`. Production remains outside this approval and requires a separate explicit release command.
+
+## Implementation Status — 2026-09-30
+
+- Implementation graph EPIC-01..09 is completed and merged into canonical `main@97800548162ec8384f9afebee2adec805a351bf4`.
+- Task Manager reconciliation is clean: 57/57 tasks closed, 0 open issues, 0 missing `EXECUTION_LEDGER_V1`, 0 delivery tasks without gate.
+- Final local proof: `corepack pnpm verify` PASS; 23 test files / 70 tests; static export emits 21 pages; artifact guard PASS.
+- Production was not executed. Remaining release blockers are external approvals/configuration: leads API, legal claims, analytics, CAPTCHA, redirect inventory, production identity/artifact storage.
 
 ## 1. Primary Goal
 

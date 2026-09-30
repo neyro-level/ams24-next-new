@@ -1,8 +1,8 @@
 # Design System — AMS Northline for Impulse
 
-Status: Draft  
-Version: 0.1  
-Updated: 2026-09-29
+Status: Active  
+Version: 1.0  
+Updated: 2026-09-30
 
 ## 1. Source and Adaptation
 
@@ -52,7 +52,7 @@ Scope: `EPIC-02.4`
 | No P0/P1 design drift | PASS | Homepage uses AMS Northline tokens, dark hero/light/soft/dark CTA rhythm, one restrained primary accent, no black/neon/gradient drift. Machine check: `tests/content/homepage.test.tsx` rejects known drift markers. |
 | Keyboard and semantic access | PASS | Primary actions are real anchors/buttons; product route map has `aria-label`; LeadForm shell has associated labels and disabled state until EPIC-08 live integration. |
 | Mobile composition | PASS | Representative page uses responsive grid contracts (`sm:` and `lg:` breakpoints) for hero, product routes, proof previews and final form shell. |
-| Production-like budget | PASS | `corepack pnpm verify` runs `next build` with `output: 'export'`; static export currently emits `/` and `/_not-found`. Latest measured static output after build: `out/` 30 files, approximately 852 KB total; `.next/static` 18 files, approximately 683 KB total. |
+| Production-like budget | PASS | `corepack pnpm verify` runs `next build` with `output: 'export'`; current static export emits 21 pages, and artifact guard scans 135 text files successfully. |
 | Scaling decision | PASS | Page patterns are approved for reuse; scaling may continue through EPIC-04/05 while keeping claims/evidence gated by content tasks. |
 
 ## 3. Visual Character

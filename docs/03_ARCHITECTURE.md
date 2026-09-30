@@ -1,8 +1,8 @@
 # Architecture — ams24-next-new
 
-Status: Draft  
-Version: 0.1  
-Updated: 2026-09-29
+Status: Active  
+Version: 1.0  
+Updated: 2026-09-30
 
 ## 1. Project Identity
 
@@ -338,17 +338,18 @@ Growth in the number of ordinary articles alone does not justify CMS migration.
 ## 19. Current Readiness
 
 ```text
-Repository: initialized
-Canonical remote: SourceCraft `integrator-p/ams24-next-new`, `origin/main` verified at `073d5689d956c15481a690dc7ef2a4e2f6730fb4`
+Repository: implemented
+Canonical remote: SourceCraft `integrator-p/ams24-next-new`, `origin/main` verified at `97800548162ec8384f9afebee2adec805a351bf4`
 Package/lockfile: pinned and verified
-On-demand SourceCraft gate: manual-only workflow placeholder present; paid run not executed
-Release runbook: missing
-Durable artifact store: unknown
-Production identity: not recorded
+On-demand SourceCraft gate: manual-only workflows present and executed for implementation PRs #1-7, #9 and #10
+Release readiness evidence: `docs/research/RELEASE_READINESS_EPIC_09.md`
+Durable artifact store: unresolved; blocks production release
+Production identity: candidate AMS Main Server contour documented read-only; owner confirmation required before release
 Local database: not needed
+Latest local proof: `corepack pnpm verify` PASS; 23 test files / 70 tests; 21 static pages; artifact guard PASS
 ```
 
-The remaining gaps are expected before foundation and release epics; they block production, not repository foundation work.
+The remaining gaps block production release, not the implemented static repository state.
 
 ## 20. External Preflight Register
 
