@@ -89,12 +89,13 @@ Prohibited in application runtime:
 
 All dynamic routes are known at build through `generateStaticParams()` and validated content.
 
-Current remediation baseline:
+Current implemented baseline after EPIC-19:
 
 - static export configuration is proven in `next.config.ts`;
-- app-level `sitemap.ts` and `robots.ts` are not present yet;
-- current worktree has no `out/sitemap.xml` or `out/robots.txt`;
-- artifact SEO proof is therefore a remediation target, not a completed release fact.
+- app-level `src/app/sitemap.ts` and `src/app/robots.ts` exist;
+- `corepack pnpm build` generates `out/sitemap.xml` and `out/robots.txt`;
+- static artifact SEO proof is recorded in `docs/research/SEO_FINAL_AUDIT_CR_19_1.md` and `docs/research/SEO_CRAWL_ARTIFACTS_CR_19_1.json`;
+- production release is still blocked by release-only external prerequisites and requires a separate owner command.
 
 ## 5. Content Boundary
 
@@ -198,7 +199,7 @@ Current source directories:
 | `src/core/content/services` | content service | singleton repository service over project local content | `getContentRepository()` for routes/tests |
 | `src/core/content/block-registry` | content core | typed block registry parsing | content validation/tests |
 | `src/core/content/services/rich-text.tsx` | content rendering service | RichText rendering from DTOs | UI/templates/tests |
-| `src/core/seo` | SEO core | metadata, route/sitemap helpers and redirect validation | app/project/tests; not yet full SEO implementation |
+| `src/core/seo` | SEO core | metadata, route/sitemap helpers, robots inputs, structured-data helpers and redirect validation | app/project/tests; structured data remains emitted only when facts are approved |
 | `src/core/lib` | shared utility core | small framework-agnostic utilities | UI primitives/shared |
 | `src/project` | project data/config | site settings, navigation, redirects, claims, evidence, editorial contracts and lead contract | app, UI shell/content, core adapters |
 | `src/project/content` | project content source | local content input for repository adapter | `core/content/services/repository.ts` |
@@ -212,13 +213,13 @@ Current import evidence:
 
 | Edge | Current evidence | Baseline decision |
 |---|---|---|
-| `app -> core/content/services` | `src/app/page.tsx`, `/impuls/`, `/pixel/`, `/zashchita/` import `getContentRepository()` | factual drift from target page-service composition; allowed only as current baseline until CR-04.2/CR-06 |
-| `app -> project` | route files import `site`, skeleton metadata, proof inventory, product claims and editorial contracts | current direct route data usage; must not expand silently |
+| `app -> core/content/services` | `src/app/page.tsx`, `/impuls/`, `/pixel/`, `/zashchita/` import `getContentRepository()` | accepted static-site service boundary for current local-repository architecture |
+| `app -> project` | route files import `site`, skeleton metadata, proof inventory, product claims and editorial contracts | accepted route composition data usage; must not expand silently |
 | `app -> ui` | route files render `ui/shell`, `ui/shared`, `ui/content`, `ui/forms` | expected composition boundary |
 | `core/content/services -> project/content` | `repository.ts` imports `localContent` | current local adapter seam; future repository contract should avoid broad project coupling |
 | `core/seo -> project/redirects` | `redirects.ts` imports `RedirectRule` type | type-level coupling only in current baseline |
 | `project -> core` | project content/evidence/link graph imports DTO/repository types | expected because project data conforms to core schemas |
-| `ui -> project` | shell/content/form components import navigation, skeletons, detail fixtures, editorial contracts and lead contract | factual drift: presentation UI consumes project data directly |
+| `ui -> project` | shell/content/form components import navigation, skeletons, detail fixtures, editorial contracts and lead contract | accepted by route/component ownership matrix for current static-site scope; do not expand without a new owner decision |
 | `ui -> core/lib` | primitives/shared import `cn()` | acceptable utility edge |
 | `project -> ui/app` | none found in current scan | required invariant remains intact |
 | non-`app` -> `app` | none found in current scan | required invariant remains intact |
@@ -250,7 +251,7 @@ owner's public boundary, but they must not recreate the same concern locally.
 | Route entrypoint, `generateMetadata`, `generateStaticParams` and route composition | `src/app` | none as implementation owner; UI/core/project supply inputs | `ui`, `project`, `core` |
 | Content DTO schemas and validation | `src/core/content/schemas` | repository, project content, tests | `project`, `ui`, `app` |
 | Repository contract and local adapter validation | `src/core/content/repository` | content services and tests | `project/content`, routes |
-| Repository runtime service | `src/core/content/services` | routes/tests until CR-06 refactor | route-local singleton factories |
+| Repository runtime service | `src/core/content/services` | routes/tests through the public service boundary | route-local singleton factories |
 | Project content source | `src/project/content` | content service/local adapter | `app`, `ui`, `core` outside the adapter seam |
 | SEO artifact contracts and helpers | `src/core/seo` plus `docs/07_SEO_SYSTEM.md` | routes, project data and tests | route-local duplicated SEO systems |
 | Redirect source data | `src/project/redirects.ts` | `core/seo/redirects.ts`, release validation | route files and ad-hoc config |
