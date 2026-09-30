@@ -7,10 +7,14 @@ import ConsentPage, { metadata as consentMetadata } from '@/app/soglasie/page'
 import DataProcessingPage, { metadata as dataProcessingMetadata } from '@/app/obrabotka-dannyh/page'
 import { analyticsProviderStatus, createAnalyticsEvent, trackAnalyticsEvent } from '@/project/analytics'
 import {
+  buildLeadRequest,
   buildLeadTestRequest,
   getLeadFormAvailability,
+  leadConsentContract,
   leadConsentTargets,
   leadFormRuntime,
+  leadRequestBoundary,
+  validateLeadRequestPayload,
   validateLeadDraft,
 } from '@/project/lead-contract'
 
@@ -60,6 +64,39 @@ describe('lead form, legal guard and analytics hardening', () => {
         consentAccepted: false,
       }).success,
     ).toBe(false)
+  })
+
+  it('defines canonical lead request, consent and idempotency boundaries', () => {
+    const payload = {
+      name: 'Анна',
+      contact: '+7 900 000-00-00',
+      task: 'Нужно рассчитать запуск по медицинской нише',
+      context: {
+        product: 'impuls',
+        route: '/impuls/',
+        ctaId: 'calculate-launch',
+      },
+      consent: {
+        accepted: true,
+        version: leadConsentContract.version,
+        acceptedAt: '2026-09-30T12:00:00+03:00',
+        targets: leadConsentTargets,
+      },
+      idempotencyKey: '11111111-1111-4111-8111-111111111111',
+    } as const
+
+    expect(validateLeadRequestPayload(payload).success).toBe(true)
+    expect(leadRequestBoundary).toMatchObject({
+      endpoint: '/api/leads',
+      method: 'POST',
+      frontendSubmissionEnabled: false,
+      authoritativeOwner: 'AMS Leads API',
+    })
+    expect(buildLeadRequest(payload)).toMatchObject({
+      endpoint: '/api/leads',
+      method: 'POST',
+      idempotencyKey: payload.idempotencyKey,
+    })
   })
 
   it('renders legal pages as noindex placeholders with release blockers', () => {
