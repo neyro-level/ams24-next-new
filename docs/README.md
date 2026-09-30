@@ -18,6 +18,7 @@ Updated: 2026-09-30
 | мастер-план, эпики, задачи, зависимости и текущий фокус | `04_BACKLOG.md` |
 | release gate, rollout, live proof и rollback | `05_RELEASE_CHECKLIST.md` |
 | визуальная система и UI-policy | `06_DESIGN_SYSTEM.md` |
+| SEO policy, intent ownership, indexability and search artifact contracts | `07_SEO_SYSTEM.md` |
 | конкурентное и SEO-evidence | `research/COMPETITOR_SEO_BASELINE.md` |
 | external preflight: leads/legal/analytics/CAPTCHA/current URLs | `research/EXTERNAL_PREFLIGHT_EPIC_01_5.md` |
 | remediation baseline classification | `research/BASELINE_CLAIMS_REGISTER_CR_00_1.md` |
@@ -32,6 +33,7 @@ Updated: 2026-09-30
 | `04_BACKLOG.md` | Approved | remediation plan `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем; прежний v4 завершён и сохранён в Git/закрытом Task Manager |
 | `05_RELEASE_CHECKLIST.md` | Draft / Blocked | release-ready claims требуют повторного proof после remediation; production требует отдельной команды |
 | `06_DESIGN_SYSTEM.md` | Active / Foundation only | Northline адаптирован; полный accessibility/performance/UI drift proof ещё не закрыт |
+| `07_SEO_SYSTEM.md` | Active / Partial | source priority and intent ownership defined; indexability, artifact and release proof rules continue in CR-03.2/CR-03.3 |
 
 ## Текущий фокус
 
