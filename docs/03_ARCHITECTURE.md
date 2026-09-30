@@ -48,7 +48,7 @@ CMS, PostgreSQL, Prisma, Payload, auth, worker, Redis и Docker не входя�
 | deployment | `output: "export"`, `trailingSlash: true`, Nginx static hosting |
 | images | preoptimized assets, `images.unoptimized: true` baseline |
 | analytics | Яндекс Метрика, typed events, no PII |
-| forms | relative `/api/leads` -> Nginx -> AMS Leads API |
+| forms | target contract: relative `/api/leads` -> Nginx -> AMS Leads API; current code still uses disabled `/api/leads/test` and is tracked by remediation |
 
 Exact foundation versions pinned during EPIC-01.2:
 
@@ -89,6 +89,13 @@ Prohibited in application runtime:
 
 All dynamic routes are known at build through `generateStaticParams()` and validated content.
 
+Current remediation baseline:
+
+- static export configuration is proven in `next.config.ts`;
+- app-level `sitemap.ts` and `robots.ts` are not present yet;
+- current worktree has no `out/sitemap.xml` or `out/robots.txt`;
+- artifact SEO proof is therefore a remediation target, not a completed release fact.
+
 ## 5. Content Boundary
 
 ```text
@@ -117,6 +124,12 @@ Rules:
 - Route identity is unique `(locale, path)`.
 - Relations are refs resolved by Content Service.
 - Unknown block, broken ref or duplicate path is a build failure.
+
+Current remediation baseline: this is the target boundary. `CR-00.1` records
+current drift: `ContentRepository` is still exported from
+`src/core/content/repository/local-adapter.ts`, the repository service imports
+`@/project/content/local-content`, and routes/UI still import several
+`@/project/*` modules directly. `CR-06.*` owns remediation.
 
 ## 6. Content Models
 
@@ -237,6 +250,10 @@ Frontend responsibilities:
 
 AMS Leads API owns authoritative validation, normalization, rate limit, CAPTCHA secret, idempotency, storage and external delivery.
 
+Current remediation baseline: the target frontend endpoint is `/api/leads`, but
+`src/project/lead-contract.ts` currently uses disabled `/api/leads/test`.
+`submissionEnabled` remains `false`; live lead submission is not claimed.
+
 ## 11. SEO Contract
 
 - Each indexable page has unique title, description, canonical, H1, OG data and robots policy.
@@ -338,18 +355,21 @@ Growth in the number of ordinary articles alone does not justify CMS migration.
 ## 19. Current Readiness
 
 ```text
-Repository: implemented
-Canonical remote: SourceCraft `integrator-p/ams24-next-new`, `origin/main` verified at `97800548162ec8384f9afebee2adec805a351bf4`
-Package/lockfile: pinned and verified
-On-demand SourceCraft gate: manual-only workflows present and executed for implementation PRs #1-7, #9 and #10
-Release readiness evidence: `docs/research/RELEASE_READINESS_EPIC_09.md`
+Repository: remediation in progress after approved v3 import
+Canonical remote: SourceCraft `integrator-p/ams24-next-new`
+Approval checkpoint: local commit `514b731814836d38b2f4aba3e46b004f94dacac6`; remote branch `work/approval-remediation-v3`
+Package/lockfile: pinned and verified by baseline classification
+Current baseline evidence: `docs/research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`
+Known drift: heading semantics, content boundary, SEO app artifacts, public internal vocabulary and lead endpoint
+SourceCraft REST automation: repaired via global skills Secret Master token-precedence fix; TestAccess passes
 Durable artifact store: unresolved; blocks production release
 Production identity: candidate AMS Main Server contour documented read-only; owner confirmation required before release
 Local database: not needed
-Latest local proof: `corepack pnpm verify` PASS; 23 test files / 70 tests; 21 static pages; artifact guard PASS
+Latest full release proof: not current for remediation; must be rerun by `verify:release`/integrated proof tasks after fixes
 ```
 
-The remaining gaps block production release, not the implemented static repository state.
+The listed gaps are implementation and release-readiness remediation targets.
+They are not treated as completed compliance.
 
 ## 20. External Preflight Register
 

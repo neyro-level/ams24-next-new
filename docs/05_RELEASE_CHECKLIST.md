@@ -6,17 +6,22 @@ Updated: 2026-09-30
 
 Release is allowed only after an explicit owner command. This checklist does not authorize merge or production.
 
-## 0. EPIC-09 readiness snapshot
+## 0. Current Readiness Snapshot
 
-Evidence: `docs/research/RELEASE_READINESS_EPIC_09.md`.
+Current evidence: `docs/research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`.
 
-Repository-ready:
+Historical evidence from the completed v4 graph remains in
+`docs/research/RELEASE_READINESS_EPIC_09.md`, but the approved remediation plan
+reopened compliance work. Those historical PASS lines are not current release
+authorization.
 
-- static Next artifact builds through `pnpm verify`;
-- `out/` exists after build and passes static artifact secret scan;
-- SourceCraft manual gate policy is preserved;
-- index/noindex, sitemap and redirect rules have tests;
-- lead, legal and analytics release blockers are explicit and guarded.
+Current repository state:
+
+- static export configuration and pinned package versions are proven;
+- app-level sitemap/robots files and exported `out/sitemap.xml` / `out/robots.txt` are not present in the current worktree;
+- content-boundary, heading, public-copy and lead-endpoint drift is recorded in CR-00.1;
+- SourceCraft Git push and REST automation work after the Secret Master token-precedence repair in global skills;
+- release readiness must be re-proven by the remediation graph before any production command.
 
 Production-only blockers:
 
@@ -28,7 +33,8 @@ Production-only blockers:
 - complete current `ams24.ru` redirect inventory not approved;
 - Nginx/security headers, live smoke and rollback rehearsal not performed.
 
-This means the repository may be reviewed and merged, but public production release is still blocked.
+This means the repository is approved for remediation work, but public
+production release is still blocked.
 
 ## 1. Release Identity
 

@@ -20,6 +20,7 @@ Updated: 2026-09-30
 | визуальная система и UI-policy | `06_DESIGN_SYSTEM.md` |
 | конкурентное и SEO-evidence | `research/COMPETITOR_SEO_BASELINE.md` |
 | external preflight: leads/legal/analytics/CAPTCHA/current URLs | `research/EXTERNAL_PREFLIGHT_EPIC_01_5.md` |
+| remediation baseline classification | `research/BASELINE_CLAIMS_REGISTER_CR_00_1.md` |
 
 ## Статус комплекта
 
@@ -27,14 +28,14 @@ Updated: 2026-09-30
 |---|---|---|
 | `01_PRD.md` | Draft | продуктовые формулировки, KPI, тарифы, кейсы и юридические claims требуют подтверждения владельца |
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
-| `03_ARCHITECTURE.md` | Active | статический Next.js contract, pinned stack, delivery policy и release boundary recorded |
-| `04_BACKLOG.md` | Approved / Implemented | canonical master plan v4 утверждён владельцем и реализован до EPIC-09; production вне approval |
-| `05_RELEASE_CHECKLIST.md` | Draft / Blocked | релиз требует отдельной команды и закрытия внешних production-блокеров |
-| `06_DESIGN_SYSTEM.md` | Active | Northline адаптирован в AMS Northline for Impulse и применён в UI foundation |
+| `03_ARCHITECTURE.md` | Active / Drift recorded | статический Next.js contract и pinned stack recorded; текущие boundary/SEO/leads drift зафиксированы в CR-00.1 |
+| `04_BACKLOG.md` | Approved | remediation plan `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем; прежний v4 завершён и сохранён в Git/закрытом Task Manager |
+| `05_RELEASE_CHECKLIST.md` | Draft / Blocked | release-ready claims требуют повторного proof после remediation; production требует отдельной команды |
+| `06_DESIGN_SYSTEM.md` | Active / Foundation only | Northline адаптирован; полный accessibility/performance/UI drift proof ещё не закрыт |
 
 ## Текущий фокус
 
-Implementation graph `AMS24-IMPULSE-2026 v4` реализован и смёржен в canonical `main@97800548162ec8384f9afebee2adec805a351bf4`. Production не выполнялся. Следующий безопасный фокус: подтвердить контент/юридические claims, leads API, аналитику, CAPTCHA, redirect inventory и затем отдельной командой запускать production release.
+Предыдущий execution graph `AMS24-IMPULSE-2026 v4` закрыт: 57/57 задач завершены, production не выполнялся. Remediation-план `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем и импортирован в Task Manager cleanly. Текущий фокус — Developer ready-loop; baseline drift классифицирован в `research/BASELINE_CLAIMS_REGISTER_CR_00_1.md`. Production пока не разрешён.
 
 ## Как читать
 
