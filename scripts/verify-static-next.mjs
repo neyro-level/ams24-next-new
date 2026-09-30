@@ -404,6 +404,9 @@ async function runSelfTest() {
           `Static guard self-test did not detect ${fixture.name}: ${missing.join(', ')}. Errors: ${errors.join('; ')}`,
         )
       }
+
+      const findingCount = fixture.expected.length === 0 ? '0 findings' : `${fixture.expected.length} expected findings`
+      console.log(`Static guard self-test fixture "${fixture.name}": PASS (${findingCount})`)
     }
 
     console.log('Static guard self-test: PASS')
