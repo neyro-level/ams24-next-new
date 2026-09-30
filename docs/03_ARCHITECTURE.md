@@ -151,6 +151,11 @@ Minimum models:
 
 Commercial pages use typed TypeScript content/blocks. Articles and KB long-form use Markdown. Arbitrary JSX/MDX page builder is out of scope.
 
+Block/RichText reachability for the current repository is recorded in
+`docs/research/BLOCK_RICHTEXT_REACHABILITY_INVENTORY_CR_12_1.md`: only content
+formats present in validated local content are runtime-supported; schema-only
+formats stay speculative until a real approved consumer uses them.
+
 ## 7. Module Map
 
 | Module | Purpose / ownership | Public boundary | Dependencies |
