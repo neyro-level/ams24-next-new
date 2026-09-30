@@ -45,6 +45,18 @@ describe('daily verification command trace', () => {
     expect(verify).not.toContain(' & ')
   })
 
+  it('keeps release verification as one verify, one build and one artifact guard', () => {
+    const release = packageJson.scripts['verify:release']
+    const steps = release.split(' && ')
+
+    expect(steps).toEqual(['pnpm verify', 'pnpm build', 'pnpm guard:artifact'])
+    expect(release.match(/pnpm verify/g) ?? []).toHaveLength(1)
+    expect(release.match(/pnpm build/g) ?? []).toHaveLength(1)
+    expect(release.match(/pnpm guard:artifact/g) ?? []).toHaveLength(1)
+    expect(release).not.toMatch(/(?:^|[^&]);/)
+    expect(release).not.toContain(' & ')
+  })
+
   it('propagates graph validation failures through the assertion API', () => {
     const repository = invalidRepository({
       ...createContentRepository(localContent),
