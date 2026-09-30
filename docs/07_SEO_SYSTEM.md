@@ -219,11 +219,98 @@ redirect sources are forbidden.
 | `/404` recovery route | `noindex, follow` | recovery H1 only | no search canonical requirement | exclude |
 | staging export accidentally reachable | `noindex, nofollow` | production SEO metadata must not be advertised | production canonical forbidden on private host | exclude |
 
-## 14. Handoff to Later CR-03 Tasks
+## 14. Internal Linking Matrix
+
+Internal links exist to clarify ownership and conversion flow, not to inflate
+SEO surfaces.
+
+| Source route family | Required links | Allowed links | Forbidden links |
+|---|---|---|---|
+| Platform `/` | three product routes, trust/company, primary CTA | selected cases/articles | repeated deep product sections that duplicate product pages |
+| Product pages | tariff/calculation, relevant cases, relevant articles, CTA | support instructions if they help adoption | competing product page as primary CTA |
+| Articles | one primary product route, 1-3 related articles/cases/KB entries | glossary-style contextual links | pricing, legal or support links as fake SEO anchors |
+| Cases | related product, cases hub, CTA | article explaining method | unsupported niche hub before niche gate |
+| KB entries | relevant product page, KB hub, next/previous instruction | legal/privacy page when needed | commercial claim blocks that duplicate product landing |
+| Legal/trust pages | contact/company recovery links | none | search-targeted product anchors |
+
+Every indexable page must have a path from a hub or product route and must link
+back to its canonical family. Orphan indexable pages are release blockers.
+
+## 15. Structured Data Eligibility Matrix
+
+Structured data is allowed only when it can be generated from approved factual
+entities. JSON-LD must be safely serialized and must not contain PII,
+unapproved ratings, invented prices or claims not visible on the page.
+
+| Entity/page | Eligible schema | Required evidence | Default decision |
+|---|---|---|---|
+| Organization/company facts | `Organization` | approved company name, URL, contacts and sameAs list | allow after owner/legal proof |
+| Product route | `Product` or service-like schema only if facts are approved | factual offer description, provider, limitations | defer until schema fields are approved |
+| Article | `Article` | title, author/source policy, dates, main image if present | allow for substantive published articles |
+| Case detail | case/article-like schema only if evidence is public | source, period, method, permission and limitations | defer unless evidence is complete |
+| FAQ blocks | `FAQPage` | visible FAQ with approved answers | allow only for visible, factual FAQ |
+| Review/testimonial | review schema | explicit permission, author policy and rating facts | reject by default; owner/legal decision required |
+| Pricing/calculation | offer/pricing schema | owner-approved commercial rules | reject until OD-02/pricing proof closes |
+
+If a required field cannot be proven, omit that schema type instead of emitting
+partial or speculative markup.
+
+## 16. Media SEO Matrix
+
+Media is part of the factual content contract.
+
+| Media type | Required fields | SEO rule | Blocker condition |
+|---|---|---|---|
+| Hero/product images | alt, dimensions, source/ownership state | alt describes visible business meaning, not keyword stuffing | missing ownership or misleading alt |
+| Article images | alt, caption/source when factual | must support article intent | stock image used as proof |
+| Case/evidence media | alt, source, permission, limitation | can support evidence only when approved | private client data or unapproved result |
+| Icons/decoration | empty alt or aria-hidden | not SEO-targeted | decorative image with keyword alt |
+| Open Graph image | approved asset and safe text | generated from page facts | unapproved claim or private data |
+
+Missing non-critical media can downgrade a page to `noindex` if the page still
+helps users, but evidence media with unclear permission blocks publication.
+
+## 17. Redirect Matrix
+
+Redirects are canonicalization and recovery rules, not a place to hide duplicate
+content.
+
+| Redirect case | Required target | Required proof | Failure state |
+|---|---|---|---|
+| legacy URL moved to canonical route | single 301 to canonical owner route | source URL, target URL, reason, no chain | release blocker |
+| slash/non-slash normalization | canonical trailing slash URL | generated route inventory equality | release blocker if loops/chains |
+| duplicate proposal merged into existing route | owner route | duplicate-policy result `MERGE` | do not publish duplicate |
+| removed thin/draft route | nearest useful owner route or 404 | explicit decision and no sitemap entry | release blocker if indexed URL remains |
+| external/private/staging URL | no public redirect unless owner-approved | source and target ownership | block if it leaks private host |
+
+Redirect inventory must be validated for loops, chains, missing targets and
+conflicting canonicals before release.
+
+## 18. Release SEO Proof Matrix
+
+Before a release may claim SEO readiness, the exported artifact must prove:
+
+| Surface | Proof required | Pass condition |
+|---|---|---|
+| Static HTML | crawl representative routes from `out/` | main content, one H1 and metadata are present without client-only loading |
+| Canonicals | inspect exported pages | every indexable page has the expected production canonical |
+| Robots | inspect page robots and `robots.txt` | no staging/private leakage; no mismatch with sitemap |
+| Sitemap | inspect generated sitemap | only canonical `index, follow` production URLs are present |
+| Internal links | crawl links | no broken internal links, no orphan indexable pages |
+| Structured data | parse JSON-LD | only eligible schema types with approved facts |
+| Media | inspect required media metadata | critical images have safe alt/source and no private data |
+| Redirects | validate redirect inventory | no loops, chains, missing targets or conflicting canonical owners |
+| Cannibalization | scan title/H1/canonical intent map | no two indexable routes own the same primary intent |
+
+This proof belongs to release or implementation epics that generate artifacts.
+The SEO system document defines the contract; it does not by itself prove a
+production build.
+
+## 19. Handoff to Later CR-03 Tasks
 
 CR-03.1 freezes source priority and intent ownership. CR-03.2 freezes
 indexability, metadata, H1, canonical, robots and sitemap rules.
 
-CR-03.3 must add linking, structured data, media, redirects and release proof.
-Until CR-03.3 is complete, this document does not yet define the full SEO
-release checklist.
+CR-03.3 freezes linking, structured data, media, redirects and release proof.
+Implementation epics may now consume this document read-only, but must still
+prove their generated artifacts separately before release.
