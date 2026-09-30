@@ -162,19 +162,19 @@ export const productClaims: ProductClaim[] = [
   },
 ]
 
-export function getClaimsForProduct(product: ProductId) {
-  return productClaims.filter((claim) => claim.product === product)
+export function getClaimsForProduct(product: ProductId, claims: ProductClaim[] = productClaims) {
+  return claims.filter((claim) => claim.product === product)
 }
 
-export function getPublicClaimsForProduct(product: ProductId) {
-  return getClaimsForProduct(product).filter((claim) => isPublicationAllowed(toClaimPublicationGateInput(claim)))
+export function getPublicClaimsForProduct(product: ProductId, claims: ProductClaim[] = productClaims) {
+  return getClaimsForProduct(product, claims).filter((claim) => isPublicationAllowed(toClaimPublicationGateInput(claim)))
 }
 
-export function validateProductClaimRegister() {
+export function validateProductClaimRegister(claims: ProductClaim[] = productClaims) {
   const issues: string[] = []
-  issues.push(...validatePublicationGateMatrix(productClaims.map(toClaimPublicationGateInput)))
+  issues.push(...validatePublicationGateMatrix(claims.map(toClaimPublicationGateInput)))
 
-  for (const claim of productClaims) {
+  for (const claim of claims) {
     if (claim.evidence.length === 0) {
       issues.push(`${claim.id}: missing evidence`)
     }
