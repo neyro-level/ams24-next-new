@@ -14,15 +14,15 @@ describe('reviews permission page', () => {
     expect(reviewsMetadata.robots).toMatchObject({ index: false, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/otzyvy/')).toBe(false)
     expect(html.match(/<h1\b/g)).toHaveLength(1)
-    expect(html).toContain('Permission contract')
-    expect(html).toContain('source, identity or anonymization, publication permission')
+    expect(html).toContain('Требования к отзывам')
+    expect(html).toContain('источник, идентификация или обезличивание и разрешение на публикацию')
 
     for (const item of reviewItems) {
       expect(html).toContain(item.title)
       expect(html).toContain(item.releaseMinimumSlot)
-      expect(html).toContain('publicationStatus')
-      expect(html).toContain('hidden')
-      expect(html).toContain('permissionState')
+      expect(html).toContain('Статус')
+      expect(html).toContain('скрыто до подтверждения')
+      expect(html).toContain('Разрешение')
     }
   })
 

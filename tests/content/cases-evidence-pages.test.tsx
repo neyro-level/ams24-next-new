@@ -8,7 +8,7 @@ import { staticRouteSkeletons } from '@/project/route-skeletons'
 import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 
 describe('cases evidence pages', () => {
-  it('keeps cases hub noindex and tied to hidden case inventory until OD-01 evidence exists', () => {
+  it('keeps cases hub noindex and tied to hidden case inventory until evidence exists', () => {
     const html = renderToStaticMarkup(<CasesPage />)
     const caseItems = proofEvidenceInventory.filter((item) => item.kind === 'case')
 
@@ -16,15 +16,15 @@ describe('cases evidence pages', () => {
     expect(casesMetadata.robots).toMatchObject({ index: false, follow: true })
     expect(staticRouteSkeletons.some((route) => route.path === '/keisy/')).toBe(false)
     expect(html.match(/<h1\b/g)).toHaveLength(1)
-    expect(html).toContain('Evidence contract')
-    expect(html).toContain('OD-01')
+    expect(html).toContain('Требования к кейсам')
+    expect(html).toContain('Пока нет подтверждённых материалов')
 
     for (const item of caseItems) {
       expect(html).toContain(item.title)
       expect(html).toContain(item.releaseMinimumSlot)
-      expect(html).toContain('publicationStatus')
-      expect(html).toContain('hidden')
-      expect(html).toContain('permissionState')
+      expect(html).toContain('Статус')
+      expect(html).toContain('скрыто до подтверждения')
+      expect(html).toContain('Разрешение')
     }
   })
 

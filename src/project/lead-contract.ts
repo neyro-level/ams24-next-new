@@ -13,7 +13,7 @@ export const leadFormRuntime = {
   endpoint: '/api/leads/test',
   submissionEnabled: false,
   disabledReason:
-    'Live submit is disabled until OD-08 API endpoint/schema and OD-03 legal text are approved',
+    'форма ждёт финального подключения, юридического текста и антиспам-защиты',
   releaseBlocker: 'public release requires approved lead endpoint, consent text and anti-spam strategy',
 } as const
 

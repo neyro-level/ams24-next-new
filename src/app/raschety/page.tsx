@@ -31,8 +31,8 @@ export default function CalculationsPage() {
               <p className="mb-5 text-label font-bold uppercase text-surface-dark-faint">Расчёт без ложной точности</p>
               <h1 className="font-display text-display font-extrabold">Расчёты Импульс</h1>
               <p className="mt-7 max-w-3xl text-body-lg text-surface-dark-muted">
-                До OD-02 эта страница не публикует цену, диапазоны или обещания результата. Она
-                фиксирует, какие допущения нужны для персонального расчёта запуска.
+                До утверждения коммерческих правил эта страница не публикует цену, диапазоны или
+                обещания результата. Она фиксирует, какие допущения нужны для персонального расчёта запуска.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Button asChild size="lg" className="h-12 px-5">
@@ -52,8 +52,8 @@ export default function CalculationsPage() {
               aria-label="Статус расчётных примеров"
               className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-5 shadow-panel"
             >
-              <p className="text-label font-bold uppercase text-surface-dark-faint">Publication guard</p>
-              <h2 className="mt-5 font-display text-h3 font-bold">noindex до утверждения</h2>
+              <p className="text-label font-bold uppercase text-surface-dark-faint">Проверка условий</p>
+              <h2 className="mt-5 font-display text-h3 font-bold">Скрыто до утверждения</h2>
               <p className="mt-4 text-body-sm text-surface-dark-muted">
                 Расчётные примеры остаются скрыты, пока не утверждены коммерческие правила и ограничения.
               </p>
@@ -65,7 +65,7 @@ export default function CalculationsPage() {
       <Section className="bg-background">
         <Container>
           <SectionHeader
-            eyebrow="Assumptions"
+            eyebrow="Допущения"
             title="Что нужно для персонального расчёта"
             lead="Вместо универсальной цены страница показывает проверяемые входные данные, которые влияют на применимость и следующий шаг."
           />
@@ -83,9 +83,9 @@ export default function CalculationsPage() {
       <Section className="bg-surface-muted">
         <Container>
           <SectionHeader
-            eyebrow="Inventory"
-            title="Расчётные примеры скрыты до OD-02"
-            lead="Этот блок связан с evidence inventory и не допускает публикацию неподтверждённых диапазонов."
+            eyebrow="Примеры"
+            title="Расчётные примеры скрыты до утверждения"
+            lead="Этот блок не допускает публикацию неподтверждённых диапазонов и точных обещаний."
           />
           <div className="mt-10 space-y-4">
             {calculationItems.map((item) => (
@@ -93,7 +93,7 @@ export default function CalculationsPage() {
                 <h2 className="font-display text-h3 font-bold">{item.title}</h2>
                 <p className="mt-4 text-body-sm text-muted-foreground">{item.hiddenReason}</p>
                 <p className="mt-4 text-caption text-muted-foreground">
-                  publicationStatus: {item.publicationStatus}; blockers: {item.blockers.join(', ')}
+                  Статус: скрыто до утверждения коммерческих правил и ограничений.
                 </p>
               </article>
             ))}

@@ -18,7 +18,7 @@ const legalPages = {
     path: '/soglasie/',
     title: 'Согласие на обработку данных',
     h1: 'Согласие на обработку данных',
-    intent: 'показать целевую страницу согласия для формы заявки до подключения live-submit',
+    intent: 'показать целевую страницу согласия для формы заявки до подключения отправки',
     requiredBeforeRelease: ['утверждённая редакция согласия', 'состав полей заявки', 'сроки и цели обработки'],
   },
   'data-processing': {
@@ -44,7 +44,7 @@ export function buildLegalMetadata(kind: LegalPageKind) {
 
   return buildNoindexMetadata({
     title: `${page.title} — черновая страница`,
-    description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию. До legal review она не индексируется.`,
+    description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию и не индексируется до финального согласования.`,
     canonicalPath: page.path,
   })
 }
@@ -57,10 +57,10 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
       <Section spacing="hero" className="bg-surface-dark text-surface-dark-foreground">
         <Container>
           <SectionHeader
-            eyebrow="Legal guard"
+            eyebrow="Юридическая страница"
             title={page.h1}
             level={1}
-            lead="Это не финальный юридический текст. Страница создана как безопасная цель для ссылок согласия и будет наполнена после OD-03 legal review."
+            lead="Это не финальный юридический текст. Страница создана как безопасная цель для ссылок согласия и будет наполнена после юридического согласования."
           />
         </Container>
       </Section>
@@ -72,15 +72,15 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
               <p className="text-label font-bold uppercase text-primary">Версия</p>
               <dl className="mt-5 space-y-4 text-body-sm text-muted-foreground">
                 <div>
-                  <dt className="font-semibold text-foreground">status</dt>
-                  <dd className="mt-1">draft / noindex / public release blocked</dd>
+                  <dt className="font-semibold text-foreground">Статус</dt>
+                  <dd className="mt-1">черновик, скрыт от индексации, ждёт согласования</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-foreground">version</dt>
+                  <dt className="font-semibold text-foreground">Версия</dt>
                   <dd className="mt-1">{legalDraftVersion}</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-foreground">canonical</dt>
+                  <dt className="font-semibold text-foreground">Адрес</dt>
                   <dd className="mt-1">{page.path}</dd>
                 </div>
               </dl>
@@ -97,8 +97,8 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
                 ))}
               </ul>
               <p className="mt-6 rounded-card border border-dashed border-border bg-surface-elevated p-4 text-body-sm text-muted-foreground">
-                Пока OD-03 не закрыт, формы остаются в disabled-состоянии, а страница не попадает в
-                индексируемый sitemap.
+                Пока юридический текст не утверждён, формы остаются выключены, а страница не
+                попадает в индексируемую карту сайта.
               </p>
             </div>
           </div>

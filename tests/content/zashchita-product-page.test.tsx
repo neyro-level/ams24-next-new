@@ -20,13 +20,13 @@ describe('/zashchita/ product page', () => {
 
     expect(html.match(/<h1\b/g)).toHaveLength(1)
     expect(html).toContain('Импульс Защита — аудит риска перехвата лидов')
-    expect(html).toContain('Threat model')
-    expect(html).toContain('Evidence boundary')
+    expect(html).toContain('Признаки риска')
+    expect(html).toContain('Граница обещаний')
     expect(html).toContain('Провести аудит')
     expect(html).toContain('не обещает невозможность перехвата')
-    expect(html).toContain('Unsupported protection promise скрыт')
+    expect(html).toContain('Абсолютных гарантий нет')
     expect(html).not.toContain('Route skeleton')
-    expect(html).not.toContain('Publication guard')
+    expect(html).not.toContain('Публикационный контроль')
   })
 
   it('keeps absolute guarantee out of the public promise', () => {

@@ -1,5 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
-import { getClaimsForProduct, getPublicClaimsForProduct } from '@/core/content/services/product-claims'
+import { getPublicClaimsForProduct } from '@/core/content/services/product-claims'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
@@ -31,9 +31,7 @@ const auditSteps = [
 export default function ZashchitaProductPage() {
   const repository = getContentRepository()
   const product = repository.assertProductRef('zashchita')
-  const claims = getClaimsForProduct('zashchita')
   const allowedClaims = getPublicClaimsForProduct('zashchita')
-  const hiddenClaims = claims.filter((claim) => claim.publicationStatus === 'hidden')
 
   return (
     <main>
@@ -67,11 +65,11 @@ export default function ZashchitaProductPage() {
               aria-label="Краткая карточка продукта Импульс Защита"
               className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-5 shadow-panel"
             >
-              <p className="text-label font-bold uppercase text-surface-dark-faint">Risk-first route</p>
+              <p className="text-label font-bold uppercase text-surface-dark-faint">Маршрут аудита</p>
               <h2 className="mt-5 font-display text-h3 font-bold">{product.name}</h2>
               <p className="mt-4 text-body-sm text-surface-dark-muted">{product.promise}</p>
               <p className="mt-6 rounded-card border border-surface-dark-faint p-4 text-body-sm text-surface-dark-muted">
-                Primary CTA: {product.primaryCta.label}
+                Следующий шаг: {product.primaryCta.label}
               </p>
             </aside>
           </div>
@@ -82,7 +80,7 @@ export default function ZashchitaProductPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
             <SectionHeader
-              eyebrow="Threat model"
+              eyebrow="Признаки риска"
               title="Сначала фиксируем признаки риска"
               lead="Один симптом не доказывает перехват. Страница помогает собрать наблюдения и перейти к проверяемому аудиту."
             />
@@ -121,7 +119,7 @@ export default function ZashchitaProductPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
             <div className="rounded-large border border-border bg-surface-elevated p-6 shadow-card">
-              <p className="text-label font-bold uppercase text-primary">Evidence boundary</p>
+              <p className="text-label font-bold uppercase text-primary">Граница обещаний</p>
               <h2 className="mt-5 font-display text-h2 font-extrabold">Защита — это снижение риска, а не абсолютная гарантия</h2>
               <p className="mt-5 text-body text-muted-foreground">
                 Публичная страница не обещает невозможность перехвата. Она показывает, как провести
@@ -129,19 +127,13 @@ export default function ZashchitaProductPage() {
               </p>
             </div>
             <div className="rounded-large border border-border bg-surface p-6">
-              <p className="text-label font-bold uppercase text-primary">Claim guard</p>
-              <h2 className="mt-5 font-display text-h2 font-extrabold">Unsupported protection promise скрыт</h2>
+              <p className="text-label font-bold uppercase text-primary">Ограничения</p>
+              <h2 className="mt-5 font-display text-h2 font-extrabold">Абсолютных гарантий нет</h2>
               <div className="mt-6 space-y-4">
                 {allowedClaims.map((claim) => (
                   <div className="rounded-card bg-surface-elevated p-4" key={claim.id}>
                     <p className="text-body-sm font-semibold">{claim.claim}</p>
-                    <p className="mt-2 text-caption text-muted-foreground">{claim.legalReviewRoute}</p>
-                  </div>
-                ))}
-                {hiddenClaims.map((claim) => (
-                  <div className="rounded-card border border-dashed border-border bg-surface-muted p-4" key={claim.id}>
-                    <p className="text-body-sm font-semibold">Не публикуется: unsupported-hidden</p>
-                    <p className="mt-2 text-caption text-muted-foreground">{claim.legalReviewRoute}</p>
+                    <p className="mt-2 text-caption text-muted-foreground">Проверено по утверждённым материалам проекта.</p>
                   </div>
                 ))}
               </div>
@@ -179,22 +171,22 @@ export default function ZashchitaProductPage() {
               <p className="text-label font-bold uppercase text-surface-dark-faint">Следующий шаг</p>
               <h2 className="mt-5 font-display text-h2 font-extrabold">Провести аудит защиты лидов</h2>
               <p className="mt-5 text-body-lg text-surface-dark-muted">
-                Соберите симптомы, рекламные каналы и точки входа. Live-форма будет подключена в
-                EPIC-08 через `/api/leads`.
+                Соберите симптомы, рекламные каналы и точки входа. Сейчас кнопка не отправляет
+                персональные данные и показывает будущий сценарий обращения.
               </p>
             </div>
             <div
               aria-label="Контекст будущей заявки на аудит защиты"
               className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-6 shadow-panel"
             >
-              <p className="text-label font-bold uppercase text-surface-dark-faint">Lead context</p>
+              <p className="text-label font-bold uppercase text-surface-dark-faint">Что передать</p>
               <dl className="mt-5 grid gap-4 text-body-sm sm:grid-cols-2">
                 <div>
-                  <dt className="text-surface-dark-faint">product</dt>
+                  <dt className="text-surface-dark-faint">Продукт</dt>
                   <dd className="mt-1">zashchita</dd>
                 </div>
                 <div>
-                  <dt className="text-surface-dark-faint">cta</dt>
+                  <dt className="text-surface-dark-faint">Действие</dt>
                   <dd className="mt-1">request-audit</dd>
                 </div>
               </dl>

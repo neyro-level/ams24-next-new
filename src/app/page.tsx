@@ -170,7 +170,7 @@ export default function HomePage() {
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {proofPreviews.map((proof) => (
               <article className="rounded-card border border-border bg-surface-elevated p-6 shadow-card" key={proof.title}>
-                <p className="text-label font-bold uppercase text-primary">Proof preview</p>
+                <p className="text-label font-bold uppercase text-primary">Материал</p>
                 <h2 className="mt-5 font-display text-h3 font-bold">{proof.title}</h2>
                 <p className="mt-4 text-body text-muted-foreground">{proof.text}</p>
               </article>
@@ -185,7 +185,7 @@ export default function HomePage() {
             <SectionHeader
               eyebrow="База знаний и статьи"
               title="Контентная зона уже заложена в архитектуру"
-              lead="После foundation можно наполнять статьи и базу знаний без переделки маршрутов, SEO-контракта и карточек."
+              lead="Эту зону можно наполнять статьями и базой знаний без переделки маршрутов, SEO-контракта и карточек."
             />
             <div className="space-y-3">
               {knowledgePreviews.map((item) => (
@@ -207,8 +207,8 @@ export default function HomePage() {
                 Опишите задачу — подготовим маршрут запуска
               </h2>
               <p className="mt-5 max-w-2xl text-body-lg text-surface-dark-muted">
-                Форма пока работает как shell: она показывает будущий состав полей, состояние
-                согласия и точку подключения к `/api/leads` без отправки персональных данных.
+                Форма показывает будущий состав полей и состояние согласия, но не отправляет
+                персональные данные до финального подключения.
               </p>
             </div>
             <LeadForm context={{ product: 'site', route: '/', ctaId: 'home-calculation' }} />

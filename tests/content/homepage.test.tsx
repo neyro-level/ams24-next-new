@@ -11,7 +11,7 @@ describe('representative homepage', () => {
     expect(html).toContain('href="/impuls/"')
     expect(html).toContain('href="/pixel/"')
     expect(html).toContain('href="/zashchita/"')
-    expect(html).toContain('Proof preview')
+    expect(html).toContain('Материал')
     expect(html).toContain('aria-label="Форма расчёта"')
     expect(html).toContain('data-form-id="ams24-lead-form"')
     expect(html).toContain('data-analytics-event="lead_form_view"')

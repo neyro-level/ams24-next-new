@@ -1,5 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
-import { getClaimsForProduct, getPublicClaimsForProduct } from '@/core/content/services/product-claims'
+import { getPublicClaimsForProduct } from '@/core/content/services/product-claims'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
@@ -15,7 +15,7 @@ const requirements = [
 
 const boundaries = [
   'не заявляем полный охват аудитории сайта',
-  'не публикуем код установки без подтверждённого integration contract',
+  'не публикуем код установки без подтверждённого порядка подключения',
   'учитываем согласия, политику данных и юридическую проверку',
 ] as const
 
@@ -23,7 +23,6 @@ export default function PixelProductPage() {
   const repository = getContentRepository()
   const product = repository.assertProductRef('pixel')
   const allowedClaims = getPublicClaimsForProduct('pixel')
-  const reviewClaims = getClaimsForProduct('pixel').filter((claim) => claim.publicationStatus === 'needs-review')
 
   return (
     <main>
@@ -58,11 +57,11 @@ export default function PixelProductPage() {
               aria-label="Краткая карточка продукта Импульс Пиксель"
               className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-5 shadow-panel"
             >
-              <p className="text-label font-bold uppercase text-surface-dark-faint">Own-site intent</p>
+              <p className="text-label font-bold uppercase text-surface-dark-faint">Свой сайт</p>
               <h2 className="mt-5 font-display text-h3 font-bold">{product.name}</h2>
               <p className="mt-4 text-body-sm text-surface-dark-muted">{product.promise}</p>
               <p className="mt-6 rounded-card border border-surface-dark-faint p-4 text-body-sm text-surface-dark-muted">
-                Primary CTA: {product.primaryCta.label}
+                Следующий шаг: {product.primaryCta.label}
               </p>
             </aside>
           </div>
@@ -92,14 +91,14 @@ export default function PixelProductPage() {
       <Section id="data-boundary" className="bg-surface-muted">
         <Container>
           <SectionHeader
-            eyebrow="Data boundary"
+            eyebrow="Граница данных"
             title="Чётко отделяем применимость от неподтверждённых обещаний"
             lead="Пиксель не подменяет аналитику, CRM или юридическую проверку. На этой странице фиксируются только безопасные продуктовые границы."
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {boundaries.map((item) => (
               <article className="rounded-card border border-border bg-surface-elevated p-6 shadow-card" key={item}>
-                <p className="text-label font-bold uppercase text-primary">Boundary</p>
+                <p className="text-label font-bold uppercase text-primary">Граница</p>
                 <h2 className="mt-5 font-display text-h3 font-bold">{item}</h2>
               </article>
             ))}
@@ -120,19 +119,13 @@ export default function PixelProductPage() {
               </p>
             </div>
             <div className="rounded-large border border-border bg-surface p-6">
-              <p className="text-label font-bold uppercase text-primary">Claim guard</p>
-              <h2 className="mt-5 font-display text-h2 font-extrabold">Privacy ambiguity закрыта до CTA</h2>
+              <p className="text-label font-bold uppercase text-primary">Ограничения</p>
+              <h2 className="mt-5 font-display text-h2 font-extrabold">Приватность учитывается до обращения</h2>
               <div className="mt-6 space-y-4">
                 {allowedClaims.map((claim) => (
                   <div className="rounded-card bg-surface-elevated p-4" key={claim.id}>
                     <p className="text-body-sm font-semibold">{claim.claim}</p>
-                    <p className="mt-2 text-caption text-muted-foreground">{claim.legalReviewRoute}</p>
-                  </div>
-                ))}
-                {reviewClaims.map((claim) => (
-                  <div className="rounded-card border border-dashed border-border bg-surface-muted p-4" key={claim.id}>
-                    <p className="text-body-sm font-semibold">Требует legal review перед публикацией</p>
-                    <p className="mt-2 text-caption text-muted-foreground">{claim.legalReviewRoute}</p>
+                    <p className="mt-2 text-caption text-muted-foreground">Проверено по утверждённым материалам проекта.</p>
                   </div>
                 ))}
               </div>
@@ -149,21 +142,21 @@ export default function PixelProductPage() {
               <h2 className="mt-5 font-display text-h2 font-extrabold">Проверить применимость пикселя</h2>
               <p className="mt-5 text-body-lg text-surface-dark-muted">
                 Подготовьте адрес сайта, список важных страниц и контакт технического ответственного.
-                Live-форма будет подключена в EPIC-08 через `/api/leads`.
+                Сейчас кнопка не отправляет персональные данные и показывает будущий сценарий заявки.
               </p>
             </div>
             <div
               aria-label="Контекст будущей заявки на пиксель"
               className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-6 shadow-panel"
             >
-              <p className="text-label font-bold uppercase text-surface-dark-faint">Lead context</p>
+              <p className="text-label font-bold uppercase text-surface-dark-faint">Что передать</p>
               <dl className="mt-5 grid gap-4 text-body-sm sm:grid-cols-2">
                 <div>
-                  <dt className="text-surface-dark-faint">product</dt>
+                  <dt className="text-surface-dark-faint">Продукт</dt>
                   <dd className="mt-1">pixel</dd>
                 </div>
                 <div>
-                  <dt className="text-surface-dark-faint">cta</dt>
+                  <dt className="text-surface-dark-faint">Действие</dt>
                   <dd className="mt-1">check-pixel</dd>
                 </div>
               </dl>

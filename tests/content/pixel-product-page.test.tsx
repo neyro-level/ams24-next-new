@@ -22,11 +22,11 @@ describe('/pixel/ product page', () => {
     expect(html).toContain('Импульс Пиксель — определить заинтересованных посетителей сайта')
     expect(html).toContain('href="#applicability"')
     expect(html).toContain('Проверить применимость')
-    expect(html).toContain('Data boundary')
-    expect(html).toContain('Privacy ambiguity закрыта до CTA')
-    expect(html).toContain('legal-review:OD-03')
+    expect(html).toContain('Граница данных')
+    expect(html).toContain('Приватность учитывается до обращения')
+    expect(html).toContain('Проверено по утверждённым материалам проекта.')
     expect(html).not.toContain('Route skeleton')
-    expect(html).not.toContain('Publication guard')
+    expect(html).not.toContain('Публикационный контроль')
   })
 
   it('does not imply unsafe visitor identification or privacy bypass', () => {
