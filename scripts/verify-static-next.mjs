@@ -95,6 +95,14 @@ const forbiddenSourcePatterns = [
   },
 ]
 
+const forbiddenScopedSourcePatterns = [
+  {
+    name: 'runtime project implementation import',
+    pathPattern: /^(?:src\/)?(?:app|ui)\//,
+    pattern: /from\s+['"]@\/project\//,
+  },
+]
+
 const sourceExtensions = new Set(['.js', '.jsx', '.mjs', '.ts', '.tsx'])
 const ignoredDirectories = new Set([
   '.git',
@@ -199,6 +207,12 @@ async function assertStaticSources(root, errors) {
 
     for (const rule of forbiddenSourcePatterns) {
       if (rule.pattern.test(source)) {
+        errors.push(`${relativePath} uses ${rule.name}`)
+      }
+    }
+
+    for (const rule of forbiddenScopedSourcePatterns) {
+      if (rule.pathPattern.test(relativePath) && rule.pattern.test(source)) {
         errors.push(`${relativePath} uses ${rule.name}`)
       }
     }
@@ -338,21 +352,35 @@ async function runSelfTest() {
         ],
       },
       {
-        name: 'public secret and CRM URL',
+        name: 'runtime boundary, public secret and CRM URL',
         setup(root) {
           mkdirSync(path.join(root, 'src', 'app'), { recursive: true })
+          mkdirSync(path.join(root, 'src', 'ui'), { recursive: true })
           writeValidNextConfig(root)
           writeFileSync(
             path.join(root, 'src', 'app', 'page.tsx'),
             [
+              "import { localContent } from '@/project/content/local-content'",
               'const token = process.env.NEXT_PUBLIC_AMOCRM_API_TOKEN',
               "const crmUrl = 'https://example.bitrix24.ru/rest/1/secret/crm.lead.add'",
-              'export default function Page() { return <main>{token}{crmUrl}</main> }',
+              'export default function Page() { return <main>{localContent}{token}{crmUrl}</main> }',
+              '',
+            ].join('\n'),
+          )
+          writeFileSync(
+            path.join(root, 'src', 'ui', 'bad.tsx'),
+            [
+              "import { siteSettings } from '@/project/site'",
+              'export function Bad() { return <div>{siteSettings.name}</div> }',
               '',
             ].join('\n'),
           )
         },
-        expected: ['suspicious public secret variable', 'direct frontend CRM integration URL'],
+        expected: [
+          'runtime project implementation import',
+          'suspicious public secret variable',
+          'direct frontend CRM integration URL',
+        ],
       },
     ]
 
