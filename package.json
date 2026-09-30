@@ -19,7 +19,9 @@
     "verify:sourcecraft:self-test": "node scripts/verify-sourcecraft-ci.mjs --self-test",
     "verify:nginx": "node scripts/verify-nginx-contract.mjs",
     "verify:nginx:self-test": "node scripts/verify-nginx-contract.mjs --self-test",
-    "verify": "pnpm verify:runtime:self-test && pnpm verify:runtime && pnpm typecheck && pnpm lint && pnpm verify:content-graph && pnpm test:content && pnpm verify:sourcecraft:self-test && pnpm verify:sourcecraft && pnpm verify:nginx:self-test && pnpm verify:nginx && pnpm guard:static:self-test && pnpm guard:static",
+    "verify:rollout": "node scripts/verify-rollout-contract.mjs",
+    "verify:rollout:self-test": "node scripts/verify-rollout-contract.mjs --self-test",
+    "verify": "pnpm verify:runtime:self-test && pnpm verify:runtime && pnpm typecheck && pnpm lint && pnpm verify:content-graph && pnpm test:content && pnpm verify:sourcecraft:self-test && pnpm verify:sourcecraft && pnpm verify:nginx:self-test && pnpm verify:nginx && pnpm verify:rollout:self-test && pnpm verify:rollout && pnpm guard:static:self-test && pnpm guard:static",
     "verify:release": "pnpm verify && pnpm build && pnpm guard:artifact"
   },
   "dependencies": {

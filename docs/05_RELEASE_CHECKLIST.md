@@ -121,7 +121,7 @@ production release is still blocked.
 - [ ] `ops/nginx/ams24-site.conf.template` validates through `pnpm verify:nginx`.
 - [ ] Security headers/CSP validated against exact artifact.
 - [ ] `/api/leads` proxy target is correct without exposing credentials.
-- [ ] Release directory uploaded before symlink switch.
+- [ ] Release directory uploaded before symlink switch; local deterministic switch proof passes through `pnpm verify:rollout`.
 - [ ] Previous verified release remains available.
 - [ ] `current` switch and required Nginx reload/cache step are defined.
 
@@ -139,8 +139,8 @@ production release is still blocked.
 ## 11. Rollback
 
 - [ ] Previous release ID is recorded.
-- [ ] Rollback is a symlink switch, not a rebuild.
-- [ ] Post-rollback smoke checklist is available.
+- [ ] Rollback is a symlink switch, not a rebuild; `pnpm verify:rollout` covers the no-build/no-install/no-git-pull invariant.
+- [ ] Post-rollback smoke checklist is available and referenced by the rollout proof.
 - [ ] Lead path remains safe during rollback.
 
 ## 12. Post-release
