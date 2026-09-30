@@ -36,6 +36,21 @@ function hasBlock(text, workflowName) {
   return new RegExp(`^  ${workflowName}:\\r?\\n[\\s\\S]*?(?=^  [a-zA-Z0-9_-]+:|(?![\\s\\S]))`, 'm').test(text)
 }
 
+function countMatches(text, pattern) {
+  return [...text.matchAll(pattern)].length
+}
+
+function getDeclaredWorkflowNames(source) {
+  const workflowsStart = source.match(/^workflows:\s*$/m)
+  if (!workflowsStart) {
+    return []
+  }
+
+  const afterWorkflows = source.slice(workflowsStart.index + workflowsStart[0].length)
+
+  return [...afterWorkflows.matchAll(/^  ([a-zA-Z0-9_-]+):\s*$/gm)].map((match) => match[1])
+}
+
 function analyzeSourcecraftCi(source, contract) {
   const lines = source.split(/\r?\n/)
   const errors = []
@@ -50,6 +65,21 @@ function analyzeSourcecraftCi(source, contract) {
     }
   }
 
+  const declaredWorkflows = getDeclaredWorkflowNames(source)
+  const allowedWorkflows = new Set(workflowNames)
+  const extraWorkflows = declaredWorkflows.filter((workflow) => !allowedWorkflows.has(workflow))
+
+  if (extraWorkflows.length > 0) {
+    errors.push(`unexpected paid workflow is forbidden: ${extraWorkflows.join(', ')}`)
+  }
+
+  for (const workflow of workflowNames) {
+    const declarationCount = declaredWorkflows.filter((declared) => declared === workflow).length
+    if (declarationCount > 1) {
+      errors.push(`${workflow} must be declared exactly once`)
+    }
+  }
+
   for (const workflow of workflowNames) {
     if (!hasBlock(source, workflow)) {
       errors.push(`manual workflow is missing: ${workflow}`)
@@ -59,6 +89,18 @@ function analyzeSourcecraftCi(source, contract) {
     const block = source.match(
       new RegExp(`^  ${workflow}:\\r?\\n([\\s\\S]*?)(?=^  [a-zA-Z0-9_-]+:|(?![\\s\\S]))`, 'm'),
     )?.[1] ?? ''
+
+    if (countMatches(block, /^    tasks:\s*$/gm) !== 1) {
+      errors.push(`${workflow} must define exactly one task list`)
+    }
+
+    if (countMatches(block, /^        cubes:\s*$/gm) !== 1) {
+      errors.push(`${workflow} must define exactly one cube list`)
+    }
+
+    if (countMatches(block, /^            image:\s+/gm) !== 1) {
+      errors.push(`${workflow} must define exactly one paid cube image`)
+    }
 
     if (!/inputs:\r?\n[\s\S]*expected_commit_sha:\r?\n[\s\S]*required:\s*true/.test(block)) {
       errors.push(`${workflow} must require expected_commit_sha input`)
@@ -150,6 +192,35 @@ async function runSelfTest() {
       'wrong package manager activation',
       valid.replaceAll(`corepack prepare ${contract.packageManager} --activate`, `corepack prepare pnpm@${Number(contract.pnpmVersion.split('.')[0]) - 1}.0.0 --activate`),
       2,
+    ],
+    [
+      'extra paid workflow',
+      valid.replace(
+        '  merge-risky:',
+        `  release-check:
+    inputs:
+      expected_commit_sha:
+        required: true
+    tasks:
+      - name: verify
+        cubes:
+          - name: duplicate-paid-run
+            image: docker.io/library/node:${contract.nodeVersion}-alpine
+            script:
+              - corepack pnpm verify
+  merge-risky:`,
+      ),
+      1,
+    ],
+    [
+      'duplicate paid cube',
+      valid.replace(
+        '          - name: static-site-standard',
+        `          - name: duplicate-standard-paid-run
+            image: docker.io/library/node:${contract.nodeVersion}-alpine
+          - name: static-site-standard`,
+      ),
+      1,
     ],
   ]
 
