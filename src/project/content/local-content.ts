@@ -1,5 +1,7 @@
 import type { LocalContentInput } from '@/core/content/repository/local-adapter'
 import { initialArticleBriefs, initialKnowledgeBriefs } from '@/project/editorial-briefs'
+import { navigationContent } from '@/project/navigation'
+import { siteSettings } from '@/project/site'
 
 const articleBodiesById: Record<string, string> = {
   'article-impuls-operator-audiences': `
@@ -209,6 +211,8 @@ const productSeo = {
 }
 
 export const localContent = {
+  siteSettings,
+  navigation: navigationContent,
   products: [
     {
       id: 'impuls',

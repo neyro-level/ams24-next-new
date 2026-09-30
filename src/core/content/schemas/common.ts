@@ -16,6 +16,18 @@ function normalizePath(value: string) {
   return withLeadingSlash.endsWith('/') ? withLeadingSlash : `${withLeadingSlash}/`
 }
 
+function normalizeNavigationHref(value: string) {
+  const trimmed = value.trim().toLowerCase()
+  const [pathPart, fragmentPart] = trimmed.split('#')
+  const normalizedPath = normalizePath(pathPart || '/')
+
+  if (!fragmentPart) {
+    return normalizedPath
+  }
+
+  return `${normalizedPath}#${fragmentPart}`
+}
+
 export const pathSchema = z
   .string()
   .trim()
@@ -27,6 +39,20 @@ export const pathSchema = z
       .regex(
         /^\/(?:[a-z0-9-]+\/)*$/,
         'Canonical path must use lowercase URL segments and leading/trailing slash',
+      ),
+  )
+
+export const navigationHrefSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .transform(normalizeNavigationHref)
+  .pipe(
+    z
+      .string()
+      .regex(
+        /^\/(?:[a-z0-9-]+\/)*(?:#[a-z0-9-]+)?$/,
+        'Navigation href must be a canonical path with an optional fragment',
       ),
   )
 
@@ -60,6 +86,7 @@ export const mediaSchema = z.object({
 })
 
 export type Locale = z.infer<typeof localeSchema>
+export type NavigationHref = z.infer<typeof navigationHrefSchema>
 export type SeoDTO = z.infer<typeof seoSchema>
 export type MediaDTO = z.infer<typeof mediaSchema>
 export type RichTextDTO = z.infer<typeof richTextSchema>

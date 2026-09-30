@@ -1,13 +1,14 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import { firstLevelRoutes, footerGroups, headerLinks, productLinks } from '@/project/navigation'
+import { getNavigationViewModel } from '@/core/content/services/view-models'
 import { Breadcrumbs } from '@/ui/shell/breadcrumbs'
 import { SiteFooter } from '@/ui/shell/site-footer'
 import { SiteHeader } from '@/ui/shell/site-header'
 
 describe('site shell navigation', () => {
   it('exposes all first-level product and content routes in keyboard reachable shell paths', () => {
+    const { firstLevelRoutes, footerGroups, headerLinks, productLinks } = getNavigationViewModel()
     const header = renderToStaticMarkup(<SiteHeader />)
     const footer = renderToStaticMarkup(<SiteFooter />)
     const shell = `${header}${footer}`

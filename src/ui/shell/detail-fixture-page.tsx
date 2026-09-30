@@ -1,4 +1,4 @@
-import type { DetailFixture } from '@/project/detail-fixtures'
+import type { DetailFixture } from '@/core/content/services/detail-fixtures'
 import { Breadcrumbs } from '@/ui/shell/breadcrumbs'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'

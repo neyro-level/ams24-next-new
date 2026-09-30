@@ -2,7 +2,7 @@ import {
   buildDetailFixtureMetadata,
   detailFixtures,
   getDetailFixture,
-} from '@/project/detail-fixtures'
+} from '@/core/content/services/detail-fixtures'
 import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 
 export const dynamicParams = false

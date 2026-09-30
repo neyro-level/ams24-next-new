@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import { proofEvidenceInventory } from '@/project/proof-inventory'
+import { proofEvidenceInventory } from '@/core/content/services/proof-inventory'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'

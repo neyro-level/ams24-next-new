@@ -1,4 +1,4 @@
-import type { ArticleEditorialContract } from '@/project/editorial-contracts'
+import type { ArticleEditorialContract } from '@/core/content/services/editorial-contracts'
 import { Breadcrumbs } from '@/ui/shell/breadcrumbs'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
