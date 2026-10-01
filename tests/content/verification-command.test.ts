@@ -27,7 +27,13 @@ const requiredDailyVerifySteps = [
   'pnpm guard:static',
 ] as const
 
-const requiredReleaseVerifySteps = ['pnpm verify', 'pnpm build', 'pnpm guard:artifact'] as const
+const requiredReleaseVerifySteps = [
+  'pnpm verify',
+  'pnpm generate:precompressed:self-test',
+  'pnpm build',
+  'pnpm generate:precompressed',
+  'pnpm guard:artifact',
+] as const
 
 function invalidRepository(input: unknown): ContentRepository {
   return input as ContentRepository

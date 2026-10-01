@@ -58,6 +58,7 @@ const forbiddenPatterns = [
   ['unsafe eval CSP capability', /(?:script-src|default-src)[^;]*'unsafe-eval'/],
   ['broad HSTS scope', /Strict-Transport-Security\s+"[^"]*(?:includeSubDomains|preload)[^"]*"/i],
   ['hardcoded certificate path', /ssl_certificate(?:_key)?\s+(?!\{\{(?:PRODUCTION|STAGING)_CERTIFICATE(?:_KEY)?\}\})[^;]+;/],
+  ['speculative Brotli configuration', /\bbrotli(?:_static|_types)?\s+/i],
 ]
 
 function stripComment(line) {
@@ -225,6 +226,31 @@ function validateRouteSemantics(source) {
   return errors
 }
 
+function validateCacheAndCompression(source) {
+  const errors = []
+  const httpsServers = extractBlocks(source, /^server\s+\{/).filter((block) =>
+    /listen\s+443\s+ssl;/.test(block),
+  )
+  const requiredTypes = ['text/plain', 'text/css', 'application/javascript', 'application/xml', 'text/xml', 'image/svg+xml']
+
+  for (const block of httpsServers) {
+    const staging = block.includes('server_name {{STAGING_SERVER_NAME}};')
+    const name = staging ? 'staging' : 'production'
+    const expectedInclude = staging ? stagingInclude : productionInclude
+    const locations = extractBlocks(block, /^\s*location\b.*\{/).filter((location) =>
+      /\(\?:ico\|svg\|webp\)/.test(location),
+    )
+    const location = locations[0] ?? ''
+    if (locations.length !== 1 || !location.includes(expectedInclude)) errors.push(`${name} must define one header-safe public asset cache location`)
+    if (!/Cache-Control\s+"public, max-age=300"\s+always;/.test(location)) errors.push(`${name} unhashed public assets must use short cache without immutable`)
+    if (/Cache-Control\s+"[^"]*immutable/.test(location)) errors.push(`${name} unhashed public assets must not use immutable caching`)
+    if (!/gzip\s+on;/.test(block) || !/gzip_static\s+on;/.test(block) || !/gzip_vary\s+on;/.test(block)) errors.push(`${name} must enable gzip, gzip_static and gzip_vary`)
+    const types = (block.match(/gzip_types\s+([^;]+);/)?.[1] ?? '').split(/\s+/)
+    for (const type of requiredTypes) if (!types.includes(type)) errors.push(`${name} gzip_types must include ${type}`)
+  }
+  return errors
+}
+
 function validateTlsRoles(source) {
   const errors = []
   const serverBlocks = extractBlocks(source, /^server\s+\{/)
@@ -275,6 +301,7 @@ function analyzeNginxContract(source, snippets) {
   errors.push(...validateHeaderSnippet('staging header snippet', snippets.staging, { staging: true }))
   errors.push(...validateHeaderInheritance(source))
   errors.push(...validateRouteSemantics(source))
+  errors.push(...validateCacheAndCompression(source))
   errors.push(...validateTlsRoles(source))
 
   const serverBlockCount = [...source.matchAll(/^server\s+\{/gm)].length
@@ -444,6 +471,36 @@ async function runSelfTest() {
       source: valid.replaceAll('{{LEADS_API_UPSTREAM}}', 'https://leads.internal.example'),
       snippets: validSnippets,
       expected: ['forbidden Nginx contract content: real http upstream'],
+    },
+    {
+      name: 'unhashed public assets lose short cache',
+      source: valid.replaceAll('public, max-age=300', 'public, max-age=60'),
+      snippets: validSnippets,
+      expected: ['production unhashed public assets must use short cache without immutable', 'staging unhashed public assets must use short cache without immutable'],
+    },
+    {
+      name: 'unhashed public assets become immutable',
+      source: valid.replaceAll('public, max-age=300', 'public, max-age=31536000, immutable'),
+      snippets: validSnippets,
+      expected: ['production unhashed public assets must not use immutable caching', 'staging unhashed public assets must not use immutable caching'],
+    },
+    {
+      name: 'gzip_static is disabled',
+      source: valid.replaceAll('gzip_static on;', ''),
+      snippets: validSnippets,
+      expected: ['production must enable gzip, gzip_static and gzip_vary', 'staging must enable gzip, gzip_static and gzip_vary'],
+    },
+    {
+      name: 'SVG gzip type is missing',
+      source: valid.replaceAll(' image/svg+xml;', ';'),
+      snippets: validSnippets,
+      expected: ['production gzip_types must include image/svg+xml', 'staging gzip_types must include image/svg+xml'],
+    },
+    {
+      name: 'speculative Brotli is configured',
+      source: valid.replace('gzip on;', 'gzip on;\n  brotli on;'),
+      snippets: validSnippets,
+      expected: ['forbidden Nginx contract content: speculative Brotli configuration'],
     },
     {
       name: 'broken directive syntax',

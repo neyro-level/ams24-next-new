@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import { gunzipSync } from 'node:zlib'
 
 const artifactDir = join(process.cwd(), 'out')
 const sitemapPath = join(artifactDir, 'sitemap.xml')
@@ -101,6 +102,22 @@ if (!existsSync(artifactDir)) {
 const textFiles = walk(artifactDir).filter((file) => textExtensions.has(extensionOf(file)))
 const findings = []
 
+for (const file of textFiles.filter((candidate) =>
+  ['.css', '.html', '.js', '.svg', '.txt', '.xml'].includes(extensionOf(candidate)),
+)) {
+  const compressed = `${file}.gz`
+  if (!existsSync(compressed)) {
+    findings.push(`precompressed artifact is missing: ${compressed.slice(artifactDir.length + 1)}`)
+    continue
+  }
+  try {
+    if (!gunzipSync(readFileSync(compressed)).equals(readFileSync(file))) {
+      findings.push(`precompressed artifact does not round-trip: ${compressed.slice(artifactDir.length + 1)}`)
+    }
+  } catch {
+    findings.push(`precompressed artifact is invalid gzip: ${compressed.slice(artifactDir.length + 1)}`)
+  }
+}
 if (!existsSync(sitemapPath)) {
   findings.push('out/sitemap.xml is required for static SEO artifact proof')
 }

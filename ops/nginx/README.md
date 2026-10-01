@@ -31,6 +31,13 @@ Every context that declares its own `add_header` must include the applicable
 production or staging security-header snippet because Nginx does not inherit
 parent `add_header` directives into such a context.
 
+Hashed `/_next/static/` assets keep the one-year immutable policy. Unhashed
+public `.ico`, `.svg` and `.webp` files use a five-minute cache without
+`immutable`. Release verification creates deterministic `.gz` siblings for
+HTML, CSS, JavaScript, XML, text and SVG files; HTTPS application servers use
+`gzip_static` with a safe dynamic gzip fallback. Brotli remains disabled until
+the target Nginx module is positively confirmed during production preflight.
+
 Port 80 servers only redirect to HTTPS. HSTS is emitted only by the HTTPS
 application servers through their security-header snippets. Keep
 `max-age=31536000` without `includeSubDomains` or `preload`, and enable this
