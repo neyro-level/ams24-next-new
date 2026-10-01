@@ -1,0 +1,77 @@
+{
+  "task_id": "ams24t-tc-t4-10-i",
+  "plan_version": "v4",
+  "mode": "READ-ONLY AUDIT",
+  "date": "2026-10-02",
+  "base_sha": "8959b80d2b75236d02e4ce1d8123911516937a4d",
+  "tools": {
+    "build": "corepack pnpm build",
+    "code_search": "rg over src/app, src/ui and src/core",
+    "rendered_html": "read-only inspection of out/**/*.html"
+  },
+  "checks": {
+    "raw_colors_in_tsx": 0,
+    "inline_styles": 0,
+    "project_dark_classes": 0,
+    "img_tags_in_source": 0,
+    "raw_anchor_files": [
+      "src/ui/content/rich-text.tsx"
+    ],
+    "client_boundaries": [
+      "src/app/error.tsx",
+      "src/ui/primitives/checkbox.tsx",
+      "src/ui/primitives/label.tsx",
+      "src/ui/shell/mobile-menu.tsx"
+    ],
+    "primitive_files": [
+      "src/ui/primitives/button.tsx",
+      "src/ui/primitives/card.tsx",
+      "src/ui/primitives/checkbox.tsx",
+      "src/ui/primitives/input.tsx",
+      "src/ui/primitives/label.tsx",
+      "src/ui/primitives/textarea.tsx"
+    ],
+    "components_json_aliases": {
+      "components": "@/ui",
+      "ui": "@/ui/primitives",
+      "utils": "@/core/lib/utils",
+      "lib": "@/core/lib",
+      "hooks": "@/core/hooks"
+    },
+    "rendered_html": {
+      "documents_checked": 21,
+      "exactly_one_main": 21,
+      "exactly_one_h1": 21,
+      "positive_tabindex": 0,
+      "img_elements": 0,
+      "mobile_menu_state_documents": 21
+    },
+    "largest_route_modules": [
+      { "file": "src/app/page.tsx", "lines": 264 },
+      { "file": "src/app/raschety/page.tsx", "lines": 114 },
+      { "file": "src/app/keisy/page.tsx", "lines": 87 },
+      { "file": "src/app/otzyvy/page.tsx", "lines": 87 },
+      { "file": "src/app/tarify/page.tsx", "lines": 83 }
+    ],
+    "local_arbitrary_grid_occurrences": 15
+  },
+  "findings": [
+    {
+      "id": "UI-T4-10-001",
+      "severity": "P2",
+      "finding": "Fifteen responsive grid ratios remain locally owned across heterogeneous route and section compositions.",
+      "recommended_action": "Keep the dated exception until repeated stable contracts justify a named layout variant."
+    },
+    {
+      "id": "UI-T4-10-002",
+      "severity": "P2",
+      "finding": "The representative homepage remains a 264-line composition module.",
+      "recommended_action": "Decompose through a separate scoped task only when change or proven reuse justifies ownership extraction."
+    }
+  ],
+  "verdict": "PASS WITH P2 FINDINGS",
+  "p0_count": 0,
+  "p1_count": 0,
+  "p2_count": 2
+}
+

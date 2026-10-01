@@ -236,6 +236,26 @@ Shared patterns added only when used:
 - `Breadcrumbs`;
 - loading/empty/error/success states where data interaction requires them.
 
+### 10.1 Shared Patterns
+
+| Pattern | Canonical owner | Reuse evidence / status |
+|---|---|---|
+| Page width | `src/ui/shared/container.tsx` | `site` and `narrow` variants own horizontal page bounds across shell, routes and editorial content. |
+| Vertical section rhythm | `src/ui/shared/section.tsx` | `sm / md / lg / hero` variants replace route-local section padding. |
+| Section heading | `src/ui/shared/section-header.tsx` | Owns eyebrow, semantic heading level, title, lead and light/dark tone. |
+| Action control | `src/ui/primitives/button.tsx` | The only button/CTA primitive; internal actions compose it with `next/link`. |
+| Content card | `src/ui/primitives/card.tsx` | `default / muted / dark` variants own comparable content surfaces. |
+| Form controls | `src/ui/primitives/{input,textarea,checkbox,label}.tsx` | One light/dark control family consumed by the canonical `LeadForm`. |
+| Lead form | `src/ui/forms/lead-form.tsx` | Single product/context-aware form shell; EPIC 5 owns interactive error/submitting/success states. |
+| Product page sections | `src/ui/pages/shared/product-section.tsx` | Shared Hero, Steps, FAQ and Lead contracts; route copy remains in the content service. |
+| Structured page blocks | `src/ui/blocks/` | Typed registry owns Hero, product routes, RichText and lead-form shell rendering. |
+| Editorial body | `src/ui/content/rich-text.tsx` | Single Markdown renderer; internal URLs use `next/link`, safe external URLs use anchors. |
+| Site navigation | `src/ui/shell/{site-header,mobile-menu,site-footer,breadcrumbs}.tsx` | Shared shell owns desktop/mobile navigation, internal links and breadcrumb layout. |
+
+Patterns not present in runtime are not reserved as empty components. `CaseCard`,
+`ReviewCard`, `TariffCard/Table`, generic state panels and `FinalCTA` are created
+only when their second real consumer proves a stable shared contract.
+
 No second Button/Input/Dialog/Card system, no universal page builder and no copied reusable semantic sections.
 
 Intentional Card exceptions:
@@ -350,7 +370,17 @@ The rest of the site is not scaled until this page and token fixture validate sy
 
 ## 20. Approved Exceptions
 
-None. Any exception requires owner decision and a dated entry here.
+| ID | Date | Scope | Approved exception | Evidence / revisit trigger |
+|---|---|---|---|---|
+| `DS-EX-01` | 2026-10-02 | `src/ui/primitives/button.tsx`, `checkbox.tsx` | Installed shadcn/Radix primitive internals may keep state/data selectors and component-owned geometry/color-mix expressions. They are not project page-token APIs. | Revisit only during a primitive API/foundation upgrade; `UI_DRIFT_AUDIT_TC_T4_10.md`. |
+| `DS-EX-02` | 2026-10-02 | route and semantic-section grid classes | Local responsive grid ratios remain allowed while compositions are heterogeneous; creating speculative layout tokens is prohibited. | Replace with a named variant when at least two sections share the same stable semantic contract; finding `UI-T4-10-001`. |
+| `DS-EX-03` | 2026-10-02 | `src/app/page.tsx` | The representative homepage may remain a route-owned composition module; no universal page builder is introduced. | Revisit when the page changes materially or a second route proves reusable section ownership; finding `UI-T4-10-002`. |
+| `DS-EX-04` | 2026-10-02 | `src/ui/foundation/token-fixture.tsx` | The token fixture may compose semantic tokens directly because its purpose is to demonstrate the token system. | Revisit when the fixture becomes a public runtime component. |
+| `DS-EX-05` | 2026-10-02 | client leaves | `MobileMenu`, framework error handling and Radix-backed interactive primitives may use client boundaries; section/layout components remain server-first. | Revisit if a client boundary expands into a page or semantic section. |
+
+Post-remediation evidence: `docs/research/UI_DRIFT_AUDIT_TC_T4_10.md` and
+`docs/research/UI_DRIFT_AUDIT_ARTIFACTS_TC_T4_10.json`. The audit records zero
+P0/P1 findings; its two P2 findings are bounded by `DS-EX-02` and `DS-EX-03`.
 
 ## 21. Design Intake Exit Criteria
 
