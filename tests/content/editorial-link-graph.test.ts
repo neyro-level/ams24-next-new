@@ -22,7 +22,7 @@ describe('editorial related-content graph', () => {
           path: '/stati/duplicate-intent/',
           slug: 'duplicate-intent',
           body: {
-            kind: 'markdown',
+            format: 'markdown',
             value: '[Broken](/missing-page/)',
           },
         },

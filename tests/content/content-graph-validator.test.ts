@@ -155,7 +155,7 @@ const negativeFixtures: NegativeFixture[] = [
           {
             ...validRepository().articles[0],
             body: {
-              kind: 'markdown',
+              format: 'markdown',
               value: '[Missing](/missing/)',
             },
           },
@@ -291,7 +291,7 @@ describe('content graph validator contract', () => {
           path: '/stati/duplicate-intent/',
           slug: 'duplicate-intent',
           body: {
-            kind: 'markdown',
+            format: 'markdown',
             value: '[Broken](/missing-page/)',
           },
         },
@@ -304,6 +304,25 @@ describe('content graph validator contract', () => {
         expect.objectContaining({ code: 'orphan-product', entity: 'product:zashchita' }),
       ]),
     )
+  })
+
+  it('fails the content graph explicitly while lexical has no Payload renderer', () => {
+    const repository = invalidRepository({
+      ...validRepository(),
+      articles: validRepository().articles.map((article, index) =>
+        index === 0 ? { ...article, body: { format: 'lexical', value: {} } } : article,
+      ),
+    })
+
+    expect(validateContentGraph(repository)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: 'unsupported-richtext-format',
+          message: 'Unsupported RichText renderer: lexical requires the Payload renderer',
+        }),
+      ]),
+    )
+    expect(() => assertValidContentGraph(repository)).toThrow(/Unsupported RichText renderer/)
   })
 
   it.each(negativeFixtures)('rejects invalid fixture: $invariant', ({ build, code }) => {

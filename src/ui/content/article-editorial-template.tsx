@@ -1,5 +1,5 @@
 import type { ArticleEditorialContract } from '@/core/content/services/editorial-contracts'
-import { RichText } from '@/core/content/services/rich-text'
+import { RichText } from '@/ui/content/rich-text'
 import { Breadcrumbs } from '@/ui/shell/breadcrumbs'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'

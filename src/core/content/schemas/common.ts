@@ -64,10 +64,37 @@ export const productRefSchema = z.enum(['impuls', 'pixel', 'zashchita'])
 
 export const indexPolicySchema = z.enum(['index', 'noindex']).default('index')
 
-export const richTextSchema = z.object({
-  kind: z.enum(['markdown', 'blocks']),
-  value: z.string().min(1),
+const markdownLinkPattern = /\[([^\]]+)\]\(([^)\s]+)\)/g
+
+const markdownValueSchema = z.string().min(1).superRefine((value, context) => {
+  const completeLinks = [...value.matchAll(markdownLinkPattern)]
+  const linkOpenings = value.match(/\[[^\]]+\]\(/g) ?? []
+
+  if (linkOpenings.length !== completeLinks.length) {
+    context.addIssue({ code: 'custom', message: 'Markdown contains a malformed link' })
+  }
+
+  for (const [, , href] of completeLinks) {
+    if (href.startsWith('/')) {
+      if (!navigationHrefSchema.safeParse(href).success) {
+        context.addIssue({ code: 'custom', message: `Markdown link must use a canonical internal path: ${href}` })
+      }
+      continue
+    }
+
+    try {
+      const url = new URL(href)
+      if (url.protocol !== 'https:' || url.username || url.password) throw new Error('unsupported')
+    } catch {
+      context.addIssue({ code: 'custom', message: `Markdown link uses an unsupported URL: ${href}` })
+    }
+  }
 })
+
+export const richTextSchema = z.discriminatedUnion('format', [
+  z.object({ format: z.literal('markdown'), value: markdownValueSchema }),
+  z.object({ format: z.literal('lexical'), value: z.unknown() }),
+])
 
 export const seoSchema = z.object({
   title: z.string().trim().min(10).max(70),

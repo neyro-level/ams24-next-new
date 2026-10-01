@@ -94,7 +94,7 @@ const articles = initialArticleBriefs.map((brief) => ({
   updatedAt: '2026-09-29',
   productRefs: [brief.targetProduct],
   body: {
-    kind: 'markdown' as const,
+    format: 'markdown' as const,
     value: articleBodiesById[brief.id],
   },
   seo: {
@@ -192,7 +192,7 @@ const knowledgeArticles = initialKnowledgeBriefs.map((brief) => ({
   task: brief.task,
   updatedAt: '2026-09-29',
   body: {
-    kind: 'markdown' as const,
+    format: 'markdown' as const,
     value: knowledgeBodiesById[brief.id],
   },
   seo: {

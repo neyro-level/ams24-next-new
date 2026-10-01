@@ -23,8 +23,8 @@ describe('CR-12.1 block/RichText reachability inventory', () => {
   })
 
   it('matches the current reachable RichText body kinds', () => {
-    const articleKinds = localContent.articles.map((article) => article.body.kind)
-    const knowledgeKinds = localContent.knowledgeArticles.map((article) => article.body.kind)
+    const articleKinds = localContent.articles.map((article) => article.body.format)
+    const knowledgeKinds = localContent.knowledgeArticles.map((article) => article.body.format)
     const reachable = new Set<string>([...articleKinds, ...knowledgeKinds])
 
     expect([...reachable].sort()).toEqual([...expectedReachableRichTextKinds].sort())

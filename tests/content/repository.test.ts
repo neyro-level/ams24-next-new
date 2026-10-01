@@ -32,7 +32,7 @@ describe('local content repository', () => {
           method: 'Сценарий запуска описан как проверяемая последовательность действий.',
           evidenceLevel: 'anonymized',
           body: {
-            kind: 'markdown',
+            format: 'markdown',
             value: 'Описание кейса.',
           },
           seo: {

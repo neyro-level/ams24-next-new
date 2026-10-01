@@ -1,5 +1,5 @@
 import type { ContentRepository } from '@/core/content/repository'
-import type { ProductDTO } from '@/core/content/schemas'
+import type { ProductDTO, RichTextDTO } from '@/core/content/schemas'
 
 export type ContentGraphIssueCode =
   | 'broken-link'
@@ -18,6 +18,7 @@ export type ContentGraphIssueCode =
   | 'invalid-publication-state'
   | 'seo-incomplete'
   | 'contradictory-index-policy'
+  | 'unsupported-richtext-format'
 
 export type ContentGraphIssue = {
   code: ContentGraphIssueCode
@@ -108,6 +109,20 @@ function validateMarkdownLinks(
       issues.push(issue('broken-link', entity, `${entity} links to unknown path: ${link}`))
     }
   }
+}
+
+function validateRichTextLinks(
+  issues: ContentGraphIssue[],
+  entity: string,
+  body: RichTextDTO,
+  knownPaths: Set<string>,
+) {
+  if (body.format !== 'markdown') {
+    issues.push(issue('unsupported-richtext-format', entity, 'Unsupported RichText renderer: lexical requires the Payload renderer'))
+    return
+  }
+
+  validateMarkdownLinks(issues, entity, body.value, knownPaths)
 }
 
 type RoutableEntity = {
@@ -350,11 +365,11 @@ export function validateContentGraph(
       )
     }
 
-    validateMarkdownLinks(issues, entity, article.body.value, knownPaths)
+    validateRichTextLinks(issues, entity, article.body, knownPaths)
   }
 
   for (const article of repository.knowledgeArticles) {
-    validateMarkdownLinks(issues, `knowledge:${article.id}`, article.body.value, knownPaths)
+    validateRichTextLinks(issues, `knowledge:${article.id}`, article.body, knownPaths)
   }
 
   for (const product of repository.products) {

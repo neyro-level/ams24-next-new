@@ -92,7 +92,7 @@ export const representativeArticleContract: ArticleEditorialContract = {
     { label: 'Импульс Защита', path: '/zashchita/' },
   ],
   body: {
-    kind: 'markdown',
+    format: 'markdown',
     value: `
 ## Короткий ответ
 
@@ -137,7 +137,7 @@ export const representativeKnowledgeContract: KnowledgeEditorialContract = {
     { label: 'Контакты', path: '/kontakty/' },
   ],
   body: {
-    kind: 'markdown',
+    format: 'markdown',
     value: `
 ## Шаг 1
 

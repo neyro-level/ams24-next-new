@@ -8,7 +8,7 @@ const richTextRendererPattern = /export\s+function\s+RichText\(/g
 
 const contractFiles = [
   'src/core/content/schemas/common.ts',
-  'src/core/content/services/rich-text.tsx',
+  'src/ui/content/rich-text.tsx',
   'src/project/editorial-contracts.ts',
   'src/ui/content/article-editorial-template.tsx',
   'src/ui/content/knowledge-editorial-template.tsx',
@@ -28,9 +28,18 @@ describe('CR-12.3 RichText contract', () => {
     const articleTemplate = readFileSync(join(process.cwd(), 'src/ui/content/article-editorial-template.tsx'), 'utf8')
     const knowledgeTemplate = readFileSync(join(process.cwd(), 'src/ui/content/knowledge-editorial-template.tsx'), 'utf8')
 
-    expect(articleTemplate).toContain("import { RichText } from '@/core/content/services/rich-text'")
+    expect(articleTemplate).toContain("import { RichText } from '@/ui/content/rich-text'")
     expect(articleTemplate).toContain('<RichText content={contract.body} />')
-    expect(knowledgeTemplate).toContain("import { RichText } from '@/core/content/services/rich-text'")
+    expect(knowledgeTemplate).toContain("import { RichText } from '@/ui/content/rich-text'")
     expect(knowledgeTemplate).toContain('<RichText content={contract.body} />')
+  })
+
+  it('keeps renderer ownership in UI and structural list keys independent of text', () => {
+    const renderer = readFileSync(join(process.cwd(), 'src/ui/content/rich-text.tsx'), 'utf8')
+
+    expect(renderer).toContain("import Link from 'next/link'")
+    expect(renderer).toContain('key={`${blockIndex}-${itemIndex}`}')
+    expect(renderer).not.toContain('key={line}')
+    expect(renderer).not.toContain("href : '#'")
   })
 })

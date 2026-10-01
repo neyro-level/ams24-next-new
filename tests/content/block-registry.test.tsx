@@ -12,7 +12,8 @@ import {
   supportedBlockRegistry,
   supportedBlockTypes,
 } from '@/core/content/block-registry'
-import { RichText } from '@/core/content/services/rich-text'
+import { richTextSchema } from '@/core/content/schemas'
+import { RichText } from '@/ui/content/rich-text'
 
 const supportedBlockFixtures = {
   hero: {
@@ -97,7 +98,7 @@ describe('block registry and RichText', () => {
       parseSupportedPageBlock({
         type: 'rich-text',
         body: {
-          kind: 'markdown',
+          format: 'markdown',
           value: 'Schema-only page RichText block.',
         },
       }),
@@ -110,7 +111,7 @@ describe('block registry and RichText', () => {
     const html = renderToStaticMarkup(
       <RichText
         content={{
-          kind: 'markdown',
+          format: 'markdown',
           value: '# Заголовок\n\n<script>alert("x")</script>\n\n- Один\n- Два',
         }}
       />,
@@ -120,5 +121,32 @@ describe('block registry and RichText', () => {
     expect(html).toContain('&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;')
     expect(html).not.toContain('<script>')
     expect(html).toContain('<li>Один</li>')
+  })
+
+  it('uses Next links internally and safe anchors externally', () => {
+    const html = renderToStaticMarkup(
+      <RichText
+        content={{
+          format: 'markdown',
+          value: '[Внутренняя](/impuls/) и [внешняя](https://example.com/path).',
+        }}
+      />,
+    )
+
+    expect(html).toContain('href="/impuls"')
+    expect(html).toContain('href="https://example.com/path"')
+    expect(html).toContain('rel="noopener"')
+  })
+
+  it('rejects malformed or unsupported links during content parsing', () => {
+    expect(() => richTextSchema.parse({ format: 'markdown', value: '[Bad](javascript:alert)' })).toThrow(/unsupported URL/)
+    expect(() => richTextSchema.parse({ format: 'markdown', value: '[Bad](not a url)' })).toThrow(/malformed link/)
+    expect(() => richTextSchema.parse({ format: 'markdown', value: '[Bad](//evil.example)' })).toThrow(/canonical internal path/)
+  })
+
+  it('fails explicitly until a lexical renderer exists', () => {
+    expect(() => renderToStaticMarkup(<RichText content={{ format: 'lexical', value: {} }} />)).toThrow(
+      /Unsupported RichText renderer: lexical requires the Payload renderer/,
+    )
   })
 })
