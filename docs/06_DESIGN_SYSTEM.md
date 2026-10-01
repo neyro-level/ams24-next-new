@@ -203,6 +203,11 @@ Baseline foundation:
 - `Footer`;
 - `MobileMenu`.
 
+Product routes compose page-owned sections from `src/ui/pages/<product>/*-section.tsx`.
+Their genuinely shared `Hero`, `Steps`, `FAQ` and `LeadSection` contracts live in
+`src/ui/pages/shared/product-section.tsx`; copy arrays remain in the project content
+layer and reach routes through `src/core/content/services/product-pages.ts`.
+
 Shared patterns added only when used:
 
 - `ProductRouteCard`;
