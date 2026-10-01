@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { getNavigationViewModel } from '@/core/content/services/view-models'
+import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 
 export async function SiteFooter() {
@@ -18,9 +19,9 @@ export async function SiteFooter() {
               Платформа AMS24 для привлечения, определения и защиты лидов. Публичный сайт
               собирается как статический Next export.
             </p>
-            <a className="mt-7 inline-flex rounded-lg bg-primary px-4 py-3 text-body-sm font-semibold text-primary-foreground" href={primaryCta.path}>
-              {primaryCta.label}
-            </a>
+            <Button asChild className="mt-7" size="xl">
+              <Link href={primaryCta.path}>{primaryCta.label}</Link>
+            </Button>
           </div>
 
           <nav aria-label="Навигация в подвале" className="grid gap-7 sm:grid-cols-2 lg:grid-cols-5">

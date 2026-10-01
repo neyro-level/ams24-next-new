@@ -1,6 +1,8 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
+import ErrorPage from '@/app/error'
+import NotFound from '@/app/not-found'
 import { cn } from '@/core/lib/utils'
 import { Button } from '@/ui/primitives/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/ui/primitives/card'
@@ -32,6 +34,26 @@ describe('canonical UI primitives', () => {
     expect(html).toContain('data-slot="button"')
     expect(html).toContain('data-variant="outlineDark"')
     expect(html).not.toContain('<button')
+  })
+
+  it('owns every not-found CTA while preserving internal link semantics', () => {
+    const html = renderToStaticMarkup(<NotFound />)
+
+    expect(html.match(/data-slot="button"/g)).toHaveLength(3)
+    expect(html.match(/<a /g)).toHaveLength(3)
+    expect(html).toContain('href="/"')
+    expect(html).toContain('href="/#products"')
+    expect(html).toContain('href="/kontakty"')
+    expect(html).not.toContain('<button')
+  })
+
+  it('keeps the error retry action semantic while links use the same CTA primitive', () => {
+    const html = renderToStaticMarkup(<ErrorPage reset={() => undefined} />)
+
+    expect(html.match(/data-slot="button"/g)).toHaveLength(3)
+    expect(html.match(/<a /g)).toHaveLength(2)
+    expect(html.match(/<button /g)).toHaveLength(1)
+    expect(html).toContain('type="button"')
   })
 
   it('owns card surfaces through variants while preserving semantic elements', () => {

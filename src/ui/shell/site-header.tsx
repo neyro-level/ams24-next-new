@@ -42,7 +42,7 @@ export async function SiteHeader() {
 
         <div className="hidden lg:block">
           <Button asChild>
-            <a href={primaryCta.path}>{primaryCta.label}</a>
+            <Link href={primaryCta.path}>{primaryCta.label}</Link>
           </Button>
         </div>
 
@@ -64,9 +64,9 @@ export async function SiteHeader() {
                   {link.label}
                 </a>
               ))}
-              <a className="mt-2 rounded-lg bg-primary px-3 py-3 text-center text-body-sm font-semibold text-primary-foreground" href={primaryCta.path}>
-                {primaryCta.label}
-              </a>
+              <Button asChild className="mt-2" size="xl">
+                <Link href={primaryCta.path}>{primaryCta.label}</Link>
+              </Button>
             </nav>
           </div>
         </details>

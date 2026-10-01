@@ -8,7 +8,7 @@ import { SiteHeader } from '@/ui/shell/site-header'
 
 describe('site shell navigation', () => {
   it('exposes all first-level product and content routes in keyboard reachable shell paths', async () => {
-    const { firstLevelRoutes, footerGroups, headerLinks, productLinks } = await getNavigationViewModel()
+    const { firstLevelRoutes, footerGroups, headerLinks, primaryCta, productLinks } = await getNavigationViewModel()
     const header = renderToStaticMarkup(await SiteHeader())
     const footer = renderToStaticMarkup(await SiteFooter())
     const shell = `${header}${footer}`
@@ -17,6 +17,10 @@ describe('site shell navigation', () => {
     expect(header).toContain('aria-label="Мобильная навигация"')
     expect(header).toContain('<summary')
     expect(footer).toContain('aria-label="Навигация в подвале"')
+    expect(header.match(/data-slot="button"/g)).toHaveLength(2)
+    expect(footer.match(/data-slot="button"/g)).toHaveLength(1)
+    expect(header).toMatch(new RegExp(`data-size="xl"[^>]+href="${primaryCta.path}"`))
+    expect(footer).toMatch(new RegExp(`data-size="xl"[^>]+href="${primaryCta.path}"`))
 
     for (const route of firstLevelRoutes) {
       expect(shell).toContain(`href="${route.path}"`)
