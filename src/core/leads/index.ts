@@ -54,6 +54,14 @@ export const leadConsentSchema = z
   })
   .strict()
 
+export const leadAntiSpamSignalSchema = z
+  .object({
+    honeypot: z.string().max(200),
+    startedAt: isoDateTimeSchema,
+    elapsedMs: z.number().int().nonnegative(),
+  })
+  .strict()
+
 export const leadDraftSchema = z
   .object({
     name: z.string().trim().min(2).max(80),
@@ -72,12 +80,14 @@ export const leadRequestPayloadSchema = z
     task: z.string().trim().min(10).max(1000),
     context: leadContextSchema,
     consent: leadConsentSchema,
+    antiSpam: leadAntiSpamSignalSchema,
     idempotencyKey: z.string().uuid(),
   })
   .strict()
 
 export type LeadContext = z.infer<typeof leadContextSchema>
 export type LeadConsent = z.infer<typeof leadConsentSchema>
+export type LeadAntiSpamSignal = z.infer<typeof leadAntiSpamSignalSchema>
 export type LeadDraft = z.infer<typeof leadDraftSchema>
 export type LeadRequestPayload = z.infer<typeof leadRequestPayloadSchema>
 

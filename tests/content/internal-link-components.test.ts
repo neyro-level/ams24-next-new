@@ -43,7 +43,7 @@ describe('internal link component contract', () => {
       'blocks/hero-block.tsx',
       'blocks/product-routes-block.tsx',
       'pages/shared/product-section.tsx',
-      'forms/lead-form.tsx',
+      'forms/lead-form-client.tsx',
     ]
 
     for (const surface of surfaces) {

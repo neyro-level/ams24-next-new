@@ -29,7 +29,8 @@ describe('lead form, legal guard and analytics hardening', () => {
     expect(availability.endpoint).toBe('/api/leads')
     expect(availability.consentTargets).toEqual(leadConsentTargets)
     expect(html).toContain('aria-label="Форма расчёта"')
-    expect(html).toContain('action="/api/leads"')
+    expect(html).not.toContain('action=')
+    expect(html).toContain('data-endpoint="/api/leads"')
     expect(html).toContain('disabled=""')
     expect(html).toContain('href="/soglasie"')
     expect(html).toContain('href="/politika"')
@@ -50,8 +51,8 @@ describe('lead form, legal guard and analytics hardening', () => {
 
       expect(calls).toHaveLength(0)
       expect(leadFormRuntime.submissionEnabled).toBe(false)
-      expect(html).toContain('action="/api/leads"')
-      expect(html).toContain('method="post"')
+      expect(html).not.toContain('action=')
+      expect(html).not.toContain('method=')
       expect(html).toContain('disabled=""')
       expect(html).toContain('data-analytics-event="lead_form_submit_blocked"')
     } finally {
@@ -105,6 +106,11 @@ describe('lead form, legal guard and analytics hardening', () => {
         version: leadConsentContract.version,
         acceptedAt: '2026-09-30T12:00:00+03:00',
         targets: leadConsentTargets,
+      },
+      antiSpam: {
+        honeypot: '',
+        startedAt: '2026-09-30T11:59:55+03:00',
+        elapsedMs: 5000,
       },
       idempotencyKey: '11111111-1111-4111-8111-111111111111',
     } as const

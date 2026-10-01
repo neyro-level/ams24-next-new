@@ -23,6 +23,11 @@ const validPayload = {
     acceptedAt: '2026-09-30T12:00:00+03:00',
     targets: leadConsentTargets,
   },
+  antiSpam: {
+    honeypot: '',
+    startedAt: '2026-09-30T11:59:55+03:00',
+    elapsedMs: 5000,
+  },
   idempotencyKey: '11111111-1111-4111-8111-111111111111',
 } as const
 
@@ -38,6 +43,7 @@ describe('CR-13.1 canonical lead request contract', () => {
       'Idempotency-Key': validPayload.idempotencyKey,
     })
     expect(request.body.consent).toEqual(validPayload.consent)
+    expect(request.body.antiSpam).toEqual(validPayload.antiSpam)
   })
 
   it('requires consent version, accepted timestamp and legal targets', () => {
@@ -97,6 +103,28 @@ describe('CR-13.1 canonical lead request contract', () => {
         ...validPayload,
         analyticsPayload: {
           contact: validPayload.contact,
+        },
+      }).success,
+    ).toBe(false)
+  })
+
+  it('requires a structurally valid anti-spam signal without claiming server enforcement', () => {
+    expect(
+      validateLeadRequestPayload({
+        ...validPayload,
+        antiSpam: {
+          ...validPayload.antiSpam,
+          elapsedMs: -1,
+        },
+      }).success,
+    ).toBe(false)
+
+    expect(
+      validateLeadRequestPayload({
+        ...validPayload,
+        antiSpam: {
+          ...validPayload.antiSpam,
+          startedAt: 'not-a-date',
         },
       }).success,
     ).toBe(false)
