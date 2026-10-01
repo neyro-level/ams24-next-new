@@ -1,4 +1,5 @@
 #!/bin/sh
+# LF line endings are required and enforced by the repository attributes.
 set -eu
 
 project_root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)

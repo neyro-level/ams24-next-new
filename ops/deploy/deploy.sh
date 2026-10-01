@@ -1,4 +1,5 @@
 #!/bin/sh
+# LF line endings are required and enforced by the repository attributes.
 set -eu
 
 usage() { echo "usage: deploy.sh <artifact.tar.gz> <artifact.sha256> <deploy-root> <release-id> <expected-sha> <smoke-url>" >&2; exit 64; }

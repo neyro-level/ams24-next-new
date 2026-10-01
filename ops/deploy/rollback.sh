@@ -1,4 +1,5 @@
 #!/bin/sh
+# LF line endings are required and enforced by the repository attributes.
 set -eu
 
 [ "$#" -eq 3 ] || { echo "usage: rollback.sh <deploy-root> <release-id> <smoke-url>" >&2; exit 64; }
