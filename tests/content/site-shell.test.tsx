@@ -1,3 +1,6 @@
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
+
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
@@ -16,6 +19,7 @@ describe('site shell navigation', () => {
     expect(header).toContain('aria-label="Основная навигация"')
     expect(header).toContain('aria-label="Мобильная навигация"')
     expect(header).toContain('<summary')
+    expect(header).toContain('aria-expanded="false"')
     expect(footer).toContain('aria-label="Навигация в подвале"')
     expect(header.match(/data-slot="button"/g)).toHaveLength(2)
     expect(footer.match(/data-slot="button"/g)).toHaveLength(1)
@@ -27,12 +31,26 @@ describe('site shell navigation', () => {
     }
 
     for (const link of [...productLinks, ...headerLinks]) {
-      expect(header).toContain(`href="${link.path}"`)
+      const standaloneRenderPath = link.path === '/' ? '/' : link.path.replace(/\/$/, '')
+      expect(header).toContain(`href="${standaloneRenderPath}"`)
     }
 
     for (const group of footerGroups) {
       expect(footer).toContain(group.title)
     }
+  })
+
+  it('keeps mobile menu behavior in a minimal client leaf and uses Next links throughout the header', async () => {
+    const headerSource = await readFile(path.join(process.cwd(), 'src/ui/shell/site-header.tsx'), 'utf8')
+    const mobileMenuSource = await readFile(path.join(process.cwd(), 'src/ui/shell/mobile-menu.tsx'), 'utf8')
+
+    expect(headerSource).not.toMatch(/<a\b/)
+    expect(mobileMenuSource).not.toMatch(/<a\b/)
+    expect(mobileMenuSource).toContain("event.key === 'Escape'")
+    expect(mobileMenuSource).toContain("document.addEventListener('pointerdown'")
+    expect(mobileMenuSource).toContain('onClick={close}')
+    expect(mobileMenuSource).toContain('aria-expanded={open}')
+    expect(`${headerSource}${mobileMenuSource}`).toContain('[&::-webkit-details-marker]:hidden')
   })
 
   it('renders breadcrumbs with aria-current on the current page', () => {
