@@ -5,7 +5,8 @@ import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
-import { Section, SectionHeader } from '@/ui/shared/section'
+import { Section } from '@/ui/shared/section'
+import { SectionHeader } from '@/ui/shared/section-header'
 
 export async function generateMetadata() {
   const repository = getContentRepository()

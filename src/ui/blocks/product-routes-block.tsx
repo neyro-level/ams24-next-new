@@ -2,7 +2,8 @@ import type { PageBlockDTO } from '@/core/content/schemas'
 import type { BlockRenderContext } from '@/ui/blocks/context'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
-import { Section, SectionHeader } from '@/ui/shared/section'
+import { Section } from '@/ui/shared/section'
+import { SectionHeader } from '@/ui/shared/section-header'
 
 export type ProductRoutesBlockDTO = Extract<PageBlockDTO, { blockType: 'product-routes' }>
 

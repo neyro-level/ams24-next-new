@@ -1,6 +1,7 @@
 import type { LegalPageDTO } from '@/core/content/services/legal-pages'
 import { Container } from '@/ui/shared/container'
-import { Section, SectionHeader } from '@/ui/shared/section'
+import { Section } from '@/ui/shared/section'
+import { SectionHeader } from '@/ui/shared/section-header'
 
 export function LegalPage({ page }: { page: LegalPageDTO }) {
   return (

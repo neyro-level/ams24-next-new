@@ -6,7 +6,8 @@ import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
-import { Section, SectionHeader } from '@/ui/shared/section'
+import { Section } from '@/ui/shared/section'
+import { SectionHeader } from '@/ui/shared/section-header'
 
 export async function generateMetadata() {
   const repository = getContentRepository()

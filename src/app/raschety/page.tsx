@@ -5,7 +5,8 @@ import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
-import { Section, SectionHeader } from '@/ui/shared/section'
+import { Section } from '@/ui/shared/section'
+import { SectionHeader } from '@/ui/shared/section-header'
 
 export async function generateMetadata() {
   return buildNoindexMetadata({
