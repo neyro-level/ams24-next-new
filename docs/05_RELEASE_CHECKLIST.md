@@ -132,6 +132,8 @@ remediation proof through EPIC-19, but production release is still blocked.
 - [ ] Release directory uploaded before symlink switch; local deterministic switch proof passes through `pnpm verify:rollout`.
 - [ ] Previous verified release remains available.
 - [ ] `current` switch and required Nginx reload/cache step are defined.
+- [ ] Operator supplied archive, checksum, deploy root, release ID, exact SHA and smoke URL to `ops/deploy/deploy.sh`; no value was committed.
+- [ ] Failed-deploy restoration behavior was preserved; failed releases are retained for diagnosis or removed only after they are no longer referenced.
 
 ## 10. Live Smoke
 
@@ -150,6 +152,8 @@ remediation proof through EPIC-19, but production release is still blocked.
 - [ ] Rollback is a symlink switch, not a rebuild; `pnpm verify:rollout` covers the no-build/no-install/no-git-pull invariant.
 - [ ] Post-rollback smoke checklist is available and referenced by the rollout proof.
 - [ ] Lead path remains safe during rollback.
+- [ ] `ops/deploy/rollback.sh` target exists under `releases/` and both Nginx validation and post-switch smoke pass.
+- [ ] Retention keeps `current` plus at least one previous verified release; pruning happens only after successful smoke.
 
 ## 12. Post-release
 

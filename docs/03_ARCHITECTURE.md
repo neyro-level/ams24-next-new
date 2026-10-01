@@ -474,14 +474,32 @@ identity is unresolved. Ownership is split as follows:
 |---|---|---|
 | Production topology and invariants | `03_ARCHITECTURE.md` | step-by-step release proof |
 | Release gate, rollout proof, live smoke and rollback checklist | `05_RELEASE_CHECKLIST.md` | new architecture decisions |
-| Executable Nginx config, once justified | `ops/nginx/*` | product, SEO or release readiness claims |
+| Executable Nginx and atomic rollout artifacts | `ops/nginx/*`, `ops/deploy/*` | product, SEO or release readiness claims |
 | External production identity, credentials and host paths | Secret Master / owner-approved release context | repository docs with secrets |
 
-CR-17 may add `ops/nginx/*` only for validated configuration artifacts. It must
+CR-17 may add `ops/nginx/*` and `ops/deploy/*` only for validated configuration
+and rollout artifacts. It must
 not create a second release checklist, duplicate production readiness claims or
 invent server identity. Production remains blocked until the owner explicitly
 starts release and the unresolved release identity fields are filled without
 exposing secrets.
+
+### Atomic rollout operator contract
+
+`ops/deploy/deploy.sh` accepts an archive, checksum file, deployment root,
+release ID, exact 40-character SHA and smoke URL. It verifies the checksum,
+unpacks into `releases/<release-id>/out`, writes non-secret release metadata,
+validates Nginx, stages a symlink and switches `current` atomically with
+`ln -sfn` plus `mv -T`. Reload and smoke happen only after the switch. A failed
+post-switch validation or smoke restores the previously recorded target.
+
+`ops/deploy/rollback.sh` accepts the deployment root, an existing verified
+release ID and smoke URL. It performs the same staged atomic switch, Nginx
+validation/reload and smoke without Git, dependency installation or rebuild.
+Both scripts require production identity and commands from the explicit release
+context; none are stored in Git. Keep the current and at least one previous
+verified release. Prune older releases only after successful smoke and never
+remove a target referenced by `current` or the recorded rollback evidence.
 
 ## 17. Content Management Evolution
 

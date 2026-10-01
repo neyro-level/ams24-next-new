@@ -2,6 +2,7 @@ import { mkdtemp, mkdir, readFile, rename, rm, symlink, writeFile } from 'node:f
 import { existsSync, lstatSync, realpathSync } from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
+import { spawnSync } from 'node:child_process'
 
 const fullShaPattern = /^[a-f0-9]{40}$/
 const releaseIdPattern = /^\d{8}T\d{6}Z-[a-f0-9]{12}$/
@@ -135,9 +136,44 @@ async function proveRolloutContract() {
   }
 }
 
+function proveShellScripts() {
+  const script = path.join(process.cwd(), 'ops', 'deploy', 'self-test.sh')
+  const command = process.platform === 'win32' ? 'docker' : '/bin/sh'
+  const args = process.platform === 'win32'
+    ? ['run', '--rm', '--mount', `type=bind,source=${process.cwd()},target=/workspace,readonly`, '-w', '/workspace', 'node:24.20.0-alpine', 'sh', 'ops/deploy/self-test.sh']
+    : [script]
+  const result = spawnSync(command, args, { cwd: process.cwd(), encoding: 'utf8' })
+  if (result.status !== 0) {
+    throw new Error(`deploy script fixture failed: ${result.stderr || result.stdout}`)
+  }
+  process.stdout.write(result.stdout)
+}
+
+async function validateShellContracts() {
+  const files = await Promise.all([
+    readFile(path.join(process.cwd(), 'ops', 'deploy', 'deploy.sh'), 'utf8'),
+    readFile(path.join(process.cwd(), 'ops', 'deploy', 'rollback.sh'), 'utf8'),
+  ])
+  const bundle = files.join('\n')
+  const required = [
+    ['strict mode', /set -eu/],
+    ['checksum validation', /sha256sum -c/],
+    ['staged symlink', /ln -sfn/],
+    ['atomic rename', /mv -Tf/],
+    ['Nginx validation', /run_nginx_test/],
+    ['Nginx reload', /run_nginx_reload/],
+    ['post-switch smoke', /run_smoke/],
+    ['failure restoration', /restore_previous/],
+  ]
+  for (const [name, pattern] of required) if (!pattern.test(bundle)) throw new Error(`deploy scripts miss ${name}`)
+  for (const pattern of [/\/var\/www/i, /ams24\.ru/i, /\bgit\s+pull\b/i, /\b(?:pnpm|npm)\s+install\b/i, /\bnext\s+build\b/i, /(?:password|private_key|api_key|token)\s*=/i]) {
+    if (pattern.test(bundle)) throw new Error(`deploy scripts contain forbidden production-specific content: ${pattern}`)
+  }
+}
+
 async function runSelfTest() {
   const cases = [
-    ['valid rollout and rollback', async () => proveRolloutContract(), true],
+    ['valid rollout and rollback', async () => { await proveRolloutContract(); await validateShellContracts(); proveShellScripts() }, true],
     ['invalid release id', async () => switchCurrent(os.tmpdir(), 'latest'), false],
     ['rollback rebuild command', async () => assertRollbackSteps(['switch current', 'pnpm install', 'smoke']), false],
     ['rollback missing smoke', async () => assertRollbackSteps(['switch current to previous release']), false],
@@ -181,6 +217,8 @@ async function main() {
 
   try {
     await proveRolloutContract()
+    await validateShellContracts()
+    proveShellScripts()
     console.log('Rollout contract: PASS')
   } catch (error) {
     console.error(`Rollout contract: FAIL — ${error instanceof Error ? error.message : String(error)}`)
