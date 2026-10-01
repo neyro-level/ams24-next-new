@@ -15,8 +15,14 @@ hostnames, credentials or upstream secrets:
 - `{{PRODUCTION_SERVER_NAME}}`
 - `{{STAGING_SERVER_NAME}}`
 - `{{RELEASE_CURRENT}}`
+- `{{NGINX_SNIPPETS_DIR}}`
 - `{{LEADS_API_UPSTREAM}}`
 - `{{STAGING_BASIC_AUTH_FILE}}`
 
 Replacement is a release-time operation and must not be committed with secret
 values.
+
+`{{NGINX_SNIPPETS_DIR}}` points to the deployed copy of `ops/nginx/snippets/`.
+Every context that declares its own `add_header` must include the applicable
+production or staging security-header snippet because Nginx does not inherit
+parent `add_header` directives into such a context.
