@@ -17,7 +17,6 @@ describe('repository-derived route artifact manifest', () => {
       '/baza-znaniy/impuls/kak-podgotovit-raschet/',
       '/impuls/',
       '/keisy/',
-      '/keisy/medical-case/',
       '/kontakty/',
       '/o-kompanii/',
       '/obrabotka-dannyh/',

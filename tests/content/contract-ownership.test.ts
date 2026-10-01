@@ -35,9 +35,8 @@ describe('T2.6 contract ownership', () => {
     }
   })
 
-  it('exposes skeleton, fixture and legal project data only through content services', () => {
+  it('exposes skeleton and legal project data only through content services', () => {
     const protectedSources = [
-      '@/project/content/detail-fixtures',
       '@/project/content/legal-pages',
       '@/project/content/route-skeletons',
     ]

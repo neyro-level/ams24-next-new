@@ -12,8 +12,6 @@ import {
 } from '@/core/content/services/route-skeletons'
 import { localContent } from '@/project/content/local-content'
 import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
-import { buildDetailFixtureMetadata, detailFixtures } from '@/core/content/services/detail-fixtures'
-import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 
 const routeFileByPath = new Map([
   ['/', 'src/app/page.tsx'],
@@ -42,27 +40,15 @@ describe('route skeleton visibility controls', () => {
     }
   })
 
-  it('declares dynamic route types with representative static fixtures', () => {
+  it('declares only repository-backed dynamic route types', () => {
     expect(dynamicRouteTypes).toEqual([
-      '/keisy/[slug]/',
       '/stati/[slug]/',
       '/baza-znaniy/[product]/[slug]/',
     ])
 
-    expect(existsSync(join(process.cwd(), 'src/app/keisy/[slug]/page.tsx'))).toBe(true)
+    expect(existsSync(join(process.cwd(), 'src/app/keisy/[slug]/page.tsx'))).toBe(false)
     expect(existsSync(join(process.cwd(), 'src/app/stati/[slug]/page.tsx'))).toBe(true)
     expect(existsSync(join(process.cwd(), 'src/app/baza-znaniy/[product]/[slug]/page.tsx'))).toBe(true)
   })
 
-  it('renders representative detail fixtures with breadcrumbs, related links and noindex metadata', async () => {
-    for (const fixture of detailFixtures) {
-      const metadata = await buildDetailFixtureMetadata(fixture)
-      const html = renderToStaticMarkup(<DetailFixturePage fixture={fixture} />)
-
-      expect(metadata.robots).toMatchObject({ index: false, follow: true })
-      expect(html).toContain('aria-label="Хлебные крошки"')
-      expect(html).toContain('aria-label="Связанные маршруты"')
-      expect(html).toContain(fixture.title)
-    }
-  })
 })

@@ -39,7 +39,6 @@ Forbidden in EPIC-10:
 | `src/ui/forms/lead-form.tsx` | form boundary / EPIC-13 | embed as opaque conversion component | do not change submission, endpoint, consent, validation or analytics behavior |
 | `src/ui/legal/legal-page.tsx` | legal page template | legal route rendering | legal text/content remains legal owner gated |
 | `src/ui/shell/route-skeleton-page.tsx` | skeleton page template | planned/noindex routes | no product-specific sections |
-| `src/ui/shell/detail-fixture-page.tsx` | detail fixture shell | representative noindex details | no approved case/article truth |
 | `src/ui/content/article-editorial-template.tsx` | editorial template | article detail layout | content contract remains project/editorial |
 | `src/ui/content/knowledge-editorial-template.tsx` | support template | KB detail layout | content contract remains project/support |
 | `src/ui/shell/site-header.tsx`, `site-footer.tsx`, `site-shell.tsx` | global shell | route wrapper/navigation only | navigation data stays in project/navigation |
@@ -55,7 +54,6 @@ Forbidden in EPIC-10:
 | `/tarify/` | `src/app/tarify/page.tsx` | commercial proof hub composition | `Button`, `Container`, `Section`, `SectionHeader` | `proofEvidenceInventory` read-only | keep tariff card markup local until reuse is proven |
 | `/raschety/` | `src/app/raschety/page.tsx` | commercial proof hub composition | `Button`, `Container`, `Section`, `SectionHeader` | `proofEvidenceInventory` read-only | keep calculation sections local |
 | `/keisy/` | `src/app/keisy/page.tsx` | evidence hub composition | `Button`, `Container`, `Section`, `SectionHeader` | `proofEvidenceInventory` read-only | hub cards local until case-card reuse is proven |
-| `/keisy/[slug]/` | `src/app/keisy/[slug]/page.tsx` | evidence detail routing | `DetailFixturePage` | `getDetailFixture()` read-only | no CR-10 decomposition before real case content |
 | `/otzyvy/` | `src/app/otzyvy/page.tsx` | evidence hub composition | `Button`, `Container`, `Section`, `SectionHeader` | `proofEvidenceInventory` read-only | review cards local until reuse is proven |
 | `/stati/` | `src/app/stati/page.tsx` | planned editorial hub | `RouteSkeletonPage` | `getStaticRouteSkeleton('/stati/')` read-only | no decomposition while skeleton |
 | `/stati/[slug]/` | `src/app/stati/[slug]/page.tsx` | editorial detail routing | `ArticleEditorialTemplate` | `representativeArticleContract` read-only | template owner remains `ui/content` |
@@ -71,6 +69,8 @@ Forbidden in EPIC-10:
 | `global layout` | `src/app/layout.tsx` | app shell composition | `SiteShell` | `getSiteSettingsViewModel()` read-only | not part of page-section decomposition |
 | `global error` | `src/app/error.tsx` | system error recovery | `Container`, `Section` | none | not part of page-section decomposition |
 
+Current T3.3 state: the case detail route remains absent until evidence and publication permission are approved; `/keisy/` remains the noindex evidence hub.
+
 ## 4. Proven shared candidates
 
 | Candidate | Evidence | Decision before CR-10.2 |
@@ -78,7 +78,7 @@ Forbidden in EPIC-10:
 | Dark hero CTA row | repeated across commercial routes | use existing `Button` variants; do not create a semantic CTA row yet |
 | Proof hub cards | `/tarify/`, `/raschety/`, `/keisy/`, `/otzyvy/` share shape but different proof rules | keep local until CR-10.3 reuse inventory |
 | Product limitation cards | product pages share pattern but copy/rules differ | keep local; no generic product builder |
-| Skeleton/legal/detail templates | already shared and route-owned by templates | reuse existing templates only |
+| Skeleton/legal templates | already shared and route-owned by templates | reuse existing templates only |
 
 ## 5. Verification
 

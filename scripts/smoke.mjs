@@ -7,7 +7,7 @@ export const smokeMatrix = Object.freeze({
     { id: 'product-impuls', path: '/impuls/', status: 200, headers: ['security'] },
     { id: 'product-pixel', path: '/pixel/', status: 200, headers: ['security'] },
     { id: 'product-zashchita', path: '/zashchita/', status: 200, headers: ['security'] },
-    { id: 'case', path: '/keisy/medical-case/', status: 200, headers: ['security'] },
+    { id: 'cases-hub', path: '/keisy/', status: 200, headers: ['security'] },
     { id: 'article', path: '/stati/kak-vybrat-produkt/', status: 200, headers: ['security'] },
     { id: 'knowledge', path: '/baza-znaniy/impuls/kak-podgotovit-raschet/', status: 200, headers: ['security'] },
     { id: 'canonical-redirect', path: '/kontakty?smoke=1', status: 301, location: '/kontakty/?smoke=1' },

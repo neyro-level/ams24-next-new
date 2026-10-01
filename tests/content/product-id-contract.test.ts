@@ -33,7 +33,6 @@ describe('canonical ProductId contract', () => {
       'src/core/content/schemas/entities.ts',
       'src/core/analytics/index.ts',
       'src/core/leads/index.ts',
-      'src/project/content/detail-fixtures.ts',
       'src/project/editorial-briefs.ts',
       'src/project/product-claims.ts',
       'src/project/proof-inventory.ts',

@@ -66,7 +66,6 @@ export const staticRouteSkeletons: RouteSkeleton[] = [
 ]
 
 export const dynamicRouteTypes = [
-  '/keisy/[slug]/',
   '/stati/[slug]/',
   '/baza-znaniy/[product]/[slug]/',
 ] as const

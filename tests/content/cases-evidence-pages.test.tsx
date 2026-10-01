@@ -1,11 +1,11 @@
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
 import CasesPage, { generateMetadata as generateCasesMetadata } from '@/app/keisy/page'
-import { buildDetailFixtureMetadata, getDetailFixture } from '@/core/content/services/detail-fixtures'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
 import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
-import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 
 describe('cases evidence pages', () => {
   it('keeps cases hub noindex and tied to hidden case inventory until evidence exists', async () => {
@@ -29,18 +29,12 @@ describe('cases evidence pages', () => {
     }
   })
 
-  it('keeps representative case detail noindex and explicit about required evidence fields', async () => {
-    const fixture = getDetailFixture('case', 'medical-case')
-    const metadata = await buildDetailFixtureMetadata(fixture)
-    const html = renderToStaticMarkup(<DetailFixturePage fixture={fixture} />)
+  it('keeps case details absent while retaining hidden evidence inventory', () => {
+    const caseItems = proofEvidenceInventory.filter((item) => item.kind === 'case')
 
-    expect(metadata.robots).toMatchObject({ index: false, follow: true })
-    expect(html).toContain('Источник')
-    expect(html).toContain('Период')
-    expect(html).toContain('Методика расчёта')
-    expect(html).toContain('Метрики')
-    expect(html).toContain('Разрешение на публикацию')
-    expect(html).toContain('skeleton-fixture')
-    expect(html).not.toMatch(/опубликованный кейс|подтверждённый результат|рост на \d+/i)
+    expect(existsSync(join(process.cwd(), 'src/app/keisy/[slug]/page.tsx'))).toBe(false)
+    expect(caseItems).toHaveLength(3)
+    expect(caseItems.every((item) => item.publicationStatus === 'hidden')).toBe(true)
+    expect(caseItems.every((item) => item.evidenceState === 'missing')).toBe(true)
   })
 })

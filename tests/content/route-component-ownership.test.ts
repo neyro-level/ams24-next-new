@@ -12,7 +12,6 @@ const requiredRoutes = [
   '/tarify/',
   '/raschety/',
   '/keisy/',
-  '/keisy/[slug]/',
   '/otzyvy/',
   '/stati/',
   '/stati/[slug]/',
@@ -31,7 +30,6 @@ const requiredBoundaryFiles = [
   'src/ui/forms/lead-form.tsx',
   'src/ui/legal/legal-page.tsx',
   'src/ui/shell/route-skeleton-page.tsx',
-  'src/ui/shell/detail-fixture-page.tsx',
   'src/ui/content/article-editorial-template.tsx',
   'src/ui/content/knowledge-editorial-template.tsx',
 ] as const
@@ -55,6 +53,6 @@ describe('CR-10.1 route-to-component ownership matrix', () => {
     expect(matrix).toContain('do not create a semantic CTA row yet')
     expect(matrix).toContain('no generic product builder')
     expect(matrix).toContain('do not change form behavior')
-    expect(matrix).toContain('no CR-10 decomposition before real case content')
+    expect(matrix).toContain('case detail route remains absent until evidence and publication permission are approved')
   })
 })
