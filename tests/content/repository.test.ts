@@ -103,4 +103,21 @@ describe('local content repository', () => {
       createContentRepository({ ...localContent, navigation: undefined } as unknown as LocalContentInput),
     ).toThrow()
   })
+
+  it('rejects an overlong SEO title instead of truncating content', () => {
+    expect(() =>
+      createContentRepository({
+        ...localContent,
+        articles: [
+          {
+            ...localContent.articles[0],
+            seo: {
+              ...localContent.articles[0].seo,
+              title: 'З'.repeat(71),
+            },
+          },
+        ],
+      }),
+    ).toThrow()
+  })
 })

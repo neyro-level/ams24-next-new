@@ -27,6 +27,8 @@ describe('initial article and knowledge briefs', () => {
       expect(brief.cta.path).toBe(productPaths[brief.targetProduct])
       expect(brief.primaryIntent.length).toBeGreaterThan(20)
       expect(brief.jtbd.length).toBeGreaterThan(20)
+      expect(brief.seoTitle.length).toBeGreaterThanOrEqual(10)
+      expect(brief.seoTitle.length).toBeLessThanOrEqual(70)
     }
   })
 
@@ -56,6 +58,7 @@ describe('initial article and knowledge briefs', () => {
         productRefs: [brief.targetProduct],
       })
       expect(article?.seo.robots).toBe('noindex')
+      expect(article?.seo.title).toBe(brief.seoTitle)
       expect(article?.seo.canonicalPath).toBe(brief.outputPath)
       expect(article?.body.format).toBe('markdown')
       if (!article || article.body.format !== 'markdown') throw new Error('Expected markdown article body')
@@ -81,6 +84,7 @@ describe('initial article and knowledge briefs', () => {
         updatedAt: '2026-09-29',
       })
       expect(article?.seo.robots).toBe('noindex')
+      expect(article?.seo.title).toBe(brief.seoTitle)
       expect(article?.seo.canonicalPath).toBe(brief.outputPath)
       expect(article?.body.format).toBe('markdown')
       if (!article || article.body.format !== 'markdown') throw new Error('Expected markdown knowledge body')

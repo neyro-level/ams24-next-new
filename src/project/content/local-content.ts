@@ -98,7 +98,7 @@ const articles = initialArticleBriefs.map((brief) => ({
     value: articleBodiesById[brief.id],
   },
   seo: {
-    title: `${brief.h1} — АМС Импульс`.slice(0, 70),
+    title: brief.seoTitle,
     description: brief.jtbd,
     canonicalPath: brief.outputPath,
     robots: 'noindex' as const,
@@ -196,7 +196,7 @@ const knowledgeArticles = initialKnowledgeBriefs.map((brief) => ({
     value: knowledgeBodiesById[brief.id],
   },
   seo: {
-    title: `${brief.h1} — база знаний`.slice(0, 70),
+    title: brief.seoTitle,
     description: brief.expectedOutcome,
     canonicalPath: brief.outputPath,
     robots: 'noindex' as const,

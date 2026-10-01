@@ -14,6 +14,7 @@ type BriefSource = {
 type EditorialBriefBase = {
   id: string
   h1: string
+  seoTitle: string
   slug: string
   objective: string
   audience: string
@@ -111,6 +112,7 @@ export const initialArticleBriefs = [
     kind: 'article',
     id: 'article-impuls-operator-audiences',
     h1: 'Когда бизнесу подходит лидогенерация через аудитории операторов',
+    seoTitle: 'Лидогенерация через аудитории операторов — Импульс',
     slug: 'kogda-podhodit-lidogeneratsiya-cherez-auditorii-operatorov',
     objective: 'Объяснить, в каких задачах основной продукт «Импульс» уместен, а где нужен другой маршрут.',
     audience: 'владелец бизнеса, руководитель маркетинга или продаж, выбирающий канал привлечения',
@@ -136,6 +138,7 @@ export const initialArticleBriefs = [
     kind: 'article',
     id: 'article-pixel-visitor-identification',
     h1: 'Идентификация посетителей сайта: что проверить до установки пикселя',
+    seoTitle: 'Идентификация посетителей сайта: подготовка к пикселю',
     slug: 'identifikatsiya-posetiteley-sayta-chto-proverit',
     objective: 'Развести обычную аналитику и продукт «Импульс Пиксель», не обещая невозможных данных.',
     audience: 'компания с собственным сайтом и заметным входящим трафиком',
@@ -161,6 +164,7 @@ export const initialArticleBriefs = [
     kind: 'article',
     id: 'article-zashchita-lead-interception-risk',
     h1: 'Как понять, что лиды могут перехватывать, и с чего начать защиту',
+    seoTitle: 'Риск перехвата лидов: с чего начать защиту',
     slug: 'kak-ponyat-risk-perekhvata-lidov',
     objective: 'Дать безопасную risk-first статью для продукта «Импульс Защита» без абсолютных обещаний.',
     audience: 'компания, которая видит падение качества заявок или подозревает утечку рекламного трафика',
@@ -189,6 +193,7 @@ export const initialKnowledgeBriefs = [
     kind: 'knowledge',
     id: 'kb-impuls-prepare-calculation',
     h1: 'Как подготовить вводные для расчёта запуска Импульса',
+    seoTitle: 'Как подготовить вводные для расчёта запуска Импульса',
     slug: 'kak-podgotovit-raschet-impuls',
     objective: 'Помочь пользователю собрать минимум данных до запроса расчёта по основному продукту.',
     audience: 'потенциальный клиент, который уже рассматривает запуск привлечения',
@@ -212,6 +217,7 @@ export const initialKnowledgeBriefs = [
     kind: 'knowledge',
     id: 'kb-pixel-site-readiness',
     h1: 'Как проверить сайт перед установкой пикселя',
+    seoTitle: 'Как проверить сайт перед установкой пикселя',
     slug: 'kak-proverit-sayt-pered-pikselem',
     objective: 'Подготовить владельца сайта к разговору о применимости пикселя и технических требованиях.',
     audience: 'маркетолог или владелец сайта, который хочет передавать заинтересованную аудиторию в продажи',
@@ -235,6 +241,7 @@ export const initialKnowledgeBriefs = [
     kind: 'knowledge',
     id: 'kb-zashchita-primary-audit',
     h1: 'Как подготовиться к первичному аудиту защиты лидов',
+    seoTitle: 'Как подготовиться к первичному аудиту защиты лидов',
     slug: 'kak-podgotovitsya-k-auditu-zashchity-lidov',
     objective: 'Собрать безопасную инструкцию для первичного аудита без технических обещаний и обвинений.',
     audience: 'команда маркетинга или продаж, которая хочет проверить риск перехвата лидов',

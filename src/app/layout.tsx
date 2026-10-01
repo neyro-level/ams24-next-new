@@ -18,10 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(site.siteOrigin),
-    title: {
-      default: site.defaultSeo.title,
-      template: `%s | ${site.siteName}`,
-    },
+    title: site.defaultSeo.title,
     description: site.defaultSeo.description,
   }
 }
