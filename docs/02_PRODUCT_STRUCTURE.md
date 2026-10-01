@@ -15,6 +15,7 @@ Updated: 2026-09-30
 - Primary domain: `https://ams24.ru/`.
 - Locale первого релиза: `ru-RU` без префикса в URL.
 - Все canonical paths имеют ведущий и завершающий `/`.
+- Единственный runtime-нормализатор canonical path — `src/core/lib/path.ts`: он сохраняет `/`, приводит сегменты к нижнему регистру, добавляет граничные `/` и отклоняет query/hash, backslash, пустые/повторные сегменты, dot-segments, percent-encoding и некорректные slug-сегменты.
 - Короткие URL являются стабильными product IDs в публичной структуре.
 - Изменение опубликованного path требует постоянного redirect.
 - Query-параметры аналитики не образуют отдельные canonical URL.

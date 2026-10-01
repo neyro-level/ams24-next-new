@@ -99,6 +99,8 @@ Current implemented baseline after EPIC-19:
 
 ## 5. Content Boundary
 
+Canonical path normalization принадлежит `src/core/lib/path.ts`. Схемы, repository adapters, redirect validation, content graph и route/static-param generation используют этот общий контракт; локальные копии нормализатора запрещены.
+
 ```text
 Page / Route
   -> Content API / Service

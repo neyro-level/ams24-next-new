@@ -9,6 +9,7 @@ import {
   type ContentGraphIssueCode,
   validateContentGraph,
 } from '@/core/content/validation'
+import { normalizePath } from '@/core/lib/path'
 import { localContent } from '@/project/content/local-content'
 
 function collectSourceFiles(root: string): string[] {
@@ -48,11 +49,6 @@ const canonicalData = {
 type RepositoryFixtureData = typeof canonicalData
 type RepositoryFixture = ContentRepository & RepositoryFixtureData
 
-function normalizeFixturePath(path: string) {
-  const leading = path.startsWith('/') ? path : `/${path}`
-  return leading.endsWith('/') ? leading : `${leading}/`
-}
-
 function validRepository(): RepositoryFixture {
   return {
     ...canonicalData,
@@ -67,11 +63,11 @@ function validRepository(): RepositoryFixture {
     async getArticles() { return this.articles },
     async getKnowledgeArticles() { return this.knowledgeArticles },
     async getProduct(id) { return this.products.find((item) => item.id === id) },
-    async getPageByPath(path) { return this.pages.find((item) => item.path === normalizeFixturePath(path)) },
-    async getCaseByPath(path) { return this.cases.find((item) => item.path === normalizeFixturePath(path)) },
-    async getArticleByPath(path) { return this.articles.find((item) => item.path === normalizeFixturePath(path)) },
+    async getPageByPath(path) { return this.pages.find((item) => item.path === normalizePath(path)) },
+    async getCaseByPath(path) { return this.cases.find((item) => item.path === normalizePath(path)) },
+    async getArticleByPath(path) { return this.articles.find((item) => item.path === normalizePath(path)) },
     async getKnowledgeArticleByPath(path) {
-      return this.knowledgeArticles.find((item) => item.path === normalizeFixturePath(path))
+      return this.knowledgeArticles.find((item) => item.path === normalizePath(path))
     },
     async getTariffsForProduct(productId) { return this.tariffs.filter((item) => item.productRef === productId) },
     async getCasesForProduct(productId) { return this.cases.filter((item) => item.productRefs.includes(productId)) },

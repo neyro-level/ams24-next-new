@@ -11,6 +11,7 @@ import type {
   RichTextDTO,
   TariffDTO,
 } from '@/core/content/schemas'
+import { normalizePath } from '@/core/lib/path'
 
 export type ContentGraphIssueCode =
   | 'broken-link'
@@ -94,11 +95,6 @@ const approvedStaticPaths = [
   '/obrabotka-dannyh/',
 ] as const
 
-function normalizePath(path: string) {
-  const withoutHash = path.split('#')[0]
-  return withoutHash.endsWith('/') ? withoutHash : `${withoutHash}/`
-}
-
 function routeFromHref(href: string) {
   return normalizePath(href.split('#')[0] || '/')
 }
@@ -113,7 +109,7 @@ function extractInternalLinks(markdown: string) {
   let match: RegExpExecArray | null
 
   while ((match = markdownLinkPattern.exec(markdown))) {
-    links.add(normalizePath(match[1]))
+    links.add(normalizePath(match[1].split('#')[0] || '/'))
   }
 
   return [...links]
@@ -345,8 +341,18 @@ function validateRedirects(issues: ContentGraphIssue[], redirects: ContentGraphR
   const sourceToDestination = new Map<string, string>()
 
   for (const rule of redirects) {
-    const source = normalizePath(rule.source)
-    const destination = normalizePath(rule.destination)
+    let source: string
+    let destination: string
+
+    try {
+      source = normalizePath(rule.source)
+      destination = normalizePath(rule.destination)
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : 'invalid canonical path'
+      issues.push(issue('invalid-redirect', `redirect:${rule.source}`, `Redirect path is invalid: ${detail}`))
+      continue
+    }
+
     const entity = `redirect:${source}`
 
     if (source === destination) {

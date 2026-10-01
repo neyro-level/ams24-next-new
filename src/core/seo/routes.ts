@@ -1,4 +1,5 @@
 import type { ContentRepository } from '@/core/content/repository'
+import { normalizePath } from '@/core/lib/path'
 
 type RouteEntity = {
   path: string
@@ -37,7 +38,7 @@ export async function buildSitemapEntries(repository: ContentRepository): Promis
         throw new Error(`Sitemap-eligible route requires updatedAt: ${entity.path}`)
       }
 
-      return { path: entity.path, lastModified: entity.updatedAt }
+      return { path: normalizePath(entity.path), lastModified: entity.updatedAt }
     })
     .sort((left, right) => left.path.localeCompare(right.path))
 }
@@ -47,14 +48,15 @@ export async function buildSitemapPaths(repository: ContentRepository) {
 }
 
 export function pathToSlugParams(path: string, prefix: string) {
-  const normalizedPrefix = prefix.endsWith('/') ? prefix : `${prefix}/`
+  const normalizedPath = normalizePath(path)
+  const normalizedPrefix = normalizePath(prefix)
 
-  if (!path.startsWith(normalizedPrefix)) {
-    throw new Error(`Path "${path}" does not belong to prefix "${normalizedPrefix}"`)
+  if (!normalizedPath.startsWith(normalizedPrefix)) {
+    throw new Error(`Path "${normalizedPath}" does not belong to prefix "${normalizedPrefix}"`)
   }
 
   return {
-    slug: path
+    slug: normalizedPath
       .slice(normalizedPrefix.length)
       .replace(/\/$/, '')
       .split('/')

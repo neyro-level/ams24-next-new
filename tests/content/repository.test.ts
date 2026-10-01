@@ -17,7 +17,7 @@ describe('local content repository', () => {
     expect('siteSettings' in first).toBe(false)
     expect(first.getProducts()).toBeInstanceOf(Promise)
     expect((await first.getProduct('impuls'))?.path).toBe('/impuls/')
-    await expect(first.getPageByPath('')).resolves.toMatchObject({ id: 'home' })
+    await expect(first.getPageByPath('')).rejects.toThrow(/must not be empty/)
     await expect(first.getPageByPath('/')).resolves.toMatchObject({ id: 'home' })
   })
 

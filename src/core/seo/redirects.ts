@@ -1,10 +1,5 @@
 import type { RedirectRule } from '@/project/redirects'
-
-function normalizePath(path: string) {
-  const trimmed = path.trim().toLowerCase()
-  const leading = trimmed.startsWith('/') ? trimmed : `/${trimmed}`
-  return leading.endsWith('/') ? leading : `${leading}/`
-}
+import { normalizePath } from '@/core/lib/path'
 
 export function validateRedirects(rules: RedirectRule[]) {
   const sourceToDestination = new Map<string, string>()

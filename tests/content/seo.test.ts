@@ -84,7 +84,14 @@ describe('SEO, routes and redirects', () => {
       },
     ])
 
+    expect(buildStaticParams(['Stati/Pervaya-Statya'], 'stati')).toEqual([
+      {
+        slug: ['pervaya-statya'],
+      },
+    ])
+
     expect(() => buildStaticParams(['/keisy/case/'], '/stati/')).toThrow(/does not belong/)
+    expect(() => buildStaticParams(['/stati//case/'], '/stati/')).toThrow(/ambiguous/)
   })
 
   it('validates redirects without loops, duplicates or chains', () => {
@@ -107,5 +114,11 @@ describe('SEO, routes and redirects', () => {
         { source: '/b/', destination: '/c/', permanent: true },
       ]),
     ).toThrow(/Redirect chain/)
+
+    expect(() =>
+      validateRedirects([
+        { source: '/unsafe//path/', destination: '/pixel/', permanent: true },
+      ]),
+    ).toThrow(/unsafe or ambiguous/)
   })
 })

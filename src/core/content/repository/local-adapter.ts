@@ -13,6 +13,7 @@ import {
   tariffSchema,
   type ProductDTO,
 } from '@/core/content/schemas'
+import { normalizePath } from '@/core/lib/path'
 
 import type { ContentRepository } from './contract'
 
@@ -36,14 +37,8 @@ type ContentLocale = LocalContent['pages'][number]['locale']
 
 const defaultLocale: ContentLocale = 'ru-RU'
 
-function normalizeLookupPath(path: string) {
-  const trimmed = path.trim().toLowerCase()
-  const leading = trimmed.startsWith('/') ? trimmed : `/${trimmed}`
-  return leading.endsWith('/') ? leading : `${leading}/`
-}
-
 function localizedPathKey(locale: ContentLocale, path: string) {
-  return `${locale}:${normalizeLookupPath(path)}`
+  return `${locale}:${normalizePath(path)}`
 }
 
 function indexBy<T>(

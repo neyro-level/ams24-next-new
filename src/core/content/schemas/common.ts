@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { normalizePath } from '@/core/lib/path'
+
 export const localeSchema = z.enum(['ru-RU']).default('ru-RU')
 
 export const idSchema = z
@@ -10,15 +12,15 @@ export const idSchema = z
 
 export const slugSchema = idSchema
 
-function normalizePath(value: string) {
-  const trimmed = value.trim().toLowerCase()
-  const withLeadingSlash = trimmed.startsWith('/') ? trimmed : `/${trimmed}`
-  return withLeadingSlash.endsWith('/') ? withLeadingSlash : `${withLeadingSlash}/`
-}
-
 function normalizeNavigationHref(value: string) {
   const trimmed = value.trim().toLowerCase()
-  const [pathPart, fragmentPart] = trimmed.split('#')
+  const parts = trimmed.split('#')
+
+  if (parts.length > 2) {
+    throw new Error('Navigation href must contain at most one fragment')
+  }
+
+  const [pathPart, fragmentPart] = parts
   const normalizedPath = normalizePath(pathPart || '/')
 
   if (!fragmentPart) {
@@ -32,7 +34,17 @@ export const pathSchema = z
   .string()
   .trim()
   .min(1)
-  .transform(normalizePath)
+  .transform((value, context) => {
+    try {
+      return normalizePath(value)
+    } catch (error) {
+      context.addIssue({
+        code: 'custom',
+        message: error instanceof Error ? error.message : 'Invalid canonical path',
+      })
+      return z.NEVER
+    }
+  })
   .pipe(
     z
       .string()
@@ -46,7 +58,17 @@ export const navigationHrefSchema = z
   .string()
   .trim()
   .min(1)
-  .transform(normalizeNavigationHref)
+  .transform((value, context) => {
+    try {
+      return normalizeNavigationHref(value)
+    } catch (error) {
+      context.addIssue({
+        code: 'custom',
+        message: error instanceof Error ? error.message : 'Invalid navigation href',
+      })
+      return z.NEVER
+    }
+  })
   .pipe(
     z
       .string()
