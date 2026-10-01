@@ -40,7 +40,7 @@ describe('repository-derived route artifact manifest', () => {
     ])
     expect(manifest.routes.every((route) => route.locale === 'ru-RU' && route.h1.count === 1)).toBe(true)
     expect(paths).not.toContain(localContent.articles.find((article) => article.status === 'draft')?.path)
-    expect(paths).not.toContain(localContent.knowledgeArticles[0].path)
+    expect(paths).not.toContain(localContent.knowledgeArticles.find((article) => article.status === 'draft')?.path)
   })
 
   it('derives canonical URLs from validated Site Settings instead of a production-domain fixture', async () => {

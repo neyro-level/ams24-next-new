@@ -4,44 +4,50 @@ import { describe, expect, it } from 'vitest'
 import { generateStaticParams as generateKnowledgeParams } from '@/app/baza-znaniy/[product]/[slug]/page'
 import { generateStaticParams as generateArticleParams } from '@/app/stati/[slug]/page'
 import { localContent } from '@/project/content/local-content'
+import { redirects } from '@/project/redirects'
 import {
   buildArticleEditorialMetadata,
   buildKnowledgeEditorialMetadata,
-  getRepresentativeKnowledgeContract,
 } from '@/core/content/services/editorial-contracts'
 import { createContentRepository } from '@/core/content/repository'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
 
-const representativeKnowledgeContract = getRepresentativeKnowledgeContract()
 const repository = createContentRepository(localContent)
 
 describe('article and knowledge editorial contracts', () => {
-  it('keeps the public article DTO and KB contract roles distinct', async () => {
+  it('serves public article and knowledge routes from repository DTOs', async () => {
     const article = await repository.getArticleByPath('/stati/kak-vybrat-produkt/')
+    const knowledge = await repository.getKnowledgeArticleByPath('/baza-znaniy/impuls/kak-podgotovit-raschet/')
 
     expect(article).toMatchObject({
       slug: 'kak-vybrat-produkt',
       status: 'published',
       seo: { robots: 'noindex' },
     })
-    expect(representativeKnowledgeContract.kind).toBe('knowledge')
-    expect(representativeKnowledgeContract.task).toContain('подготовить')
+    expect(knowledge).toMatchObject({
+      slug: 'kak-podgotovit-raschet',
+      productRef: 'impuls',
+      status: 'published',
+      seo: { robots: 'noindex' },
+    })
     expect(article).not.toHaveProperty('targetCommercialPage')
     expect(article).not.toHaveProperty('sourceLedger')
-    expect(representativeKnowledgeContract).toHaveProperty('prerequisites')
-    expect(representativeKnowledgeContract).not.toHaveProperty('primaryQuery')
+    expect(knowledge).not.toHaveProperty('prerequisites')
+    expect(knowledge).not.toHaveProperty('sourceLedger')
   })
 
   it('builds noindex metadata until content is approved', async () => {
     const article = await repository.getArticleByPath('/stati/kak-vybrat-produkt/')
+    const knowledge = await repository.getKnowledgeArticleByPath('/baza-znaniy/impuls/kak-podgotovit-raschet/')
     if (!article) throw new Error('Expected repository-backed article')
+    if (!knowledge) throw new Error('Expected repository-backed knowledge article')
 
     expect((await buildArticleEditorialMetadata(article)).robots).toMatchObject({
       index: false,
       follow: true,
     })
-    expect((await buildKnowledgeEditorialMetadata(representativeKnowledgeContract)).robots).toMatchObject({
+    expect((await buildKnowledgeEditorialMetadata(knowledge)).robots).toMatchObject({
       index: false,
       follow: true,
     })
@@ -51,22 +57,27 @@ describe('article and knowledge editorial contracts', () => {
     const draftArticles = localContent.articles.filter((article) => article.status === 'draft')
     expect(draftArticles).toHaveLength(3)
     expect(draftArticles.every((article) => article.seo.robots === 'noindex')).toBe(true)
-    expect(localContent.knowledgeArticles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
+    const draftKnowledge = localContent.knowledgeArticles.filter((article) => article.status === 'draft')
+    expect(draftKnowledge).toHaveLength(2)
+    expect(draftKnowledge.every((article) => article.seo.robots === 'noindex')).toBe(true)
     expect(await generateArticleParams()).toEqual([{ slug: 'kak-vybrat-produkt' }])
-    expect(generateKnowledgeParams()).toEqual([{
-      product: representativeKnowledgeContract.product,
-      slug: representativeKnowledgeContract.slug,
+    expect(await generateKnowledgeParams()).toEqual([{
+      product: 'impuls',
+      slug: 'kak-podgotovit-raschet',
     }])
+    expect(redirects.some((rule) => rule.source.includes('kak-podgotovit-raschet-impuls'))).toBe(false)
   })
 
   it('renders editorial typography and different layouts', async () => {
     const article = await repository.getArticleByPath('/stati/kak-vybrat-produkt/')
+    const knowledge = await repository.getKnowledgeArticleByPath('/baza-znaniy/impuls/kak-podgotovit-raschet/')
     if (!article) throw new Error('Expected repository-backed article')
+    if (!knowledge) throw new Error('Expected repository-backed knowledge article')
     const articleHtml = renderToStaticMarkup(
       <ArticleEditorialTemplate article={article} />,
     )
     const kbHtml = renderToStaticMarkup(
-      <KnowledgeEditorialTemplate contract={representativeKnowledgeContract} />,
+      <KnowledgeEditorialTemplate article={knowledge} />,
     )
 
     expect(articleHtml).toContain('Статья')
@@ -75,8 +86,8 @@ describe('article and knowledge editorial contracts', () => {
     expect(articleHtml).toContain('Короткий ответ')
     expect(articleHtml).toContain('text-h1')
     expect(articleHtml).toContain('max-w-narrow')
-    expect(kbHtml).toContain('База знаний · support task')
-    expect(kbHtml).toContain('Перед началом')
+    expect(kbHtml).toContain('База знаний')
+    expect(kbHtml).not.toContain('Перед началом')
     expect(kbHtml).toContain('data-rich-text')
     expect(kbHtml).toContain('Шаг 2')
     expect(kbHtml).toContain('Шаг 1')

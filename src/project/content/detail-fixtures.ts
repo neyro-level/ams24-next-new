@@ -28,22 +28,4 @@ export const detailFixtures: DetailFixture[] = [
       { label: 'Расчёты', path: '/raschety/' },
     ],
   },
-  {
-    type: 'knowledge',
-    path: '/baza-znaniy/impuls/kak-podgotovit-raschet/',
-    slug: 'kak-podgotovit-raschet',
-    product: 'impuls',
-    title: 'Как подготовить данные для расчёта',
-    eyebrow: 'Representative KB detail',
-    summary: 'Скелет инструкции показывает будущую структуру базы знаний: задача, входные данные, шаги и следующий маршрут.',
-    breadcrumbs: [
-      { label: 'База знаний', path: '/baza-znaniy/' },
-      { label: 'Импульс', path: '/impuls/' },
-      { label: 'Подготовить расчёт', path: '/baza-znaniy/impuls/kak-podgotovit-raschet/' },
-    ],
-    related: [
-      { label: 'Тарифы', path: '/tarify/' },
-      { label: 'Контакты', path: '/kontakty/' },
-    ],
-  },
 ]

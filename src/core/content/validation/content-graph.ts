@@ -240,7 +240,12 @@ function validateRoutableEntities(issues: ContentGraphIssue[], repository: Conte
       issues.push(issue('seo-incomplete', entity, `${entity} must have complete SEO title, description and canonicalPath.`))
     }
 
-    if (item.status === 'published' && item.seo?.robots === 'noindex' && kind !== 'article') {
+    if (
+      item.status === 'published' &&
+      item.seo?.robots === 'noindex' &&
+      kind !== 'article' &&
+      kind !== 'knowledge'
+    ) {
       issues.push(issue('invalid-publication-state', entity, `${entity} is published but hidden from indexing.`))
     }
 

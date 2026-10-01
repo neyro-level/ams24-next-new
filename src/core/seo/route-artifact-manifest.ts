@@ -1,7 +1,6 @@
 import type { ContentRepository } from '@/core/content/repository'
 import type { Locale } from '@/core/content/schemas'
 import { getDetailFixtures } from '@/core/content/services/detail-fixtures'
-import { getRepresentativeKnowledgeContract } from '@/core/content/services/editorial-contracts'
 import { getContentRepository } from '@/core/content/services/repository'
 import { getStaticRouteSkeletons } from '@/core/content/services/route-skeletons'
 import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
@@ -71,11 +70,6 @@ export async function buildRouteArtifactManifest(
         locale: settings.locale,
         indexPolicy: 'noindex' as const,
       })),
-    {
-      path: `/baza-znaniy/${getRepresentativeKnowledgeContract().product}/${getRepresentativeKnowledgeContract().slug}/`,
-      locale: settings.locale,
-      indexPolicy: 'noindex' as const,
-    },
   ]
   const byPath = new Map<string, RouteInput>()
 

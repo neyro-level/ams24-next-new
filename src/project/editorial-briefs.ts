@@ -194,7 +194,7 @@ export const initialKnowledgeBriefs = [
     id: 'kb-impuls-prepare-calculation',
     h1: 'Как подготовить вводные для расчёта запуска Импульса',
     seoTitle: 'Как подготовить вводные для расчёта запуска Импульса',
-    slug: 'kak-podgotovit-raschet-impuls',
+    slug: 'kak-podgotovit-raschet',
     objective: 'Помочь пользователю собрать минимум данных до запроса расчёта по основному продукту.',
     audience: 'потенциальный клиент, который уже рассматривает запуск привлечения',
     jtbd: 'собрать нишу, регион, объём, ограничения и формат передачи результата перед обращением',
@@ -210,7 +210,7 @@ export const initialKnowledgeBriefs = [
     verifiedExperience: 'project CTA model uses calculation/request; tariffs wait for OD-02',
     forbiddenClaims: ['фиксированная цена без OD-02', 'срок запуска без утверждённого процесса'],
     cta: { label: 'Рассчитать запуск', path: '/impuls/' },
-    outputPath: '/baza-znaniy/impuls/kak-podgotovit-raschet-impuls/',
+    outputPath: '/baza-znaniy/impuls/kak-podgotovit-raschet/',
     sourceLedger: [prdMinimumSource, productStructureSource],
   },
   {

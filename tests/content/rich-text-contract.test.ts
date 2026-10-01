@@ -9,7 +9,6 @@ const richTextRendererPattern = /export\s+function\s+RichText\(/g
 const contractFiles = [
   'src/core/content/schemas/common.ts',
   'src/ui/content/rich-text.tsx',
-  'src/project/editorial-contracts.ts',
   'src/ui/content/article-editorial-template.tsx',
   'src/ui/content/knowledge-editorial-template.tsx',
 ] as const
@@ -31,7 +30,7 @@ describe('CR-12.3 RichText contract', () => {
     expect(articleTemplate).toContain("import { RichText } from '@/ui/content/rich-text'")
     expect(articleTemplate).toContain('<RichText content={article.body} />')
     expect(knowledgeTemplate).toContain("import { RichText } from '@/ui/content/rich-text'")
-    expect(knowledgeTemplate).toContain('<RichText content={contract.body} />')
+    expect(knowledgeTemplate).toContain('<RichText content={article.body} />')
   })
 
   it('keeps renderer ownership in UI and structural list keys independent of text', () => {

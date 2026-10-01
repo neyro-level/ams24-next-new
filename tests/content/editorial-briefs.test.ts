@@ -78,7 +78,7 @@ describe('initial article and knowledge briefs', () => {
       expect(article).toMatchObject({
         id: brief.id,
         slug: brief.slug,
-        status: 'draft',
+        status: brief.id === 'kb-impuls-prepare-calculation' ? 'published' : 'draft',
         productRef: brief.targetProduct,
         task: brief.task,
         updatedAt: '2026-09-29',
