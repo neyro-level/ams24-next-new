@@ -29,19 +29,6 @@ export const detailFixtures: DetailFixture[] = [
     ],
   },
   {
-    type: 'article',
-    path: '/stati/kak-vybrat-produkt/',
-    slug: 'kak-vybrat-produkt',
-    title: 'Как выбрать продукт Импульс',
-    eyebrow: 'Representative article detail',
-    summary: 'Скелет статьи фиксирует будущий editorial layout, связанные продукты и переход к расчёту.',
-    breadcrumbs: [{ label: 'Статьи', path: '/stati/' }, { label: 'Как выбрать продукт', path: '/stati/kak-vybrat-produkt/' }],
-    related: [
-      { label: 'Импульс Пиксель', path: '/pixel/' },
-      { label: 'Импульс Защита', path: '/zashchita/' },
-    ],
-  },
-  {
     type: 'knowledge',
     path: '/baza-znaniy/impuls/kak-podgotovit-raschet/',
     slug: 'kak-podgotovit-raschet',

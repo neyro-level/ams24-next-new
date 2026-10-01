@@ -29,7 +29,7 @@ describe('CR-12.3 RichText contract', () => {
     const knowledgeTemplate = readFileSync(join(process.cwd(), 'src/ui/content/knowledge-editorial-template.tsx'), 'utf8')
 
     expect(articleTemplate).toContain("import { RichText } from '@/ui/content/rich-text'")
-    expect(articleTemplate).toContain('<RichText content={contract.body} />')
+    expect(articleTemplate).toContain('<RichText content={article.body} />')
     expect(knowledgeTemplate).toContain("import { RichText } from '@/ui/content/rich-text'")
     expect(knowledgeTemplate).toContain('<RichText content={contract.body} />')
   })

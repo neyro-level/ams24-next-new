@@ -7,35 +7,37 @@ import { localContent } from '@/project/content/local-content'
 import {
   buildArticleEditorialMetadata,
   buildKnowledgeEditorialMetadata,
-  getRepresentativeArticleContract,
   getRepresentativeKnowledgeContract,
 } from '@/core/content/services/editorial-contracts'
+import { createContentRepository } from '@/core/content/repository'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
 
-const representativeArticleContract = getRepresentativeArticleContract()
 const representativeKnowledgeContract = getRepresentativeKnowledgeContract()
+const repository = createContentRepository(localContent)
 
 describe('article and knowledge editorial contracts', () => {
-  it('keeps article and KB roles distinct', () => {
-    expect(representativeArticleContract.kind).toBe('article')
+  it('keeps the public article DTO and KB contract roles distinct', async () => {
+    const article = await repository.getArticleByPath('/stati/kak-vybrat-produkt/')
+
+    expect(article).toMatchObject({
+      slug: 'kak-vybrat-produkt',
+      status: 'published',
+      seo: { robots: 'noindex' },
+    })
     expect(representativeKnowledgeContract.kind).toBe('knowledge')
-    expect(representativeArticleContract.primaryIntent).toContain('editorial')
     expect(representativeKnowledgeContract.task).toContain('подготовить')
-    expect(representativeArticleContract).toHaveProperty('targetCommercialPage')
+    expect(article).not.toHaveProperty('targetCommercialPage')
+    expect(article).not.toHaveProperty('sourceLedger')
     expect(representativeKnowledgeContract).toHaveProperty('prerequisites')
-    expect(representativeArticleContract).not.toHaveProperty('steps')
     expect(representativeKnowledgeContract).not.toHaveProperty('primaryQuery')
   })
 
-  it('keeps unchecked SEO/source facts explicit instead of invented', () => {
-    expect(representativeArticleContract.primaryQuery).toBe('not checked')
-    expect(representativeArticleContract.sourceLedger[0]?.checkedAt).toBe('not checked')
-    expect(representativeArticleContract.sourceLedger[0]?.status).toBe('not checked')
-  })
-
   it('builds noindex metadata until content is approved', async () => {
-    expect((await buildArticleEditorialMetadata(representativeArticleContract)).robots).toMatchObject({
+    const article = await repository.getArticleByPath('/stati/kak-vybrat-produkt/')
+    if (!article) throw new Error('Expected repository-backed article')
+
+    expect((await buildArticleEditorialMetadata(article)).robots).toMatchObject({
       index: false,
       follow: true,
     })
@@ -46,25 +48,29 @@ describe('article and knowledge editorial contracts', () => {
   })
 
   it('keeps editorial drafts noindex while exporting only representative noindex routes', async () => {
-    expect(localContent.articles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
+    const draftArticles = localContent.articles.filter((article) => article.status === 'draft')
+    expect(draftArticles).toHaveLength(3)
+    expect(draftArticles.every((article) => article.seo.robots === 'noindex')).toBe(true)
     expect(localContent.knowledgeArticles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
-    expect(generateArticleParams()).toEqual([{ slug: representativeArticleContract.slug }])
+    expect(await generateArticleParams()).toEqual([{ slug: 'kak-vybrat-produkt' }])
     expect(generateKnowledgeParams()).toEqual([{
       product: representativeKnowledgeContract.product,
       slug: representativeKnowledgeContract.slug,
     }])
   })
 
-  it('renders editorial typography and different layouts', () => {
+  it('renders editorial typography and different layouts', async () => {
+    const article = await repository.getArticleByPath('/stati/kak-vybrat-produkt/')
+    if (!article) throw new Error('Expected repository-backed article')
     const articleHtml = renderToStaticMarkup(
-      <ArticleEditorialTemplate contract={representativeArticleContract} />,
+      <ArticleEditorialTemplate article={article} />,
     )
     const kbHtml = renderToStaticMarkup(
       <KnowledgeEditorialTemplate contract={representativeKnowledgeContract} />,
     )
 
-    expect(articleHtml).toContain('Статья · editorial intent')
-    expect(articleHtml).toContain('Target commercial page')
+    expect(articleHtml).toContain('Статья')
+    expect(articleHtml).not.toContain('Target commercial page')
     expect(articleHtml).toContain('data-rich-text')
     expect(articleHtml).toContain('Короткий ответ')
     expect(articleHtml).toContain('text-h1')

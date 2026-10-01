@@ -1,30 +1,31 @@
 import {
   buildArticleEditorialMetadata,
-  getRepresentativeArticleContract,
 } from '@/core/content/services/editorial-contracts'
+import { getContentRepository } from '@/core/content/services/repository'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
+import { notFound } from 'next/navigation'
 
 export const dynamicParams = false
-const representativeArticleContract = getRepresentativeArticleContract()
 
-export function generateStaticParams() {
-  return [{ slug: representativeArticleContract.slug }]
+export async function generateStaticParams() {
+  const articles = await getContentRepository().getArticles()
+  return articles
+    .filter((article) => article.status === 'published')
+    .map((article) => ({ slug: article.slug }))
+}
+
+async function getArticle(slug: string) {
+  const article = await getContentRepository().getArticleByPath(`/stati/${slug}/`)
+  if (!article || article.status !== 'published') notFound()
+  return article
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  if (slug !== representativeArticleContract.slug) {
-    throw new Error(`Unknown article contract: ${slug}`)
-  }
-
-  return buildArticleEditorialMetadata(representativeArticleContract)
+  return buildArticleEditorialMetadata(await getArticle(slug))
 }
 
 export default async function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  if (slug !== representativeArticleContract.slug) {
-    throw new Error(`Unknown article contract: ${slug}`)
-  }
-
-  return <ArticleEditorialTemplate contract={representativeArticleContract} />
+  return <ArticleEditorialTemplate article={await getArticle(slug)} />
 }

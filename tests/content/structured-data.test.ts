@@ -19,15 +19,16 @@ describe('structured data eligibility and serialization', () => {
   })
 
   it('allows only substantive published indexable articles with a publication date', async () => {
+    const draftArticle = localContent.articles.find((article) => article.status === 'draft')!
     const repository = createContentRepository({
       ...localContent,
       articles: [
         {
-          ...localContent.articles[0],
+          ...draftArticle,
           status: 'published' as const,
           publishedAt: '2026-09-30',
           seo: {
-            ...localContent.articles[0].seo,
+            ...draftArticle.seo,
             robots: 'index' as const,
           },
         },
@@ -44,8 +45,8 @@ describe('structured data eligibility and serialization', () => {
         description: article.seo.description,
         datePublished: '2026-09-30',
         dateModified: article.updatedAt,
-        mainEntityOfPage: 'https://ams24.ru/stati/kogda-podhodit-lidogeneratsiya-cherez-auditorii-operatorov/',
-        url: 'https://ams24.ru/stati/kogda-podhodit-lidogeneratsiya-cherez-auditorii-operatorov/',
+        mainEntityOfPage: `https://ams24.ru${draftArticle.path}`,
+        url: `https://ams24.ru${draftArticle.path}`,
       },
     ])
 
@@ -53,7 +54,7 @@ describe('structured data eligibility and serialization', () => {
     expect(buildArticleStructuredData({ ...article, seo: { ...article.seo, robots: 'noindex' } }, settings)).toEqual([])
     expect(
       buildArticleStructuredData(article, { ...settings, domain: 'https://example.test' })[0]?.url,
-    ).toBe('https://example.test/stati/kogda-podhodit-lidogeneratsiya-cherez-auditorii-operatorov/')
+    ).toBe(`https://example.test${draftArticle.path}`)
   })
 
   it('uses canonical Site Settings for organization defaults', async () => {

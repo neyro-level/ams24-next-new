@@ -282,9 +282,9 @@ const negativeFixtures: NegativeFixture[] = [
         ...validRepository(),
         articles: [
           {
-            ...validRepository().articles[0],
+            ...validRepository().articles.find((article) => article.status === 'draft')!,
             seo: {
-              ...validRepository().articles[0].seo,
+              ...validRepository().articles.find((article) => article.status === 'draft')!.seo,
               robots: 'index',
             },
           },
@@ -358,9 +358,11 @@ describe('content graph validator contract', () => {
     const repository = createContentRepository({
       ...localContent,
       articles: [
-        ...localContent.articles!.filter((article) => article.productRefs.includes('pixel')),
+        ...localContent.articles!.filter(
+          (article) => article.status === 'draft' && article.productRefs.includes('pixel'),
+        ),
         {
-          ...localContent.articles![0],
+          ...localContent.articles!.find((article) => article.status === 'draft')!,
           id: 'article-duplicate-intent',
           path: '/stati/duplicate-intent/',
           slug: 'duplicate-intent',

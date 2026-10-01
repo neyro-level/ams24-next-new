@@ -1,32 +1,22 @@
-import { buildNoindexMetadata } from '@/core/seo'
+import type { ArticleDTO } from '@/core/content/schemas'
+import { buildMetadata, buildNoindexMetadata } from '@/core/seo'
 import {
-  representativeArticleContract,
   representativeKnowledgeContract,
-  type ArticleEditorialContract as ProjectArticleEditorialContract,
   type KnowledgeEditorialContract as ProjectKnowledgeEditorialContract,
 } from '@/project/editorial-contracts'
 
 import { getRequiredSiteSettings } from './site-settings'
 
-export type ArticleEditorialContract = ProjectArticleEditorialContract
 export type KnowledgeEditorialContract = ProjectKnowledgeEditorialContract
-
-export function getRepresentativeArticleContract(): ArticleEditorialContract {
-  return representativeArticleContract
-}
 
 export function getRepresentativeKnowledgeContract(): KnowledgeEditorialContract {
   return representativeKnowledgeContract
 }
 
-export async function buildArticleEditorialMetadata(contract: ArticleEditorialContract) {
+export async function buildArticleEditorialMetadata(article: ArticleDTO) {
   const settings = await getRequiredSiteSettings()
 
-  return buildNoindexMetadata({
-    title: `${contract.h1} — статья`,
-    description: contract.jtbd,
-    canonicalPath: `/stati/${contract.slug}/`,
-  }, settings, { type: 'article' })
+  return buildMetadata(article.seo, settings, { type: 'article' })
 }
 
 export async function buildKnowledgeEditorialMetadata(contract: KnowledgeEditorialContract) {
