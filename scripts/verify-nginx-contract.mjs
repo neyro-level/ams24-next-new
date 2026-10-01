@@ -172,8 +172,53 @@ function validateHeaderInheritance(source) {
     for (const location of extractBlocks(block, /^\s*location\b.*\{/)) {
       if (location.includes('add_header') && !location.includes(expectedInclude)) {
         const firstLine = location.split(/\r?\n/, 1)[0].trim()
-        errors.push(`${contextName} ${firstLine} declares add_header without security-header include`)
+        const consequence = staging ? ' and loses X-Robots-Tag' : ''
+        errors.push(
+          `${contextName} ${firstLine} declares add_header without security-header include${consequence}`,
+        )
       }
+    }
+  }
+
+  return errors
+}
+
+function validateRouteSemantics(source) {
+  const errors = []
+  const httpsServers = extractBlocks(source, /^server\s+\{/).filter((block) =>
+    /listen\s+443\s+ssl;/.test(block),
+  )
+  const canonicalMatcher =
+    /^\s*location\s+~\s+\^\/\(\?!_next\(\?:\/\|\$\)\)\(\?:\.\*\/\)\?\[\^\.\/\]\+\$\s+\{/
+
+  for (const block of httpsServers) {
+    const contextName = block.includes('server_name {{STAGING_SERVER_NAME}};')
+      ? 'staging'
+      : 'production'
+    const locations = extractBlocks(block, /^\s*location\b.*\{/)
+    const slashLocations = locations.filter((location) =>
+      /return\s+\d+\s+\$uri\//.test(location),
+    )
+
+    if (slashLocations.length !== 1 || !canonicalMatcher.test(slashLocations[0] ?? '')) {
+      errors.push(
+        `${contextName} trailing-slash matcher must exclude files and /_next/ routes`,
+      )
+    }
+
+    const slashRedirect = slashLocations[0] ?? ''
+    if (!/return\s+301\s+\$uri\/\$is_args\$args;/.test(slashRedirect)) {
+      if (!/return\s+301\s+/.test(slashRedirect)) {
+        errors.push(`${contextName} trailing-slash redirect must use status 301`)
+      }
+      if (!/\$is_args\$args;/.test(slashRedirect)) {
+        errors.push(`${contextName} trailing-slash redirect must preserve query arguments`)
+      }
+    }
+
+    const publicLocation = locations.find((location) => /^\s*location\s+\/\s+\{/.test(location))
+    if (!publicLocation || !/try_files\s+\$uri\s+\$uri\/index\.html\s+=404;/.test(publicLocation)) {
+      errors.push(`${contextName} public try_files must end in =404, not a URI fallback`)
     }
   }
 
@@ -229,6 +274,7 @@ function analyzeNginxContract(source, snippets) {
   errors.push(...validateHeaderSnippet('production header snippet', snippets.production))
   errors.push(...validateHeaderSnippet('staging header snippet', snippets.staging, { staging: true }))
   errors.push(...validateHeaderInheritance(source))
+  errors.push(...validateRouteSemantics(source))
   errors.push(...validateTlsRoles(source))
 
   const serverBlockCount = [...source.matchAll(/^server\s+\{/gm)].length
@@ -257,33 +303,169 @@ async function runSelfTest() {
     production: await readFile(productionHeadersPath, 'utf8'),
     staging: await readFile(stagingHeadersPath, 'utf8'),
   }
+  const removeLocationInclude = (source, include) =>
+    source.replace(
+      new RegExp(
+        `    ${include.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\r?\\n    add_header Cache-Control "public, max-age=31536000, immutable" always;`,
+      ),
+      '    add_header Cache-Control "public, max-age=31536000, immutable" always;',
+    )
+
   const cases = [
-    ['valid baseline', valid, validSnippets, 0],
-    ['missing leads proxy', valid.replaceAll(/location = \/api\/leads \{[\s\S]*?  \}/g, 'location = /api/leads_removed { return 404; }'), validSnippets, 3],
-    ['missing immutable asset cache', valid.replaceAll('public, max-age=31536000, immutable', 'public, max-age=60'), validSnippets, 1],
-    ['missing staging noindex', valid, { ...validSnippets, staging: validSnippets.staging.replace('add_header X-Robots-Tag "noindex, nofollow" always;', '') }, 1],
-    ['missing static Next inline script policy', valid, { production: validSnippets.production.replace("'unsafe-inline' https://mc.yandex.ru", 'https://mc.yandex.ru'), staging: validSnippets.staging }, 1],
-    ['unsafe eval CSP capability', valid, { production: validSnippets.production.replace("script-src 'self'", "script-src 'self' 'unsafe-eval'"), staging: validSnippets.staging }, 2],
-    ['missing HSTS', valid, { production: validSnippets.production.replace('add_header Strict-Transport-Security "max-age=31536000" always;', ''), staging: validSnippets.staging }, 1],
-    ['forbidden HSTS preload', valid, { production: validSnippets.production.replace('max-age=31536000', 'max-age=31536000; includeSubDomains; preload'), staging: validSnippets.staging }, 2],
-    ['hardcoded certificate path', valid.replace('ssl_certificate {{PRODUCTION_CERTIFICATE}};', 'ssl_certificate /etc/ssl/private/example.pem;'), validSnippets, 2],
-    ['missing location security include', valid.replace(new RegExp(`    ${productionInclude.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\r?\\n    add_header Cache-Control "public, max-age=31536000, immutable" always;`), '    add_header Cache-Control "public, max-age=31536000, immutable" always;'), validSnippets, 1],
-    ['redirect rewrites file-like paths', valid.replaceAll('^/(?!_next(?:/|$))(?:.*/)?[^./]+$', '^(.+[^/])$').replaceAll('return 301 $uri/$is_args$args;', 'return 308 $scheme://$host$1/;'), validSnippets, 3],
-    ['redirect drops query string', valid.replaceAll('return 301 $uri/$is_args$args;', 'return 301 $uri/;'), validSnippets, 1],
-    ['redirect includes Next internals', valid.replaceAll('(?!_next(?:/|$))', ''), validSnippets, 1],
-    ['soft 404 fallback', valid.replaceAll('try_files $uri $uri/index.html =404;', 'try_files $uri $uri/ $uri/index.html /404.html;'), validSnippets, 2],
-    ['hardcoded upstream URL', valid.replaceAll('{{LEADS_API_UPSTREAM}}', 'https://leads.internal.example'), validSnippets, 2],
-    ['broken directive syntax', valid.replace('server_name {{PRODUCTION_SERVER_NAME}};', 'server_name {{PRODUCTION_SERVER_NAME}}'), validSnippets, 1],
+    { name: 'valid baseline', source: valid, snippets: validSnippets, expected: [] },
+    {
+      name: 'missing leads proxy',
+      source: valid.replaceAll(
+        /location = \/api\/leads \{[\s\S]*?  \}/g,
+        'location = /api/leads_removed { return 404; }',
+      ),
+      snippets: validSnippets,
+      expected: ['missing required Nginx contract: lead proxy exact location'],
+    },
+    {
+      name: 'missing immutable asset cache',
+      source: valid.replaceAll('public, max-age=31536000, immutable', 'public, max-age=60'),
+      snippets: validSnippets,
+      expected: ['missing required Nginx contract: immutable Next assets'],
+    },
+    {
+      name: 'missing staging noindex',
+      source: valid,
+      snippets: {
+        ...validSnippets,
+        staging: validSnippets.staging.replace(
+          'add_header X-Robots-Tag "noindex, nofollow" always;',
+          '',
+        ),
+      },
+      expected: ['staging header snippet: missing required Nginx contract: staging noindex header'],
+    },
+    {
+      name: 'unsafe eval CSP capability',
+      source: valid,
+      snippets: {
+        production: validSnippets.production.replace(
+          "script-src 'self'",
+          "script-src 'self' 'unsafe-eval'",
+        ),
+        staging: validSnippets.staging,
+      },
+      expected: ['forbidden Nginx contract content: unsafe eval CSP capability'],
+    },
+    {
+      name: 'missing HSTS',
+      source: valid,
+      snippets: {
+        production: validSnippets.production.replace(
+          'add_header Strict-Transport-Security "max-age=31536000" always;',
+          '',
+        ),
+        staging: validSnippets.staging,
+      },
+      expected: ['production header snippet: missing required Nginx contract: one-year HSTS header'],
+    },
+    {
+      name: 'forbidden HSTS preload',
+      source: valid,
+      snippets: {
+        production: validSnippets.production.replace(
+          'max-age=31536000',
+          'max-age=31536000; includeSubDomains; preload',
+        ),
+        staging: validSnippets.staging,
+      },
+      expected: ['forbidden Nginx contract content: broad HSTS scope'],
+    },
+    {
+      name: 'hardcoded certificate path',
+      source: valid.replace(
+        'ssl_certificate {{PRODUCTION_CERTIFICATE}};',
+        'ssl_certificate /etc/ssl/private/example.pem;',
+      ),
+      snippets: validSnippets,
+      expected: ['forbidden Nginx contract content: hardcoded certificate path'],
+    },
+    {
+      name: 'location add_header without security include',
+      source: removeLocationInclude(valid, productionInclude),
+      snippets: validSnippets,
+      expected: ['production location ^~ /_next/static/ { declares add_header without security-header include'],
+    },
+    {
+      name: 'staging location loses X-Robots-Tag',
+      source: removeLocationInclude(valid, stagingInclude),
+      snippets: validSnippets,
+      expected: ['staging location ^~ /_next/static/ { declares add_header without security-header include and loses X-Robots-Tag'],
+    },
+    {
+      name: 'public try_files URI fallback',
+      source: valid.replaceAll(
+        'try_files $uri $uri/index.html =404;',
+        'try_files $uri $uri/index.html /404.html;',
+      ),
+      snippets: validSnippets,
+      expected: ['production public try_files must end in =404, not a URI fallback', 'staging public try_files must end in =404, not a URI fallback'],
+    },
+    {
+      name: 'trailing-slash matcher includes files',
+      source: valid.replaceAll('^/(?!_next(?:/|$))(?:.*/)?[^./]+$', '^/(?!_next(?:/|$)).+[^/]$'),
+      snippets: validSnippets,
+      expected: ['production trailing-slash matcher must exclude files and /_next/ routes', 'staging trailing-slash matcher must exclude files and /_next/ routes'],
+    },
+    {
+      name: 'trailing-slash matcher includes Next internals',
+      source: valid.replaceAll('(?!_next(?:/|$))', ''),
+      snippets: validSnippets,
+      expected: ['production trailing-slash matcher must exclude files and /_next/ routes', 'staging trailing-slash matcher must exclude files and /_next/ routes'],
+    },
+    {
+      name: 'trailing-slash redirect is not 301',
+      source: valid.replaceAll('return 301 $uri/$is_args$args;', 'return 308 $uri/$is_args$args;'),
+      snippets: validSnippets,
+      expected: ['production trailing-slash redirect must use status 301', 'staging trailing-slash redirect must use status 301'],
+    },
+    {
+      name: 'trailing-slash redirect drops query arguments',
+      source: valid.replaceAll('return 301 $uri/$is_args$args;', 'return 301 $uri/;'),
+      snippets: validSnippets,
+      expected: ['production trailing-slash redirect must preserve query arguments', 'staging trailing-slash redirect must preserve query arguments'],
+    },
+    {
+      name: 'CSP loses static Next inline script strategy',
+      source: valid,
+      snippets: {
+        production: validSnippets.production.replace("'unsafe-inline' https://mc.yandex.ru", 'https://mc.yandex.ru'),
+        staging: validSnippets.staging,
+      },
+      expected: ['production header snippet: missing required Nginx contract: static Next inline script policy'],
+    },
+    {
+      name: 'hardcoded upstream URL',
+      source: valid.replaceAll('{{LEADS_API_UPSTREAM}}', 'https://leads.internal.example'),
+      snippets: validSnippets,
+      expected: ['forbidden Nginx contract content: real http upstream'],
+    },
+    {
+      name: 'broken directive syntax',
+      source: valid.replace('charset utf-8;', 'charset utf-8'),
+      snippets: validSnippets,
+      expected: ['line 23: directive must end with ;, { or }'],
+    },
   ]
 
   const failures = []
-  for (const [name, source, snippets, expectedErrors] of cases) {
+  for (const { name, source, snippets, expected } of cases) {
     const errors = analyzeNginxContract(source, snippets)
-    if (errors.length !== expectedErrors) {
-      failures.push(`${name}: expected ${expectedErrors} errors, got ${errors.length}: ${errors.join('; ')}`)
+    const missing = expected.filter((finding) => !errors.includes(finding))
+    if (missing.length > 0 || (expected.length === 0 && errors.length > 0)) {
+      failures.push(
+        `${name}: missing intended findings [${missing.join('; ')}]; actual findings: ${errors.join('; ')}`,
+      )
       continue
     }
-    console.log(`Nginx contract self-test fixture "${name}": PASS (${errors.length} expected findings)`)
+    console.log(
+      `Nginx contract self-test fixture "${name}": PASS (${expected.length} intended findings proved)`,
+    )
   }
 
   if (failures.length > 0) {
