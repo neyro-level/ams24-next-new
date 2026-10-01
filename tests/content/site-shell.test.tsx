@@ -40,5 +40,9 @@ describe('site shell navigation', () => {
     expect(html).toContain('href="/"')
     expect(html).toContain('href="/keisy/"')
     expect(html).toContain('aria-current="page"')
+    expect(html).toMatch(/<nav[^>]*><div class="mx-auto w-full px-5 sm:px-6 max-w-site"><ol/)
+
+    const orderedListClass = html.match(/<ol class="([^"]+)"/)?.[1]
+    expect(orderedListClass).toBe('flex flex-wrap items-center gap-2 py-3 text-body-sm text-muted-foreground')
   })
 })
