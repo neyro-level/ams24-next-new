@@ -22,6 +22,7 @@ Updated: 2026-09-30
 | конкурентное и SEO-evidence | `research/COMPETITOR_SEO_BASELINE.md` |
 | external preflight: leads/legal/analytics/CAPTCHA/current URLs | `research/EXTERNAL_PREFLIGHT_EPIC_01_5.md` |
 | remediation baseline classification | `research/BASELINE_CLAIMS_REGISTER_CR_00_1.md` |
+| архитектурные решения с проверяемым evidence | `adr/` |
 
 ## Статус комплекта
 

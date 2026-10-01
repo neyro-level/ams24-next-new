@@ -39,6 +39,7 @@ const requiredPatterns = [
 
 const commonHeaderPatterns = [
   ['CSP header', /add_header\s+Content-Security-Policy\s+"/],
+  ['static Next inline script policy', /script-src\s+'self'\s+'unsafe-inline'\s+https:\/\/mc\.yandex\.ru;/],
   ['nosniff header', /add_header\s+X-Content-Type-Options\s+"nosniff"\s+always;/],
   ['frame policy header', /add_header\s+X-Frame-Options\s+"SAMEORIGIN"\s+always;/],
   ['referrer policy header', /add_header\s+Referrer-Policy\s+"strict-origin-when-cross-origin"\s+always;/],
@@ -50,6 +51,7 @@ const forbiddenPatterns = [
   ['hardcoded production path', /\/var\/www\/ams24\/releases\/[a-zA-Z0-9._-]+/],
   ['secret-like token', /\b(?:TOKEN|SECRET|PASSWORD|API_KEY|PRIVATE_KEY)\s*[:=]/i],
   ['legacy host-rebuilding redirect', /return\s+308\s+\$scheme:\/\/\$host\$1\/;/],
+  ['unsafe eval CSP capability', /(?:script-src|default-src)[^;]*'unsafe-eval'/],
 ]
 
 function stripComment(line) {
@@ -219,6 +221,8 @@ async function runSelfTest() {
     ['missing leads proxy', valid.replaceAll(/location = \/api\/leads \{[\s\S]*?  \}/g, 'location = /api/leads_removed { return 404; }'), validSnippets, 3],
     ['missing immutable asset cache', valid.replaceAll('public, max-age=31536000, immutable', 'public, max-age=60'), validSnippets, 1],
     ['missing staging noindex', valid, { ...validSnippets, staging: validSnippets.staging.replace('add_header X-Robots-Tag "noindex, nofollow" always;', '') }, 1],
+    ['missing static Next inline script policy', valid, { production: validSnippets.production.replace("'unsafe-inline' https://mc.yandex.ru", 'https://mc.yandex.ru'), staging: validSnippets.staging }, 1],
+    ['unsafe eval CSP capability', valid, { production: validSnippets.production.replace("script-src 'self'", "script-src 'self' 'unsafe-eval'"), staging: validSnippets.staging }, 2],
     ['missing location security include', valid.replace(new RegExp(`    ${productionInclude.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\r?\\n    add_header Cache-Control "public, max-age=31536000, immutable" always;`), '    add_header Cache-Control "public, max-age=31536000, immutable" always;'), validSnippets, 1],
     ['redirect rewrites file-like paths', valid.replaceAll('^/(?!_next(?:/|$))(?:.*/)?[^./]+$', '^(.+[^/])$').replaceAll('return 301 $uri/$is_args$args;', 'return 308 $scheme://$host$1/;'), validSnippets, 3],
     ['redirect drops query string', valid.replaceAll('return 301 $uri/$is_args$args;', 'return 301 $uri/;'), validSnippets, 1],

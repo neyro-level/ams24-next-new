@@ -413,6 +413,8 @@ Reusable UI emits semantic callbacks/events and does not own provider-specific b
 - No secrets in repository, static bundle or content.
 - No untrusted raw HTML or unchecked `dangerouslySetInnerHTML`.
 - Static CSP and security headers are owned by Nginx and tested against built output.
+  The narrow inline-script exception for the current static Next.js artifact is
+  governed by `docs/adr/0001-static-next-inline-script-csp.md`.
 - Production forbids `'unsafe-eval'` without an explicit documented exception.
 - Staging uses access restriction plus `X-Robots-Tag: noindex, nofollow`.
 - Legal pages and consent version are release blockers for PII forms.
