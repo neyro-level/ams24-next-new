@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import ReviewsPage, { metadata as reviewsMetadata } from '@/app/otzyvy/page'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
-import { staticRouteSkeletons } from '@/project/route-skeletons'
+import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 
 describe('reviews permission page', () => {
   it('keeps reviews hub noindex and hides reviews without source and permission', () => {

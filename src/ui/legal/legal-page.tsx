@@ -1,56 +1,13 @@
-import { buildNoindexMetadata } from '@/core/seo'
+import {
+  getLegalPage,
+  legalDraftVersion,
+  type LegalPageKind,
+} from '@/core/content/services/legal-pages'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const legalDraftVersion = 'legal-draft-2026-09-29'
-
-export type LegalPageKind = 'policy' | 'consent' | 'data-processing'
-
-const legalPages = {
-  policy: {
-    path: '/politika/',
-    title: 'Политика обработки данных',
-    h1: 'Политика обработки данных',
-    intent: 'показать место будущей утверждённой политики и не подменять юридический текст заглушкой',
-    requiredBeforeRelease: ['утверждённая редакция политики', 'реквизиты оператора', 'контакты для обращений'],
-  },
-  consent: {
-    path: '/soglasie/',
-    title: 'Согласие на обработку данных',
-    h1: 'Согласие на обработку данных',
-    intent: 'показать целевую страницу согласия для формы заявки до подключения отправки',
-    requiredBeforeRelease: ['утверждённая редакция согласия', 'состав полей заявки', 'сроки и цели обработки'],
-  },
-  'data-processing': {
-    path: '/obrabotka-dannyh/',
-    title: 'Обработка данных',
-    h1: 'Обработка данных',
-    intent: 'зафиксировать границы будущего описания обработки данных без юридических обещаний',
-    requiredBeforeRelease: ['утверждённый порядок обработки', 'основания обработки', 'роль AMS24 в сценарии заявки'],
-  },
-} as const satisfies Record<
-  LegalPageKind,
-  {
-    path: string
-    title: string
-    h1: string
-    intent: string
-    requiredBeforeRelease: readonly string[]
-  }
->
-
-export function buildLegalMetadata(kind: LegalPageKind) {
-  const page = legalPages[kind]
-
-  return buildNoindexMetadata({
-    title: `${page.title} — черновая страница`,
-    description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию и не индексируется до финального согласования.`,
-    canonicalPath: page.path,
-  })
-}
-
 export function LegalPage({ kind }: { kind: LegalPageKind }) {
-  const page = legalPages[kind]
+  const page = getLegalPage(kind)
 
   return (
     <main>
@@ -108,4 +65,3 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
     </main>
   )
 }
-

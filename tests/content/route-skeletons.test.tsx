@@ -9,10 +9,10 @@ import {
   buildSkeletonMetadata,
   dynamicRouteTypes,
   staticRouteSkeletons,
-} from '@/project/route-skeletons'
+} from '@/core/content/services/route-skeletons'
 import { localContent } from '@/project/content/local-content'
 import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
-import { buildDetailFixtureMetadata, detailFixtures } from '@/project/detail-fixtures'
+import { buildDetailFixtureMetadata, detailFixtures } from '@/core/content/services/detail-fixtures'
 import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 
 const routeFileByPath = new Map([

@@ -11,7 +11,7 @@ import { metadata as consentMetadata } from '@/app/soglasie/page'
 import { redirects } from '@/project/redirects'
 import { localContent } from '@/project/content/local-content'
 import { siteOrigin } from '@/project/site'
-import { buildLegalMetadata } from '@/ui/legal/legal-page'
+import { buildLegalMetadata } from '@/core/content/services/legal-pages'
 
 const indexableStaticPaths = ['/', '/impuls/', '/pixel/', '/zashchita/'] as const
 const guardedStaticPaths = [

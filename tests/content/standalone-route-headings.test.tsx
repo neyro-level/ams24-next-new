@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
 import ContactsPage from '@/app/kontakty/page'
-import { getStaticRouteSkeleton } from '@/project/route-skeletons'
+import { getStaticRouteSkeleton } from '@/core/content/services/route-skeletons'
 import { LegalPage } from '@/ui/legal/legal-page'
 import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
 

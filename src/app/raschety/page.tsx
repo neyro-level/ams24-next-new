@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { proofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { getProofEvidenceInventory } from '@/core/content/services/proof-inventory'
 import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
@@ -13,7 +13,7 @@ export const metadata = buildNoindexMetadata({
   canonicalPath: '/raschety/',
 })
 
-const calculationItems = proofEvidenceInventory.filter((item) => item.kind === 'calculation')
+const calculationItems = getProofEvidenceInventory().filter((item) => item.kind === 'calculation')
 
 const assumptionGroups = [
   'ниша, регион и сезонность спроса',

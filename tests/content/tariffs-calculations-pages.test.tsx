@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import CalculationsPage, { metadata as calculationsMetadata } from '@/app/raschety/page'
 import TariffsPage, { metadata as tariffsMetadata } from '@/app/tarify/page'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
-import { staticRouteSkeletons } from '@/project/route-skeletons'
+import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 
 describe('tariffs and calculations pages', () => {
   it('keeps tariff page noindex and tied to hidden tariff inventory until commercial rules are approved', () => {

@@ -1,6 +1,6 @@
 import { Button } from '@/ui/primitives/button'
 
-import { getLeadFormAvailability, type LeadContext } from '@/core/content/services/lead-contract'
+import { getLeadFormAvailability, type LeadContext } from '@/core/leads'
 
 type LeadFormProps = {
   context: LeadContext
@@ -113,4 +113,3 @@ export function LeadForm({
     </form>
   )
 }
-

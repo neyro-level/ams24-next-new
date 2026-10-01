@@ -1,11 +1,12 @@
 import {
   buildArticleEditorialMetadata,
-  representativeArticleContract,
+  getRepresentativeArticleContract,
 } from '@/core/content/services/editorial-contracts'
 import { getContentRepository } from '@/core/content/services/repository'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
 
 export const dynamicParams = false
+const representativeArticleContract = getRepresentativeArticleContract()
 
 export async function generateStaticParams() {
   return (await getContentRepository().getArticles())

@@ -14,7 +14,7 @@ import NotFound from '@/app/not-found'
 import PolicyPage from '@/app/politika/page'
 import ConsentPage from '@/app/soglasie/page'
 import DataProcessingPage from '@/app/obrabotka-dannyh/page'
-import { staticRouteSkeletons } from '@/project/route-skeletons'
+import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
 
 const forbiddenVisibleCopy = [

@@ -10,7 +10,7 @@ import { createContentRepository } from '@/core/content/repository'
 import { buildSitemapPaths } from '@/core/seo'
 import { localContent } from '@/project/content/local-content'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
-import { staticRouteSkeletons } from '@/project/route-skeletons'
+import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 
 type ProofHub = {
   path: string

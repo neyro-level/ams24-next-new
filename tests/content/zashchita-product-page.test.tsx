@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
 import ZashchitaProductPage, { generateMetadata } from '@/app/zashchita/page'
-import { staticRouteSkeletons } from '@/project/route-skeletons'
+import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 
 describe('/zashchita/ product page', () => {
   it('has protection-risk SEO metadata and is no longer an unfinished skeleton', async () => {

@@ -5,7 +5,7 @@ import ContactsPage, { metadata as contactsMetadata } from '@/app/kontakty/page'
 import PolicyPage, { metadata as policyMetadata } from '@/app/politika/page'
 import ConsentPage, { metadata as consentMetadata } from '@/app/soglasie/page'
 import DataProcessingPage, { metadata as dataProcessingMetadata } from '@/app/obrabotka-dannyh/page'
-import { analyticsProviderStatus, createAnalyticsEvent, trackAnalyticsEvent } from '@/project/analytics'
+import { analyticsProviderStatus, createAnalyticsEvent, trackAnalyticsEvent } from '@/core/analytics'
 import {
   buildDisabledLeadRequest,
   buildLeadRequest,
@@ -16,7 +16,7 @@ import {
   leadRequestBoundary,
   validateLeadRequestPayload,
   validateLeadDraft,
-} from '@/project/lead-contract'
+} from '@/core/leads'
 
 describe('lead form, legal guard and analytics hardening', () => {
   it('keeps contact form static-safe and disabled until API/legal decisions are approved', () => {

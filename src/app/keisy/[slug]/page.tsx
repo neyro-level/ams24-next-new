@@ -1,6 +1,6 @@
 import {
   buildDetailFixtureMetadata,
-  detailFixtures,
+  getDetailFixtures,
   getDetailFixture,
 } from '@/core/content/services/detail-fixtures'
 import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
@@ -8,7 +8,7 @@ import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return detailFixtures
+  return getDetailFixtures()
     .filter((fixture) => fixture.type === 'case')
     .map((fixture) => ({ slug: fixture.slug }))
 }

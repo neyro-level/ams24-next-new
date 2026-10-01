@@ -1,11 +1,12 @@
 import {
   buildKnowledgeEditorialMetadata,
-  representativeKnowledgeContract,
+  getRepresentativeKnowledgeContract,
 } from '@/core/content/services/editorial-contracts'
 import { getContentRepository } from '@/core/content/services/repository'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
 
 export const dynamicParams = false
+const representativeKnowledgeContract = getRepresentativeKnowledgeContract()
 
 export async function generateStaticParams() {
   return (await getContentRepository().getKnowledgeArticles())

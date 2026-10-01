@@ -7,11 +7,14 @@ import { localContent } from '@/project/content/local-content'
 import {
   buildArticleEditorialMetadata,
   buildKnowledgeEditorialMetadata,
-  representativeArticleContract,
-  representativeKnowledgeContract,
-} from '@/project/editorial-contracts'
+  getRepresentativeArticleContract,
+  getRepresentativeKnowledgeContract,
+} from '@/core/content/services/editorial-contracts'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
+
+const representativeArticleContract = getRepresentativeArticleContract()
+const representativeKnowledgeContract = getRepresentativeKnowledgeContract()
 
 describe('article and knowledge editorial contracts', () => {
   it('keeps article and KB roles distinct', () => {

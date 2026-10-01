@@ -2,9 +2,9 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
 import CasesPage, { metadata as casesMetadata } from '@/app/keisy/page'
-import { buildDetailFixtureMetadata, getDetailFixture } from '@/project/detail-fixtures'
+import { buildDetailFixtureMetadata, getDetailFixture } from '@/core/content/services/detail-fixtures'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
-import { staticRouteSkeletons } from '@/project/route-skeletons'
+import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 
 describe('cases evidence pages', () => {

@@ -6,7 +6,7 @@ import {
   leadConsentTargets,
   leadRequestBoundary,
   validateLeadRequestPayload,
-} from '@/project/lead-contract'
+} from '@/core/leads'
 
 const validPayload = {
   name: 'Анна',

@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
 import ImpulsProductPage, { generateMetadata } from '@/app/impuls/page'
-import { staticRouteSkeletons } from '@/project/route-skeletons'
+import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 
 describe('/impuls/ product page', () => {
   it('has unique indexable SEO metadata and is no longer an unfinished skeleton', async () => {

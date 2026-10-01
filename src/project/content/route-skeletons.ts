@@ -1,5 +1,3 @@
-import { buildNoindexMetadata } from '@/core/seo'
-
 export type RouteSkeleton = {
   path: string
   title: string
@@ -72,21 +70,3 @@ export const dynamicRouteTypes = [
   '/stati/[slug]/',
   '/baza-znaniy/[product]/[slug]/',
 ] as const
-
-export function getStaticRouteSkeleton(path: string): RouteSkeleton {
-  const route = staticRouteSkeletons.find((item) => item.path === path)
-
-  if (!route) {
-    throw new Error(`Unknown static route skeleton: ${path}`)
-  }
-
-  return route
-}
-
-export function buildSkeletonMetadata(route: RouteSkeleton) {
-  return buildNoindexMetadata({
-    title: `${route.title} — скоро`,
-    description: `${route.role}: ${route.intent}. Страница готовится к наполнению.`,
-    canonicalPath: route.path,
-  })
-}

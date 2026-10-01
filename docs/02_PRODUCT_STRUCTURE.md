@@ -388,6 +388,8 @@ Content Repository methods; routes and UI do not read repository arrays.
 
 Route skeleton во время разработки имеет `noindex` либо не включается в published content/sitemap.
 
+Skeleton, representative fixture и draft legal data принадлежат `src/project/content/`, но routes и UI получают их только через типизированные `src/core/content/services/*`. Lead request/transport принадлежит `src/core/leads/`, analytics event contract — `src/core/analytics/`.
+
 ## 17. Open Decisions
 
 - Финальное коммерческое подназвание продукта «Импульс».

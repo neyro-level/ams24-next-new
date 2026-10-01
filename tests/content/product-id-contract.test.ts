@@ -4,9 +4,9 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 import { productIdSchema, productSchema, type ProductId } from '@/core/content/schemas'
-import { analyticsProductSchema } from '@/project/analytics'
+import { analyticsProductSchema } from '@/core/analytics'
 import { initialEditorialBriefs } from '@/project/editorial-briefs'
-import { leadContextSchema } from '@/project/lead-contract'
+import { leadContextSchema } from '@/core/leads'
 
 const productIds: ProductId[] = ['impuls', 'pixel', 'zashchita']
 
@@ -31,11 +31,11 @@ describe('canonical ProductId contract', () => {
     const files = [
       'src/core/content/schemas/common.ts',
       'src/core/content/schemas/entities.ts',
-      'src/project/analytics.ts',
-      'src/project/detail-fixtures.ts',
+      'src/core/analytics/index.ts',
+      'src/core/leads/index.ts',
+      'src/project/content/detail-fixtures.ts',
       'src/project/editorial-briefs.ts',
       'src/project/editorial-contracts.ts',
-      'src/project/lead-contract.ts',
       'src/project/product-claims.ts',
       'src/project/proof-inventory.ts',
     ]

@@ -5,7 +5,7 @@ import {
   analyticsForbiddenPayloadKeys,
   createAnalyticsEvent,
   trackAnalyticsEvent,
-} from '@/project/analytics'
+} from '@/core/analytics'
 
 const allowedEvents = [
   {

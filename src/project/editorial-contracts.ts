@@ -1,5 +1,4 @@
 import type { ProductId, RichTextDTO } from '@/core/content/schemas'
-import { buildNoindexMetadata } from '@/core/seo'
 import type { NavigationLink } from '@/project/navigation'
 
 type SourceLedgerItem = {
@@ -152,20 +151,4 @@ export const representativeKnowledgeContract: KnowledgeEditorialContract = {
 Передайте вводные через [форму расчёта](/#lead-form).
 `,
   },
-}
-
-export function buildArticleEditorialMetadata(contract: ArticleEditorialContract) {
-  return buildNoindexMetadata({
-    title: `${contract.h1} — статья`,
-    description: contract.jtbd,
-    canonicalPath: `/stati/${contract.slug}/`,
-  }, { type: 'article' })
-}
-
-export function buildKnowledgeEditorialMetadata(contract: KnowledgeEditorialContract) {
-  return buildNoindexMetadata({
-    title: `${contract.h1} — база знаний`,
-    description: contract.expectedOutcome,
-    canonicalPath: `/baza-znaniy/${contract.product}/${contract.slug}/`,
-  }, { type: 'article' })
 }
