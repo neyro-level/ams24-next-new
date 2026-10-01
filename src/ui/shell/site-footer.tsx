@@ -31,9 +31,9 @@ export async function SiteFooter() {
                 <ul className="mt-4 space-y-3">
                   {group.links.map((link) => (
                     <li key={link.path}>
-                      <a className="text-body-sm text-surface-dark-muted transition hover:text-surface-dark-foreground" href={link.path}>
+                      <Link className="text-body-sm text-surface-dark-muted transition hover:text-surface-dark-foreground" href={link.path}>
                         {link.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

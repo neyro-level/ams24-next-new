@@ -31,8 +31,8 @@ describe('lead form, legal guard and analytics hardening', () => {
     expect(html).toContain('aria-label="Форма расчёта"')
     expect(html).toContain('action="/api/leads"')
     expect(html).toContain('disabled=""')
-    expect(html).toContain('href="/soglasie/"')
-    expect(html).toContain('href="/politika/"')
+    expect(html).toContain('href="/soglasie"')
+    expect(html).toContain('href="/politika"')
     expect(html).toContain(leadFormRuntime.disabledReason)
   })
 

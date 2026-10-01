@@ -32,9 +32,9 @@ export function Breadcrumbs({ items = [] }: BreadcrumbsProps) {
                     {item.label}
                   </span>
                 ) : (
-                  <a className="transition hover:text-foreground" href={item.path}>
+                  <Link className="transition hover:text-foreground" href={item.path}>
                     {item.label}
-                  </a>
+                  </Link>
                 )}
               </li>
             )

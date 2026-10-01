@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import type {
   ProductFaq,
   ProductStep,
@@ -46,10 +48,10 @@ export function ProductHeroSection({
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="xl">
-                <a href={content.primary.href}>{content.primary.label}</a>
+                <Link href={content.primary.href}>{content.primary.label}</Link>
               </Button>
               <Button asChild size="xl" variant="outlineDark">
-                <a href={content.secondary.href}>{content.secondary.label}</a>
+                <Link href={content.secondary.href}>{content.secondary.label}</Link>
               </Button>
             </div>
           </div>

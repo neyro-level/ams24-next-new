@@ -20,7 +20,7 @@ function renderInline(text: string) {
           {label}
         </Link>
       ) : (
-        <a className={className} href={href} key={`link-${match.index}`} rel="noopener">
+        <a className={className} href={href} key={`link-${match.index}`} rel="noopener noreferrer">
           {label}
         </a>
       ),

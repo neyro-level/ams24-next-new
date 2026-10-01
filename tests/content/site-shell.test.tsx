@@ -27,7 +27,8 @@ describe('site shell navigation', () => {
     expect(footer).toMatch(new RegExp(`data-size="xl"[^>]+href="${primaryCta.path}"`))
 
     for (const route of firstLevelRoutes) {
-      expect(shell).toContain(`href="${route.path}"`)
+      const standaloneRenderPath = route.path === '/' ? '/' : route.path.replace(/\/$/, '')
+      expect(shell).toContain(`href="${standaloneRenderPath}"`)
     }
 
     for (const link of [...productLinks, ...headerLinks]) {
@@ -60,7 +61,7 @@ describe('site shell navigation', () => {
 
     expect(html).toContain('aria-label="Хлебные крошки"')
     expect(html).toContain('href="/"')
-    expect(html).toContain('href="/keisy/"')
+    expect(html).toContain('href="/keisy"')
     expect(html).toContain('aria-current="page"')
     expect(html).toMatch(/<nav[^>]*><div class="mx-auto w-full px-5 sm:px-6 max-w-site"><ol/)
 

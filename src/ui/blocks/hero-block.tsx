@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import type { PageBlockDTO } from '@/core/content/schemas'
 import type { BlockRenderContext } from '@/ui/blocks/context'
 import { Button } from '@/ui/primitives/button'
@@ -17,7 +19,7 @@ export function HeroBlock({ block }: { block: HeroBlockDTO; context: BlockRender
         {block.lead ? <p className="mt-7 max-w-3xl text-body-lg text-surface-dark-muted">{block.lead}</p> : null}
         {block.cta ? (
           <Button asChild className="mt-9" size="xl">
-            <a href={`#${block.cta.id}`}>{block.cta.label}</a>
+            <Link href={`#${block.cta.id}`}>{block.cta.label}</Link>
           </Button>
         ) : null}
       </Container>

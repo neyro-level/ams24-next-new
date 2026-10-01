@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { Button } from '@/ui/primitives/button'
 import { Checkbox } from '@/ui/primitives/checkbox'
 import { Input } from '@/ui/primitives/input'
@@ -111,13 +113,13 @@ export function LeadForm({
         />
         <span>
           Я принимаю{' '}
-          <a className="underline underline-offset-4" href={availability.consentTargets.consent}>
+          <Link className="underline underline-offset-4" href={availability.consentTargets.consent}>
             согласие
-          </a>{' '}
+          </Link>{' '}
           и{' '}
-          <a className="underline underline-offset-4" href={availability.consentTargets.policy}>
+          <Link className="underline underline-offset-4" href={availability.consentTargets.policy}>
             политику обработки данных
-          </a>
+          </Link>
           .
         </span>
       </Label>

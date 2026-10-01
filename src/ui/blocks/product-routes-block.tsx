@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import type { PageBlockDTO } from '@/core/content/schemas'
 import type { BlockRenderContext } from '@/ui/blocks/context'
 import { Button } from '@/ui/primitives/button'
@@ -44,7 +46,7 @@ export function ProductRoutesBlock({
                 </CardHeader>
                 <CardFooter>
                   <Button asChild variant="outline" className="h-11 justify-start px-4">
-                    <a href={product.path}>{product.primaryCta.label}</a>
+                    <Link href={product.path}>{product.primaryCta.label}</Link>
                   </Button>
                 </CardFooter>
               </article>

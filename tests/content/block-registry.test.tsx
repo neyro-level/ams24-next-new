@@ -77,7 +77,7 @@ describe('executable page block registry', () => {
 
     expect(blocks.map((block) => block.blockType)).toEqual(blockTypes)
     expect(html).toContain('Импульс')
-    expect(html).toContain('/pixel/')
+    expect(html).toContain('href="/pixel"')
     expect(html).toContain('data-rich-text')
     expect(html).toContain('data-form-id')
   })
@@ -118,7 +118,7 @@ describe('executable page block registry', () => {
 
     expect(html).toContain('href="/impuls"')
     expect(html).toContain('href="https://example.com/path"')
-    expect(html).toContain('rel="noopener"')
+    expect(html).toContain('rel="noopener noreferrer"')
   })
 
   it('rejects malformed or unsupported links during content parsing', () => {
