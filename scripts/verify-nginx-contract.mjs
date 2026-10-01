@@ -281,6 +281,23 @@ function validateTlsRoles(source) {
   return errors
 }
 
+function validateLeadIsolation(source) {
+  const errors = []
+  const servers = extractBlocks(source, /^server\s+\{/).filter((block) => /listen\s+443\s+ssl;/.test(block))
+  const production = servers.find((block) => block.includes('server_name {{PRODUCTION_SERVER_NAME}};')) ?? ''
+  const staging = servers.find((block) => block.includes('server_name {{STAGING_SERVER_NAME}};')) ?? ''
+  const leadLocation = (block) => extractBlocks(block, /^\s*location\s+=\s+\/api\/leads\s+\{/)[0] ?? ''
+  const productionLead = leadLocation(production)
+  const stagingLead = leadLocation(staging)
+
+  if (!productionLead.includes('proxy_pass {{LEADS_API_UPSTREAM}};')) errors.push('production leads proxy must use production upstream placeholder')
+  if (!stagingLead.includes('proxy_pass {{STAGING_LEADS_API_UPSTREAM}};')) errors.push('staging leads proxy must use distinct staging upstream placeholder')
+  if (!staging.includes(stagingInclude) || (stagingLead.includes('add_header') && !stagingLead.includes(stagingInclude))) {
+    errors.push('staging leads proxy must preserve staging noindex header inheritance')
+  }
+  return errors
+}
+
 function analyzeNginxContract(source, snippets) {
   const errors = findBraceErrors(source)
 
@@ -303,6 +320,7 @@ function analyzeNginxContract(source, snippets) {
   errors.push(...validateRouteSemantics(source))
   errors.push(...validateCacheAndCompression(source))
   errors.push(...validateTlsRoles(source))
+  errors.push(...validateLeadIsolation(source))
 
   const serverBlockCount = [...source.matchAll(/^server\s+\{/gm)].length
   if (serverBlockCount !== 4) {
@@ -340,6 +358,12 @@ async function runSelfTest() {
 
   const cases = [
     { name: 'valid baseline', source: valid, snippets: validSnippets, expected: [] },
+    {
+      name: 'staging leads share production upstream',
+      source: valid.replace('proxy_pass {{STAGING_LEADS_API_UPSTREAM}};', 'proxy_pass {{LEADS_API_UPSTREAM}};'),
+      snippets: validSnippets,
+      expected: ['staging leads proxy must use distinct staging upstream placeholder'],
+    },
     {
       name: 'missing leads proxy',
       source: valid.replaceAll(

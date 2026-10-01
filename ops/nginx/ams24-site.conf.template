@@ -101,7 +101,7 @@ server {
   include {{NGINX_SNIPPETS_DIR}}/staging-security-headers.conf;
 
   location = /api/leads {
-    proxy_pass {{LEADS_API_UPSTREAM}};
+    proxy_pass {{STAGING_LEADS_API_UPSTREAM}};
     proxy_http_version 1.1;
     proxy_set_header Host $proxy_host;
     proxy_set_header X-Forwarded-Host $host;

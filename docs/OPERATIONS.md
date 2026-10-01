@@ -30,7 +30,8 @@ placeholders, not defaults.
 | `RELEASE_ID` | UTC `YYYYMMDDTHHMMSSZ-<12-char-sha>` |
 | `PRODUCTION_SERVER_NAME` / `STAGING_SERVER_NAME` | approved host identities |
 | certificate/key and staging password-file paths | server-held paths, never repository values |
-| `LEADS_API_UPSTREAM` | server-held upstream value |
+| `LEADS_API_UPSTREAM` | production-only server-held lead destination |
+| `STAGING_LEADS_API_UPSTREAM` | distinct isolated/marked staging destination; never the production value |
 | `NGINX_SNIPPETS_DIR` | rendered snippet directory |
 | `SMOKE_URL` | HTTPS base URL without credentials, query or fragment |
 
@@ -62,7 +63,10 @@ identity and retention policy are approved.
 4. Confirm staging Basic Auth is enabled and its password file is server-held.
 5. Confirm staging returns `X-Robots-Tag: noindex, nofollow` and production does
    not inherit that directive.
-6. Run `nginx -t`. Do not reload when validation fails.
+6. Resolve production and staging lead upstreams independently. Stop if they
+   are equal, staging isolation cannot be proved, or the staging proxy would
+   lose inherited noindex headers; never fall back to production.
+7. Run `nginx -t`. Do not reload when validation fails.
 
 TLS certificates and upstream credentials are provisioned through the approved
 server/Secret Master route during an explicit release; this repository neither
