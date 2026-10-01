@@ -1,14 +1,8 @@
-import {
-  getLegalPage,
-  legalDraftVersion,
-  type LegalPageKind,
-} from '@/core/content/services/legal-pages'
+import type { LegalPageDTO } from '@/core/content/services/legal-pages'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export function LegalPage({ kind }: { kind: LegalPageKind }) {
-  const page = getLegalPage(kind)
-
+export function LegalPage({ page }: { page: LegalPageDTO }) {
   return (
     <main>
       <Section spacing="hero" className="bg-surface-dark text-surface-dark-foreground">
@@ -35,7 +29,7 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
                 </div>
                 <div>
                   <dt className="font-semibold text-foreground">Версия</dt>
-                  <dd className="mt-1">{legalDraftVersion}</dd>
+                  <dd className="mt-1">{page.version}</dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-foreground">Адрес</dt>

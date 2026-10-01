@@ -1,8 +1,10 @@
-import { buildLegalMetadata } from '@/core/content/services/legal-pages'
+import { buildLegalMetadata, getLegalPage } from '@/core/content/services/legal-pages'
 import { LegalPage } from '@/ui/legal/legal-page'
 
-export const metadata = buildLegalMetadata('consent')
+const page = getLegalPage('consent')
+
+export const metadata = buildLegalMetadata(page)
 
 export default function ConsentPage() {
-  return <LegalPage kind="consent" />
+  return <LegalPage page={page} />
 }

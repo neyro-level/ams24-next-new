@@ -5,17 +5,20 @@ import {
 } from '@/project/content/legal-pages'
 
 export type LegalPageKind = keyof typeof legalPages
-export type LegalPageDTO = (typeof legalPages)[LegalPageKind]
-
-export const legalDraftVersion = projectLegalDraftVersion
+export type LegalPageDTO = Readonly<
+  (typeof legalPages)[LegalPageKind] & {
+    version: string
+  }
+>
 
 export function getLegalPage(kind: LegalPageKind): LegalPageDTO {
-  return legalPages[kind]
+  return {
+    ...legalPages[kind],
+    version: projectLegalDraftVersion,
+  }
 }
 
-export function buildLegalMetadata(kind: LegalPageKind) {
-  const page = getLegalPage(kind)
-
+export function buildLegalMetadata(page: LegalPageDTO) {
   return buildNoindexMetadata({
     title: `${page.title} — черновая страница`,
     description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию и не индексируется до финального согласования.`,

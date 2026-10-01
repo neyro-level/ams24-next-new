@@ -1,8 +1,10 @@
-import { buildLegalMetadata } from '@/core/content/services/legal-pages'
+import { buildLegalMetadata, getLegalPage } from '@/core/content/services/legal-pages'
 import { LegalPage } from '@/ui/legal/legal-page'
 
-export const metadata = buildLegalMetadata('data-processing')
+const page = getLegalPage('data-processing')
+
+export const metadata = buildLegalMetadata(page)
 
 export default function DataProcessingPage() {
-  return <LegalPage kind="data-processing" />
+  return <LegalPage page={page} />
 }

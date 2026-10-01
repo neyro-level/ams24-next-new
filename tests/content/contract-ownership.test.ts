@@ -51,4 +51,11 @@ describe('T2.6 contract ownership', () => {
       }
     }
   })
+
+  it('keeps legal content lookup and metadata outside the UI template', () => {
+    const source = readFileSync('src/ui/legal/legal-page.tsx', 'utf8')
+
+    expect(source).toContain('page: LegalPageDTO')
+    expect(source).not.toMatch(/getLegalPage|buildLegalMetadata|legalDraftVersion|@\/project\//)
+  })
 })

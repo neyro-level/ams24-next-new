@@ -11,7 +11,7 @@ import { metadata as consentMetadata } from '@/app/soglasie/page'
 import { redirects } from '@/project/redirects'
 import { localContent } from '@/project/content/local-content'
 import { siteOrigin } from '@/project/site'
-import { buildLegalMetadata } from '@/core/content/services/legal-pages'
+import { buildLegalMetadata, getLegalPage } from '@/core/content/services/legal-pages'
 
 const indexableStaticPaths = ['/', '/impuls/', '/pixel/', '/zashchita/'] as const
 const guardedStaticPaths = [
@@ -40,9 +40,9 @@ describe('final static SEO/security hardening', () => {
 
   it('keeps legal and contact routes noindex until external approvals are supplied', () => {
     expect(contactsMetadata.robots).toMatchObject({ index: false, follow: true })
-    expect(policyMetadata).toEqual(buildLegalMetadata('policy'))
-    expect(consentMetadata).toEqual(buildLegalMetadata('consent'))
-    expect(dataProcessingMetadata).toEqual(buildLegalMetadata('data-processing'))
+    expect(policyMetadata).toEqual(buildLegalMetadata(getLegalPage('policy')))
+    expect(consentMetadata).toEqual(buildLegalMetadata(getLegalPage('consent')))
+    expect(dataProcessingMetadata).toEqual(buildLegalMetadata(getLegalPage('data-processing')))
 
     for (const metadata of [policyMetadata, consentMetadata, dataProcessingMetadata]) {
       expect(metadata.robots).toMatchObject({ index: false, follow: true })
