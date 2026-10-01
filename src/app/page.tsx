@@ -154,7 +154,7 @@ function ProductRoutesSection({ products }: { products: readonly HomeProduct[] }
               key={product.id}
             >
               <p className="text-label font-bold uppercase text-primary">{product.name}</p>
-              <h2 className="mt-5 font-display text-h3 font-extrabold text-foreground">{product.shortName}</h2>
+              <h3 className="mt-5 font-display text-h3 font-extrabold text-foreground">{product.shortName}</h3>
               <p className="mt-4 text-body text-muted-foreground">{productRouteSummaries[product.id]}</p>
               <div className="mt-6 rounded-card bg-surface-muted p-4 text-body-sm text-muted-foreground">
                 Подходит, когда нужна понятная проверка применимости, входных данных и следующего
@@ -208,7 +208,7 @@ function ProofPreviewSection() {
           {proofPreviews.map((proof) => (
             <article className="rounded-card border border-border bg-surface-elevated p-6 shadow-card" key={proof.title}>
               <p className="text-label font-bold uppercase text-primary">Материал</p>
-              <h2 className="mt-5 font-display text-h3 font-bold">{proof.title}</h2>
+              <h3 className="mt-5 font-display text-h3 font-bold">{proof.title}</h3>
               <p className="mt-4 text-body text-muted-foreground">{proof.text}</p>
             </article>
           ))}
@@ -256,7 +256,7 @@ function HomeLeadSection() {
               персональные данные до финального подключения.
             </p>
           </div>
-          <LeadForm context={{ product: 'site', route: '/', ctaId: 'home-calculation' }} />
+          <LeadForm context={{ product: 'site', route: '/', ctaId: 'home-calculation' }} headingLevel="h3" />
         </div>
       </Container>
     </Section>

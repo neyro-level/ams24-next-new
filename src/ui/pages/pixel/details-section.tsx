@@ -82,7 +82,7 @@ export function PixelDataBoundarySection({
               <p className="text-label font-bold uppercase text-primary">
                 Граница
               </p>
-              <h2 className="mt-5 font-display text-h3 font-bold">{item}</h2>
+              <h3 className="mt-5 font-display text-h3 font-bold">{item}</h3>
             </article>
           ))}
         </div>

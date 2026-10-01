@@ -113,9 +113,9 @@ export function ProductStepsSection({
               <p className="text-label font-bold uppercase text-primary">
                 Шаг 0{index + 1}
               </p>
-              <h2 className="mt-5 font-display text-h3 font-bold">
+              <h3 className="mt-5 font-display text-h3 font-bold">
                 {step.title}
-              </h2>
+              </h3>
               <p className="mt-4 text-body text-muted-foreground">
                 {step.text}
               </p>
@@ -146,9 +146,9 @@ export function ProductFaqSection({
               className="rounded-card border border-border bg-surface-elevated p-5 shadow-card"
               key={item.question}
             >
-              <h2 className="font-display text-h3 font-bold">
+              <h3 className="font-display text-h3 font-bold">
                 {item.question}
-              </h2>
+              </h3>
               <p className="mt-4 text-body-sm text-muted-foreground">
                 {item.answer}
               </p>
@@ -200,6 +200,7 @@ export function ProductLeadSection({ content }: { content: LeadContent }) {
               context={content.context}
               title={content.formTitle}
               description={content.formDescription}
+              headingLevel="h3"
             />
           ) : (
             <div

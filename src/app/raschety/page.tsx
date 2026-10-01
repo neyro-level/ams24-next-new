@@ -52,7 +52,7 @@ export default function CalculationsPage() {
               <aside aria-label="Статус расчётных примеров">
                 <CardHeader>
                   <p className="text-label font-bold uppercase text-surface-dark-faint">Проверка условий</p>
-                  <CardTitle asChild><h2>Скрыто до утверждения</h2></CardTitle>
+                  <CardTitle asChild><h3>Скрыто до утверждения</h3></CardTitle>
                   <CardDescription asChild>
                     <p>Расчётные примеры остаются скрыты, пока не утверждены коммерческие правила и ограничения.</p>
                   </CardDescription>
@@ -76,7 +76,7 @@ export default function CalculationsPage() {
                 <article>
                   <CardHeader>
                     <p className="text-label font-bold uppercase text-primary">Допущение</p>
-                    <CardTitle asChild><h2>{item}</h2></CardTitle>
+                    <CardTitle asChild><h3>{item}</h3></CardTitle>
                   </CardHeader>
                 </article>
               </Card>
@@ -97,7 +97,7 @@ export default function CalculationsPage() {
               <Card asChild key={item.id}>
                 <article>
                   <CardHeader>
-                    <CardTitle asChild><h2>{item.title}</h2></CardTitle>
+                    <CardTitle asChild><h3>{item.title}</h3></CardTitle>
                     <CardDescription asChild><p>{item.hiddenReason}</p></CardDescription>
                     <p className="text-caption text-muted-foreground">
                       Статус: скрыто до утверждения коммерческих правил и ограничений.

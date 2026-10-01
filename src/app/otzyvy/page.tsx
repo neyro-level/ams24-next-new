@@ -57,7 +57,7 @@ export default function ReviewsPage() {
                 <article>
                   <CardHeader>
                     <p className="text-label font-bold uppercase text-primary">{item.releaseMinimumSlot}</p>
-                    <CardTitle asChild><h2>{item.title}</h2></CardTitle>
+                    <CardTitle asChild><h3>{item.title}</h3></CardTitle>
                     <CardDescription asChild><p>{item.hiddenReason}</p></CardDescription>
                   </CardHeader>
                   <CardContent>

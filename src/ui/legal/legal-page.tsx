@@ -43,7 +43,7 @@ export function LegalPage({ page }: { page: LegalPageDTO }) {
               <p className="text-label font-bold uppercase text-primary">Назначение страницы</p>
               <h2 className="mt-5 font-display text-h2 font-extrabold">Что уже можно проверять</h2>
               <p className="mt-5 text-body text-muted-foreground">{page.intent}.</p>
-              <h2 className="mt-8 font-display text-h3 font-bold">Что нужно до публичного релиза</h2>
+              <h3 className="mt-8 font-display text-h3 font-bold">Что нужно до публичного релиза</h3>
               <ul className="mt-4 space-y-3 text-body text-muted-foreground">
                 {page.requiredBeforeRelease.map((item) => (
                   <li key={item}>• {item}</li>

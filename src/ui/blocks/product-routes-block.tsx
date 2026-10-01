@@ -36,7 +36,7 @@ export function ProductRoutesBlock({
                 <CardHeader>
                   <p className="text-label font-bold uppercase text-primary">{product.name}</p>
                   <CardTitle asChild>
-                    <h2>{product.shortName}</h2>
+                    <h3>{product.shortName}</h3>
                   </CardTitle>
                   <CardDescription asChild>
                     <p>{product.promise}</p>

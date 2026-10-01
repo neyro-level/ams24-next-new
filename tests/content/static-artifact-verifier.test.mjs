@@ -87,4 +87,13 @@ describe('static artifact verifier', () => {
 
     expect(verifyStaticArtifact(root).join('\n')).toContain('must contain exactly one <h1>; found 2')
   })
+
+  it('fails when any HTML page has no h1', async () => {
+    const root = await createFixture()
+    const file = path.join(root, 'hidden', 'index.html')
+    const source = await readFile(file, 'utf8')
+    await writeCompressed(file, source.replace('<h1>Title</h1>', ''))
+
+    expect(verifyStaticArtifact(root).join('\n')).toContain('must contain exactly one <h1>; found 0')
+  })
 })

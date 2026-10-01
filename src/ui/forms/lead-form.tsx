@@ -10,6 +10,7 @@ type LeadFormProps = {
   context: LeadContext
   title?: string
   description?: string
+  headingLevel?: 'h2' | 'h3'
   surface?: 'dark' | 'light'
 }
 
@@ -24,6 +25,7 @@ export function LeadForm({
   context,
   title = 'Опишите задачу — подготовим маршрут запуска',
   description = 'Форма показывает будущий состав заявки и цели согласия. Отправка отключена до финального подключения и утверждения юридического текста.',
+  headingLevel = 'h2',
   surface = 'dark',
 }: LeadFormProps) {
   const availability = getLeadFormAvailability()
@@ -34,6 +36,7 @@ export function LeadForm({
   const mutedClass = isDark ? 'text-surface-dark-muted' : 'text-muted-foreground'
   const faintClass = isDark ? 'text-surface-dark-faint' : 'text-muted-foreground'
   const contextCopy = productCopy[context.product]
+  const Heading = headingLevel
 
   return (
     <form
@@ -50,7 +53,7 @@ export function LeadForm({
     >
       <div>
         <p className={`text-label font-bold uppercase ${faintClass}`}>Заявка</p>
-        <h2 className="mt-4 font-display text-h3 font-extrabold">{title}</h2>
+        <Heading className="mt-4 font-display text-h3 font-extrabold">{title}</Heading>
         <p className={`mt-3 text-body-sm ${mutedClass}`}>{description}</p>
       </div>
 
