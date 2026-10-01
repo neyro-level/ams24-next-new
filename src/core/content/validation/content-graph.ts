@@ -115,15 +115,32 @@ function extractInternalLinks(markdown: string) {
   return [...links]
 }
 
-function buildKnownPaths(repository: ContentRepositoryData) {
-  return new Set([
-    ...repository.products.map((item) => item.path),
-    ...repository.pages.map((item) => item.path),
-    ...repository.cases.map((item) => item.path),
-    ...repository.articles.map((item) => item.path),
-    ...repository.knowledgeArticles.map((item) => item.path),
-    ...approvedStaticPaths,
+function localizedPath(locale: string, path: string) {
+  return `${locale}:${normalizePath(path)}`
+}
+
+function buildKnownPaths(
+  repository: ContentRepositoryData,
+  redirects: ContentGraphRedirect[] = [],
+) {
+  const paths = new Set([
+    ...repository.products.map((item) => localizedPath(item.locale, item.path)),
+    ...repository.pages.map((item) => localizedPath(item.locale, item.path)),
+    ...repository.cases.map((item) => localizedPath(item.locale, item.path)),
+    ...repository.articles.map((item) => localizedPath(item.locale, item.path)),
+    ...repository.knowledgeArticles.map((item) => localizedPath(item.locale, item.path)),
+    ...approvedStaticPaths.map((path) => localizedPath(repository.navigation.locale, path)),
   ])
+
+  for (const redirect of redirects) {
+    try {
+      paths.add(localizedPath(repository.navigation.locale, redirect.source))
+    } catch {
+      // validateRedirects owns the actionable invalid-path finding.
+    }
+  }
+
+  return paths
 }
 
 function issue(code: ContentGraphIssueCode, entity: string, message: string): ContentGraphIssue {
@@ -138,11 +155,12 @@ function issue(code: ContentGraphIssueCode, entity: string, message: string): Co
 function validateMarkdownLinks(
   issues: ContentGraphIssue[],
   entity: string,
+  locale: string,
   markdown: string,
   knownPaths: Set<string>,
 ) {
   for (const link of extractInternalLinks(markdown)) {
-    if (!knownPaths.has(link)) {
+    if (!knownPaths.has(localizedPath(locale, link))) {
       issues.push(issue('broken-link', entity, `${entity} links to unknown path: ${link}`))
     }
   }
@@ -151,6 +169,7 @@ function validateMarkdownLinks(
 function validateRichTextLinks(
   issues: ContentGraphIssue[],
   entity: string,
+  locale: string,
   body: RichTextDTO,
   knownPaths: Set<string>,
 ) {
@@ -159,7 +178,7 @@ function validateRichTextLinks(
     return
   }
 
-  validateMarkdownLinks(issues, entity, body.value, knownPaths)
+  validateMarkdownLinks(issues, entity, locale, body.value, knownPaths)
 }
 
 type RoutableEntity = {
@@ -336,7 +355,7 @@ function validateNavigation(issues: ContentGraphIssue[], repository: ContentRepo
   for (const link of navigationLinks) {
     const target = routeFromHref(link.path)
 
-    if (!knownPaths.has(target)) {
+    if (!knownPaths.has(localizedPath(repository.navigation.locale, target))) {
       issues.push(issue('broken-navigation-ref', link.source, `${link.source} points to unknown path: ${link.path}`))
     }
   }
@@ -388,7 +407,7 @@ export async function validateContentGraph(
 ): Promise<ContentGraphIssue[]> {
   const content = await loadContentRepository(repository)
   const issues: ContentGraphIssue[] = []
-  const knownPaths = buildKnownPaths(content)
+  const knownPaths = buildKnownPaths(content, options.redirects)
   const articleIntentIndex = new Map<string, string>()
 
   validateGlobalIds(issues, content)
@@ -424,11 +443,23 @@ export async function validateContentGraph(
       )
     }
 
-    validateRichTextLinks(issues, entity, article.body, knownPaths)
+    validateRichTextLinks(issues, entity, article.locale, article.body, knownPaths)
   }
 
   for (const article of content.knowledgeArticles) {
-    validateRichTextLinks(issues, `knowledge:${article.id}`, article.body, knownPaths)
+    validateRichTextLinks(issues, `knowledge:${article.id}`, article.locale, article.body, knownPaths)
+  }
+
+  for (const item of content.cases) {
+    validateRichTextLinks(issues, `case:${item.id}`, item.locale, item.body, knownPaths)
+  }
+
+  for (const page of content.pages) {
+    page.blocks.forEach((block, index) => {
+      if (block.blockType === 'rich-text') {
+        validateRichTextLinks(issues, `page:${page.id}:block:${index}`, page.locale, block.body, knownPaths)
+      }
+    })
   }
 
   for (const product of content.products) {

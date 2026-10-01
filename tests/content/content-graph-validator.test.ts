@@ -382,6 +382,89 @@ describe('content graph validator contract', () => {
     )
   })
 
+  it('checks Markdown links in page, case, draft article and draft knowledge bodies', async () => {
+    const page = validRepository().pages[0]
+    const draftArticle = validRepository().articles.find((article) => article.status === 'draft')!
+    const draftKnowledge = validRepository().knowledgeArticles.find((article) => article.status === 'draft')!
+    const repository = invalidRepository({
+      ...validRepository(),
+      pages: [{
+        ...page,
+        blocks: [...page.blocks, {
+          blockType: 'rich-text',
+          body: { format: 'markdown', value: '[Broken KB](/baza-znaniy/impuls/missing-from-page/)' },
+        }],
+      }],
+      cases: [{
+        id: 'draft-case-link-fixture',
+        locale: 'ru-RU',
+        path: '/keisy/draft-case-link-fixture/',
+        slug: 'draft-case-link-fixture',
+        productRefs: ['impuls'],
+        niche: 'Тестовая ниша',
+        period: '2026',
+        problem: 'Проверить обход валидатора ссылок в теле чернового кейса.',
+        method: 'Добавить заведомо несуществующую внутреннюю ссылку в Markdown.',
+        metrics: [],
+        evidenceLevel: 'internal',
+        body: { format: 'markdown', value: '[Broken KB](/baza-znaniy/pixel/missing-from-case/)' },
+        seo: {
+          title: 'Черновой кейс для проверки ссылок',
+          description: 'Технический fixture проверяет внутренние ссылки в скрытом Markdown-контенте кейса.',
+          canonicalPath: '/keisy/draft-case-link-fixture/',
+          robots: 'noindex',
+        },
+        status: 'draft',
+      }],
+      articles: validRepository().articles.map((article) => article.id === draftArticle.id ? {
+        ...article,
+        body: { format: 'markdown', value: '[Broken KB](/baza-znaniy/zashchita/missing-from-draft-article/)' },
+      } : article),
+      knowledgeArticles: validRepository().knowledgeArticles.map((article) => article.id === draftKnowledge.id ? {
+        ...article,
+        body: { format: 'markdown', value: '[Broken KB](/baza-znaniy/impuls/missing-from-draft-kb/)' },
+      } : article),
+    })
+
+    await expect(validateContentGraph(repository)).resolves.toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'broken-link', entity: `page:${page.id}:block:${page.blocks.length}` }),
+      expect.objectContaining({ code: 'broken-link', entity: 'case:draft-case-link-fixture' }),
+      expect.objectContaining({ code: 'broken-link', entity: `article:${draftArticle.id}` }),
+      expect.objectContaining({ code: 'broken-link', entity: `knowledge:${draftKnowledge.id}` }),
+    ]))
+  })
+
+  it('resolves internal Markdown targets by locale and accepts explicit redirect sources', async () => {
+    const draftArticle = validRepository().articles.find((article) => article.status === 'draft')!
+    const redirectRepository = invalidRepository({
+      ...validRepository(),
+      articles: validRepository().articles.map((article) => article.id === draftArticle.id ? {
+        ...article,
+        body: { format: 'markdown', value: '[Legacy Pixel](/identifikatsiya-posetiteley-sayta/)' },
+      } : article),
+    })
+    const redirectIssues = await validateContentGraph(redirectRepository, {
+      redirects: [{
+        source: '/identifikatsiya-posetiteley-sayta/',
+        destination: '/pixel/',
+        permanent: true,
+      }],
+    })
+    expect(redirectIssues.filter((item) => item.code === 'broken-link')).toEqual([])
+
+    const wrongLocaleRepository = invalidRepository({
+      ...validRepository(),
+      articles: validRepository().articles.map((article) => article.id === draftArticle.id ? {
+        ...article,
+        locale: 'en-US',
+        body: { format: 'markdown', value: '[Pixel](/pixel/)' },
+      } : article),
+    })
+    await expect(validateContentGraph(wrongLocaleRepository)).resolves.toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: 'broken-link', entity: `article:${draftArticle.id}` }),
+    ]))
+  })
+
   it('fails the content graph explicitly while lexical has no Payload renderer', async () => {
     const repository = invalidRepository({
       ...validRepository(),
