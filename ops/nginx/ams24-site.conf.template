@@ -39,8 +39,8 @@ server {
     add_header X-Robots-Tag "noindex, follow" always;
   }
 
-  location ~ ^(.+[^/])$ {
-    return 308 $scheme://$host$1/;
+  location ~ ^/(?!_next(?:/|$))(?:.*/)?[^./]+$ {
+    return 301 $uri/$is_args$args;
   }
 
   location / {
@@ -88,8 +88,8 @@ server {
     add_header Cache-Control "no-store" always;
   }
 
-  location ~ ^(.+[^/])$ {
-    return 308 $scheme://$host$1/;
+  location ~ ^/(?!_next(?:/|$))(?:.*/)?[^./]+$ {
+    return 301 $uri/$is_args$args;
   }
 
   location / {

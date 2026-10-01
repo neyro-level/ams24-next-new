@@ -26,7 +26,8 @@ const requiredPatterns = [
   ['staging server placeholder', /server_name\s+\{\{STAGING_SERVER_NAME\}\};/],
   ['lead proxy exact location', /location\s+=\s+\/api\/leads\s+\{/],
   ['lead proxy placeholder upstream', /proxy_pass\s+\{\{LEADS_API_UPSTREAM\}\};/],
-  ['trailing slash redirect', /return\s+308\s+\$scheme:\/\/\$host\$1\/;/],
+  ['extensionless trailing slash location', /location\s+~\s+\^\/\(\?!_next\(\?:\/\|\$\)\)\(\?:\.\*\/\)\?\[\^\.\/\]\+\$\s+\{/],
+  ['query-preserving permanent redirect', /return\s+301\s+\$uri\/\$is_args\$args;/],
   ['custom 404 fallback', /error_page\s+404\s+\/404\.html;/],
   ['internal 404 artifact', /location\s+=\s+\/404\.html\s+\{[\s\S]*?internal;/],
   ['immutable Next assets', /location\s+\^~\s+\/_next\/static\/\s+\{[\s\S]*?Cache-Control\s+"public, max-age=31536000, immutable"/],
@@ -47,6 +48,7 @@ const forbiddenPatterns = [
   ['real http upstream', /proxy_pass\s+https?:\/\//],
   ['hardcoded production path', /\/var\/www\/ams24\/releases\/[a-zA-Z0-9._-]+/],
   ['secret-like token', /\b(?:TOKEN|SECRET|PASSWORD|API_KEY|PRIVATE_KEY)\s*[:=]/i],
+  ['legacy host-rebuilding redirect', /return\s+308\s+\$scheme:\/\/\$host\$1\/;/],
 ]
 
 function stripComment(line) {
@@ -209,7 +211,10 @@ async function runSelfTest() {
     ['missing leads proxy', valid.replaceAll(/location = \/api\/leads \{[\s\S]*?  \}/g, 'location = /api/leads_removed { return 404; }'), validSnippets, 3],
     ['missing immutable asset cache', valid.replaceAll('public, max-age=31536000, immutable', 'public, max-age=60'), validSnippets, 1],
     ['missing staging noindex', valid, { ...validSnippets, staging: validSnippets.staging.replace('add_header X-Robots-Tag "noindex, nofollow" always;', '') }, 1],
-    ['missing location security include', valid.replace(`    ${productionInclude}\n    add_header Cache-Control "public, max-age=31536000, immutable" always;`, '    add_header Cache-Control "public, max-age=31536000, immutable" always;'), validSnippets, 1],
+    ['missing location security include', valid.replace(new RegExp(`    ${productionInclude.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\r?\\n    add_header Cache-Control "public, max-age=31536000, immutable" always;`), '    add_header Cache-Control "public, max-age=31536000, immutable" always;'), validSnippets, 1],
+    ['redirect rewrites file-like paths', valid.replaceAll('^/(?!_next(?:/|$))(?:.*/)?[^./]+$', '^(.+[^/])$').replaceAll('return 301 $uri/$is_args$args;', 'return 308 $scheme://$host$1/;'), validSnippets, 3],
+    ['redirect drops query string', valid.replaceAll('return 301 $uri/$is_args$args;', 'return 301 $uri/;'), validSnippets, 1],
+    ['redirect includes Next internals', valid.replaceAll('(?!_next(?:/|$))', ''), validSnippets, 1],
     ['hardcoded upstream URL', valid.replaceAll('{{LEADS_API_UPSTREAM}}', 'https://leads.internal.example'), validSnippets, 2],
     ['broken directive syntax', valid.replace('server_name {{PRODUCTION_SERVER_NAME}};', 'server_name {{PRODUCTION_SERVER_NAME}}'), validSnippets, 1],
   ]
