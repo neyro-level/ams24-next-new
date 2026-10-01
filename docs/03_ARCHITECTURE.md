@@ -120,6 +120,7 @@ Rules:
 - Page and UI components do not import raw content files.
 - Zod schemas own validation and TypeScript inference.
 - `id` is a stable AMS domain/content ID, never a database PK.
+- `productIdSchema` is the single product-ID source; `ProductId` is inferred from it and reused by entities, lead/analytics context and editorial contracts.
 - `path` is the full normalized canonical route with leading/trailing `/`.
 - `slug` is only a URL segment.
 - Route identity is unique `(locale, path)`.

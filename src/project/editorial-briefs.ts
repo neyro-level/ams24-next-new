@@ -1,6 +1,5 @@
+import type { ProductId } from '@/core/content/schemas'
 import type { NavigationLink } from '@/project/navigation'
-
-type ProductId = 'impuls' | 'pixel' | 'zashchita'
 
 type BriefSource = {
   url: string

@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { productIdSchema } from '@/core/content/schemas'
+
 export const analyticsForbiddenPayloadKeys = [
   'acceptedAt',
   'consent',
@@ -27,7 +29,7 @@ export const analyticsEventNameSchema = z.enum([
   'legal_link_click',
 ])
 
-export const analyticsProductSchema = z.enum(['site', 'impuls', 'pixel', 'zashchita'])
+export const analyticsProductSchema = z.union([z.literal('site'), productIdSchema])
 
 export const analyticsEventSchema = z
   .object({

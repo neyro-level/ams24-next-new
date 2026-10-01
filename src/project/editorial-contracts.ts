@@ -1,6 +1,6 @@
-import type { NavigationLink } from '@/project/navigation'
-import type { RichTextDTO } from '@/core/content/schemas'
+import type { ProductId, RichTextDTO } from '@/core/content/schemas'
 import { buildNoindexMetadata } from '@/core/seo'
+import type { NavigationLink } from '@/project/navigation'
 
 type SourceLedgerItem = {
   url: string
@@ -35,7 +35,7 @@ export type KnowledgeEditorialContract = {
   kind: 'knowledge'
   h1: string
   slug: string
-  product: 'impuls' | 'pixel' | 'zashchita'
+  product: ProductId
   task: string
   expectedOutcome: string
   prerequisites: string[]

@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
-const productSchema = z.enum(['site', 'impuls', 'pixel', 'zashchita'])
+import { productIdSchema } from '@/core/content/schemas'
+
+const leadProductContextSchema = z.union([z.literal('site'), productIdSchema])
 const isoDateTimeSchema = z.string().datetime({ offset: true })
 
 export const leadConsentTargets = {
@@ -34,7 +36,7 @@ export const leadFormRuntime = {
 } as const
 
 export const leadContextSchema = z.object({
-  product: productSchema,
+  product: leadProductContextSchema,
   route: z.string().regex(/^\/(?:[a-z0-9-]+\/)*$/),
   ctaId: z.string().regex(/^[a-z0-9-]+$/),
 })

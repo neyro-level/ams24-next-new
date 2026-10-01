@@ -60,7 +60,7 @@ export const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Expected Y
 
 export const publicationStatusSchema = z.enum(['draft', 'published', 'hidden']).default('draft')
 
-export const productRefSchema = z.enum(['impuls', 'pixel', 'zashchita'])
+export const productIdSchema = z.enum(['impuls', 'pixel', 'zashchita'])
 
 export const indexPolicySchema = z.enum(['index', 'noindex']).default('index')
 
@@ -113,6 +113,7 @@ export const mediaSchema = z.object({
 })
 
 export type Locale = z.infer<typeof localeSchema>
+export type ProductId = z.infer<typeof productIdSchema>
 export type NavigationHref = z.infer<typeof navigationHrefSchema>
 export type SeoDTO = z.infer<typeof seoSchema>
 export type MediaDTO = z.infer<typeof mediaSchema>

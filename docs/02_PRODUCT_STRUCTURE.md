@@ -357,6 +357,9 @@ existing route is updated instead.
 | LeadIntent | sourcePath, productId, CTA, consentVersion | AMS Leads API |
 
 Relations use stable refs. Product pages never own duplicate embedded copies of case/article entities.
+The canonical product identity is `ProductId`, derived only from
+`productIdSchema`; entity refs, lead/analytics context and editorial briefs do
+not maintain copied product unions.
 
 ## 15. Internal Linking Rules
 

@@ -1,11 +1,12 @@
-import type { NavigationLink } from '@/project/navigation'
+import type { ProductId } from '@/core/content/schemas'
 import { buildNoindexMetadata } from '@/core/seo'
+import type { NavigationLink } from '@/project/navigation'
 
 export type DetailFixture = {
   type: 'case' | 'article' | 'knowledge'
   path: string
   slug: string
-  product?: 'impuls' | 'pixel' | 'zashchita'
+  product?: ProductId
   title: string
   eyebrow: string
   summary: string
@@ -61,7 +62,7 @@ export const detailFixtures: DetailFixture[] = [
   },
 ]
 
-export function getDetailFixture(type: DetailFixture['type'], slug: string, product?: string): DetailFixture {
+export function getDetailFixture(type: DetailFixture['type'], slug: string, product?: ProductId): DetailFixture {
   const item = detailFixtures.find((fixture) => {
     if (fixture.type !== type || fixture.slug !== slug) {
       return false

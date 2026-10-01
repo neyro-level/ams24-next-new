@@ -8,7 +8,7 @@ import {
   navigationHrefSchema,
   pathSchema,
   publicationStatusSchema,
-  productRefSchema,
+  productIdSchema,
   richTextSchema,
   seoSchema,
   slugSchema,
@@ -25,7 +25,7 @@ const linkSchema = z.object({
 })
 
 export const productSchema = z.object({
-  id: productRefSchema,
+  id: productIdSchema,
   locale: localeSchema,
   slug: slugSchema,
   name: z.string().trim().min(2),
@@ -41,7 +41,7 @@ export const productSchema = z.object({
 export const tariffSchema = z.object({
   id: idSchema,
   locale: localeSchema,
-  productRef: productRefSchema,
+  productRef: productIdSchema,
   title: z.string().trim().min(2),
   pricingModel: z.string().trim().min(2),
   inclusions: z.array(z.string().trim().min(2)).min(1),
@@ -54,7 +54,7 @@ export const caseSchema = z.object({
   locale: localeSchema,
   path: pathSchema,
   slug: slugSchema,
-  productRefs: z.array(productRefSchema).min(1),
+  productRefs: z.array(productIdSchema).min(1),
   niche: z.string().trim().min(2),
   period: z.string().trim().min(2),
   updatedAt: isoDateSchema.optional(),
@@ -83,7 +83,7 @@ export const reviewSchema = z.object({
   company: z.string().trim().min(2).optional(),
   quote: z.string().trim().min(20),
   permissionStatus: z.enum(['approved', 'anonymized', 'internal-only']),
-  productRef: productRefSchema.optional(),
+  productRef: productIdSchema.optional(),
   caseRef: idSchema.optional(),
   status: z.enum(['draft', 'published', 'hidden']).default('draft'),
 })
@@ -91,7 +91,7 @@ export const reviewSchema = z.object({
 export const calculationExampleSchema = z.object({
   id: idSchema,
   locale: localeSchema,
-  productRef: productRefSchema,
+  productRef: productIdSchema,
   title: z.string().trim().min(2),
   inputs: z.array(z.string().trim().min(2)).min(1),
   assumptions: z.array(z.string().trim().min(2)).min(1),
@@ -108,7 +108,7 @@ export const articleSchema = z.object({
   topic: z.string().trim().min(2),
   publishedAt: isoDateSchema.optional(),
   updatedAt: isoDateSchema.optional(),
-  productRefs: z.array(productRefSchema).default([]),
+  productRefs: z.array(productIdSchema).default([]),
   caseRefs: z.array(idSchema).default([]),
   body: richTextSchema,
   seo: seoSchema,
@@ -128,7 +128,7 @@ export const knowledgeArticleSchema = z.object({
   locale: localeSchema,
   path: pathSchema,
   slug: slugSchema,
-  productRef: productRefSchema,
+  productRef: productIdSchema,
   task: z.string().trim().min(5),
   updatedAt: isoDateSchema,
   body: richTextSchema,
@@ -150,7 +150,7 @@ export const heroPageBlockSchema = z.object({
 
 export const productRoutesPageBlockSchema = z.object({
   blockType: z.literal('product-routes'),
-  productRefs: z.array(productRefSchema).min(1),
+  productRefs: z.array(productIdSchema).min(1),
 })
 
 export const richTextPageBlockSchema = z.object({
@@ -201,7 +201,7 @@ export const siteSettingsSchema = z.object({
 
 export const leadIntentSchema = z.object({
   sourcePath: pathSchema,
-  productId: productRefSchema.optional(),
+  productId: productIdSchema.optional(),
   ctaId: idSchema,
   consentVersion: idSchema,
 })

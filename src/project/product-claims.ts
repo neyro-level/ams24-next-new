@@ -1,4 +1,4 @@
-type ProductId = 'platform' | 'impuls' | 'pixel' | 'zashchita'
+import type { ProductId } from '@/core/content/schemas'
 
 import {
   isPublicationAllowed,
@@ -15,10 +15,11 @@ type EvidenceStatus =
 type PublicationStatus = 'allowed' | 'needs-review' | 'hidden'
 
 type ClaimRisk = 'low' | 'medium' | 'high'
+type ClaimProductId = ProductId | 'platform'
 
 export type ProductClaim = {
   id: string
-  product: ProductId
+  product: ClaimProductId
   claim: string
   plannedUse: string
   evidenceStatus: EvidenceStatus
@@ -162,11 +163,11 @@ export const productClaims: ProductClaim[] = [
   },
 ]
 
-export function getClaimsForProduct(product: ProductId, claims: ProductClaim[] = productClaims) {
+export function getClaimsForProduct(product: ClaimProductId, claims: ProductClaim[] = productClaims) {
   return claims.filter((claim) => claim.product === product)
 }
 
-export function getPublicClaimsForProduct(product: ProductId, claims: ProductClaim[] = productClaims) {
+export function getPublicClaimsForProduct(product: ClaimProductId, claims: ProductClaim[] = productClaims) {
   return getClaimsForProduct(product, claims).filter((claim) => isPublicationAllowed(toClaimPublicationGateInput(claim)))
 }
 

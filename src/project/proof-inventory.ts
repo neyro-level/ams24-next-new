@@ -1,11 +1,9 @@
-import type { ProductDTO } from '@/core/content/schemas'
+import type { ProductId } from '@/core/content/schemas'
 import {
   isPublicationAllowed,
   validatePublicationGateMatrix,
   type PublicationGateInput,
 } from '@/core/content/services/publication-gate'
-
-type ProductId = ProductDTO['id']
 
 export type ProofInventoryKind = 'tariff' | 'case' | 'review' | 'calculation'
 export type EvidenceState = 'verified' | 'owner-provided-needs-evidence' | 'missing'
