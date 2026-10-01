@@ -30,6 +30,7 @@ const requiredPatterns = [
   ['query-preserving permanent redirect', /return\s+301\s+\$uri\/\$is_args\$args;/],
   ['custom 404 fallback', /error_page\s+404\s+\/404\.html;/],
   ['internal 404 artifact', /location\s+=\s+\/404\.html\s+\{[\s\S]*?internal;/],
+  ['public routes return real 404', /location\s+\/\s+\{[\s\S]*?try_files\s+\$uri\s+\$uri\/index\.html\s+=404;/],
   ['immutable Next assets', /location\s+\^~\s+\/_next\/static\/\s+\{[\s\S]*?Cache-Control\s+"public, max-age=31536000, immutable"/],
   ['short HTML/static cache', /location\s+\/\s+\{[\s\S]*?Cache-Control\s+"public, max-age=60"/],
   ['staging basic auth', /auth_basic\s+"AMS24 staging";[\s\S]*?auth_basic_user_file\s+\{\{STAGING_BASIC_AUTH_FILE\}\};/],
@@ -197,6 +198,13 @@ function analyzeNginxContract(source, snippets) {
     errors.push(`expected /api/leads proxy in both server blocks, got ${leadProxyCount}`)
   }
 
+  const real404Count = [
+    ...source.matchAll(/try_files\s+\$uri\s+\$uri\/index\.html\s+=404;/g),
+  ].length
+  if (real404Count !== 2) {
+    errors.push(`expected real 404 try_files contract in both server blocks, got ${real404Count}`)
+  }
+
   return errors
 }
 
@@ -215,6 +223,7 @@ async function runSelfTest() {
     ['redirect rewrites file-like paths', valid.replaceAll('^/(?!_next(?:/|$))(?:.*/)?[^./]+$', '^(.+[^/])$').replaceAll('return 301 $uri/$is_args$args;', 'return 308 $scheme://$host$1/;'), validSnippets, 3],
     ['redirect drops query string', valid.replaceAll('return 301 $uri/$is_args$args;', 'return 301 $uri/;'), validSnippets, 1],
     ['redirect includes Next internals', valid.replaceAll('(?!_next(?:/|$))', ''), validSnippets, 1],
+    ['soft 404 fallback', valid.replaceAll('try_files $uri $uri/index.html =404;', 'try_files $uri $uri/ $uri/index.html /404.html;'), validSnippets, 2],
     ['hardcoded upstream URL', valid.replaceAll('{{LEADS_API_UPSTREAM}}', 'https://leads.internal.example'), validSnippets, 2],
     ['broken directive syntax', valid.replace('server_name {{PRODUCTION_SERVER_NAME}};', 'server_name {{PRODUCTION_SERVER_NAME}}'), validSnippets, 1],
   ]

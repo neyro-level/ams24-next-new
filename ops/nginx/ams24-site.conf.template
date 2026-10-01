@@ -44,7 +44,7 @@ server {
   }
 
   location / {
-    try_files $uri $uri/ $uri/index.html /404.html;
+    try_files $uri $uri/index.html =404;
     include {{NGINX_SNIPPETS_DIR}}/production-security-headers.conf;
     add_header Cache-Control "public, max-age=60" always;
   }
@@ -93,7 +93,7 @@ server {
   }
 
   location / {
-    try_files $uri $uri/ $uri/index.html /404.html;
+    try_files $uri $uri/index.html =404;
     include {{NGINX_SNIPPETS_DIR}}/staging-security-headers.conf;
     add_header Cache-Control "public, max-age=60" always;
   }
