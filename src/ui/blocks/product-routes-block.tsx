@@ -1,6 +1,7 @@
 import type { PageBlockDTO } from '@/core/content/schemas'
 import type { BlockRenderContext } from '@/ui/blocks/context'
 import { Button } from '@/ui/primitives/button'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/ui/primitives/card'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
 import { SectionHeader } from '@/ui/shared/section-header'
@@ -30,17 +31,24 @@ export function ProductRoutesBlock({
         <SectionHeader eyebrow="Маршруты" title="Выберите продукт под текущую задачу" />
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {products.map((product) => (
-            <article
-              className="flex min-h-72 flex-col rounded-large border border-border bg-surface-elevated p-6 shadow-card"
-              key={product.id}
-            >
-              <p className="text-label font-bold uppercase text-primary">{product.name}</p>
-              <h2 className="mt-5 font-display text-h3 font-extrabold text-foreground">{product.shortName}</h2>
-              <p className="mt-4 text-body text-muted-foreground">{product.promise}</p>
-              <Button asChild variant="outline" className="mt-auto h-11 justify-start px-4">
-                <a href={product.path}>{product.primaryCta.label}</a>
-              </Button>
-            </article>
+            <Card asChild className="min-h-72" key={product.id}>
+              <article>
+                <CardHeader>
+                  <p className="text-label font-bold uppercase text-primary">{product.name}</p>
+                  <CardTitle asChild>
+                    <h2>{product.shortName}</h2>
+                  </CardTitle>
+                  <CardDescription asChild>
+                    <p>{product.promise}</p>
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter>
+                  <Button asChild variant="outline" className="h-11 justify-start px-4">
+                    <a href={product.path}>{product.primaryCta.label}</a>
+                  </Button>
+                </CardFooter>
+              </article>
+            </Card>
           ))}
         </div>
       </Container>

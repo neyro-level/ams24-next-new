@@ -4,6 +4,7 @@ import { getProofEvidenceInventory } from '@/core/content/services/proof-invento
 import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/ui/primitives/card'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
 import { SectionHeader } from '@/ui/shared/section-header'
@@ -52,25 +53,31 @@ export default function ReviewsPage() {
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {reviewItems.map((item) => (
-              <article className="rounded-card border border-border bg-surface-elevated p-6 shadow-card" key={item.id}>
-                <p className="text-label font-bold uppercase text-primary">{item.releaseMinimumSlot}</p>
-                <h2 className="mt-5 font-display text-h3 font-bold">{item.title}</h2>
-                <p className="mt-4 text-body-sm text-muted-foreground">{item.hiddenReason}</p>
-                <dl className="mt-6 grid gap-3 text-caption text-muted-foreground">
-                  <div>
-                    <dt className="font-bold text-foreground">Статус</dt>
-                    <dd>скрыто до подтверждения</dd>
-                  </div>
-                  <div>
-                    <dt className="font-bold text-foreground">Разрешение</dt>
-                    <dd>требуется перед публикацией</dd>
-                  </div>
-                  <div>
-                    <dt className="font-bold text-foreground">Что требуется</dt>
-                    <dd>источник, идентификация или обезличивание и разрешение на публикацию</dd>
-                  </div>
-                </dl>
-              </article>
+              <Card asChild key={item.id}>
+                <article>
+                  <CardHeader>
+                    <p className="text-label font-bold uppercase text-primary">{item.releaseMinimumSlot}</p>
+                    <CardTitle asChild><h2>{item.title}</h2></CardTitle>
+                    <CardDescription asChild><p>{item.hiddenReason}</p></CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <dl className="grid gap-3 text-caption text-muted-foreground">
+                      <div>
+                        <dt className="font-bold text-foreground">Статус</dt>
+                        <dd>скрыто до подтверждения</dd>
+                      </div>
+                      <div>
+                        <dt className="font-bold text-foreground">Разрешение</dt>
+                        <dd>требуется перед публикацией</dd>
+                      </div>
+                      <div>
+                        <dt className="font-bold text-foreground">Что требуется</dt>
+                        <dd>источник, идентификация или обезличивание и разрешение на публикацию</dd>
+                      </div>
+                    </dl>
+                  </CardContent>
+                </article>
+              </Card>
             ))}
           </div>
         </Container>

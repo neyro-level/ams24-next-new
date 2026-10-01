@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import { cn } from '@/core/lib/utils'
 import { Button } from '@/ui/primitives/button'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/ui/primitives/card'
 import { LeadForm } from '@/ui/forms/lead-form'
 
 describe('canonical UI primitives', () => {
@@ -31,6 +32,33 @@ describe('canonical UI primitives', () => {
     expect(html).toContain('data-slot="button"')
     expect(html).toContain('data-variant="outlineDark"')
     expect(html).not.toContain('<button')
+  })
+
+  it('owns card surfaces through variants while preserving semantic elements', () => {
+    const defaultCard = renderToStaticMarkup(<Card>Default</Card>)
+    const mutedCard = renderToStaticMarkup(<Card variant="muted">Muted</Card>)
+    const darkCard = renderToStaticMarkup(<Card variant="dark">Dark</Card>)
+    const semanticCard = renderToStaticMarkup(
+      <Card asChild>
+        <article>
+          <CardHeader>
+            <CardTitle asChild><h3>Semantic title</h3></CardTitle>
+            <CardDescription asChild><p>Semantic description</p></CardDescription>
+          </CardHeader>
+        </article>
+      </Card>,
+    )
+
+    expect(defaultCard).toContain('data-variant="default"')
+    expect(defaultCard).toContain('bg-surface-elevated')
+    expect(mutedCard).toContain('data-variant="muted"')
+    expect(mutedCard).toContain('bg-surface-muted')
+    expect(darkCard).toContain('data-variant="dark"')
+    expect(darkCard).toContain('bg-surface-dark-elevated')
+    expect(semanticCard).toContain('<article')
+    expect(semanticCard).toContain('data-slot="card"')
+    expect(semanticCard).toContain('<h3 data-slot="card-title"')
+    expect(semanticCard).toContain('<p data-slot="card-description"')
   })
 
   it('keeps form submit a real disabled button with accessible form context', () => {

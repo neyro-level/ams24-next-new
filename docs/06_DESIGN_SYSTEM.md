@@ -194,10 +194,11 @@ shadcn primitives
 Baseline foundation:
 
 - `Button` at `src/ui/primitives/button.tsx`;
+- `Card` at `src/ui/primitives/card.tsx` with `default`, `muted` and `dark` surface variants;
 - required form primitives;
 - `Container` at `src/ui/shared/container.tsx`;
 - `Section`;
-- `SectionHeader` at `src/ui/shared/section.tsx`;
+- `SectionHeader` at `src/ui/shared/section-header.tsx`;
 - `Header`;
 - `Footer`;
 - `MobileMenu`.
@@ -215,6 +216,14 @@ Shared patterns added only when used:
 - loading/empty/error/success states where data interaction requires them.
 
 No second Button/Input/Dialog/Card system, no universal page builder and no copied reusable semantic sections.
+
+Intentional Card exceptions:
+
+- navigation popovers and mobile-menu panels remain navigation shells, not content cards;
+- dashed notices and compact inline callouts keep their own semantic element and do not become cards;
+- long-form editorial shells and legal side panels keep their article/aside ownership until a shared editorial pattern exists;
+- token fixtures stay explicit because they demonstrate raw token combinations;
+- page-specific product/service shells that will be decomposed by T4.6 remain unchanged until their shared semantic pattern is established.
 
 ## 11. Product Route Cards
 

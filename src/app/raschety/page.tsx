@@ -4,6 +4,7 @@ import { getProofEvidenceInventory } from '@/core/content/services/proof-invento
 import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/ui/primitives/card'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
 import { SectionHeader } from '@/ui/shared/section-header'
@@ -47,16 +48,17 @@ export default function CalculationsPage() {
                 </Button>
               </div>
             </div>
-            <aside
-              aria-label="Статус расчётных примеров"
-              className="rounded-large border border-surface-dark-faint bg-surface-dark-elevated p-5 shadow-panel"
-            >
-              <p className="text-label font-bold uppercase text-surface-dark-faint">Проверка условий</p>
-              <h2 className="mt-5 font-display text-h3 font-bold">Скрыто до утверждения</h2>
-              <p className="mt-4 text-body-sm text-surface-dark-muted">
-                Расчётные примеры остаются скрыты, пока не утверждены коммерческие правила и ограничения.
-              </p>
-            </aside>
+            <Card asChild variant="dark">
+              <aside aria-label="Статус расчётных примеров">
+                <CardHeader>
+                  <p className="text-label font-bold uppercase text-surface-dark-faint">Проверка условий</p>
+                  <CardTitle asChild><h2>Скрыто до утверждения</h2></CardTitle>
+                  <CardDescription asChild>
+                    <p>Расчётные примеры остаются скрыты, пока не утверждены коммерческие правила и ограничения.</p>
+                  </CardDescription>
+                </CardHeader>
+              </aside>
+            </Card>
           </div>
         </Container>
       </Section>
@@ -70,10 +72,14 @@ export default function CalculationsPage() {
           />
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {assumptionGroups.map((item) => (
-              <article className="rounded-card border border-border bg-surface-elevated p-6 shadow-card" key={item}>
-                <p className="text-label font-bold uppercase text-primary">Допущение</p>
-                <h2 className="mt-5 font-display text-h3 font-bold">{item}</h2>
-              </article>
+              <Card asChild key={item} variant="muted">
+                <article>
+                  <CardHeader>
+                    <p className="text-label font-bold uppercase text-primary">Допущение</p>
+                    <CardTitle asChild><h2>{item}</h2></CardTitle>
+                  </CardHeader>
+                </article>
+              </Card>
             ))}
           </div>
         </Container>
@@ -88,13 +94,17 @@ export default function CalculationsPage() {
           />
           <div className="mt-10 space-y-4">
             {calculationItems.map((item) => (
-              <article className="rounded-card border border-border bg-surface-elevated p-6 shadow-card" key={item.id}>
-                <h2 className="font-display text-h3 font-bold">{item.title}</h2>
-                <p className="mt-4 text-body-sm text-muted-foreground">{item.hiddenReason}</p>
-                <p className="mt-4 text-caption text-muted-foreground">
-                  Статус: скрыто до утверждения коммерческих правил и ограничений.
-                </p>
-              </article>
+              <Card asChild key={item.id}>
+                <article>
+                  <CardHeader>
+                    <CardTitle asChild><h2>{item.title}</h2></CardTitle>
+                    <CardDescription asChild><p>{item.hiddenReason}</p></CardDescription>
+                    <p className="text-caption text-muted-foreground">
+                      Статус: скрыто до утверждения коммерческих правил и ограничений.
+                    </p>
+                  </CardHeader>
+                </article>
+              </Card>
             ))}
           </div>
         </Container>
