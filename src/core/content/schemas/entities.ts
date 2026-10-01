@@ -117,7 +117,7 @@ export const knowledgeArticleSchema = z.object({
 })
 
 export const heroPageBlockSchema = z.object({
-  type: z.literal('hero'),
+  blockType: z.literal('hero'),
   eyebrow: z.string().optional(),
   title: z.string().trim().min(5),
   lead: z.string().trim().min(20).optional(),
@@ -125,21 +125,21 @@ export const heroPageBlockSchema = z.object({
 })
 
 export const productRoutesPageBlockSchema = z.object({
-  type: z.literal('product-routes'),
+  blockType: z.literal('product-routes'),
   productRefs: z.array(productRefSchema).min(1),
 })
 
 export const richTextPageBlockSchema = z.object({
-  type: z.literal('rich-text'),
+  blockType: z.literal('rich-text'),
   body: richTextSchema,
 })
 
 export const leadFormShellPageBlockSchema = z.object({
-  type: z.literal('lead-form-shell'),
+  blockType: z.literal('lead-form-shell'),
   intentId: idSchema,
 })
 
-export const pageBlockSchema = z.discriminatedUnion('type', [
+export const pageBlockSchema = z.discriminatedUnion('blockType', [
   heroPageBlockSchema,
   productRoutesPageBlockSchema,
   richTextPageBlockSchema,

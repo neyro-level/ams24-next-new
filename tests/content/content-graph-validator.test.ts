@@ -205,7 +205,7 @@ const negativeFixtures: NegativeFixture[] = [
             ...validRepository().pages[0],
             blocks: [
               {
-                type: 'product-routes',
+                blockType: 'product-routes',
                 productRefs: ['unknown'],
               },
             ],

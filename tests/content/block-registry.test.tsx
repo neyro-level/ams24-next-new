@@ -1,110 +1,89 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
+import { richTextSchema } from '@/core/content/schemas'
+import { getContentRepository } from '@/core/content/services/repository'
 import {
   assertKnownBlockType,
-  assertSupportedBlockType,
+  blockRegistry,
+  blockTypes,
+  PageBlocks,
   parsePageBlock,
   parsePageBlocks,
-  parseSupportedPageBlock,
-  parseSupportedPageBlocks,
-  schemaOnlyBlockTypes,
-  supportedBlockRegistry,
-  supportedBlockTypes,
-} from '@/core/content/block-registry'
-import { richTextSchema } from '@/core/content/schemas'
+  renderPageBlock,
+} from '@/ui/blocks'
 import { RichText } from '@/ui/content/rich-text'
 
-const supportedBlockFixtures = {
+const blockFixtures = {
   hero: {
-    type: 'hero',
+    blockType: 'hero',
     title: 'Импульс',
     lead: 'Единая платформа для привлечения, определения и защиты лидов.',
   },
   'product-routes': {
-    type: 'product-routes',
+    blockType: 'product-routes',
     productRefs: ['impuls', 'pixel', 'zashchita'],
   },
+  'rich-text': {
+    blockType: 'rich-text',
+    body: {
+      format: 'markdown',
+      value: '## Содержание',
+    },
+  },
   'lead-form-shell': {
-    type: 'lead-form-shell',
+    blockType: 'lead-form-shell',
     intentId: 'home-final-calc',
   },
 } as const
 
-describe('block registry and RichText', () => {
-  it('parses known blocks and hard-fails unknown blocks', () => {
-    expect(
-      parsePageBlock({
-        type: 'hero',
-        title: 'Импульс',
-        lead: 'Единая платформа для привлечения, определения и защиты лидов.',
-      }),
-    ).toMatchObject({ type: 'hero' })
+const renderContext = {
+  products: getContentRepository().products,
+  lead: {
+    product: 'site' as const,
+    route: '/',
+    ctaId: 'page-block',
+  },
+}
 
-    expect(() => parsePageBlock({ type: 'unknown-block' })).toThrow()
-    expect(() => assertKnownBlockType('unknown-block')).toThrow(/Unknown page block type/)
+describe('executable page block registry', () => {
+  it('parses known blocks through their registry schemas and hard-fails unknown blocks', () => {
+    expect(parsePageBlock(blockFixtures.hero)).toMatchObject({ blockType: 'hero' })
+    expect(() => parsePageBlock({ blockType: 'unknown-block' })).toThrow(
+      /Unknown or unimplemented page block type/,
+    )
+    expect(() => assertKnownBlockType('unknown-block')).toThrow(/Unknown or unimplemented page block type/)
+    expect(() => parsePageBlock({ type: 'hero' })).toThrow(/string blockType/)
   })
 
-  it('maps every supported block type to a schema and component key', () => {
-    expect(Object.keys(supportedBlockRegistry).sort()).toEqual([...supportedBlockTypes].sort())
+  it('maps every schema block type to a Zod schema and a real React component', () => {
+    expect(Object.keys(blockRegistry).sort()).toEqual([...blockTypes].sort())
+    expect(blockTypes).toEqual(['hero', 'product-routes', 'rich-text', 'lead-form-shell'])
 
-    for (const type of supportedBlockTypes) {
-      const definition = supportedBlockRegistry[type]
+    for (const blockType of blockTypes) {
+      const definition = blockRegistry[blockType]
 
-      expect(definition.type).toBe(type)
-      expect(definition.component).toMatch(/Block$/)
-      expect(definition.schema.parse(supportedBlockFixtures[type])).toBeDefined()
+      expect(typeof definition.component).toBe('function')
+      expect(definition.schema.parse(blockFixtures[blockType])).toBeDefined()
     }
   })
 
-  it('parses a typed block list', () => {
-    const blocks = parsePageBlocks([
-      {
-        type: 'product-routes',
-        productRefs: ['impuls', 'pixel', 'zashchita'],
-      },
-      {
-        type: 'lead-form-shell',
-        intentId: 'home-final-calc',
-      },
-    ])
+  it('parses and renders every registered block, including rich text', () => {
+    const blocks = parsePageBlocks(Object.values(blockFixtures))
+    const html = renderToStaticMarkup(<PageBlocks blocks={blocks} context={renderContext} />)
 
-    expect(blocks).toHaveLength(2)
+    expect(blocks.map((block) => block.blockType)).toEqual(blockTypes)
+    expect(html).toContain('Импульс')
+    expect(html).toContain('/pixel/')
+    expect(html).toContain('data-rich-text')
+    expect(html).toContain('data-form-id')
   })
 
-  it('parses only currently supported blocks through the schema-to-component registry', () => {
-    const blocks = parseSupportedPageBlocks([
-      {
-        type: 'hero',
-        title: 'Импульс',
-        lead: 'Единая платформа для привлечения, определения и защиты лидов.',
-      },
-      {
-        type: 'product-routes',
-        productRefs: ['impuls', 'pixel', 'zashchita'],
-      },
-      {
-        type: 'lead-form-shell',
-        intentId: 'home-final-calc',
-      },
-    ])
-
-    expect(blocks.map((block) => block.type)).toEqual(['hero', 'product-routes', 'lead-form-shell'])
-  })
-
-  it('keeps schema-only block formats out of the supported component registry', () => {
-    expect(schemaOnlyBlockTypes).toEqual(['rich-text'])
+  it('rejects malformed registered blocks before component execution', () => {
     expect(() =>
-      parseSupportedPageBlock({
-        type: 'rich-text',
-        body: {
-          format: 'markdown',
-          value: 'Schema-only page RichText block.',
-        },
-      }),
-    ).toThrow(/Unsupported page block type/)
-    expect(() => assertSupportedBlockType('rich-text')).toThrow(/Unsupported page block type/)
-    expect(() => parseSupportedPageBlock({ type: 'unknown-block' })).toThrow(/Unknown page block type/)
+      renderPageBlock({ blockType: 'rich-text', body: { format: 'markdown' } }, renderContext),
+    ).toThrow()
+    expect(() => renderPageBlock({ blockType: 'missing' }, renderContext)).toThrow(/Unknown or unimplemented/)
   })
 
   it('renders markdown without raw arbitrary HTML execution', () => {

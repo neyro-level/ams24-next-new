@@ -261,7 +261,7 @@ function validateEntityRefs(issues: ContentGraphIssue[], repository: ContentRepo
 
   for (const page of repository.pages) {
     for (const block of page.blocks) {
-      if (block.type === 'product-routes') {
+      if (block.blockType === 'product-routes') {
         for (const productId of block.productRefs) {
           if (!productIds.has(productId)) {
             issues.push(issue('broken-block-ref', `page:${page.id}`, `page:${page.id} product-routes block references unknown product: ${productId}`))

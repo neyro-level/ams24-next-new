@@ -98,7 +98,7 @@ function assertKnownProducts(content: LocalContent, productIndex: Map<string, Pr
 
   for (const page of content.pages) {
     for (const block of page.blocks) {
-      if (block.type === 'product-routes') {
+      if (block.blockType === 'product-routes') {
         for (const productId of block.productRefs) {
           assert(productId, `page:${page.id}`)
         }

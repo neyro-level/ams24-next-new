@@ -3,7 +3,7 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { blockTypes } from '@/core/content/block-registry'
+import { blockTypes } from '@/ui/blocks'
 import { localContent } from '@/project/content/local-content'
 
 const inventoryPath = join(process.cwd(), 'docs/research/BLOCK_RICHTEXT_REACHABILITY_INVENTORY_CR_12_1.md')
@@ -15,7 +15,7 @@ describe('CR-12.1 block/RichText reachability inventory', () => {
   const inventory = readFileSync(inventoryPath, 'utf8')
 
   it('matches the current reachable page block types', () => {
-    const reachable = new Set<string>(localContent.pages.flatMap((page) => page.blocks.map((block) => block.type)))
+    const reachable = new Set<string>(localContent.pages.flatMap((page) => page.blocks.map((block) => block.blockType)))
 
     expect([...reachable].sort()).toEqual([...expectedReachablePageBlocks].sort())
     expect(reachable.has('rich-text')).toBe(false)
@@ -36,7 +36,7 @@ describe('CR-12.1 block/RichText reachability inventory', () => {
       expect(inventory).toContain(`\`${blockType}\``)
     }
 
-    for (const kind of [...expectedReachableRichTextKinds, 'blocks']) {
+    for (const kind of [...expectedReachableRichTextKinds, 'lexical']) {
       expect(inventory).toContain(`\`${kind}\``)
     }
 

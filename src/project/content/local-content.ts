@@ -280,16 +280,16 @@ export const localContent = {
       status: 'published' as const,
       blocks: [
         {
-          type: 'hero',
+          blockType: 'hero',
           title: 'Импульс',
           lead: 'Единая платформа для привлечения, определения и защиты лидов.',
         },
         {
-          type: 'product-routes',
+          blockType: 'product-routes',
           productRefs: ['impuls', 'pixel', 'zashchita'],
         },
         {
-          type: 'lead-form-shell',
+          blockType: 'lead-form-shell',
           intentId: 'home-final-calc',
         },
       ],

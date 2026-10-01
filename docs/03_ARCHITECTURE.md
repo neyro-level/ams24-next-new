@@ -161,7 +161,7 @@ formats stay speculative until a real approved consumer uses them.
 
 | Module | Purpose / ownership | Public boundary | Dependencies |
 |---|---|---|---|
-| `core/content` | schemas, repository, local adapter, services, block registry | DTO/repository functions | Zod, local sources |
+| `core/content` | schemas, repository, local adapter and services | DTO/repository functions | Zod, local sources |
 | `core/seo` | metadata, sitemap, robots, schema.org from facts | SEO view models | content DTO |
 | `core/leads` | safe client schema and relative transport | lead submission client | AMS Leads API via Nginx |
 | `core/analytics` | typed non-PII events | event dispatcher | provider adapter |
@@ -169,6 +169,7 @@ formats stay speculative until a real approved consumer uses them.
 | `ui/primitives` | shadcn source-owned primitives | semantic primitive API | Radix/shadcn |
 | `ui/layout` | shell, header, footer, mobile nav | layout components | primitives/project navigation |
 | `ui/shared` | container, section, CTA, FAQ, lead form, common states | semantic shared API | primitives/DTO |
+| `ui/blocks` | executable page-block registry and block components | `blockType -> schema -> component`, parser and renderer | content DTO/schemas, shared UI |
 | `ui/domain` | product/case/tariff/review components | domain view models | shared/content DTO |
 | `ui/pages` | page-specific semantic sections | composition components | domain/shared |
 | `app` | routes, metadata integration, page composition | Next routes | services/UI only |
@@ -197,8 +198,6 @@ Current source directories:
 | `src/core/content/schemas` | content core | Zod DTO schemas and shared content types | imported by repository, project content and tests |
 | `src/core/content/repository` | content core | repository contract and local adapter validation | `ContentRepository`, `createContentRepository()` |
 | `src/core/content/services` | content service | singleton repository service over project local content | `getContentRepository()` for routes/tests |
-| `src/core/content/block-registry` | content core | typed block registry parsing | content validation/tests |
-| `src/core/content/services/rich-text.tsx` | content rendering service | RichText rendering from DTOs | UI/templates/tests |
 | `src/core/seo` | SEO core | metadata, route/sitemap helpers, robots inputs, structured-data helpers and redirect validation | app/project/tests; structured data remains emitted only when facts are approved |
 | `src/core/lib` | shared utility core | small framework-agnostic utilities | UI primitives/shared |
 | `src/project` | project data/config | site settings, navigation, redirects, claims, evidence, editorial contracts and lead contract | app, UI shell/content, core adapters |
@@ -207,6 +206,7 @@ Current source directories:
 | `src/ui/shared` | reusable UI | section/container shared layout primitives | routes and shell/content UI |
 | `src/ui/shell` | UI shell | header/footer/breadcrumbs/skeleton/detail page shells | app routes |
 | `src/ui/content` | content presentation UI | article/knowledge editorial templates | dynamic editorial routes/tests |
+| `src/ui/blocks` | page block UI | exhaustive executable registry, typed parsing and React renderers | block validation/tests and future approved page composition |
 | `src/ui/forms` | form UI | disabled-safe lead form presentation | app routes/tests |
 
 Current import evidence:

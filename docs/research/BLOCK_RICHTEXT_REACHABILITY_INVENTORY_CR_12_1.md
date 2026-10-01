@@ -19,7 +19,7 @@ Source: `src/project/content/local-content.ts` → `localContent.pages[*].blocks
 | `hero` | reachable | `/` page content graph contains the home hero block | supported by current schema/registry |
 | `product-routes` | reachable | `/` page content graph references `impuls`, `pixel`, `zashchita` | supported by current schema/registry and graph refs |
 | `lead-form-shell` | reachable | `/` page content graph contains `home-final-calc` intent | supported by current schema/registry |
-| `rich-text` | schema-only | present in `pageBlockSchema` and `blockTypes`, absent from `localContent.pages[*].blocks` | speculative for page blocks until a page actually uses it |
+| `rich-text` | not content-reachable | executable through `src/ui/blocks` and the canonical `RichText` renderer, but absent from `localContent.pages[*].blocks` | implemented and validation-safe; not claimed as visible page content until a page uses it |
 
 ## Reachable RichText kinds
 
@@ -27,12 +27,12 @@ Source: `src/project/content/local-content.ts` article and knowledge article bod
 
 | RichText kind | Reachability | Current consumer evidence | CR-12.1 status |
 | --- | --- | --- | --- |
-| `markdown` | reachable | articles and knowledge articles use `body.kind = "markdown"` | runtime-supported by `RichText` renderer |
-| `blocks` | schema-only | present in `richTextSchema`, absent from real article/KB bodies | speculative; renderer fallback exists but must not be claimed as a rich block system |
+| `markdown` | reachable | articles and knowledge articles use `body.format = "markdown"` | runtime-supported by `RichText` renderer |
+| `lexical` | schema-only | present in `richTextSchema`, absent from real article/KB bodies | explicitly rejected until an approved Payload renderer exists |
 
 ## Renderer syntax reachable through Markdown
 
-Source: `src/core/content/services/rich-text.tsx` and real Markdown bodies.
+Source: `src/ui/content/rich-text.tsx` and real Markdown bodies.
 
 | Syntax | Reachability | Rendering behavior |
 | --- | --- | --- |
@@ -62,6 +62,6 @@ Do not implement or claim these without a later approved content migration:
 `tests/content/block-richtext-reachability.test.ts` protects this inventory by checking:
 
 - reachable page block types in current content are exactly `hero`, `product-routes`, `lead-form-shell`;
-- `rich-text` page block remains schema-only until a real page uses it;
+- `rich-text` page block remains absent from live page content while its registry component is executable;
 - reachable RichText body kinds in article/KB content are exactly `markdown`;
 - speculative formats are documented and not present as live content kinds.
