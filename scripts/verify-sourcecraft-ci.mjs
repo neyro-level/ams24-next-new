@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
 const ciPath = path.join(process.cwd(), '.sourcecraft', 'ci.yaml')
-const workflowNames = ['merge-standard', 'merge-risky']
+const workflowNames = ['merge-standard', 'merge-risky', 'release-artifact']
 
 async function readRuntimeContract() {
   const [nodeVersion, packageJsonSource] = await Promise.all([
@@ -150,6 +150,30 @@ function analyzeSourcecraftCi(source, contract) {
     if (workflow === 'merge-risky' && !/corepack pnpm verify:release/.test(block)) {
       errors.push('merge-risky must run corepack pnpm verify:release')
     }
+
+    if (workflow === 'release-artifact') {
+      if (!/test "\$SOURCECRAFT_COMMIT_REF" = "refs\/heads\/main"/.test(block)) {
+        errors.push('release-artifact must fail unless the selected ref is main')
+      }
+      if (countMatches(block, /corepack pnpm verify:release/g) !== 1) {
+        errors.push('release-artifact must run exactly one release proof')
+      }
+      if (!/archive="release-\$\{release_sha\}\.tar\.gz"/.test(block)) {
+        errors.push('release-artifact must name the archive release-<sha>.tar.gz')
+      }
+      if (!/sha256sum "release-artifacts\/\$\{archive\}"/.test(block)) {
+        errors.push('release-artifact must calculate the archive SHA-256 checksum')
+      }
+      if (!/release-artifacts\/manifest\.json/.test(block)) {
+        errors.push('release-artifact must emit the release manifest')
+      }
+      if (!/artifacts:\r?\n\s+paths:\r?\n\s+- release-artifacts\//.test(block)) {
+        errors.push('release-artifact must upload the release artifact directory once')
+      }
+      if (/\b(?:deploy|ssh|scp|rsync|kubectl)\b/i.test(block)) {
+        errors.push('release-artifact must not contain deployment commands')
+      }
+    }
   }
 
   return errors
@@ -199,6 +223,37 @@ function buildValidFixture(contract) {
                 node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
                 corepack pnpm verify:release
+  release-artifact:
+    inputs:
+      expected_commit_sha:
+        required: true
+    tasks:
+      - name: release
+        cubes:
+          - name: static-site-release
+            image: docker.io/library/node:${contract.nodeVersion}-alpine
+            script:
+              - |
+                test "$SOURCECRAFT_EVENT" = "manual"
+                test "$SOURCECRAFT_COMMIT_REF" = "refs/heads/main"
+                test "$SOURCECRAFT_COMMIT_SHA" = "\${{ inputs.expected_commit_sha }}"
+                EXPECTED_COMMIT_SHA="\${{ inputs.expected_commit_sha }}"
+                export EXPECTED_COMMIT_SHA
+                node scripts/verify-sourcecraft-head.mjs
+                corepack prepare ${contract.packageManager} --activate
+                node scripts/verify-runtime-versions.mjs
+                corepack pnpm install --frozen-lockfile
+                corepack pnpm verify:release
+                release_sha="\${{ inputs.expected_commit_sha }}"
+                archive="release-\${release_sha}.tar.gz"
+                mkdir -p release-artifacts
+                tar -czf "release-artifacts/\${archive}" -C out .
+                checksum="$(sha256sum "release-artifacts/\${archive}" | awk '{print $1}')"
+                printf '%s  %s\\n' "$checksum" "$archive" > "release-artifacts/\${archive}.sha256"
+                printf '{}' > release-artifacts/manifest.json
+            artifacts:
+              paths:
+                - release-artifacts/
 `
 }
 
@@ -208,13 +263,13 @@ async function runSelfTest() {
   const cases = [
     ['valid baseline', valid, 0],
     ['automatic trigger', `on:\n  push:\n${valid}`, 2],
-    ['floating node image', valid.replaceAll(`node:${contract.nodeVersion}-alpine`, 'node:24-alpine'), 2],
-    ['missing frozen install', valid.replaceAll('corepack pnpm install --frozen-lockfile', 'corepack pnpm install'), 2],
-    ['missing exact-head script', valid.replaceAll('node scripts/verify-sourcecraft-head.mjs', ''), 2],
+    ['floating node image', valid.replaceAll(`node:${contract.nodeVersion}-alpine`, 'node:24-alpine'), 3],
+    ['missing frozen install', valid.replaceAll('corepack pnpm install --frozen-lockfile', 'corepack pnpm install'), 3],
+    ['missing exact-head script', valid.replaceAll('node scripts/verify-sourcecraft-head.mjs', ''), 3],
     [
       'missing manual-event assertion',
       valid.replaceAll('test "$SOURCECRAFT_EVENT" = "manual"', ''),
-      2,
+      3,
     ],
     [
       'missing exact-SHA comparison',
@@ -222,7 +277,7 @@ async function runSelfTest() {
         'test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"',
         '',
       ),
-      2,
+      3,
     ],
     [
       'risky gate lacks release proof',
@@ -235,9 +290,39 @@ async function runSelfTest() {
       2,
     ],
     [
+      'release workflow is not exact-main',
+      valid.replace('test "$SOURCECRAFT_COMMIT_REF" = "refs/heads/main"', ''),
+      1,
+    ],
+    [
+      'release archive has unstable name',
+      valid.replace('archive="release-${release_sha}.tar.gz"', 'archive="release-latest.tar.gz"'),
+      1,
+    ],
+    [
+      'release checksum is missing',
+      valid.replace('sha256sum "release-artifacts/${archive}"', 'cksum "release-artifacts/${archive}"'),
+      1,
+    ],
+    [
+      'release manifest is missing',
+      valid.replace('release-artifacts/manifest.json', 'release-artifacts/metadata.json'),
+      1,
+    ],
+    [
+      'release artifact upload is missing',
+      valid.replace('                - release-artifacts/', '                - missing-artifacts/'),
+      1,
+    ],
+    [
+      'release workflow attempts deployment',
+      valid.replace('                tar -czf', '                rsync /tmp/remote\n                tar -czf'),
+      1,
+    ],
+    [
       'wrong package manager activation',
       valid.replaceAll(`corepack prepare ${contract.packageManager} --activate`, `corepack prepare pnpm@${Number(contract.pnpmVersion.split('.')[0]) - 1}.0.0 --activate`),
-      2,
+      3,
     ],
     [
       'extra paid workflow',

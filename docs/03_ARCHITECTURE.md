@@ -441,12 +441,13 @@ Critical browser checks: home/navigation, representative product page, article, 
 `DELIVERY_PROFILE=CRITICAL`:
 
 - zero automatic paid CI on branch push/PR;
-- `.sourcecraft/ci.yaml` defines manual-only `merge-standard` and `merge-risky` workflows, with no `on.push`, `on.pull_request` or `on.schedule` triggers;
+- `.sourcecraft/ci.yaml` defines manual-only `merge-standard`, `merge-risky` and exact-main `release-artifact` workflows, with no `on.push`, `on.pull_request` or `on.schedule` triggers;
 - each manual gate requires `expected_commit_sha` and fails closed unless `SOURCECRAFT_EVENT=manual` and `SOURCECRAFT_COMMIT_SHA` equals that input;
 - one exact-head risk-classified SourceCraft Merge Gate before merge;
 - review is mandatory and separate from CI;
 - production only from clean canonical `main` and only by explicit owner command;
-- artifact is built reproducibly, uploaded to release storage and deployed atomically;
+- the exact-main release workflow builds once, emits a SHA-named archive, checksum and manifest, and retains them as a temporary SourceCraft workflow artifact; durable release storage remains a separate unresolved production prerequisite;
+- production deployment remains a separate explicit operation and must not rebuild the artifact;
 - exact SHA, live smoke and rollback evidence are mandatory.
 
 ## 16. Production Contract

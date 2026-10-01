@@ -70,3 +70,45 @@ workflows:
                 node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
                 corepack pnpm verify:release
+
+  release-artifact:
+    inputs:
+      expected_commit_sha:
+        type: string
+        required: true
+        description: Exact main SHA to build and archive without deployment.
+    settings:
+      max_cube_duration: 10m
+    checkout:
+      enabled: true
+      fetch_depth: 1
+      remove_credentials: true
+    tasks:
+      - name: release
+        cubes:
+          - name: static-site-release
+            image: docker.io/library/node:24.20.0-alpine
+            script:
+              - |
+                set -eu
+                test "$SOURCECRAFT_EVENT" = "manual"
+                test "$SOURCECRAFT_COMMIT_REF" = "refs/heads/main"
+                test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
+                EXPECTED_COMMIT_SHA="${{ inputs.expected_commit_sha }}"
+                export EXPECTED_COMMIT_SHA
+                node scripts/verify-sourcecraft-head.mjs
+                corepack enable
+                corepack prepare pnpm@12.8.1 --activate
+                node scripts/verify-runtime-versions.mjs
+                corepack pnpm install --frozen-lockfile
+                corepack pnpm verify:release
+                release_sha="${{ inputs.expected_commit_sha }}"
+                archive="release-${release_sha}.tar.gz"
+                mkdir -p release-artifacts
+                tar -czf "release-artifacts/${archive}" -C out .
+                checksum="$(sha256sum "release-artifacts/${archive}" | awk '{print $1}')"
+                printf '%s  %s\n' "$checksum" "$archive" > "release-artifacts/${archive}.sha256"
+                printf '{"schema":"ams24-release-manifest-v1","commit_sha":"%s","archive":"%s","sha256":"%s"}\n' "$release_sha" "$archive" "$checksum" > release-artifacts/manifest.json
+            artifacts:
+              paths:
+                - release-artifacts/
