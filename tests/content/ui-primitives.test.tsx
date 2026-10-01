@@ -1,10 +1,24 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
+import { cn } from '@/core/lib/utils'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
 
 describe('canonical UI primitives', () => {
+  it('merges semantic typography roles independently from text colors', () => {
+    expect(cn('text-h3', 'text-foreground')).toBe('text-h3 text-foreground')
+    expect(cn('text-body', 'text-h2')).toBe('text-h2')
+  })
+
+  it('lets a semantic typography role override the button size without removing its foreground color', () => {
+    const html = renderToStaticMarkup(<Button className="text-body-sm">Отправить</Button>)
+
+    expect(html).toContain('text-body-sm')
+    expect(html).toContain('text-primary-foreground')
+    expect(html).not.toMatch(/class="[^"]*\btext-sm\b/)
+  })
+
   it('keeps CTA links semantic when Button owns the visual style', () => {
     const html = renderToStaticMarkup(
       <Button asChild variant="outlineDark" size="xl">
