@@ -107,7 +107,8 @@ export function renderNginxRedirects(rules, manifest) {
 }
 
 export function assertGeneratedFile(expected, actual) {
-  if (actual !== expected) {
+  const normalizeLineEndings = (value) => value.replace(/\r\n?/g, '\n')
+  if (normalizeLineEndings(actual) !== normalizeLineEndings(expected)) {
     throw new Error('Generated Nginx redirects are stale; run pnpm generate:nginx-redirects')
   }
 }
@@ -148,6 +149,7 @@ async function runSelfTest() {
   )
   if (rendered !== expected) throw new Error('Generator output is not deterministic')
   assertGeneratedFile(expected, rendered)
+  assertGeneratedFile(expected, expected.replaceAll('\n', '\r\n'))
 
   const rejected = [
     {
