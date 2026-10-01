@@ -27,9 +27,9 @@ describe('route skeleton visibility controls', () => {
     }
   })
 
-  it('keeps unfinished skeleton routes noindex and absent from sitemap', () => {
+  it('keeps unfinished skeleton routes noindex and absent from sitemap', async () => {
     const repository = createContentRepository(localContent)
-    const sitemapPaths = buildSitemapPaths(repository)
+    const sitemapPaths = await buildSitemapPaths(repository)
 
     for (const route of staticRouteSkeletons) {
       const metadata = buildSkeletonMetadata(route)

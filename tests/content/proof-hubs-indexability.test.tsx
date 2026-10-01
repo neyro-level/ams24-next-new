@@ -52,8 +52,8 @@ const proofHubs: ProofHub[] = [
 ]
 
 describe('proof hubs indexability guard', () => {
-  it('keeps incomplete proof hubs noindex and out of sitemap', () => {
-    const sitemapPaths = buildSitemapPaths(createContentRepository(localContent))
+  it('keeps incomplete proof hubs noindex and out of sitemap', async () => {
+    const sitemapPaths = await buildSitemapPaths(createContentRepository(localContent))
 
     for (const hub of proofHubs) {
       expect(hub.metadata.alternates?.canonical).toBe(new URL(hub.path, 'https://ams24.ru').toString())

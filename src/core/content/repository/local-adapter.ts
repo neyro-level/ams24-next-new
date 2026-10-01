@@ -17,8 +17,8 @@ import {
 import type { ContentRepository } from './contract'
 
 const localContentSchema = z.object({
-  siteSettings: siteSettingsSchema.optional(),
-  navigation: navigationSchema.optional(),
+  siteSettings: siteSettingsSchema,
+  navigation: navigationSchema,
   products: z.array(productSchema).default([]),
   pages: z.array(pageSchema).default([]),
   tariffs: z.array(tariffSchema).default([]),
@@ -144,42 +144,62 @@ export function createContentRepository(input: LocalContentInput): ContentReposi
   assertUniqueLocalizedPaths(content)
 
   return {
-    ...content,
-    getProduct(id) {
+    async getSiteSettings() {
+      return content.siteSettings
+    },
+    async getNavigation() {
+      return content.navigation
+    },
+    async getProducts() {
+      return content.products
+    },
+    async getPages() {
+      return content.pages
+    },
+    async getTariffs() {
+      return content.tariffs
+    },
+    async getCases() {
+      return content.cases
+    },
+    async getReviews() {
+      return content.reviews
+    },
+    async getCalculations() {
+      return content.calculations
+    },
+    async getArticles() {
+      return content.articles
+    },
+    async getKnowledgeArticles() {
+      return content.knowledgeArticles
+    },
+    async getProduct(id) {
       return productIndex.get(id)
     },
-    getPageByPath(path, locale = defaultLocale) {
+    async getPageByPath(path, locale = defaultLocale) {
       return pageByPath.get(localizedPathKey(locale, path))
     },
-    getCaseByPath(path, locale = defaultLocale) {
+    async getCaseByPath(path, locale = defaultLocale) {
       return caseByPath.get(localizedPathKey(locale, path))
     },
-    getArticleByPath(path, locale = defaultLocale) {
+    async getArticleByPath(path, locale = defaultLocale) {
       return articleByPath.get(localizedPathKey(locale, path))
     },
-    getKnowledgeArticleByPath(path, locale = defaultLocale) {
+    async getKnowledgeArticleByPath(path, locale = defaultLocale) {
       return knowledgeByPath.get(localizedPathKey(locale, path))
     },
-    getTariffsForProduct(productId) {
+    async getTariffsForProduct(productId) {
       return content.tariffs.filter((item) => item.productRef === productId)
     },
-    getCasesForProduct(productId) {
+    async getCasesForProduct(productId) {
       return content.cases.filter((item) => item.productRefs.includes(productId))
     },
-    getReviewsForProduct(productId) {
+    async getReviewsForProduct(productId) {
       return content.reviews.filter((item) => item.productRef === productId)
     },
-    getArticlesForProduct(productId) {
+    async getArticlesForProduct(productId) {
       return content.articles.filter((item) => item.productRefs.includes(productId))
-    },
-    assertProductRef(productId) {
-      const product = productIndex.get(productId)
-
-      if (!product) {
-        throw new Error(`Unknown product ref: ${productId}`)
-      }
-
-      return product
     },
   }
 }

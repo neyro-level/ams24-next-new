@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest'
 import HomePage from '@/app/page'
 
 describe('representative homepage', () => {
-  it('renders the approved composition patterns', () => {
-    const html = renderToStaticMarkup(<HomePage />)
+  it('renders the approved composition patterns', async () => {
+    const html = renderToStaticMarkup(await HomePage())
 
     expect(html.match(/<h1\b/g)).toHaveLength(1)
     expect(html).toContain('href="/impuls/"')
@@ -17,8 +17,8 @@ describe('representative homepage', () => {
     expect(html).toContain('data-analytics-event="lead_form_view"')
   })
 
-  it('keeps design-intake accessibility and mobile invariants measurable', () => {
-    const html = renderToStaticMarkup(<HomePage />)
+  it('keeps design-intake accessibility and mobile invariants measurable', async () => {
+    const html = renderToStaticMarkup(await HomePage())
 
     expect(html).toContain('href="#lead-form"')
     expect(html).toContain('href="#products"')

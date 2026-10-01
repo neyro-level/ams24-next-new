@@ -1,11 +1,12 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import ZashchitaProductPage, { metadata } from '@/app/zashchita/page'
+import ZashchitaProductPage, { generateMetadata } from '@/app/zashchita/page'
 import { staticRouteSkeletons } from '@/project/route-skeletons'
 
 describe('/zashchita/ product page', () => {
-  it('has protection-risk SEO metadata and is no longer an unfinished skeleton', () => {
+  it('has protection-risk SEO metadata and is no longer an unfinished skeleton', async () => {
+    const metadata = await generateMetadata()
     expect(metadata.title).toBe('Импульс Защита — аудит риска перехвата лидов')
     expect(metadata.description).toContain('без абсолютных гарантий')
     expect(metadata.alternates?.canonical).toBe('https://ams24.ru/zashchita/')
@@ -15,8 +16,8 @@ describe('/zashchita/ product page', () => {
     expect(staticRouteSkeletons.some((route) => route.path === '/zashchita/')).toBe(false)
   })
 
-  it('explains threat model, limits, evidence and CTA', () => {
-    const html = renderToStaticMarkup(<ZashchitaProductPage />)
+  it('explains threat model, limits, evidence and CTA', async () => {
+    const html = renderToStaticMarkup(await ZashchitaProductPage())
 
     expect(html.match(/<h1\b/g)).toHaveLength(1)
     expect(html).toContain('Импульс Защита — аудит риска перехвата лидов')
@@ -29,8 +30,8 @@ describe('/zashchita/ product page', () => {
     expect(html).not.toContain('Публикационный контроль')
   })
 
-  it('keeps absolute guarantee out of the public promise', () => {
-    const html = renderToStaticMarkup(<ZashchitaProductPage />)
+  it('keeps absolute guarantee out of the public promise', async () => {
+    const html = renderToStaticMarkup(await ZashchitaProductPage())
 
     expect(html).toContain('aria-label="Краткая карточка продукта Импульс Защита"')
     expect(html).toContain('aria-label="Контекст будущей заявки на аудит защиты"')

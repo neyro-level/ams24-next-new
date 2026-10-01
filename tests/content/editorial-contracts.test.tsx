@@ -42,11 +42,11 @@ describe('article and knowledge editorial contracts', () => {
     })
   })
 
-  it('keeps editorial drafts noindex and outside generated static routes', () => {
+  it('keeps editorial drafts noindex and outside generated static routes', async () => {
     expect(localContent.articles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
     expect(localContent.knowledgeArticles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
-    expect(generateArticleParams()).toEqual([])
-    expect(generateKnowledgeParams()).toEqual([])
+    await expect(generateArticleParams()).resolves.toEqual([])
+    await expect(generateKnowledgeParams()).resolves.toEqual([])
   })
 
   it('renders editorial typography and different layouts', () => {

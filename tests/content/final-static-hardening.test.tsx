@@ -26,9 +26,9 @@ const guardedStaticPaths = [
 ] as const
 
 describe('final static SEO/security hardening', () => {
-  it('keeps sitemap restricted to approved indexable public routes', () => {
+  it('keeps sitemap restricted to approved indexable public routes', async () => {
     const repository = createContentRepository(localContent)
-    const sitemapPaths = buildSitemapPaths(repository)
+    const sitemapPaths = await buildSitemapPaths(repository)
 
     expect(sitemapPaths).toEqual(['/', '/impuls/', '/pixel/', '/zashchita/'])
     expect(indexableStaticPaths).toContain('/')

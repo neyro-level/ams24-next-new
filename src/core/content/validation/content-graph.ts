@@ -1,5 +1,16 @@
 import type { ContentRepository } from '@/core/content/repository'
-import type { ProductDTO, RichTextDTO } from '@/core/content/schemas'
+import type {
+  ArticleDTO,
+  CalculationExampleDTO,
+  CaseDTO,
+  KnowledgeArticleDTO,
+  NavigationDTO,
+  PageDTO,
+  ProductDTO,
+  ReviewDTO,
+  RichTextDTO,
+  TariffDTO,
+} from '@/core/content/schemas'
 
 export type ContentGraphIssueCode =
   | 'broken-link'
@@ -36,6 +47,35 @@ export type ContentGraphRedirect = {
 
 export type ContentGraphValidationOptions = {
   redirects?: ContentGraphRedirect[]
+}
+
+type ContentRepositoryData = {
+  navigation: NavigationDTO
+  products: ProductDTO[]
+  pages: PageDTO[]
+  tariffs: TariffDTO[]
+  cases: CaseDTO[]
+  reviews: ReviewDTO[]
+  calculations: CalculationExampleDTO[]
+  articles: ArticleDTO[]
+  knowledgeArticles: KnowledgeArticleDTO[]
+}
+
+async function loadContentRepository(repository: ContentRepository): Promise<ContentRepositoryData> {
+  const [navigation, products, pages, tariffs, cases, reviews, calculations, articles, knowledgeArticles] =
+    await Promise.all([
+      repository.getNavigation(),
+      repository.getProducts(),
+      repository.getPages(),
+      repository.getTariffs(),
+      repository.getCases(),
+      repository.getReviews(),
+      repository.getCalculations(),
+      repository.getArticles(),
+      repository.getKnowledgeArticles(),
+    ])
+
+  return { navigation, products, pages, tariffs, cases, reviews, calculations, articles, knowledgeArticles }
 }
 
 const markdownLinkPattern = /\[[^\]]+\]\((\/[^)\s]+)\)/g
@@ -79,7 +119,7 @@ function extractInternalLinks(markdown: string) {
   return [...links]
 }
 
-function buildKnownPaths(repository: ContentRepository) {
+function buildKnownPaths(repository: ContentRepositoryData) {
   return new Set([
     ...repository.products.map((item) => item.path),
     ...repository.pages.map((item) => item.path),
@@ -143,7 +183,7 @@ type RoutableEntity = {
   }
 }
 
-function getRoutableEntities(repository: ContentRepository) {
+function getRoutableEntities(repository: ContentRepositoryData) {
   return [
     ...repository.products.map((item) => ({ kind: 'product', item: item as RoutableEntity })),
     ...repository.pages.map((item) => ({ kind: 'page', item: item as RoutableEntity })),
@@ -153,7 +193,7 @@ function getRoutableEntities(repository: ContentRepository) {
   ]
 }
 
-function validateGlobalIds(issues: ContentGraphIssue[], repository: ContentRepository) {
+function validateGlobalIds(issues: ContentGraphIssue[], repository: ContentRepositoryData) {
   const ids = new Map<string, string>()
   const rows = [
     ...repository.products.map((item) => ({ entity: `product:${item.id}`, id: item.id })),
@@ -178,7 +218,7 @@ function validateGlobalIds(issues: ContentGraphIssue[], repository: ContentRepos
   }
 }
 
-function validateRoutableEntities(issues: ContentGraphIssue[], repository: ContentRepository) {
+function validateRoutableEntities(issues: ContentGraphIssue[], repository: ContentRepositoryData) {
   const localizedPaths = new Map<string, string>()
 
   for (const { kind, item } of getRoutableEntities(repository)) {
@@ -226,7 +266,7 @@ function validateRoutableEntities(issues: ContentGraphIssue[], repository: Conte
   }
 }
 
-function assertProductRef(
+function validateProductRef(
   issues: ContentGraphIssue[],
   productIds: Set<string>,
   productId: string,
@@ -237,37 +277,37 @@ function assertProductRef(
   }
 }
 
-function validateEntityRefs(issues: ContentGraphIssue[], repository: ContentRepository) {
+function validateEntityRefs(issues: ContentGraphIssue[], repository: ContentRepositoryData) {
   const productIds = new Set(repository.products.map((item) => item.id))
 
   for (const tariff of repository.tariffs) {
-    assertProductRef(issues, productIds, tariff.productRef, `tariff:${tariff.id}`)
+    validateProductRef(issues, productIds, tariff.productRef, `tariff:${tariff.id}`)
   }
 
   for (const item of repository.cases) {
     for (const productId of item.productRefs) {
-      assertProductRef(issues, productIds, productId, `case:${item.id}`)
+      validateProductRef(issues, productIds, productId, `case:${item.id}`)
     }
   }
 
   for (const review of repository.reviews) {
     if (review.productRef) {
-      assertProductRef(issues, productIds, review.productRef, `review:${review.id}`)
+      validateProductRef(issues, productIds, review.productRef, `review:${review.id}`)
     }
   }
 
   for (const item of repository.calculations) {
-    assertProductRef(issues, productIds, item.productRef, `calculation:${item.id}`)
+    validateProductRef(issues, productIds, item.productRef, `calculation:${item.id}`)
   }
 
   for (const article of repository.articles) {
     for (const productId of article.productRefs) {
-      assertProductRef(issues, productIds, productId, `article:${article.id}`)
+      validateProductRef(issues, productIds, productId, `article:${article.id}`)
     }
   }
 
   for (const article of repository.knowledgeArticles) {
-    assertProductRef(issues, productIds, article.productRef, `knowledge:${article.id}`)
+    validateProductRef(issues, productIds, article.productRef, `knowledge:${article.id}`)
   }
 
   for (const page of repository.pages) {
@@ -283,11 +323,7 @@ function validateEntityRefs(issues: ContentGraphIssue[], repository: ContentRepo
   }
 }
 
-function validateNavigation(issues: ContentGraphIssue[], repository: ContentRepository, knownPaths: Set<string>) {
-  if (!repository.navigation) {
-    return
-  }
-
+function validateNavigation(issues: ContentGraphIssue[], repository: ContentRepositoryData, knownPaths: Set<string>) {
   const navigationLinks = [
     ...repository.navigation.header.map((link) => ({ source: 'navigation:header', path: link.path })),
     ...Object.entries(repository.navigation.footer).flatMap(([group, links]) =>
@@ -331,25 +367,26 @@ function validateRedirects(issues: ContentGraphIssue[], redirects: ContentGraphR
   }
 }
 
-function getArticlesForProduct(repository: ContentRepository, productId: ProductDTO['id']) {
+function getArticlesForProduct(repository: ContentRepositoryData, productId: ProductDTO['id']) {
   return repository.articles.filter((item) => item.productRefs.includes(productId))
 }
 
-export function validateContentGraph(
+export async function validateContentGraph(
   repository: ContentRepository,
   options: ContentGraphValidationOptions = {},
-): ContentGraphIssue[] {
+): Promise<ContentGraphIssue[]> {
+  const content = await loadContentRepository(repository)
   const issues: ContentGraphIssue[] = []
-  const knownPaths = buildKnownPaths(repository)
+  const knownPaths = buildKnownPaths(content)
   const articleIntentIndex = new Map<string, string>()
 
-  validateGlobalIds(issues, repository)
-  validateRoutableEntities(issues, repository)
-  validateEntityRefs(issues, repository)
-  validateNavigation(issues, repository, knownPaths)
+  validateGlobalIds(issues, content)
+  validateRoutableEntities(issues, content)
+  validateEntityRefs(issues, content)
+  validateNavigation(issues, content, knownPaths)
   validateRedirects(issues, options.redirects)
 
-  for (const article of repository.articles) {
+  for (const article of content.articles) {
     const entity = `article:${article.id}`
     const normalizedIntent = article.topic.trim().toLowerCase()
     const previous = articleIntentIndex.get(normalizedIntent)
@@ -379,13 +416,13 @@ export function validateContentGraph(
     validateRichTextLinks(issues, entity, article.body, knownPaths)
   }
 
-  for (const article of repository.knowledgeArticles) {
+  for (const article of content.knowledgeArticles) {
     validateRichTextLinks(issues, `knowledge:${article.id}`, article.body, knownPaths)
   }
 
-  for (const product of repository.products) {
-    const articles = getArticlesForProduct(repository, product.id)
-    const knowledgeItems = repository.knowledgeArticles.filter((item) => item.productRef === product.id)
+  for (const product of content.products) {
+    const articles = getArticlesForProduct(content, product.id)
+    const knowledgeItems = content.knowledgeArticles.filter((item) => item.productRef === product.id)
 
     if (articles.length === 0 || knowledgeItems.length === 0) {
       issues.push(
@@ -401,11 +438,11 @@ export function validateContentGraph(
   return issues
 }
 
-export function assertValidContentGraph(
+export async function assertValidContentGraph(
   repository: ContentRepository,
   options: ContentGraphValidationOptions = {},
 ) {
-  const issues = validateContentGraph(repository, options)
+  const issues = await validateContentGraph(repository, options)
 
   if (issues.length > 0) {
     throw new Error(`Content graph validation failed: ${issues.map((item) => item.message).join('; ')}`)

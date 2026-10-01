@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 
 import { describe, expect, it } from 'vitest'
 
-import { createContentRepository, type ContentRepository } from '@/core/content/repository'
+import { createContentRepository } from '@/core/content/repository'
 import { assertValidContentGraph } from '@/core/content/validation'
 import { localContent } from '@/project/content/local-content'
 
@@ -35,10 +35,6 @@ const requiredReleaseVerifySteps = [
   'pnpm generate:precompressed',
   'pnpm guard:artifact',
 ] as const
-
-function invalidRepository(input: unknown): ContentRepository {
-  return input as ContentRepository
-}
 
 function validateChainedScript(script: string, requiredSteps: readonly string[]) {
   const steps = script.split(' && ')
@@ -117,15 +113,15 @@ describe('daily verification command trace', () => {
     })
   })
 
-  it('propagates graph validation failures through the assertion API', () => {
-    const repository = invalidRepository({
-      ...createContentRepository(localContent),
+  it('propagates graph validation failures through the assertion API', async () => {
+    const repository = createContentRepository({
+      ...localContent,
       navigation: {
-        ...createContentRepository(localContent).navigation!,
+        ...localContent.navigation,
         header: [{ label: 'Missing', path: '/missing/' }],
       },
     })
 
-    expect(() => assertValidContentGraph(repository)).toThrow(/Content graph validation failed/)
+    await expect(assertValidContentGraph(repository)).rejects.toThrow(/Content graph validation failed/)
   })
 })

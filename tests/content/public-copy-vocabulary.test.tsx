@@ -52,10 +52,10 @@ function visibleText(markup: string) {
 }
 
 const renderedRoutes = [
-  { route: '/', render: () => <HomePage /> },
-  { route: '/impuls/', render: () => <ImpulsProductPage /> },
-  { route: '/pixel/', render: () => <PixelProductPage /> },
-  { route: '/zashchita/', render: () => <ZashchitaProductPage /> },
+  { route: '/', render: () => HomePage() },
+  { route: '/impuls/', render: () => ImpulsProductPage() },
+  { route: '/pixel/', render: () => PixelProductPage() },
+  { route: '/zashchita/', render: () => ZashchitaProductPage() },
   { route: '/tarify/', render: () => <TariffsPage /> },
   { route: '/raschety/', render: () => <CalculationsPage /> },
   { route: '/keisy/', render: () => <CasesPage /> },
@@ -72,9 +72,9 @@ const renderedRoutes = [
 ] as const
 
 describe('public route copy vocabulary', () => {
-  it('keeps internal implementation vocabulary out of visible rendered copy', () => {
+  it('keeps internal implementation vocabulary out of visible rendered copy', async () => {
     for (const routeCase of renderedRoutes) {
-      const text = visibleText(renderToStaticMarkup(routeCase.render()))
+      const text = visibleText(renderToStaticMarkup(await routeCase.render()))
 
       for (const forbidden of forbiddenVisibleCopy) {
         expect(text, routeCase.route).not.toMatch(forbidden)

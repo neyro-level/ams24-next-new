@@ -42,11 +42,11 @@ describe('initial article and knowledge briefs', () => {
     }
   })
 
-  it('turns initial article briefs into substantive reviewed draft articles without indexing them', () => {
+  it('turns initial article briefs into substantive reviewed draft articles without indexing them', async () => {
     const repository = createContentRepository(localContent)
 
     for (const brief of initialArticleBriefs) {
-      const article = repository.getArticleByPath(brief.outputPath)
+      const article = await repository.getArticleByPath(brief.outputPath)
 
       expect(article).toBeDefined()
       expect(article).toMatchObject({
@@ -65,11 +65,11 @@ describe('initial article and knowledge briefs', () => {
     }
   })
 
-  it('turns initial KB briefs into actionable current draft instructions', () => {
+  it('turns initial KB briefs into actionable current draft instructions', async () => {
     const repository = createContentRepository(localContent)
 
     for (const brief of initialKnowledgeBriefs) {
-      const article = repository.getKnowledgeArticleByPath(brief.outputPath)
+      const article = await repository.getKnowledgeArticleByPath(brief.outputPath)
 
       expect(article).toBeDefined()
       expect(article).toMatchObject({

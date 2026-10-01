@@ -1,4 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
+import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
@@ -11,7 +12,15 @@ const trustFacts = [
   'Три продукта в одной системе',
 ] as const
 
-export const metadata = buildMetadata(getContentRepository().getPageByPath('/')!.seo)
+export async function generateMetadata() {
+  const page = await getContentRepository().getPageByPath('/')
+
+  if (!page) {
+    throw new Error('Home page content is missing')
+  }
+
+  return buildMetadata(page.seo)
+}
 
 const proofPreviews = [
   {
@@ -40,9 +49,9 @@ const productRouteSummaries = {
   zashchita: 'Маршрут для ситуации, где нужно оценить риск утечки лидов, собрать симптомы и перейти к безопасному аудиту.',
 } as const
 
-export default function HomePage() {
+export default async function HomePage() {
   const repository = getContentRepository()
-  const products = repository.products
+  const products = await repository.getProducts()
 
   return (
     <main>
@@ -57,7 +66,7 @@ export default function HomePage() {
   )
 }
 
-type HomeProduct = ReturnType<typeof getContentRepository>['products'][number]
+type HomeProduct = ProductDTO
 
 function HomeHeroSection({ products }: { products: readonly HomeProduct[] }) {
   return (

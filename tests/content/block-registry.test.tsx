@@ -37,13 +37,15 @@ const blockFixtures = {
   },
 } as const
 
-const renderContext = {
-  products: getContentRepository().products,
-  lead: {
-    product: 'site' as const,
-    route: '/',
-    ctaId: 'page-block',
-  },
+async function getRenderContext() {
+  return {
+    products: await getContentRepository().getProducts(),
+    lead: {
+      product: 'site' as const,
+      route: '/',
+      ctaId: 'page-block',
+    },
+  }
 }
 
 describe('executable page block registry', () => {
@@ -68,8 +70,9 @@ describe('executable page block registry', () => {
     }
   })
 
-  it('parses and renders every registered block, including rich text', () => {
+  it('parses and renders every registered block, including rich text', async () => {
     const blocks = parsePageBlocks(Object.values(blockFixtures))
+    const renderContext = await getRenderContext()
     const html = renderToStaticMarkup(<PageBlocks blocks={blocks} context={renderContext} />)
 
     expect(blocks.map((block) => block.blockType)).toEqual(blockTypes)
@@ -79,7 +82,8 @@ describe('executable page block registry', () => {
     expect(html).toContain('data-form-id')
   })
 
-  it('rejects malformed registered blocks before component execution', () => {
+  it('rejects malformed registered blocks before component execution', async () => {
+    const renderContext = await getRenderContext()
     expect(() =>
       renderPageBlock({ blockType: 'rich-text', body: { format: 'markdown' } }, renderContext),
     ).toThrow()

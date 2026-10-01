@@ -14,13 +14,20 @@ export type SitemapEntry = {
   lastModified: string
 }
 
-export function buildSitemapEntries(repository: ContentRepository): SitemapEntry[] {
+export async function buildSitemapEntries(repository: ContentRepository): Promise<SitemapEntry[]> {
+  const [products, pages, cases, articles, knowledgeArticles] = await Promise.all([
+    repository.getProducts(),
+    repository.getPages(),
+    repository.getCases(),
+    repository.getArticles(),
+    repository.getKnowledgeArticles(),
+  ])
   const entities: RouteEntity[] = [
-    ...repository.products,
-    ...repository.pages,
-    ...repository.cases,
-    ...repository.articles,
-    ...repository.knowledgeArticles,
+    ...products,
+    ...pages,
+    ...cases,
+    ...articles,
+    ...knowledgeArticles,
   ]
 
   return entities
@@ -35,8 +42,8 @@ export function buildSitemapEntries(repository: ContentRepository): SitemapEntry
     .sort((left, right) => left.path.localeCompare(right.path))
 }
 
-export function buildSitemapPaths(repository: ContentRepository) {
-  return buildSitemapEntries(repository).map((entry) => entry.path)
+export async function buildSitemapPaths(repository: ContentRepository) {
+  return (await buildSitemapEntries(repository)).map((entry) => entry.path)
 }
 
 export function pathToSlugParams(path: string, prefix: string) {

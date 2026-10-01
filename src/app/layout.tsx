@@ -13,13 +13,17 @@ const manrope = Manrope({
   display: 'swap',
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getSiteSettingsViewModel().siteOrigin),
-  title: {
-    default: 'Импульс — маркетинговые продукты АМС',
-    template: '%s | Импульс',
-  },
-  description: 'Новый статический сайт платформы маркетинговых продуктов «Импульс».',
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteSettingsViewModel()
+
+  return {
+    metadataBase: new URL(site.siteOrigin),
+    title: {
+      default: 'Импульс — маркетинговые продукты АМС',
+      template: '%s | Импульс',
+    },
+    description: 'Новый статический сайт платформы маркетинговых продуктов «Импульс».',
+  }
 }
 
 export default function RootLayout({

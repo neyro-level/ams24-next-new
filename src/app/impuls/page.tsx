@@ -1,12 +1,21 @@
 import { getContentRepository } from '@/core/content/services/repository'
 import { getPublicClaimsForProduct } from '@/core/content/services/product-claims'
+import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata = buildMetadata(getContentRepository().assertProductRef('impuls').seo)
+export async function generateMetadata() {
+  const product = await getContentRepository().getProduct('impuls')
+
+  if (!product) {
+    throw new Error('Product content is missing: impuls')
+  }
+
+  return buildMetadata(product.seo)
+}
 
 const criteria = [
   'понятна ниша и география запуска',
@@ -47,9 +56,14 @@ const faqs = [
   },
 ] as const
 
-export default function ImpulsProductPage() {
+export default async function ImpulsProductPage() {
   const repository = getContentRepository()
-  const product = repository.assertProductRef('impuls')
+  const product = await repository.getProduct('impuls')
+
+  if (!product) {
+    throw new Error('Product content is missing: impuls')
+  }
+
   const allowedClaims = getPublicClaimsForProduct('impuls')
 
   return (
@@ -64,7 +78,7 @@ export default function ImpulsProductPage() {
   )
 }
 
-type ProductRef = ReturnType<typeof getContentRepository>['products'][number]
+type ProductRef = ProductDTO
 type PublicClaim = ReturnType<typeof getPublicClaimsForProduct>[number]
 
 function ImpulsHeroSection({ product }: { product: ProductRef }) {

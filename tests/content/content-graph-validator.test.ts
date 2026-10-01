@@ -31,12 +31,57 @@ function collectSourceFiles(root: string): string[] {
   return files
 }
 
-function validRepository() {
-  return createContentRepository(localContent)
+const canonicalRepository = createContentRepository(localContent)
+const canonicalData = {
+  siteSettings: await canonicalRepository.getSiteSettings(),
+  navigation: await canonicalRepository.getNavigation(),
+  products: await canonicalRepository.getProducts(),
+  pages: await canonicalRepository.getPages(),
+  tariffs: await canonicalRepository.getTariffs(),
+  cases: await canonicalRepository.getCases(),
+  reviews: await canonicalRepository.getReviews(),
+  calculations: await canonicalRepository.getCalculations(),
+  articles: await canonicalRepository.getArticles(),
+  knowledgeArticles: await canonicalRepository.getKnowledgeArticles(),
 }
 
-function invalidRepository(input: unknown): ContentRepository {
-  return input as ContentRepository
+type RepositoryFixtureData = typeof canonicalData
+type RepositoryFixture = ContentRepository & RepositoryFixtureData
+
+function normalizeFixturePath(path: string) {
+  const leading = path.startsWith('/') ? path : `/${path}`
+  return leading.endsWith('/') ? leading : `${leading}/`
+}
+
+function validRepository(): RepositoryFixture {
+  return {
+    ...canonicalData,
+    async getSiteSettings() { return this.siteSettings },
+    async getNavigation() { return this.navigation },
+    async getProducts() { return this.products },
+    async getPages() { return this.pages },
+    async getTariffs() { return this.tariffs },
+    async getCases() { return this.cases },
+    async getReviews() { return this.reviews },
+    async getCalculations() { return this.calculations },
+    async getArticles() { return this.articles },
+    async getKnowledgeArticles() { return this.knowledgeArticles },
+    async getProduct(id) { return this.products.find((item) => item.id === id) },
+    async getPageByPath(path) { return this.pages.find((item) => item.path === normalizeFixturePath(path)) },
+    async getCaseByPath(path) { return this.cases.find((item) => item.path === normalizeFixturePath(path)) },
+    async getArticleByPath(path) { return this.articles.find((item) => item.path === normalizeFixturePath(path)) },
+    async getKnowledgeArticleByPath(path) {
+      return this.knowledgeArticles.find((item) => item.path === normalizeFixturePath(path))
+    },
+    async getTariffsForProduct(productId) { return this.tariffs.filter((item) => item.productRef === productId) },
+    async getCasesForProduct(productId) { return this.cases.filter((item) => item.productRefs.includes(productId)) },
+    async getReviewsForProduct(productId) { return this.reviews.filter((item) => item.productRef === productId) },
+    async getArticlesForProduct(productId) { return this.articles.filter((item) => item.productRefs.includes(productId)) },
+  }
+}
+
+function invalidRepository(input: unknown): RepositoryFixture {
+  return input as RepositoryFixture
 }
 
 type NegativeFixture = {
@@ -306,14 +351,14 @@ const negativeFixtures: NegativeFixture[] = [
 ]
 
 describe('content graph validator contract', () => {
-  it('exposes one canonical validator API for valid repository content', () => {
+  it('exposes one canonical validator API for valid repository content', async () => {
     const repository = createContentRepository(localContent)
 
-    expect(validateContentGraph(repository)).toEqual([])
-    expect(() => assertValidContentGraph(repository)).not.toThrow()
+    await expect(validateContentGraph(repository)).resolves.toEqual([])
+    await expect(assertValidContentGraph(repository)).resolves.toBeUndefined()
   })
 
-  it('reports cross-entity graph issues without throwing in report mode', () => {
+  it('reports cross-entity graph issues without throwing in report mode', async () => {
     const repository = createContentRepository({
       ...localContent,
       articles: [
@@ -331,7 +376,7 @@ describe('content graph validator contract', () => {
       ],
     })
 
-    expect(validateContentGraph(repository)).toEqual(
+    await expect(validateContentGraph(repository)).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({ code: 'broken-link', entity: 'article:article-duplicate-intent' }),
         expect.objectContaining({ code: 'orphan-product', entity: 'product:zashchita' }),
@@ -339,7 +384,7 @@ describe('content graph validator contract', () => {
     )
   })
 
-  it('fails the content graph explicitly while lexical has no Payload renderer', () => {
+  it('fails the content graph explicitly while lexical has no Payload renderer', async () => {
     const repository = invalidRepository({
       ...validRepository(),
       articles: validRepository().articles.map((article, index) =>
@@ -347,7 +392,7 @@ describe('content graph validator contract', () => {
       ),
     })
 
-    expect(validateContentGraph(repository)).toEqual(
+    await expect(validateContentGraph(repository)).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           code: 'unsupported-richtext-format',
@@ -355,13 +400,13 @@ describe('content graph validator contract', () => {
         }),
       ]),
     )
-    expect(() => assertValidContentGraph(repository)).toThrow(/Unsupported RichText renderer/)
+    await expect(assertValidContentGraph(repository)).rejects.toThrow(/Unsupported RichText renderer/)
   })
 
-  it.each(negativeFixtures)('rejects invalid fixture: $invariant', ({ build, code }) => {
+  it.each(negativeFixtures)('rejects invalid fixture: $invariant', async ({ build, code }) => {
     const { repository, options } = build()
 
-    expect(validateContentGraph(repository, options)).toEqual(
+    await expect(validateContentGraph(repository, options)).resolves.toEqual(
       expect.arrayContaining([expect.objectContaining({ code })]),
     )
   })

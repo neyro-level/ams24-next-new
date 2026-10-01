@@ -4,9 +4,7 @@ import { getNavigationViewModel } from '@/core/content/services/view-models'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 
-function ProductMenu() {
-  const { productLinks } = getNavigationViewModel()
-
+function ProductMenu({ productLinks }: { productLinks: Awaited<ReturnType<typeof getNavigationViewModel>>['productLinks'] }) {
   return (
     <details className="group relative">
       <summary className="cursor-pointer list-none rounded-lg px-3 py-2 text-body-sm font-medium outline-none transition hover:bg-surface-muted focus-visible:ring-3 focus-visible:ring-ring/40">
@@ -23,8 +21,8 @@ function ProductMenu() {
   )
 }
 
-export function SiteHeader() {
-  const { headerLinks, primaryCta, productLinks } = getNavigationViewModel()
+export async function SiteHeader() {
+  const { headerLinks, primaryCta, productLinks } = await getNavigationViewModel()
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-surface-elevated/95 backdrop-blur">
@@ -34,7 +32,7 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Основная навигация" className="hidden items-center gap-1 lg:flex">
-          <ProductMenu />
+          <ProductMenu productLinks={productLinks} />
           {headerLinks.map((link) => (
             <a className="rounded-lg px-3 py-2 text-body-sm font-medium transition hover:bg-surface-muted" href={link.path} key={link.path}>
               {link.label}

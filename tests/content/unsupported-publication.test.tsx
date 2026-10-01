@@ -1,10 +1,10 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import HomePage, { metadata as homeMetadata } from '@/app/page'
-import ImpulsProductPage, { metadata as impulsMetadata } from '@/app/impuls/page'
-import PixelProductPage, { metadata as pixelMetadata } from '@/app/pixel/page'
-import ZashchitaProductPage, { metadata as zashchitaMetadata } from '@/app/zashchita/page'
+import HomePage, { generateMetadata as generateHomeMetadata } from '@/app/page'
+import ImpulsProductPage, { generateMetadata as generateImpulsMetadata } from '@/app/impuls/page'
+import PixelProductPage, { generateMetadata as generatePixelMetadata } from '@/app/pixel/page'
+import ZashchitaProductPage, { generateMetadata as generateZashchitaMetadata } from '@/app/zashchita/page'
 import {
   getPublicClaimsForProduct,
   productClaims,
@@ -13,21 +13,20 @@ import {
 } from '@/project/product-claims'
 import { proofEvidenceInventory, validateProofEvidenceInventory } from '@/project/proof-inventory'
 
-const indexableRoutes = [
-  { path: '/', html: () => renderToStaticMarkup(<HomePage />), metadata: homeMetadata },
-  { path: '/impuls/', html: () => renderToStaticMarkup(<ImpulsProductPage />), metadata: impulsMetadata },
-  { path: '/pixel/', html: () => renderToStaticMarkup(<PixelProductPage />), metadata: pixelMetadata },
-  { path: '/zashchita/', html: () => renderToStaticMarkup(<ZashchitaProductPage />), metadata: zashchitaMetadata },
-] as const
-
 describe('unsupported publication regressions', () => {
-  it('keeps denied claims and internal review routes out of indexable UI', () => {
+  it('keeps denied claims and internal review routes out of indexable UI', async () => {
     const deniedClaims = productClaims.filter((claim) => claim.publicationStatus !== 'allowed')
+    const indexableRoutes = [
+      { path: '/', html: renderToStaticMarkup(await HomePage()), metadata: await generateHomeMetadata() },
+      { path: '/impuls/', html: renderToStaticMarkup(await ImpulsProductPage()), metadata: await generateImpulsMetadata() },
+      { path: '/pixel/', html: renderToStaticMarkup(await PixelProductPage()), metadata: await generatePixelMetadata() },
+      { path: '/zashchita/', html: renderToStaticMarkup(await ZashchitaProductPage()), metadata: await generateZashchitaMetadata() },
+    ]
 
     for (const route of indexableRoutes) {
       expect(route.metadata.robots).toMatchObject({ index: true, follow: true })
 
-      const html = route.html()
+      const html = route.html
 
       for (const claim of deniedClaims) {
         expect(html, `${route.path} must not render denied claim ${claim.id}`).not.toContain(claim.claim)

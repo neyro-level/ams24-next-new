@@ -7,10 +7,10 @@ import { SiteFooter } from '@/ui/shell/site-footer'
 import { SiteHeader } from '@/ui/shell/site-header'
 
 describe('site shell navigation', () => {
-  it('exposes all first-level product and content routes in keyboard reachable shell paths', () => {
-    const { firstLevelRoutes, footerGroups, headerLinks, productLinks } = getNavigationViewModel()
-    const header = renderToStaticMarkup(<SiteHeader />)
-    const footer = renderToStaticMarkup(<SiteFooter />)
+  it('exposes all first-level product and content routes in keyboard reachable shell paths', async () => {
+    const { firstLevelRoutes, footerGroups, headerLinks, productLinks } = await getNavigationViewModel()
+    const header = renderToStaticMarkup(await SiteHeader())
+    const footer = renderToStaticMarkup(await SiteFooter())
     const shell = `${header}${footer}`
 
     expect(header).toContain('aria-label="Основная навигация"')

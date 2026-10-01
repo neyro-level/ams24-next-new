@@ -11,9 +11,9 @@ import {
 import { localContent } from '@/project/content/local-content'
 
 describe('content service ViewModels', () => {
-  it('exposes validated site settings and navigation ViewModels from repository data', () => {
-    const site = getSiteSettingsViewModel(createContentRepository(localContent))
-    const navigation = getNavigationViewModel(createContentRepository(localContent))
+  it('exposes validated site settings and navigation ViewModels from repository data', async () => {
+    const site = await getSiteSettingsViewModel(createContentRepository(localContent))
+    const navigation = await getNavigationViewModel(createContentRepository(localContent))
 
     expect(site).toMatchObject({
       locale: 'ru-RU',
@@ -43,9 +43,9 @@ describe('content service ViewModels', () => {
     ).toThrow()
   })
 
-  it('hard-fails invalid navigation fixtures before UI can consume them', () => {
+  it('hard-fails invalid navigation fixtures before UI can consume them', async () => {
     const repository = createContentRepository(localContent)
-    const content = createContentCatalogViewModel(repository)
+    const content = await createContentCatalogViewModel(repository)
 
     expect(() =>
       createNavigationViewModel(

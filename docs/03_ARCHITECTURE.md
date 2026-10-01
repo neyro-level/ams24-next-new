@@ -126,6 +126,7 @@ Rules:
 - Route identity is unique `(locale, path)`.
 - Product/page publication state is `published | hidden`; intentional editorial drafts follow ADR-0002 and remain `noindex` and outside generated routes.
 - Relations are refs resolved by Content Service.
+- The Content Repository exposes async query methods only. Site Settings and Navigation are required validated inputs; raw collection properties, non-null route assertions and adapter-specific access are not public API.
 - Unknown block, broken ref or duplicate path is a build failure.
 
 Current remediation baseline: this is the target boundary. `CR-00.1` records

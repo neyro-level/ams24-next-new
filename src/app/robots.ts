@@ -4,8 +4,8 @@ import { getSiteSettingsViewModel } from '@/core/content/services/view-models'
 
 export const dynamic = 'force-static'
 
-export default function robots(): MetadataRoute.Robots {
-  const site = getSiteSettingsViewModel()
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const site = await getSiteSettingsViewModel()
 
   return {
     rules: {

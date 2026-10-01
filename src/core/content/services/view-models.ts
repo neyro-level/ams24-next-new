@@ -1,6 +1,5 @@
 import { navigationSchema, siteSettingsSchema } from '@/core/content/schemas'
 import type {
-  NavigationDTO,
   ProductDTO,
   SiteSettingsDTO,
 } from '@/core/content/schemas'
@@ -58,9 +57,9 @@ export function createSiteSettingsViewModel(input: unknown): SiteSettingsViewMod
   }
 }
 
-export function createContentCatalogViewModel(repository: ContentRepository): ContentCatalogViewModel {
+export async function createContentCatalogViewModel(repository: ContentRepository): Promise<ContentCatalogViewModel> {
   return {
-    products: repository.products.filter((product) => product.status === 'published'),
+    products: (await repository.getProducts()).filter((product) => product.status === 'published'),
   }
 }
 
@@ -95,28 +94,17 @@ export function createNavigationViewModel(
   }
 }
 
-function requireRepositoryField<T>(
-  value: T | undefined,
-  fieldName: string,
-): T {
-  if (!value) {
-    throw new Error(`Content repository is missing ${fieldName}`)
-  }
-
-  return value
-}
-
-export function getContentCatalogViewModel(repository = getContentRepository()) {
+export async function getContentCatalogViewModel(repository = getContentRepository()) {
   return createContentCatalogViewModel(repository)
 }
 
-export function getNavigationViewModel(repository = getContentRepository()) {
+export async function getNavigationViewModel(repository = getContentRepository()) {
   return createNavigationViewModel(
-    requireRepositoryField(repository.navigation, 'navigation'),
-    createContentCatalogViewModel(repository),
+    await repository.getNavigation(),
+    await createContentCatalogViewModel(repository),
   )
 }
 
-export function getSiteSettingsViewModel(repository = getContentRepository()) {
-  return createSiteSettingsViewModel(requireRepositoryField(repository.siteSettings, 'siteSettings'))
+export async function getSiteSettingsViewModel(repository = getContentRepository()) {
+  return createSiteSettingsViewModel(await repository.getSiteSettings())
 }

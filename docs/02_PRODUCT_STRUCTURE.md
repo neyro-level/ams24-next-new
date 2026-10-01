@@ -361,6 +361,10 @@ The canonical product identity is `ProductId`, derived only from
 `productIdSchema`; entity refs, lead/analytics context and editorial briefs do
 not maintain copied product unions.
 
+Site Settings and Navigation are required repository inputs. Pages, products,
+articles and knowledge items are consumed only through the asynchronous
+Content Repository methods; routes and UI do not read repository arrays.
+
 ## 15. Internal Linking Rules
 
 - Главная ссылается на все продукты и основные trust-разделы.

@@ -123,11 +123,11 @@ export function buildFaqStructuredData(facts: FaqStructuredDataFacts): JsonLdObj
   ]
 }
 
-export function buildStructuredDataForPath(repository: ContentRepository, path: string) {
-  const article = repository.getArticleByPath(path)
+export async function buildStructuredDataForPath(repository: ContentRepository, path: string) {
+  const article = await repository.getArticleByPath(path)
 
   if (article) {
-    return buildArticleStructuredData(article, repository.siteSettings?.domain)
+    return buildArticleStructuredData(article, (await repository.getSiteSettings()).domain)
   }
 
   return []

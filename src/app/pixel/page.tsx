@@ -1,11 +1,20 @@
 import { getContentRepository } from '@/core/content/services/repository'
 import { getPublicClaimsForProduct } from '@/core/content/services/product-claims'
+import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata = buildMetadata(getContentRepository().assertProductRef('pixel').seo)
+export async function generateMetadata() {
+  const product = await getContentRepository().getProduct('pixel')
+
+  if (!product) {
+    throw new Error('Product content is missing: pixel')
+  }
+
+  return buildMetadata(product.seo)
+}
 
 const requirements = [
   'сайт получает собственный релевантный трафик',
@@ -19,9 +28,14 @@ const boundaries = [
   'учитываем согласия, политику данных и юридическую проверку',
 ] as const
 
-export default function PixelProductPage() {
+export default async function PixelProductPage() {
   const repository = getContentRepository()
-  const product = repository.assertProductRef('pixel')
+  const product = await repository.getProduct('pixel')
+
+  if (!product) {
+    throw new Error('Product content is missing: pixel')
+  }
+
   const allowedClaims = getPublicClaimsForProduct('pixel')
 
   return (
@@ -35,7 +49,7 @@ export default function PixelProductPage() {
   )
 }
 
-type ProductRef = ReturnType<typeof getContentRepository>['products'][number]
+type ProductRef = ProductDTO
 type PublicClaim = ReturnType<typeof getPublicClaimsForProduct>[number]
 
 function PixelHeroSection({ product }: { product: ProductRef }) {

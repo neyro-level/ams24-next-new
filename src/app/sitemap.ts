@@ -6,11 +6,11 @@ import { buildSitemapEntries } from '@/core/seo'
 
 export const dynamic = 'force-static'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const repository = getContentRepository()
-  const site = getSiteSettingsViewModel(repository)
+  const site = await getSiteSettingsViewModel(repository)
 
-  return buildSitemapEntries(repository).map(({ path, lastModified }) => ({
+  return (await buildSitemapEntries(repository)).map(({ path, lastModified }) => ({
     url: new URL(path, site.siteOrigin).toString(),
     lastModified,
   }))

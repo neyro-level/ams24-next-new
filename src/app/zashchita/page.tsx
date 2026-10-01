@@ -1,11 +1,20 @@
 import { getContentRepository } from '@/core/content/services/repository'
 import { getPublicClaimsForProduct } from '@/core/content/services/product-claims'
+import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata = buildMetadata(getContentRepository().assertProductRef('zashchita').seo)
+export async function generateMetadata() {
+  const product = await getContentRepository().getProduct('zashchita')
+
+  if (!product) {
+    throw new Error('Product content is missing: zashchita')
+  }
+
+  return buildMetadata(product.seo)
+}
 
 const symptoms = [
   'резко меняется качество заявок без понятной причины',
@@ -34,9 +43,14 @@ const protectionFaqs = [
   ['Что подготовить перед обращением?', 'Каналы, посадочные страницы, формы, телефонию, периоды изменений и примеры подозрительных ситуаций.'],
 ] as const
 
-export default function ZashchitaProductPage() {
+export default async function ZashchitaProductPage() {
   const repository = getContentRepository()
-  const product = repository.assertProductRef('zashchita')
+  const product = await repository.getProduct('zashchita')
+
+  if (!product) {
+    throw new Error('Product content is missing: zashchita')
+  }
+
   const allowedClaims = getPublicClaimsForProduct('zashchita')
 
   return (
@@ -51,7 +65,7 @@ export default function ZashchitaProductPage() {
   )
 }
 
-type ProductRef = ReturnType<typeof getContentRepository>['products'][number]
+type ProductRef = ProductDTO
 type PublicClaim = ReturnType<typeof getPublicClaimsForProduct>[number]
 
 function ZashchitaHeroSection({ product }: { product: ProductRef }) {

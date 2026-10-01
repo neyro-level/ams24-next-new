@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { getNavigationViewModel } from '@/core/content/services/view-models'
 import { Container } from '@/ui/shared/container'
 
-export function SiteFooter() {
-  const { footerGroups, primaryCta } = getNavigationViewModel()
+export async function SiteFooter() {
+  const { footerGroups, primaryCta } = await getNavigationViewModel()
 
   return (
     <footer className="bg-surface-dark text-surface-dark-foreground">

@@ -7,8 +7,8 @@ import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-tem
 
 export const dynamicParams = false
 
-export function generateStaticParams() {
-  return getContentRepository().knowledgeArticles
+export async function generateStaticParams() {
+  return (await getContentRepository().getKnowledgeArticles())
     .filter((article) => article.status === 'published')
     .map((article) => ({ product: article.productRef, slug: article.slug }))
 }

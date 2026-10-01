@@ -5,13 +5,13 @@ import { validateContentGraph } from '@/core/content/validation'
 import { localContent } from '@/project/content/local-content'
 
 describe('editorial related-content graph', () => {
-  it('has no broken links, orphan products, duplicate intent or unsupported topic hubs', () => {
+  it('has no broken links, orphan products, duplicate intent or unsupported topic hubs', async () => {
     const repository = createContentRepository(localContent)
 
-    expect(validateContentGraph(repository)).toEqual([])
+    await expect(validateContentGraph(repository)).resolves.toEqual([])
   })
 
-  it('detects broken links and duplicate article intent', () => {
+  it('detects broken links and duplicate article intent', async () => {
     const repository = createContentRepository({
       ...localContent,
       articles: [
@@ -29,7 +29,7 @@ describe('editorial related-content graph', () => {
       ],
     })
 
-    expect(validateContentGraph(repository)).toEqual(
+    await expect(validateContentGraph(repository)).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({ code: 'duplicate-intent' }),
         expect.objectContaining({ code: 'broken-link' }),

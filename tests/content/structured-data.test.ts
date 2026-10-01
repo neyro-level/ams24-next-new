@@ -11,14 +11,14 @@ import {
 import { localContent } from '@/project/content/local-content'
 
 describe('structured data eligibility and serialization', () => {
-  it('omits product, pricing, review and draft article schema by default', () => {
+  it('omits product, pricing, review and draft article schema by default', async () => {
     const repository = createContentRepository(localContent)
 
-    expect(buildStructuredDataForPath(repository, '/impuls/')).toEqual([])
-    expect(buildStructuredDataForPath(repository, '/stati/impuls-dlya-kogo-podhodit/')).toEqual([])
+    await expect(buildStructuredDataForPath(repository, '/impuls/')).resolves.toEqual([])
+    await expect(buildStructuredDataForPath(repository, '/stati/impuls-dlya-kogo-podhodit/')).resolves.toEqual([])
   })
 
-  it('allows only substantive published indexable articles with a publication date', () => {
+  it('allows only substantive published indexable articles with a publication date', async () => {
     const repository = createContentRepository({
       ...localContent,
       articles: [
@@ -33,7 +33,7 @@ describe('structured data eligibility and serialization', () => {
         },
       ],
     })
-    const article = repository.articles[0]
+    const article = (await repository.getArticles())[0]
 
     expect(buildArticleStructuredData(article)).toEqual([
       {

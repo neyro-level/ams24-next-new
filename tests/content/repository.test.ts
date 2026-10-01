@@ -1,23 +1,27 @@
 import { describe, expect, it } from 'vitest'
 
-import { createContentRepository } from '../../src/core/content/repository'
+import { createContentRepository, type LocalContentInput } from '../../src/core/content/repository'
 import { getContentRepository, resetContentRepositoryForTests } from '../../src/core/content/services/repository'
 import { localContent } from '../../src/project/content/local-content'
 
 describe('local content repository', () => {
-  it('loads local content once and exposes normalized getters', () => {
+  it('loads local content once and exposes normalized getters', async () => {
     resetContentRepositoryForTests()
 
     const first = getContentRepository()
     const second = getContentRepository()
 
     expect(first).toBe(second)
-    expect(first.getProduct('impuls')?.path).toBe('/impuls/')
-    expect(first.getPageByPath('')).toMatchObject({ id: 'home' })
-    expect(first.getPageByPath('/')).toMatchObject({ id: 'home' })
+    expect('products' in first).toBe(false)
+    expect('pages' in first).toBe(false)
+    expect('siteSettings' in first).toBe(false)
+    expect(first.getProducts()).toBeInstanceOf(Promise)
+    expect((await first.getProduct('impuls'))?.path).toBe('/impuls/')
+    await expect(first.getPageByPath('')).resolves.toMatchObject({ id: 'home' })
+    await expect(first.getPageByPath('/')).resolves.toMatchObject({ id: 'home' })
   })
 
-  it('resolves product refs through filtered getters', () => {
+  it('resolves product refs through filtered getters', async () => {
     const repository = createContentRepository({
       ...localContent,
       cases: [
@@ -46,9 +50,9 @@ describe('local content repository', () => {
       ],
     })
 
-    expect(repository.getCasesForProduct('impuls')).toHaveLength(1)
-    expect(repository.getCasesForProduct('pixel')).toHaveLength(0)
-    expect(repository.getCaseByPath('keisy/medical-case')).toMatchObject({ id: 'medical-case' })
+    await expect(repository.getCasesForProduct('impuls')).resolves.toHaveLength(1)
+    await expect(repository.getCasesForProduct('pixel')).resolves.toHaveLength(0)
+    await expect(repository.getCaseByPath('keisy/medical-case')).resolves.toMatchObject({ id: 'medical-case' })
   })
 
   it('hard-fails duplicate ids and duplicate canonical paths', () => {
@@ -89,5 +93,14 @@ describe('local content repository', () => {
         products: [localContent.products[0]],
       }),
     ).toThrow(/Broken product ref/)
+  })
+
+  it('requires validated site settings and navigation at repository creation', () => {
+    expect(() =>
+      createContentRepository({ ...localContent, siteSettings: undefined } as unknown as LocalContentInput),
+    ).toThrow()
+    expect(() =>
+      createContentRepository({ ...localContent, navigation: undefined } as unknown as LocalContentInput),
+    ).toThrow()
   })
 })

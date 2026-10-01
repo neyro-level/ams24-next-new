@@ -7,8 +7,8 @@ import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-templat
 
 export const dynamicParams = false
 
-export function generateStaticParams() {
-  return getContentRepository().articles
+export async function generateStaticParams() {
+  return (await getContentRepository().getArticles())
     .filter((article) => article.status === 'published')
     .map((article) => ({ slug: article.slug }))
 }

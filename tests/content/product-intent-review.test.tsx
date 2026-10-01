@@ -1,38 +1,40 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import HomePage, { metadata as homeMetadata } from '@/app/page'
-import ImpulsProductPage, { metadata as impulsMetadata } from '@/app/impuls/page'
-import PixelProductPage, { metadata as pixelMetadata } from '@/app/pixel/page'
-import ZashchitaProductPage, { metadata as zashchitaMetadata } from '@/app/zashchita/page'
+import HomePage, { generateMetadata as generateHomeMetadata } from '@/app/page'
+import ImpulsProductPage, { generateMetadata as generateImpulsMetadata } from '@/app/impuls/page'
+import PixelProductPage, { generateMetadata as generatePixelMetadata } from '@/app/pixel/page'
+import ZashchitaProductPage, { generateMetadata as generateZashchitaMetadata } from '@/app/zashchita/page'
 import { localContent } from '@/project/content/local-content'
 
-const productPages = [
-  {
-    id: 'impuls',
-    path: '/impuls/',
-    html: () => renderToStaticMarkup(<ImpulsProductPage />),
-    metadata: impulsMetadata,
-    expectedCta: 'Рассчитать запуск',
-    uniqueIntentMarker: 'лидогенерация для бизнеса',
-  },
-  {
-    id: 'pixel',
-    path: '/pixel/',
-    html: () => renderToStaticMarkup(<PixelProductPage />),
-    metadata: pixelMetadata,
-    expectedCta: 'Проверить применимость',
-    uniqueIntentMarker: 'заинтересованных посетителей сайта',
-  },
-  {
-    id: 'zashchita',
-    path: '/zashchita/',
-    html: () => renderToStaticMarkup(<ZashchitaProductPage />),
-    metadata: zashchitaMetadata,
-    expectedCta: 'Провести аудит',
-    uniqueIntentMarker: 'аудит риска перехвата лидов',
-  },
-] as const
+async function getProductPages() {
+  return [
+    {
+      id: 'impuls',
+      path: '/impuls/',
+      html: renderToStaticMarkup(await ImpulsProductPage()),
+      metadata: await generateImpulsMetadata(),
+      expectedCta: 'Рассчитать запуск',
+      uniqueIntentMarker: 'лидогенерация для бизнеса',
+    },
+    {
+      id: 'pixel',
+      path: '/pixel/',
+      html: renderToStaticMarkup(await PixelProductPage()),
+      metadata: await generatePixelMetadata(),
+      expectedCta: 'Проверить применимость',
+      uniqueIntentMarker: 'заинтересованных посетителей сайта',
+    },
+    {
+      id: 'zashchita',
+      path: '/zashchita/',
+      html: renderToStaticMarkup(await ZashchitaProductPage()),
+      metadata: await generateZashchitaMetadata(),
+      expectedCta: 'Провести аудит',
+      uniqueIntentMarker: 'аудит риска перехвата лидов',
+    },
+  ] as const
+}
 
 function normalizeText(value: string) {
   return value
@@ -50,8 +52,10 @@ function paragraphTexts(html: string) {
 }
 
 describe('homepage and product intent review', () => {
-  it('keeps homepage as a route selector and product pages as distinct intent landings', () => {
-    const homeHtml = renderToStaticMarkup(<HomePage />)
+  it('keeps homepage as a route selector and product pages as distinct intent landings', async () => {
+    const homeHtml = renderToStaticMarkup(await HomePage())
+    const homeMetadata = await generateHomeMetadata()
+    const productPages = await getProductPages()
     const homePage = localContent.pages.find((page) => page.path === '/')
 
     expect(homePage?.role).toBe('платформа и маршрутизация')
@@ -67,7 +71,7 @@ describe('homepage and product intent review', () => {
     expect(homeHtml).not.toContain('href="#audit"')
 
     for (const page of productPages) {
-      const html = page.html()
+      const html = page.html
 
       expect(homeHtml).toContain(`href="${page.path}"`)
       expect(html).toContain(page.expectedCta)
@@ -80,17 +84,19 @@ describe('homepage and product intent review', () => {
     }
   })
 
-  it('has no paragraph-level duplicate between homepage and any product page', () => {
-    const homeParagraphs = new Set(paragraphTexts(renderToStaticMarkup(<HomePage />)))
+  it('has no paragraph-level duplicate between homepage and any product page', async () => {
+    const productPages = await getProductPages()
+    const homeParagraphs = new Set(paragraphTexts(renderToStaticMarkup(await HomePage())))
 
     for (const page of productPages) {
-      const duplicates = paragraphTexts(page.html()).filter((text) => homeParagraphs.has(text))
+      const duplicates = paragraphTexts(page.html).filter((text) => homeParagraphs.has(text))
 
       expect(duplicates, `${page.path} duplicates homepage paragraphs`).toEqual([])
     }
   })
 
-  it('keeps product SEO titles, canonical routes and CTA labels unique', () => {
+  it('keeps product SEO titles, canonical routes and CTA labels unique', async () => {
+    const productPages = await getProductPages()
     const titles = new Set(productPages.map((page) => page.metadata.title))
     const canonicalRoutes = new Set(productPages.map((page) => page.metadata.alternates?.canonical))
     const ctas = new Set(productPages.map((page) => page.expectedCta))
