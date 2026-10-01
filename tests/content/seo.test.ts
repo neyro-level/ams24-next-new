@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { createContentRepository } from '@/core/content/repository'
+import { getRequiredPageByPath } from '@/core/content/services/site-settings'
 import {
   buildMetadata,
   buildSitemapEntries,
@@ -18,11 +19,34 @@ describe('SEO, routes and redirects', () => {
     const repository = createContentRepository(localContent)
     const page = await repository.getPageByPath('/')
     if (!page) throw new Error('Expected home page')
-    const metadata = buildMetadata(page.seo)
+    const metadata = buildMetadata(page.seo, await repository.getSiteSettings())
 
     expect(metadata.title).toBe('Импульс — маркетинговые продукты AMS24')
     expect(metadata.alternates?.canonical).toBe('https://ams24.ru/')
     expect(metadata.robots).toMatchObject({ index: true, follow: true })
+
+    const customMetadata = buildMetadata(page.seo, {
+      ...(await repository.getSiteSettings()),
+      domain: 'https://example.test',
+      siteName: 'Example Site',
+    })
+    expect(customMetadata.alternates?.canonical).toBe('https://example.test/')
+    expect(customMetadata.openGraph?.siteName).toBe('Example Site')
+
+    const defaultMetadata = buildMetadata(undefined, await repository.getSiteSettings())
+    expect(defaultMetadata.title).toBe((await repository.getSiteSettings()).defaultSeo.title)
+  })
+
+  it('fails with useful errors when canonical settings or page data is missing', async () => {
+    const repository = createContentRepository({ ...localContent, pages: [] })
+    const page = localContent.pages[0]
+
+    expect(() => buildMetadata(page.seo, undefined as never)).toThrow(
+      'Canonical Site Settings are missing or invalid',
+    )
+    await expect(getRequiredPageByPath('/', repository)).rejects.toThrow(
+      'Canonical page content is missing: /',
+    )
   })
 
   it('includes only published indexable routes in sitemap paths', async () => {

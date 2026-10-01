@@ -34,12 +34,12 @@ describe('article and knowledge editorial contracts', () => {
     expect(representativeArticleContract.sourceLedger[0]?.status).toBe('not checked')
   })
 
-  it('builds noindex metadata until content is approved', () => {
-    expect(buildArticleEditorialMetadata(representativeArticleContract).robots).toMatchObject({
+  it('builds noindex metadata until content is approved', async () => {
+    expect((await buildArticleEditorialMetadata(representativeArticleContract)).robots).toMatchObject({
       index: false,
       follow: true,
     })
-    expect(buildKnowledgeEditorialMetadata(representativeKnowledgeContract).robots).toMatchObject({
+    expect((await buildKnowledgeEditorialMetadata(representativeKnowledgeContract)).robots).toMatchObject({
       index: false,
       follow: true,
     })

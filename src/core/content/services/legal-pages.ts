@@ -4,6 +4,8 @@ import {
   legalPages,
 } from '@/project/content/legal-pages'
 
+import { getRequiredSiteSettings } from './site-settings'
+
 export type LegalPageKind = keyof typeof legalPages
 export type LegalPageDTO = Readonly<
   (typeof legalPages)[LegalPageKind] & {
@@ -18,10 +20,12 @@ export function getLegalPage(kind: LegalPageKind): LegalPageDTO {
   }
 }
 
-export function buildLegalMetadata(page: LegalPageDTO) {
+export async function buildLegalMetadata(page: LegalPageDTO) {
+  const settings = await getRequiredSiteSettings()
+
   return buildNoindexMetadata({
     title: `${page.title} — черновая страница`,
     description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию и не индексируется до финального согласования.`,
     canonicalPath: page.path,
-  })
+  }, settings)
 }

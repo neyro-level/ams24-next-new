@@ -1,14 +1,15 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import CasesPage, { metadata as casesMetadata } from '@/app/keisy/page'
+import CasesPage, { generateMetadata as generateCasesMetadata } from '@/app/keisy/page'
 import { buildDetailFixtureMetadata, getDetailFixture } from '@/core/content/services/detail-fixtures'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
 import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 import { DetailFixturePage } from '@/ui/shell/detail-fixture-page'
 
 describe('cases evidence pages', () => {
-  it('keeps cases hub noindex and tied to hidden case inventory until evidence exists', () => {
+  it('keeps cases hub noindex and tied to hidden case inventory until evidence exists', async () => {
+    const casesMetadata = await generateCasesMetadata()
     const html = renderToStaticMarkup(<CasesPage />)
     const caseItems = proofEvidenceInventory.filter((item) => item.kind === 'case')
 
@@ -28,9 +29,9 @@ describe('cases evidence pages', () => {
     }
   })
 
-  it('keeps representative case detail noindex and explicit about required evidence fields', () => {
+  it('keeps representative case detail noindex and explicit about required evidence fields', async () => {
     const fixture = getDetailFixture('case', 'medical-case')
-    const metadata = buildDetailFixtureMetadata(fixture)
+    const metadata = await buildDetailFixtureMetadata(fixture)
     const html = renderToStaticMarkup(<DetailFixturePage fixture={fixture} />)
 
     expect(metadata.robots).toMatchObject({ index: false, follow: true })

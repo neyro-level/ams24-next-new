@@ -1,17 +1,20 @@
 import Link from 'next/link'
 
 import { getProofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata = buildNoindexMetadata({
-  title: 'Кейсы Импульс — материалы готовятся',
-  description:
-    'Кейсы Импульс остаются скрыты до подтверждения ниши, периода, методики, метрик и разрешения на публикацию.',
-  canonicalPath: '/keisy/',
-})
+export async function generateMetadata() {
+  return buildNoindexMetadata({
+    title: 'Кейсы Импульс — материалы готовятся',
+    description:
+      'Кейсы Импульс остаются скрыты до подтверждения ниши, периода, методики, метрик и разрешения на публикацию.',
+    canonicalPath: '/keisy/',
+  }, await getRequiredSiteSettings())
+}
 
 const caseItems = getProofEvidenceInventory().filter((item) => item.kind === 'case')
 

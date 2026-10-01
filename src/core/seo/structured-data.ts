@@ -1,5 +1,6 @@
 import type { ContentRepository } from '@/core/content/repository'
-import type { ArticleDTO } from '@/core/content/schemas'
+import type { ArticleDTO, SiteSettingsDTO } from '@/core/content/schemas'
+import { requireSiteSettings } from '@/core/content/validation/site-settings'
 
 type JsonLdScalar = string | number | boolean | null
 type JsonLdValue = JsonLdScalar | JsonLdObject | JsonLdValue[]
@@ -55,17 +56,18 @@ export function serializeJsonLd(value: JsonLdObject | JsonLdObject[]) {
     .replace(/\u2029/g, '\\u2029')
 }
 
-export function buildOrganizationStructuredData(facts?: OrganizationStructuredDataFacts): JsonLdObject[] {
-  if (!facts) {
-    return []
-  }
+export function buildOrganizationStructuredData(
+  settingsInput: SiteSettingsDTO,
+  facts: Partial<OrganizationStructuredDataFacts> = {},
+): JsonLdObject[] {
+  const settings = requireSiteSettings(settingsInput)
 
   return [
     {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: facts.name,
-      url: facts.url,
+      name: facts.name ?? settings.siteName,
+      url: facts.url ?? settings.domain,
       contactPoint: facts.contactPoint
         ? {
             '@type': 'ContactPoint',
@@ -79,12 +81,17 @@ export function buildOrganizationStructuredData(facts?: OrganizationStructuredDa
   ]
 }
 
-export function buildArticleStructuredData(article: ArticleDTO, siteUrl = 'https://ams24.ru'): JsonLdObject[] {
+export function buildArticleStructuredData(
+  article: ArticleDTO,
+  settingsInput: SiteSettingsDTO,
+): JsonLdObject[] {
+  const settings = requireSiteSettings(settingsInput)
+
   if (article.status !== 'published' || article.seo.robots !== 'index' || !article.publishedAt) {
     return []
   }
 
-  const canonicalUrl = new URL(article.path, siteUrl).toString()
+  const canonicalUrl = new URL(article.path, settings.domain).toString()
 
   return [
     {
@@ -124,10 +131,13 @@ export function buildFaqStructuredData(facts: FaqStructuredDataFacts): JsonLdObj
 }
 
 export async function buildStructuredDataForPath(repository: ContentRepository, path: string) {
-  const article = await repository.getArticleByPath(path)
+  const [article, settings] = await Promise.all([
+    repository.getArticleByPath(path),
+    repository.getSiteSettings(),
+  ])
 
   if (article) {
-    return buildArticleStructuredData(article, (await repository.getSiteSettings()).domain)
+    return buildArticleStructuredData(article, settings)
   }
 
   return []

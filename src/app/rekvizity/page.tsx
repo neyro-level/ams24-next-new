@@ -3,7 +3,9 @@ import { RouteSkeletonPage } from '@/ui/shell/route-skeleton-page'
 
 const route = getStaticRouteSkeleton('/rekvizity/')
 
-export const metadata = buildSkeletonMetadata(route)
+export async function generateMetadata() {
+  return buildSkeletonMetadata(route)
+}
 
 export default function Page() {
   return <RouteSkeletonPage route={route} />

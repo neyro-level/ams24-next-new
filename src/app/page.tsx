@@ -1,4 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
+import { getRequiredPageByPath, getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
@@ -13,13 +14,13 @@ const trustFacts = [
 ] as const
 
 export async function generateMetadata() {
-  const page = await getContentRepository().getPageByPath('/')
+  const repository = getContentRepository()
+  const [page, settings] = await Promise.all([
+    getRequiredPageByPath('/', repository),
+    getRequiredSiteSettings(repository),
+  ])
 
-  if (!page) {
-    throw new Error('Home page content is missing')
-  }
-
-  return buildMetadata(page.seo)
+  return buildMetadata(page.seo, settings)
 }
 
 const proofPreviews = [

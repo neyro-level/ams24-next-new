@@ -387,6 +387,7 @@ AMS Leads API, legal text and anti-spam approvals are complete.
 
 - Each indexable page has unique title, description, canonical, H1, OG data and robots policy.
 - Metadata uses the same validated content layer as page rendering.
+- Metadata and site-scoped structured data require validated Site Settings for domain, site name, locale and default SEO; hardcoded production fallbacks are forbidden, and missing canonical settings/page data is a build error.
 - Sitemap contains only published indexable routes and emits their required `updatedAt` as `lastModified`.
 - Structured data is generated only from factual entity data.
 - Route skeletons and thin pages are excluded from index/sitemap.

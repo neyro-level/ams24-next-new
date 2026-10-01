@@ -4,10 +4,10 @@ import { describe, expect, it } from 'vitest'
 
 import { createContentRepository } from '@/core/content/repository'
 import { buildSitemapPaths, validateRedirects } from '@/core/seo'
-import { metadata as contactsMetadata } from '@/app/kontakty/page'
-import { metadata as dataProcessingMetadata } from '@/app/obrabotka-dannyh/page'
-import { metadata as policyMetadata } from '@/app/politika/page'
-import { metadata as consentMetadata } from '@/app/soglasie/page'
+import { generateMetadata as generateContactsMetadata } from '@/app/kontakty/page'
+import { generateMetadata as generateDataProcessingMetadata } from '@/app/obrabotka-dannyh/page'
+import { generateMetadata as generatePolicyMetadata } from '@/app/politika/page'
+import { generateMetadata as generateConsentMetadata } from '@/app/soglasie/page'
 import { redirects } from '@/project/redirects'
 import { localContent } from '@/project/content/local-content'
 import { siteOrigin } from '@/project/site'
@@ -38,11 +38,17 @@ describe('final static SEO/security hardening', () => {
     }
   })
 
-  it('keeps legal and contact routes noindex until external approvals are supplied', () => {
+  it('keeps legal and contact routes noindex until external approvals are supplied', async () => {
+    const [contactsMetadata, policyMetadata, consentMetadata, dataProcessingMetadata] = await Promise.all([
+      generateContactsMetadata(),
+      generatePolicyMetadata(),
+      generateConsentMetadata(),
+      generateDataProcessingMetadata(),
+    ])
     expect(contactsMetadata.robots).toMatchObject({ index: false, follow: true })
-    expect(policyMetadata).toEqual(buildLegalMetadata(getLegalPage('policy')))
-    expect(consentMetadata).toEqual(buildLegalMetadata(getLegalPage('consent')))
-    expect(dataProcessingMetadata).toEqual(buildLegalMetadata(getLegalPage('data-processing')))
+    await expect(buildLegalMetadata(getLegalPage('policy'))).resolves.toEqual(policyMetadata)
+    await expect(buildLegalMetadata(getLegalPage('consent'))).resolves.toEqual(consentMetadata)
+    await expect(buildLegalMetadata(getLegalPage('data-processing'))).resolves.toEqual(dataProcessingMetadata)
 
     for (const metadata of [policyMetadata, consentMetadata, dataProcessingMetadata]) {
       expect(metadata.robots).toMatchObject({ index: false, follow: true })

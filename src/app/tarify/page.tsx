@@ -1,17 +1,20 @@
 import Link from 'next/link'
 
 import { getProofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata = buildNoindexMetadata({
-  title: 'Тарифы Импульс — условия готовятся',
-  description:
-    'Тарифы Импульс остаются скрыты до утверждения коммерческих правил, состава услуги, ограничений и допущений расчёта.',
-  canonicalPath: '/tarify/',
-})
+export async function generateMetadata() {
+  return buildNoindexMetadata({
+    title: 'Тарифы Импульс — условия готовятся',
+    description:
+      'Тарифы Импульс остаются скрыты до утверждения коммерческих правил, состава услуги, ограничений и допущений расчёта.',
+    canonicalPath: '/tarify/',
+  }, await getRequiredSiteSettings())
+}
 
 const tariffItems = getProofEvidenceInventory().filter((item) => item.kind === 'tariff')
 

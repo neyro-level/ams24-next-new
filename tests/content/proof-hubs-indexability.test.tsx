@@ -1,59 +1,36 @@
-import type { Metadata } from 'next'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import CasesPage, { metadata as casesMetadata } from '@/app/keisy/page'
-import ReviewsPage, { metadata as reviewsMetadata } from '@/app/otzyvy/page'
-import CalculationsPage, { metadata as calculationsMetadata } from '@/app/raschety/page'
-import TariffsPage, { metadata as tariffsMetadata } from '@/app/tarify/page'
+import CasesPage, { generateMetadata as generateCasesMetadata } from '@/app/keisy/page'
+import ReviewsPage, { generateMetadata as generateReviewsMetadata } from '@/app/otzyvy/page'
+import CalculationsPage, { generateMetadata as generateCalculationsMetadata } from '@/app/raschety/page'
+import TariffsPage, { generateMetadata as generateTariffsMetadata } from '@/app/tarify/page'
 import { createContentRepository } from '@/core/content/repository'
 import { buildSitemapPaths } from '@/core/seo'
 import { localContent } from '@/project/content/local-content'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
 import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 
-type ProofHub = {
-  path: string
-  metadata: Metadata
-  html: string
-  inventoryKind: 'tariff' | 'case' | 'review' | 'calculation'
-  expectedLinks: string[]
-}
+async function getProofHubs() {
+  const [tariffsMetadata, calculationsMetadata, casesMetadata, reviewsMetadata] = await Promise.all([
+    generateTariffsMetadata(),
+    generateCalculationsMetadata(),
+    generateCasesMetadata(),
+    generateReviewsMetadata(),
+  ])
 
-const proofHubs: ProofHub[] = [
-  {
-    path: '/tarify/',
-    metadata: tariffsMetadata,
-    html: renderToStaticMarkup(<TariffsPage />),
-    inventoryKind: 'tariff',
-    expectedLinks: ['href="/#lead-form"', 'href="/raschety"'],
-  },
-  {
-    path: '/raschety/',
-    metadata: calculationsMetadata,
-    html: renderToStaticMarkup(<CalculationsPage />),
-    inventoryKind: 'calculation',
-    expectedLinks: ['href="/#lead-form"', 'href="/tarify"'],
-  },
-  {
-    path: '/keisy/',
-    metadata: casesMetadata,
-    html: renderToStaticMarkup(<CasesPage />),
-    inventoryKind: 'case',
-    expectedLinks: ['href="/#lead-form"', 'href="/raschety"'],
-  },
-  {
-    path: '/otzyvy/',
-    metadata: reviewsMetadata,
-    html: renderToStaticMarkup(<ReviewsPage />),
-    inventoryKind: 'review',
-    expectedLinks: ['href="/#lead-form"', 'href="/keisy"'],
-  },
-]
+  return [
+    { path: '/tarify/', metadata: tariffsMetadata, html: renderToStaticMarkup(<TariffsPage />), inventoryKind: 'tariff' as const, expectedLinks: ['href="/#lead-form"', 'href="/raschety"'] },
+    { path: '/raschety/', metadata: calculationsMetadata, html: renderToStaticMarkup(<CalculationsPage />), inventoryKind: 'calculation' as const, expectedLinks: ['href="/#lead-form"', 'href="/tarify"'] },
+    { path: '/keisy/', metadata: casesMetadata, html: renderToStaticMarkup(<CasesPage />), inventoryKind: 'case' as const, expectedLinks: ['href="/#lead-form"', 'href="/raschety"'] },
+    { path: '/otzyvy/', metadata: reviewsMetadata, html: renderToStaticMarkup(<ReviewsPage />), inventoryKind: 'review' as const, expectedLinks: ['href="/#lead-form"', 'href="/keisy"'] },
+  ]
+}
 
 describe('proof hubs indexability guard', () => {
   it('keeps incomplete proof hubs noindex and out of sitemap', async () => {
     const sitemapPaths = await buildSitemapPaths(createContentRepository(localContent))
+    const proofHubs = await getProofHubs()
 
     for (const hub of proofHubs) {
       expect(hub.metadata.alternates?.canonical).toBe(new URL(hub.path, 'https://ams24.ru').toString())
@@ -63,7 +40,8 @@ describe('proof hubs indexability guard', () => {
     }
   })
 
-  it('renders non-empty guarded content instead of thin placeholder pages', () => {
+  it('renders non-empty guarded content instead of thin placeholder pages', async () => {
+    const proofHubs = await getProofHubs()
     for (const hub of proofHubs) {
       const inventoryItems = proofEvidenceInventory.filter((item) => item.kind === hub.inventoryKind)
 

@@ -6,6 +6,8 @@ import {
   type KnowledgeEditorialContract as ProjectKnowledgeEditorialContract,
 } from '@/project/editorial-contracts'
 
+import { getRequiredSiteSettings } from './site-settings'
+
 export type ArticleEditorialContract = ProjectArticleEditorialContract
 export type KnowledgeEditorialContract = ProjectKnowledgeEditorialContract
 
@@ -17,18 +19,22 @@ export function getRepresentativeKnowledgeContract(): KnowledgeEditorialContract
   return representativeKnowledgeContract
 }
 
-export function buildArticleEditorialMetadata(contract: ArticleEditorialContract) {
+export async function buildArticleEditorialMetadata(contract: ArticleEditorialContract) {
+  const settings = await getRequiredSiteSettings()
+
   return buildNoindexMetadata({
     title: `${contract.h1} — статья`,
     description: contract.jtbd,
     canonicalPath: `/stati/${contract.slug}/`,
-  }, { type: 'article' })
+  }, settings, { type: 'article' })
 }
 
-export function buildKnowledgeEditorialMetadata(contract: KnowledgeEditorialContract) {
+export async function buildKnowledgeEditorialMetadata(contract: KnowledgeEditorialContract) {
+  const settings = await getRequiredSiteSettings()
+
   return buildNoindexMetadata({
     title: `${contract.h1} — база знаний`,
     description: contract.expectedOutcome,
     canonicalPath: `/baza-znaniy/${contract.product}/${contract.slug}/`,
-  }, { type: 'article' })
+  }, settings, { type: 'article' })
 }

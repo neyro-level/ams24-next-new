@@ -3,7 +3,9 @@ import { LegalPage } from '@/ui/legal/legal-page'
 
 const page = getLegalPage('policy')
 
-export const metadata = buildLegalMetadata(page)
+export async function generateMetadata() {
+  return buildLegalMetadata(page)
+}
 
 export default function PolicyPage() {
   return <LegalPage page={page} />

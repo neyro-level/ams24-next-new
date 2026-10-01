@@ -1,22 +1,22 @@
 import type { Metadata } from 'next'
 
-import type { SeoDTO } from '@/core/content/schemas'
+import type { SeoDTO, SiteSettingsDTO } from '@/core/content/schemas'
+import { requireSiteSettings } from '@/core/content/validation/site-settings'
 
 type MetadataOptions = {
-  domain?: string
-  locale?: string
-  siteName?: string
   type?: 'website' | 'article'
 }
 
 type MetadataInput = Pick<SeoDTO, 'title' | 'description' | 'canonicalPath'> & Partial<Pick<SeoDTO, 'robots' | 'ogImage'>>
 
-export function buildMetadata(seo: MetadataInput, options: MetadataOptions | string = {}): Metadata {
-  const normalizedOptions = typeof options === 'string' ? { domain: options } : options
-  const domain = normalizedOptions.domain ?? 'https://ams24.ru'
-  const canonical = new URL(seo.canonicalPath, domain).toString()
-  const siteName = normalizedOptions.siteName ?? 'Импульс'
-  const locale = normalizedOptions.locale ?? 'ru_RU'
+export function buildMetadata(
+  seoInput: MetadataInput | undefined,
+  settingsInput: SiteSettingsDTO,
+  options: MetadataOptions = {},
+): Metadata {
+  const settings = requireSiteSettings(settingsInput)
+  const seo = seoInput ?? settings.defaultSeo
+  const canonical = new URL(seo.canonicalPath, settings.domain).toString()
 
   return {
     title: seo.title,
@@ -28,9 +28,9 @@ export function buildMetadata(seo: MetadataInput, options: MetadataOptions | str
       title: seo.title,
       description: seo.description,
       url: canonical,
-      siteName,
-      locale,
-      type: normalizedOptions.type ?? 'website',
+      siteName: settings.siteName,
+      locale: settings.locale.replace('-', '_'),
+      type: options.type ?? 'website',
       images: seo.ogImage ? [seo.ogImage] : undefined,
     },
     robots: {
@@ -40,6 +40,10 @@ export function buildMetadata(seo: MetadataInput, options: MetadataOptions | str
   }
 }
 
-export function buildNoindexMetadata(seo: Omit<MetadataInput, 'robots'>, options?: MetadataOptions | string) {
-  return buildMetadata({ ...seo, robots: 'noindex' }, options)
+export function buildNoindexMetadata(
+  seo: Omit<MetadataInput, 'robots'>,
+  settings: SiteSettingsDTO,
+  options?: MetadataOptions,
+) {
+  return buildMetadata({ ...seo, robots: 'noindex' }, settings, options)
 }

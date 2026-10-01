@@ -5,6 +5,8 @@ import {
   type DetailFixture as ProjectDetailFixture,
 } from '@/project/content/detail-fixtures'
 
+import { getRequiredSiteSettings } from './site-settings'
+
 export type DetailFixture = ProjectDetailFixture
 export const detailFixtures: readonly DetailFixture[] = projectDetailFixtures
 
@@ -32,10 +34,12 @@ export function getDetailFixture(
   return item
 }
 
-export function buildDetailFixtureMetadata(fixture: DetailFixture) {
+export async function buildDetailFixtureMetadata(fixture: DetailFixture) {
+  const settings = await getRequiredSiteSettings()
+
   return buildNoindexMetadata({
     title: `${fixture.title} — skeleton`,
     description: fixture.summary,
     canonicalPath: fixture.path,
-  })
+  }, settings)
 }

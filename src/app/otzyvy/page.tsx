@@ -1,17 +1,20 @@
 import Link from 'next/link'
 
 import { getProofEvidenceInventory } from '@/core/content/services/proof-inventory'
+import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import { buildNoindexMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata = buildNoindexMetadata({
-  title: 'Отзывы Импульс — материалы готовятся',
-  description:
-    'Отзывы Импульс остаются скрыты до подтверждения источника, идентификации или обезличивания и разрешения на публикацию.',
-  canonicalPath: '/otzyvy/',
-})
+export async function generateMetadata() {
+  return buildNoindexMetadata({
+    title: 'Отзывы Импульс — материалы готовятся',
+    description:
+      'Отзывы Импульс остаются скрыты до подтверждения источника, идентификации или обезличивания и разрешения на публикацию.',
+    canonicalPath: '/otzyvy/',
+  }, await getRequiredSiteSettings())
+}
 
 const reviewItems = getProofEvidenceInventory().filter((item) => item.kind === 'review')
 

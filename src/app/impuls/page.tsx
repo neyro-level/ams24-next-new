@@ -1,5 +1,6 @@
 import { getContentRepository } from '@/core/content/services/repository'
 import { getPublicClaimsForProduct } from '@/core/content/services/product-claims'
+import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
@@ -8,13 +9,17 @@ import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
 export async function generateMetadata() {
-  const product = await getContentRepository().getProduct('impuls')
+  const repository = getContentRepository()
+  const [product, settings] = await Promise.all([
+    repository.getProduct('impuls'),
+    getRequiredSiteSettings(repository),
+  ])
 
   if (!product) {
     throw new Error('Product content is missing: impuls')
   }
 
-  return buildMetadata(product.seo)
+  return buildMetadata(product.seo, settings)
 }
 
 const criteria = [

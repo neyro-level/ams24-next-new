@@ -32,7 +32,7 @@ describe('route skeleton visibility controls', () => {
     const sitemapPaths = await buildSitemapPaths(repository)
 
     for (const route of staticRouteSkeletons) {
-      const metadata = buildSkeletonMetadata(route)
+      const metadata = await buildSkeletonMetadata(route)
       const html = renderToStaticMarkup(<RouteSkeletonPage route={route} />)
 
       expect(metadata.robots).toMatchObject({ index: false, follow: true })
@@ -54,9 +54,9 @@ describe('route skeleton visibility controls', () => {
     expect(existsSync(join(process.cwd(), 'src/app/baza-znaniy/[product]/[slug]/page.tsx'))).toBe(true)
   })
 
-  it('renders representative detail fixtures with breadcrumbs, related links and noindex metadata', () => {
+  it('renders representative detail fixtures with breadcrumbs, related links and noindex metadata', async () => {
     for (const fixture of detailFixtures) {
-      const metadata = buildDetailFixtureMetadata(fixture)
+      const metadata = await buildDetailFixtureMetadata(fixture)
       const html = renderToStaticMarkup(<DetailFixturePage fixture={fixture} />)
 
       expect(metadata.robots).toMatchObject({ index: false, follow: true })

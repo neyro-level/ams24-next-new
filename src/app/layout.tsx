@@ -19,10 +19,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(site.siteOrigin),
     title: {
-      default: 'Импульс — маркетинговые продукты АМС',
-      template: '%s | Импульс',
+      default: site.defaultSeo.title,
+      template: `%s | ${site.siteName}`,
     },
-    description: 'Новый статический сайт платформы маркетинговых продуктов «Импульс».',
+    description: site.defaultSeo.description,
   }
 }
 

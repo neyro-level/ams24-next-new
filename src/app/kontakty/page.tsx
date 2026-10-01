@@ -1,14 +1,17 @@
+import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import { buildNoindexMetadata } from '@/core/seo'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
 import { Section, SectionHeader } from '@/ui/shared/section'
 
-export const metadata = buildNoindexMetadata({
-  title: 'Контакты AMS24 — заявка на расчёт',
-  description:
-    'Контактная страница AMS24 с безопасной формой заявки. Отправка отключена до финального подключения и юридического согласования.',
-  canonicalPath: '/kontakty/',
-})
+export async function generateMetadata() {
+  return buildNoindexMetadata({
+    title: 'Контакты AMS24 — заявка на расчёт',
+    description:
+      'Контактная страница AMS24 с безопасной формой заявки. Отправка отключена до финального подключения и юридического согласования.',
+    canonicalPath: '/kontakty/',
+  }, await getRequiredSiteSettings())
+}
 
 export default function ContactsPage() {
   return (

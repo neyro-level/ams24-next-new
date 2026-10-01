@@ -3,7 +3,9 @@ import { LegalPage } from '@/ui/legal/legal-page'
 
 const page = getLegalPage('consent')
 
-export const metadata = buildLegalMetadata(page)
+export async function generateMetadata() {
+  return buildLegalMetadata(page)
+}
 
 export default function ConsentPage() {
   return <LegalPage page={page} />

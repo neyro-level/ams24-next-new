@@ -34,8 +34,9 @@ describe('structured data eligibility and serialization', () => {
       ],
     })
     const article = (await repository.getArticles())[0]
+    const settings = await repository.getSiteSettings()
 
-    expect(buildArticleStructuredData(article)).toEqual([
+    expect(buildArticleStructuredData(article, settings)).toEqual([
       {
         '@context': 'https://schema.org',
         '@type': 'Article',
@@ -48,15 +49,18 @@ describe('structured data eligibility and serialization', () => {
       },
     ])
 
-    expect(buildArticleStructuredData({ ...article, publishedAt: undefined })).toEqual([])
-    expect(buildArticleStructuredData({ ...article, seo: { ...article.seo, robots: 'noindex' } })).toEqual([])
+    expect(buildArticleStructuredData({ ...article, publishedAt: undefined }, settings)).toEqual([])
+    expect(buildArticleStructuredData({ ...article, seo: { ...article.seo, robots: 'noindex' } }, settings)).toEqual([])
+    expect(
+      buildArticleStructuredData(article, { ...settings, domain: 'https://example.test' })[0]?.url,
+    ).toBe('https://example.test/stati/kogda-podhodit-lidogeneratsiya-cherez-auditorii-operatorov/')
   })
 
-  it('requires explicit approved organization facts', () => {
-    expect(buildOrganizationStructuredData()).toEqual([])
+  it('uses canonical Site Settings for organization defaults', async () => {
+    const settings = await createContentRepository(localContent).getSiteSettings()
 
     expect(
-      buildOrganizationStructuredData({
+      buildOrganizationStructuredData(settings, {
         name: 'AMS24',
         url: 'https://ams24.ru/',
         sameAs: ['https://example.com/ams24'],
@@ -68,6 +72,15 @@ describe('structured data eligibility and serialization', () => {
         name: 'AMS24',
         url: 'https://ams24.ru/',
         sameAs: ['https://example.com/ams24'],
+      },
+    ])
+
+    expect(buildOrganizationStructuredData(settings)).toEqual([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: settings.siteName,
+        url: settings.domain,
       },
     ])
   })

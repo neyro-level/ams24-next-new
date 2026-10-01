@@ -1,10 +1,10 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import ContactsPage, { metadata as contactsMetadata } from '@/app/kontakty/page'
-import PolicyPage, { metadata as policyMetadata } from '@/app/politika/page'
-import ConsentPage, { metadata as consentMetadata } from '@/app/soglasie/page'
-import DataProcessingPage, { metadata as dataProcessingMetadata } from '@/app/obrabotka-dannyh/page'
+import ContactsPage, { generateMetadata as generateContactsMetadata } from '@/app/kontakty/page'
+import PolicyPage, { generateMetadata as generatePolicyMetadata } from '@/app/politika/page'
+import ConsentPage, { generateMetadata as generateConsentMetadata } from '@/app/soglasie/page'
+import DataProcessingPage, { generateMetadata as generateDataProcessingMetadata } from '@/app/obrabotka-dannyh/page'
 import { analyticsProviderStatus, createAnalyticsEvent, trackAnalyticsEvent } from '@/core/analytics'
 import {
   buildDisabledLeadRequest,
@@ -19,7 +19,8 @@ import {
 } from '@/core/leads'
 
 describe('lead form, legal guard and analytics hardening', () => {
-  it('keeps contact form static-safe and disabled until API/legal decisions are approved', () => {
+  it('keeps contact form static-safe and disabled until API/legal decisions are approved', async () => {
+    const contactsMetadata = await generateContactsMetadata()
     const html = renderToStaticMarkup(<ContactsPage />)
     const availability = getLeadFormAvailability()
 
@@ -122,7 +123,12 @@ describe('lead form, legal guard and analytics hardening', () => {
     })
   })
 
-  it('renders legal pages as noindex placeholders with release blockers', () => {
+  it('renders legal pages as noindex placeholders with release blockers', async () => {
+    const [policyMetadata, consentMetadata, dataProcessingMetadata] = await Promise.all([
+      generatePolicyMetadata(),
+      generateConsentMetadata(),
+      generateDataProcessingMetadata(),
+    ])
     const pages = [
       { component: <PolicyPage />, metadata: policyMetadata, title: 'Политика обработки данных' },
       { component: <ConsentPage />, metadata: consentMetadata, title: 'Согласие на обработку данных' },

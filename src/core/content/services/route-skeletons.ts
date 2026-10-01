@@ -5,6 +5,8 @@ import {
   type RouteSkeleton as ProjectRouteSkeleton,
 } from '@/project/content/route-skeletons'
 
+import { getRequiredSiteSettings } from './site-settings'
+
 export type RouteSkeleton = ProjectRouteSkeleton
 export const staticRouteSkeletons: readonly RouteSkeleton[] = projectStaticRouteSkeletons
 export const dynamicRouteTypes = projectDynamicRouteTypes
@@ -27,10 +29,12 @@ export function getStaticRouteSkeleton(path: string): RouteSkeleton {
   return route
 }
 
-export function buildSkeletonMetadata(route: RouteSkeleton) {
+export async function buildSkeletonMetadata(route: RouteSkeleton) {
+  const settings = await getRequiredSiteSettings()
+
   return buildNoindexMetadata({
     title: `${route.title} — скоро`,
     description: `${route.role}: ${route.intent}. Страница готовится к наполнению.`,
     canonicalPath: route.path,
-  })
+  }, settings)
 }

@@ -3,7 +3,9 @@ import { LegalPage } from '@/ui/legal/legal-page'
 
 const page = getLegalPage('data-processing')
 
-export const metadata = buildLegalMetadata(page)
+export async function generateMetadata() {
+  return buildLegalMetadata(page)
+}
 
 export default function DataProcessingPage() {
   return <LegalPage page={page} />

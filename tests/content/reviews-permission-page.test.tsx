@@ -1,12 +1,13 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import ReviewsPage, { metadata as reviewsMetadata } from '@/app/otzyvy/page'
+import ReviewsPage, { generateMetadata as generateReviewsMetadata } from '@/app/otzyvy/page'
 import { proofEvidenceInventory } from '@/project/proof-inventory'
 import { staticRouteSkeletons } from '@/core/content/services/route-skeletons'
 
 describe('reviews permission page', () => {
-  it('keeps reviews hub noindex and hides reviews without source and permission', () => {
+  it('keeps reviews hub noindex and hides reviews without source and permission', async () => {
+    const reviewsMetadata = await generateReviewsMetadata()
     const html = renderToStaticMarkup(<ReviewsPage />)
     const reviewItems = proofEvidenceInventory.filter((item) => item.kind === 'review')
 
