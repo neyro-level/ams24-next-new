@@ -27,7 +27,7 @@ export async function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-surface-elevated/95 backdrop-blur">
       <Container className="flex min-h-16 items-center justify-between gap-4">
-        <Link className="font-display text-h3 font-extrabold tracking-[-0.03em]" href="/">
+        <Link className="font-display text-h3 font-extrabold" href="/">
           Импульс
         </Link>
 

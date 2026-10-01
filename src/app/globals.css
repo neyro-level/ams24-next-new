@@ -111,16 +111,9 @@
   --radius-xl: calc(var(--radius) + 0.25rem);
   --radius-card: 0.875rem;
   --radius-large: 1.25rem;
-  --radius-pill: 999px;
 
   --shadow-card: 0 18px 55px rgb(16 23 32 / 8%);
   --shadow-panel: 0 28px 80px rgb(12 17 23 / 18%);
-
-  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
-  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
-
-  --aspect-card: 4 / 3;
-  --aspect-hero: 16 / 9;
 }
 
 @layer base {

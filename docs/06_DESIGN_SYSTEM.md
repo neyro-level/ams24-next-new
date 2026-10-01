@@ -108,6 +108,22 @@ Required families only:
 
 Unused project tokens are removed. `chart-*` and `sidebar-*` are not created until those components exist.
 
+### 5.1 Token disposition
+
+| Token | Disposition | Owner / evidence |
+|---|---|---|
+| `text-display` | USED | AMS Northline semantic role for primary commercial hero and hub `h1` headings. |
+| `--font-display` | USED | Semantic display-family alias used by headings, brand marks and card titles; currently resolves to the approved Manrope family. |
+| `aspect-card` | REMOVED | No rendered owner or approved media composition. |
+| `aspect-hero` | REMOVED | No rendered owner; current heroes are content-led grids. |
+| `success` | RESERVED | EPIC 5 `LeadForm` success state owner. |
+| `warning` | RESERVED | EPIC 5 `LeadForm` validation and recoverable warning state owner. |
+| `shadow-panel` | USED | Elevated hero summaries, dark lead panels and the canonical form shell. |
+| `radius-pill` | REMOVED | No rendered owner; pills use component-owned geometry only when introduced. |
+| `ease-*` | REMOVED | No approved motion implementation consumes custom easing tokens. |
+
+Brand tracking follows the semantic typography role; arbitrary `tracking-[...]` values are not used.
+
 ## 6. Color and Surfaces
 
 Policy:
