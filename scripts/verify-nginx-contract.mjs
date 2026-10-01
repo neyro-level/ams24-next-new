@@ -16,9 +16,11 @@ const stagingHeadersPath = path.join(
   'snippets',
   'staging-security-headers.conf',
 )
+const redirectsPath = path.join(process.cwd(), 'ops', 'nginx', 'snippets', 'redirects.conf')
 
 const productionInclude = 'include {{NGINX_SNIPPETS_DIR}}/production-security-headers.conf;'
 const stagingInclude = 'include {{NGINX_SNIPPETS_DIR}}/staging-security-headers.conf;'
+const redirectsInclude = 'include {{NGINX_SNIPPETS_DIR}}/redirects.conf;'
 
 const requiredPatterns = [
   ['release current root', /root\s+\{\{RELEASE_CURRENT\}\}\/out;/],
@@ -169,6 +171,9 @@ function validateHeaderInheritance(source) {
     if (!block.includes(expectedInclude)) {
       errors.push(`${contextName} server missing security-header include`)
     }
+    if (!block.includes(redirectsInclude)) {
+      errors.push(`${contextName} server missing generated redirects include`)
+    }
 
     for (const location of extractBlocks(block, /^\s*location\b.*\{/)) {
       if (location.includes('add_header') && !location.includes(expectedInclude)) {
@@ -300,6 +305,9 @@ function validateLeadIsolation(source) {
 
 function analyzeNginxContract(source, snippets) {
   const errors = findBraceErrors(source)
+  errors.push(
+    ...findBraceErrors(snippets.redirects).map((error) => `generated redirects snippet: ${error}`),
+  )
 
   for (const [name, pattern] of requiredPatterns) {
     if (!pattern.test(source)) {
@@ -307,7 +315,7 @@ function analyzeNginxContract(source, snippets) {
     }
   }
 
-  const bundle = `${source}\n${snippets.production}\n${snippets.staging}`
+  const bundle = `${source}\n${snippets.production}\n${snippets.staging}\n${snippets.redirects}`
   for (const [name, pattern] of forbiddenPatterns) {
     if (pattern.test(bundle)) {
       errors.push(`forbidden Nginx contract content: ${name}`)
@@ -339,6 +347,11 @@ function analyzeNginxContract(source, snippets) {
     errors.push(`expected real 404 try_files contract in both server blocks, got ${real404Count}`)
   }
 
+  const redirectsIncludeCount = [...source.matchAll(/include\s+\{\{NGINX_SNIPPETS_DIR\}\}\/redirects\.conf;/g)].length
+  if (redirectsIncludeCount !== 2) {
+    errors.push(`expected generated redirects include in both HTTPS servers, got ${redirectsIncludeCount}`)
+  }
+
   return errors
 }
 
@@ -347,6 +360,7 @@ async function runSelfTest() {
   const validSnippets = {
     production: await readFile(productionHeadersPath, 'utf8'),
     staging: await readFile(stagingHeadersPath, 'utf8'),
+    redirects: await readFile(redirectsPath, 'utf8'),
   }
   const removeLocationInclude = (source, include) =>
     source.replace(
@@ -358,6 +372,18 @@ async function runSelfTest() {
 
   const cases = [
     { name: 'valid baseline', source: valid, snippets: validSnippets, expected: [] },
+    {
+      name: 'missing generated redirects include',
+      source: valid.replace(
+        new RegExp(`  ${redirectsInclude.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`),
+        '',
+      ),
+      snippets: validSnippets,
+      expected: [
+        'production server missing generated redirects include',
+        'expected generated redirects include in both HTTPS servers, got 1',
+      ],
+    },
     {
       name: 'staging leads share production upstream',
       source: valid.replace('proxy_pass {{STAGING_LEADS_API_UPSTREAM}};', 'proxy_pass {{LEADS_API_UPSTREAM}};'),
@@ -536,7 +562,7 @@ async function runSelfTest() {
 
   const failures = []
   for (const { name, source, snippets, expected } of cases) {
-    const errors = analyzeNginxContract(source, snippets)
+    const errors = analyzeNginxContract(source, { ...validSnippets, ...snippets })
     const missing = expected.filter((finding) => !errors.includes(finding))
     if (missing.length > 0 || (expected.length === 0 && errors.length > 0)) {
       failures.push(
@@ -571,6 +597,7 @@ async function main() {
   const snippets = {
     production: await readFile(productionHeadersPath, 'utf8'),
     staging: await readFile(stagingHeadersPath, 'utf8'),
+    redirects: await readFile(redirectsPath, 'utf8'),
   }
   const errors = analyzeNginxContract(source, snippets)
 

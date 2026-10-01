@@ -28,6 +28,7 @@ server {
   gzip_types text/plain text/css application/javascript application/xml text/xml image/svg+xml;
 
   include {{NGINX_SNIPPETS_DIR}}/production-security-headers.conf;
+  include {{NGINX_SNIPPETS_DIR}}/redirects.conf;
 
   location = /api/leads {
     proxy_pass {{LEADS_API_UPSTREAM}};
@@ -99,6 +100,7 @@ server {
   gzip_types text/plain text/css application/javascript application/xml text/xml image/svg+xml;
 
   include {{NGINX_SNIPPETS_DIR}}/staging-security-headers.conf;
+  include {{NGINX_SNIPPETS_DIR}}/redirects.conf;
 
   location = /api/leads {
     proxy_pass {{STAGING_LEADS_API_UPSTREAM}};

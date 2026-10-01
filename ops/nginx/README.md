@@ -31,6 +31,12 @@ Every context that declares its own `add_header` must include the applicable
 production or staging security-header snippet because Nginx does not inherit
 parent `add_header` directives into such a context.
 
+`snippets/redirects.conf` is generated from `src/project/redirects.ts` by
+`pnpm generate:nginx-redirects`. Its targets are checked against the same
+repository-derived route manifest that produces `out/ams-routes.json`.
+`pnpm verify` rejects unknown targets, redirect chains or loops, and manual
+drift in the committed snippet.
+
 Hashed `/_next/static/` assets keep the one-year immutable policy. Unhashed
 public `.ico`, `.svg` and `.webp` files use a five-minute cache without
 `immutable`. Release verification creates deterministic `.gz` siblings for

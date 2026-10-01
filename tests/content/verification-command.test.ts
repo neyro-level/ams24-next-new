@@ -19,6 +19,8 @@ const requiredDailyVerifySteps = [
   'pnpm test:content',
   'pnpm verify:sourcecraft:self-test',
   'pnpm verify:sourcecraft',
+  'pnpm verify:nginx-redirects:self-test',
+  'pnpm verify:nginx-redirects',
   'pnpm verify:nginx:self-test',
   'pnpm verify:nginx',
   'pnpm verify:rollout:self-test',
