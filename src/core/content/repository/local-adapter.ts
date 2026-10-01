@@ -32,11 +32,18 @@ const localContentSchema = z.object({
 export type LocalContentInput = z.input<typeof localContentSchema>
 
 type LocalContent = z.infer<typeof localContentSchema>
+type ContentLocale = LocalContent['pages'][number]['locale']
+
+const defaultLocale: ContentLocale = 'ru-RU'
 
 function normalizeLookupPath(path: string) {
   const trimmed = path.trim().toLowerCase()
   const leading = trimmed.startsWith('/') ? trimmed : `/${trimmed}`
   return leading.endsWith('/') ? leading : `${leading}/`
+}
+
+function localizedPathKey(locale: ContentLocale, path: string) {
+  return `${locale}:${normalizeLookupPath(path)}`
 }
 
 function indexBy<T>(
@@ -107,50 +114,51 @@ function assertKnownProducts(content: LocalContent, productIndex: Map<string, Pr
   }
 }
 
-function assertUniquePublishedPaths(content: LocalContent) {
+function assertUniqueLocalizedPaths(content: LocalContent) {
   indexBy(
     [
-      ...content.pages.map((item) => ({ type: 'page', id: item.id, path: item.path })),
-      ...content.cases.map((item) => ({ type: 'case', id: item.id, path: item.path })),
-      ...content.articles.map((item) => ({ type: 'article', id: item.id, path: item.path })),
-      ...content.knowledgeArticles.map((item) => ({ type: 'knowledge', id: item.id, path: item.path })),
+      ...content.products.map((item) => ({ type: 'product', id: item.id, locale: item.locale, path: item.path })),
+      ...content.pages.map((item) => ({ type: 'page', id: item.id, locale: item.locale, path: item.path })),
+      ...content.cases.map((item) => ({ type: 'case', id: item.id, locale: item.locale, path: item.path })),
+      ...content.articles.map((item) => ({ type: 'article', id: item.id, locale: item.locale, path: item.path })),
+      ...content.knowledgeArticles.map((item) => ({ type: 'knowledge', id: item.id, locale: item.locale, path: item.path })),
     ],
-    (item) => item.path,
-    'canonical path',
+    (item) => localizedPathKey(item.locale, item.path),
+    'localized canonical path',
   )
 }
 
 export function createContentRepository(input: LocalContentInput): ContentRepository {
   const content = localContentSchema.parse(input)
   const productIndex = indexBy(content.products, (item) => item.id, 'product id')
-  const pageByPath = indexBy(content.pages, (item) => item.path, 'page path')
-  const caseByPath = indexBy(content.cases, (item) => item.path, 'case path')
-  const articleByPath = indexBy(content.articles, (item) => item.path, 'article path')
+  const pageByPath = indexBy(content.pages, (item) => localizedPathKey(item.locale, item.path), 'localized page path')
+  const caseByPath = indexBy(content.cases, (item) => localizedPathKey(item.locale, item.path), 'localized case path')
+  const articleByPath = indexBy(content.articles, (item) => localizedPathKey(item.locale, item.path), 'localized article path')
   const knowledgeByPath = indexBy(
     content.knowledgeArticles,
-    (item) => item.path,
-    'knowledge article path',
+    (item) => localizedPathKey(item.locale, item.path),
+    'localized knowledge article path',
   )
 
   assertKnownProducts(content, productIndex)
-  assertUniquePublishedPaths(content)
+  assertUniqueLocalizedPaths(content)
 
   return {
     ...content,
     getProduct(id) {
       return productIndex.get(id)
     },
-    getPageByPath(path) {
-      return pageByPath.get(normalizeLookupPath(path))
+    getPageByPath(path, locale = defaultLocale) {
+      return pageByPath.get(localizedPathKey(locale, path))
     },
-    getCaseByPath(path) {
-      return caseByPath.get(normalizeLookupPath(path))
+    getCaseByPath(path, locale = defaultLocale) {
+      return caseByPath.get(localizedPathKey(locale, path))
     },
-    getArticleByPath(path) {
-      return articleByPath.get(normalizeLookupPath(path))
+    getArticleByPath(path, locale = defaultLocale) {
+      return articleByPath.get(localizedPathKey(locale, path))
     },
-    getKnowledgeArticleByPath(path) {
-      return knowledgeByPath.get(normalizeLookupPath(path))
+    getKnowledgeArticleByPath(path, locale = defaultLocale) {
+      return knowledgeByPath.get(localizedPathKey(locale, path))
     },
     getTariffsForProduct(productId) {
       return content.tariffs.filter((item) => item.productRef === productId)

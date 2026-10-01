@@ -123,6 +123,7 @@ Rules:
 - `path` is the full normalized canonical route with leading/trailing `/`.
 - `slug` is only a URL segment.
 - Route identity is unique `(locale, path)`.
+- Product/page publication state is `published | hidden`; intentional editorial drafts follow ADR-0002 and remain `noindex` and outside generated routes.
 - Relations are refs resolved by Content Service.
 - Unknown block, broken ref or duplicate path is a build failure.
 
@@ -383,7 +384,7 @@ AMS Leads API, legal text and anti-spam approvals are complete.
 
 - Each indexable page has unique title, description, canonical, H1, OG data and robots policy.
 - Metadata uses the same validated content layer as page rendering.
-- Sitemap contains only published routes.
+- Sitemap contains only published indexable routes and emits their required `updatedAt` as `lastModified`.
 - Structured data is generated only from factual entity data.
 - Route skeletons and thin pages are excluded from index/sitemap.
 - Redirect source is centralized and validated for loops, chains and missing targets.

@@ -1,6 +1,9 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
+import { generateStaticParams as generateKnowledgeParams } from '@/app/baza-znaniy/[product]/[slug]/page'
+import { generateStaticParams as generateArticleParams } from '@/app/stati/[slug]/page'
+import { localContent } from '@/project/content/local-content'
 import {
   buildArticleEditorialMetadata,
   buildKnowledgeEditorialMetadata,
@@ -37,6 +40,13 @@ describe('article and knowledge editorial contracts', () => {
       index: false,
       follow: true,
     })
+  })
+
+  it('keeps editorial drafts noindex and outside generated static routes', () => {
+    expect(localContent.articles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
+    expect(localContent.knowledgeArticles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
+    expect(generateArticleParams()).toEqual([])
+    expect(generateKnowledgeParams()).toEqual([])
   })
 
   it('renders editorial typography and different layouts', () => {

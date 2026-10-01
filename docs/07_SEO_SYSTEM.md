@@ -201,6 +201,10 @@ The sitemap contains only production URLs that are:
 5. not duplicate/cannibalizing variants;
 6. backed by validated content and approved evidence where required.
 
+Every included entity has a validated `updatedAt`; the generated sitemap emits
+that date as `lastModified`. Missing timestamps fail verification instead of
+producing an undated sitemap entry.
+
 Sitemap generation must consume the same route/content repository as page
 metadata. Handwritten URLs, private/staging URLs, `noindex` URLs and unresolved
 redirect sources are forbidden.

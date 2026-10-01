@@ -346,11 +346,12 @@ existing route is updated instead.
 
 | Entity | Core attributes | Relations |
 |---|---|---|
-| Product | id, name, shortName, path, promise, status | tariffs, cases, articles, KB |
+| Product | id, slug, name, shortName, path, updatedAt, promise, published/hidden status | tariffs, cases, articles, KB |
+| Page | id, slug, path, updatedAt, role, intent, blocks, published/hidden status | products through block refs |
 | Tariff | id, productRef, title, pricingModel, inclusions, limits | product |
-| Case | id, path, niche, period, problem, method, metrics, evidenceLevel | product, review |
+| Case | id, path, slug, updatedAt when sitemap-eligible, niche, period, problem, method, metrics, evidenceLevel | product, review |
 | Review | id, author, role, company, quote, permissionStatus | case/product optional |
-| Article | id, path, title, topic, publishedAt, body | products/cases |
+| Article | id, path, slug, title, topic, publishedAt, updatedAt when sitemap-eligible, body | products/cases |
 | KnowledgeArticle | id, path, productRef, task, body, updatedAt | product |
 | CalculationExample | id, productRef, inputs, assumptions, resultRange | tariff/product |
 | LeadIntent | sourcePath, productId, CTA, consentVersion | AMS Leads API |

@@ -60,7 +60,7 @@ export function createSiteSettingsViewModel(input: unknown): SiteSettingsViewMod
 
 export function createContentCatalogViewModel(repository: ContentRepository): ContentCatalogViewModel {
   return {
-    products: repository.products.filter((product) => product.status === 'active'),
+    products: repository.products.filter((product) => product.status === 'published'),
   }
 }
 

@@ -2,13 +2,19 @@ import type { ContentRepository } from '@/core/content/repository'
 
 type RouteEntity = {
   path: string
+  updatedAt?: string
   seo: {
     robots: 'index' | 'noindex'
   }
-  status: 'active' | 'draft' | 'published' | 'hidden' | 'planned'
+  status: 'draft' | 'published' | 'hidden'
 }
 
-export function buildSitemapPaths(repository: ContentRepository) {
+export type SitemapEntry = {
+  path: string
+  lastModified: string
+}
+
+export function buildSitemapEntries(repository: ContentRepository): SitemapEntry[] {
   const entities: RouteEntity[] = [
     ...repository.products,
     ...repository.pages,
@@ -18,9 +24,19 @@ export function buildSitemapPaths(repository: ContentRepository) {
   ]
 
   return entities
-    .filter((entity) => ['active', 'published'].includes(entity.status) && entity.seo.robots === 'index')
-    .map((entity) => entity.path)
-    .sort()
+    .filter((entity) => entity.status === 'published' && entity.seo.robots === 'index')
+    .map((entity) => {
+      if (!entity.updatedAt) {
+        throw new Error(`Sitemap-eligible route requires updatedAt: ${entity.path}`)
+      }
+
+      return { path: entity.path, lastModified: entity.updatedAt }
+    })
+    .sort((left, right) => left.path.localeCompare(right.path))
+}
+
+export function buildSitemapPaths(repository: ContentRepository) {
+  return buildSitemapEntries(repository).map((entry) => entry.path)
 }
 
 export function pathToSlugParams(path: string, prefix: string) {

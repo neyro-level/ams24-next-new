@@ -7,6 +7,7 @@ import {
   localeSchema,
   navigationHrefSchema,
   pathSchema,
+  publicationStatusSchema,
   productRefSchema,
   richTextSchema,
   seoSchema,
@@ -26,11 +27,13 @@ const linkSchema = z.object({
 export const productSchema = z.object({
   id: productRefSchema,
   locale: localeSchema,
+  slug: slugSchema,
   name: z.string().trim().min(2),
   shortName: z.string().trim().min(2),
   path: pathSchema,
+  updatedAt: isoDateSchema,
   promise: z.string().trim().min(20),
-  status: z.enum(['active', 'planned', 'hidden']).default('active'),
+  status: z.enum(['published', 'hidden']),
   primaryCta: ctaSchema,
   seo: seoSchema,
 })
@@ -54,13 +57,22 @@ export const caseSchema = z.object({
   productRefs: z.array(productRefSchema).min(1),
   niche: z.string().trim().min(2),
   period: z.string().trim().min(2),
+  updatedAt: isoDateSchema.optional(),
   problem: z.string().trim().min(20),
   method: z.string().trim().min(20),
   metrics: z.array(z.string().trim().min(2)).default([]),
   evidenceLevel: z.enum(['internal', 'anonymized', 'public']),
   body: richTextSchema,
   seo: seoSchema,
-  status: z.enum(['draft', 'published', 'hidden']).default('draft'),
+  status: publicationStatusSchema,
+}).superRefine((item, context) => {
+  if (item.status === 'draft' && item.seo.robots !== 'noindex') {
+    context.addIssue({ code: 'custom', message: 'Draft case content must use noindex' })
+  }
+
+  if (item.status === 'published' && item.seo.robots === 'index' && !item.updatedAt) {
+    context.addIssue({ code: 'custom', message: 'Sitemap-eligible case content requires updatedAt' })
+  }
 })
 
 export const reviewSchema = z.object({
@@ -100,7 +112,15 @@ export const articleSchema = z.object({
   caseRefs: z.array(idSchema).default([]),
   body: richTextSchema,
   seo: seoSchema,
-  status: z.enum(['draft', 'published', 'hidden']).default('draft'),
+  status: publicationStatusSchema,
+}).superRefine((item, context) => {
+  if (item.status === 'draft' && item.seo.robots !== 'noindex') {
+    context.addIssue({ code: 'custom', message: 'Draft article content must use noindex' })
+  }
+
+  if (item.status === 'published' && item.seo.robots === 'index' && !item.updatedAt) {
+    context.addIssue({ code: 'custom', message: 'Sitemap-eligible article content requires updatedAt' })
+  }
 })
 
 export const knowledgeArticleSchema = z.object({
@@ -113,7 +133,11 @@ export const knowledgeArticleSchema = z.object({
   updatedAt: isoDateSchema,
   body: richTextSchema,
   seo: seoSchema,
-  status: z.enum(['draft', 'published', 'hidden']).default('draft'),
+  status: publicationStatusSchema,
+}).superRefine((item, context) => {
+  if (item.status === 'draft' && item.seo.robots !== 'noindex') {
+    context.addIssue({ code: 'custom', message: 'Draft knowledge content must use noindex' })
+  }
 })
 
 export const heroPageBlockSchema = z.object({
@@ -149,14 +173,16 @@ export const pageBlockSchema = z.discriminatedUnion('blockType', [
 export const pageSchema = z.object({
   id: idSchema,
   locale: localeSchema,
+  slug: slugSchema,
   path: pathSchema,
+  updatedAt: isoDateSchema,
   role: z.string().trim().min(2),
   intent: z.string().trim().min(10),
   h1: z.string().trim().min(5),
   seo: seoSchema,
   blocks: z.array(pageBlockSchema).min(1),
   indexPolicy: indexPolicySchema.default('index'),
-  status: z.enum(['draft', 'published', 'hidden']).default('draft'),
+  status: z.enum(['published', 'hidden']),
 })
 
 export const navigationSchema = z.object({

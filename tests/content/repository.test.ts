@@ -28,9 +28,11 @@ describe('local content repository', () => {
           productRefs: ['impuls'],
           niche: 'Медицина',
           period: '2026',
+          updatedAt: '2026-09-30',
           problem: 'Клиенту требовалось проверить канал заявок без неподтверждённых обещаний.',
           method: 'Сценарий запуска описан как проверяемая последовательность действий.',
           evidenceLevel: 'anonymized',
+          status: 'published',
           body: {
             format: 'markdown',
             value: 'Описание кейса.',
@@ -68,7 +70,7 @@ describe('local content repository', () => {
           },
         ],
       }),
-    ).toThrow(/Duplicate page path/)
+    ).toThrow(/Duplicate localized page path/)
   })
 
   it('hard-fails broken product refs', () => {

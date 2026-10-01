@@ -216,9 +216,12 @@ export const localContent = {
   products: [
     {
       id: 'impuls',
+      slug: 'impuls',
       name: 'Импульс',
       shortName: 'Импульс',
       path: '/impuls/',
+      updatedAt: '2026-09-30',
+      status: 'published' as const,
       promise: 'Привлечение лидов через проверенные аудитории и понятный запуск кампании.',
       primaryCta: {
         id: 'calculate-launch',
@@ -234,9 +237,12 @@ export const localContent = {
     },
     {
       id: 'pixel',
+      slug: 'pixel',
       name: 'Импульс Пиксель',
       shortName: 'Пиксель',
       path: '/pixel/',
+      updatedAt: '2026-09-30',
+      status: 'published' as const,
       promise: 'Определение части заинтересованных посетителей собственного сайта для передачи в продажи.',
       primaryCta: {
         id: 'check-pixel',
@@ -252,9 +258,12 @@ export const localContent = {
     },
     {
       id: 'zashchita',
+      slug: 'zashchita',
       name: 'Импульс Защита',
       shortName: 'Защита',
       path: '/zashchita/',
+      updatedAt: '2026-09-30',
+      status: 'published' as const,
       promise: 'Аудит и меры снижения риска перехвата лидов без абсолютных неподтверждённых гарантий.',
       primaryCta: {
         id: 'request-audit',
@@ -272,7 +281,9 @@ export const localContent = {
   pages: [
     {
       id: 'home',
+      slug: 'home',
       path: '/',
+      updatedAt: '2026-09-30',
       role: 'платформа и маршрутизация',
       intent: 'понять линейку продуктов и выбрать подходящий маршрут',
       h1: 'Импульс',

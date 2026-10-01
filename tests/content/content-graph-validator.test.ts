@@ -234,6 +234,39 @@ const negativeFixtures: NegativeFixture[] = [
     }),
   },
   {
+    invariant: 'draft editorial content must remain noindex',
+    code: 'invalid-publication-state',
+    build: () => ({
+      repository: invalidRepository({
+        ...validRepository(),
+        articles: [
+          {
+            ...validRepository().articles[0],
+            seo: {
+              ...validRepository().articles[0].seo,
+              robots: 'index',
+            },
+          },
+        ],
+      }),
+    }),
+  },
+  {
+    invariant: 'sitemap-eligible content has an update timestamp',
+    code: 'missing-updated-at',
+    build: () => ({
+      repository: invalidRepository({
+        ...validRepository(),
+        products: [
+          {
+            ...validRepository().products[0],
+            updatedAt: undefined,
+          },
+        ],
+      }),
+    }),
+  },
+  {
     invariant: 'SEO fields stay complete after composition',
     code: 'seo-incomplete',
     build: () => ({

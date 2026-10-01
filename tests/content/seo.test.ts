@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
 import { createContentRepository } from '@/core/content/repository'
-import { buildMetadata, buildSitemapPaths, buildStaticParams, validateRedirects } from '@/core/seo'
+import {
+  buildMetadata,
+  buildSitemapEntries,
+  buildSitemapPaths,
+  buildStaticParams,
+  validateRedirects,
+} from '@/core/seo'
 import robots from '@/app/robots'
 import sitemap from '@/app/sitemap'
 import { localContent } from '@/project/content/local-content'
@@ -28,6 +34,7 @@ describe('SEO, routes and redirects', () => {
         {
           ...localContent.pages[0],
           id: 'policy',
+          slug: 'politika',
           path: '/politika/',
           h1: 'Политика обработки данных',
           seo: {
@@ -36,20 +43,26 @@ describe('SEO, routes and redirects', () => {
             canonicalPath: '/politika/',
             robots: 'noindex',
           },
-          status: 'published',
+          status: 'hidden',
         },
       ],
     })
 
     expect(buildSitemapPaths(repository)).toEqual(['/', '/impuls/', '/pixel/', '/zashchita/'])
+    expect(buildSitemapEntries(repository)).toEqual([
+      { path: '/', lastModified: '2026-09-30' },
+      { path: '/impuls/', lastModified: '2026-09-30' },
+      { path: '/pixel/', lastModified: '2026-09-30' },
+      { path: '/zashchita/', lastModified: '2026-09-30' },
+    ])
   })
 
   it('generates app sitemap and robots from repository-owned SEO facts', () => {
     expect(sitemap()).toEqual([
-      { url: 'https://ams24.ru/' },
-      { url: 'https://ams24.ru/impuls/' },
-      { url: 'https://ams24.ru/pixel/' },
-      { url: 'https://ams24.ru/zashchita/' },
+      { url: 'https://ams24.ru/', lastModified: '2026-09-30' },
+      { url: 'https://ams24.ru/impuls/', lastModified: '2026-09-30' },
+      { url: 'https://ams24.ru/pixel/', lastModified: '2026-09-30' },
+      { url: 'https://ams24.ru/zashchita/', lastModified: '2026-09-30' },
     ])
 
     expect(robots()).toEqual({

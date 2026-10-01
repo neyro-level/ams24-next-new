@@ -23,10 +23,10 @@ export type ContentRepository = {
   articles: ArticleDTO[]
   knowledgeArticles: KnowledgeArticleDTO[]
   getProduct(id: ProductDTO['id']): ProductDTO | undefined
-  getPageByPath(path: string): PageDTO | undefined
-  getCaseByPath(path: string): CaseDTO | undefined
-  getArticleByPath(path: string): ArticleDTO | undefined
-  getKnowledgeArticleByPath(path: string): KnowledgeArticleDTO | undefined
+  getPageByPath(path: string, locale?: PageDTO['locale']): PageDTO | undefined
+  getCaseByPath(path: string, locale?: CaseDTO['locale']): CaseDTO | undefined
+  getArticleByPath(path: string, locale?: ArticleDTO['locale']): ArticleDTO | undefined
+  getKnowledgeArticleByPath(path: string, locale?: KnowledgeArticleDTO['locale']): KnowledgeArticleDTO | undefined
   getTariffsForProduct(productId: ProductDTO['id']): TariffDTO[]
   getCasesForProduct(productId: ProductDTO['id']): CaseDTO[]
   getReviewsForProduct(productId: ProductDTO['id']): ReviewDTO[]

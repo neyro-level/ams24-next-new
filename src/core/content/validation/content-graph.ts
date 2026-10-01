@@ -16,6 +16,7 @@ export type ContentGraphIssueCode =
   | 'invalid-media'
   | 'invalid-redirect'
   | 'invalid-publication-state'
+  | 'missing-updated-at'
   | 'seo-incomplete'
   | 'contradictory-index-policy'
   | 'unsupported-richtext-format'
@@ -64,7 +65,7 @@ function routeFromHref(href: string) {
 
 function slugFromPath(path: string) {
   const segments = path.split('/').filter(Boolean)
-  return segments.at(-1) ?? ''
+  return segments.at(-1) ?? 'home'
 }
 
 function extractInternalLinks(markdown: string) {
@@ -130,6 +131,7 @@ type RoutableEntity = {
   path: string
   locale?: string
   slug?: string
+  updatedAt?: string
   status?: string
   indexPolicy?: string
   seo?: {
@@ -177,16 +179,17 @@ function validateGlobalIds(issues: ContentGraphIssue[], repository: ContentRepos
 }
 
 function validateRoutableEntities(issues: ContentGraphIssue[], repository: ContentRepository) {
-  const paths = new Map<string, string>()
+  const localizedPaths = new Map<string, string>()
 
   for (const { kind, item } of getRoutableEntities(repository)) {
     const entity = `${kind}:${item.id}`
-    const previousPathOwner = paths.get(item.path)
+    const localizedPath = `${item.locale ?? 'ru-RU'}:${item.path}`
+    const previousPathOwner = localizedPaths.get(localizedPath)
 
     if (previousPathOwner) {
       issues.push(issue('duplicate-canonical-path', entity, `${entity} duplicates canonical path from ${previousPathOwner}: ${item.path}`))
     } else {
-      paths.set(item.path, entity)
+      localizedPaths.set(localizedPath, entity)
     }
 
     if (item.seo?.canonicalPath !== item.path) {
@@ -203,6 +206,14 @@ function validateRoutableEntities(issues: ContentGraphIssue[], repository: Conte
 
     if (item.status === 'published' && item.seo?.robots === 'noindex') {
       issues.push(issue('invalid-publication-state', entity, `${entity} is published but hidden from indexing.`))
+    }
+
+    if (item.status === 'draft' && item.seo?.robots !== 'noindex') {
+      issues.push(issue('invalid-publication-state', entity, `${entity} is a draft but is not marked noindex.`))
+    }
+
+    if (item.status === 'published' && item.seo?.robots === 'index' && !item.updatedAt) {
+      issues.push(issue('missing-updated-at', entity, `${entity} is sitemap-eligible but has no updatedAt.`))
     }
 
     if (item.indexPolicy && item.seo?.robots && item.indexPolicy !== item.seo.robots) {
