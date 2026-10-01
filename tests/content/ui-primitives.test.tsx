@@ -6,6 +6,10 @@ import NotFound from '@/app/not-found'
 import { cn } from '@/core/lib/utils'
 import { Button } from '@/ui/primitives/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/ui/primitives/card'
+import { Checkbox } from '@/ui/primitives/checkbox'
+import { Input } from '@/ui/primitives/input'
+import { Label } from '@/ui/primitives/label'
+import { Textarea } from '@/ui/primitives/textarea'
 import { LeadForm } from '@/ui/forms/lead-form'
 
 describe('canonical UI primitives', () => {
@@ -83,6 +87,25 @@ describe('canonical UI primitives', () => {
     expect(semanticCard).toContain('<p data-slot="card-description"')
   })
 
+  it('owns form controls with explicit light and dark surface variants', () => {
+    const html = renderToStaticMarkup(
+      <>
+        <Label htmlFor="dark-name" surface="dark">Имя</Label>
+        <Input id="dark-name" surface="dark" />
+        <Textarea surface="light" />
+        <Checkbox aria-label="Согласие" surface="dark" />
+      </>,
+    )
+
+    expect(html).toContain('data-slot="label"')
+    expect(html).toContain('data-slot="input"')
+    expect(html).toContain('data-slot="textarea"')
+    expect(html).toContain('data-slot="checkbox"')
+    expect(html.match(/data-surface="dark"/g)).toHaveLength(3)
+    expect(html).toContain('data-surface="light"')
+    expect(html).not.toContain('dark:')
+  })
+
   it('keeps form submit a real disabled button with accessible form context', () => {
     const html = renderToStaticMarkup(
       <LeadForm context={{ product: 'site', route: '/', ctaId: 'test-primary' }} surface="light" />,
@@ -97,9 +120,23 @@ describe('canonical UI primitives', () => {
     expect(html).toContain('value="/"')
     expect(html).toContain('name="ctaId"')
     expect(html).toContain('value="test-primary"')
+    expect(html.match(/data-slot="input"/g)).toHaveLength(2)
+    expect(html).toContain('data-slot="textarea"')
+    expect(html).toContain('data-slot="checkbox"')
+    expect(html.match(/data-slot="label"/g)).toHaveLength(4)
+    expect(html).toContain('data-surface="light"')
     expect(html).toContain('<button')
     expect(html).toContain('type="submit"')
     expect(html).toContain('disabled=""')
     expect(html).toContain('aria-disabled="true"')
+  })
+
+  it('applies dark form presentation through primitive variants', () => {
+    const html = renderToStaticMarkup(
+      <LeadForm context={{ product: 'site', route: '/', ctaId: 'test-dark' }} />,
+    )
+
+    expect(html.match(/data-surface="dark"/g)).toHaveLength(8)
+    expect(html).not.toContain('dark:')
   })
 })

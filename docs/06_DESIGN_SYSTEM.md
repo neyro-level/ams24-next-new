@@ -195,7 +195,7 @@ Baseline foundation:
 
 - `Button` at `src/ui/primitives/button.tsx`;
 - `Card` at `src/ui/primitives/card.tsx` with `default`, `muted` and `dark` surface variants;
-- required form primitives;
+- project-owned `Input`, `Textarea`, `Checkbox` and `Label` at `src/ui/primitives/`, each with controlled `light` and `dark` surface variants;
 - `Container` at `src/ui/shared/container.tsx`;
 - `Section`;
 - `SectionHeader` at `src/ui/shared/section-header.tsx`;

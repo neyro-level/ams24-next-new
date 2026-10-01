@@ -1,4 +1,8 @@
 import { Button } from '@/ui/primitives/button'
+import { Checkbox } from '@/ui/primitives/checkbox'
+import { Input } from '@/ui/primitives/input'
+import { Label } from '@/ui/primitives/label'
+import { Textarea } from '@/ui/primitives/textarea'
 
 import { getLeadFormAvailability, type LeadContext } from '@/core/leads'
 
@@ -8,9 +12,6 @@ type LeadFormProps = {
   description?: string
   surface?: 'dark' | 'light'
 }
-
-const inputBase =
-  'mt-2 h-12 w-full rounded-lg border px-3 outline-none focus:border-primary focus:ring-3 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-70'
 
 const productCopy = {
   site: 'по общей задаче',
@@ -30,9 +31,6 @@ export function LeadForm({
   const cardClass = isDark
     ? 'border-surface-dark-faint bg-surface-dark-elevated text-surface-dark-foreground'
     : 'border-border bg-surface-elevated text-foreground'
-  const inputClass = isDark
-    ? `${inputBase} border-surface-dark-faint bg-surface-dark text-surface-dark-foreground`
-    : `${inputBase} border-border bg-background text-foreground`
   const mutedClass = isDark ? 'text-surface-dark-muted' : 'text-muted-foreground'
   const faintClass = isDark ? 'text-surface-dark-faint' : 'text-muted-foreground'
   const contextCopy = productCopy[context.product]
@@ -61,28 +59,53 @@ export function LeadForm({
       <input name="ctaId" type="hidden" value={context.ctaId} />
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <label className="block text-body-sm">
-          <span className={mutedClass}>Имя</span>
-          <input className={inputClass} disabled name="name" placeholder="Заполним после подключения формы" type="text" />
-        </label>
-        <label className="block text-body-sm">
-          <span className={mutedClass}>Контакт</span>
-          <input className={inputClass} disabled name="contact" placeholder="Телефон или email" type="text" />
-        </label>
+        <div>
+          <Label htmlFor={`${availability.formId}-name`} surface={surface}>Имя</Label>
+          <Input
+            className="mt-2"
+            disabled
+            id={`${availability.formId}-name`}
+            name="name"
+            placeholder="Заполним после подключения формы"
+            surface={surface}
+            type="text"
+          />
+        </div>
+        <div>
+          <Label htmlFor={`${availability.formId}-contact`} surface={surface}>Контакт</Label>
+          <Input
+            className="mt-2"
+            disabled
+            id={`${availability.formId}-contact`}
+            name="contact"
+            placeholder="Телефон или email"
+            surface={surface}
+            type="text"
+          />
+        </div>
       </div>
 
-      <label className="mt-4 block text-body-sm">
-        <span className={mutedClass}>Какая задача сейчас важнее?</span>
-        <textarea
-          className={`${inputClass} min-h-28 p-3`}
+      <div className="mt-4">
+        <Label htmlFor={`${availability.formId}-task`} surface={surface}>Какая задача сейчас важнее?</Label>
+        <Textarea
+          className="mt-2"
           disabled
+          id={`${availability.formId}-task`}
           name="task"
           placeholder="Привлечение лидов, пиксель или защита"
+          surface={surface}
         />
-      </label>
+      </div>
 
-      <label className={`mt-4 flex gap-3 text-body-sm ${mutedClass}`}>
-        <input className="mt-1 size-4" disabled name="consentAccepted" type="checkbox" value="true" />
+      <Label className="mt-4 flex items-start gap-3" htmlFor={`${availability.formId}-consent`} surface={surface}>
+        <Checkbox
+          className="mt-1"
+          disabled
+          id={`${availability.formId}-consent`}
+          name="consentAccepted"
+          surface={surface}
+          value="true"
+        />
         <span>
           Я принимаю{' '}
           <a className="underline underline-offset-4" href={availability.consentTargets.consent}>
@@ -94,7 +117,7 @@ export function LeadForm({
           </a>
           .
         </span>
-      </label>
+      </Label>
 
       <p className={`mt-4 text-caption ${faintClass}`} id={`${availability.formId}-status`}>
         Отправка отключена: {availability.disabledReason}. Вы можете заранее подготовить задачу {contextCopy}.
