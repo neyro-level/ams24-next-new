@@ -126,19 +126,24 @@ remediation proof through EPIC-19, but production release is still blocked.
 
 ## 9. Deployment
 
+Execute the parameterized procedure in `OPERATIONS.md`; this section records
+release evidence and does not duplicate operator steps.
+
 - [ ] `ops/nginx/ams24-site.conf.template` validates through `pnpm verify:nginx`.
 - [ ] Security headers/CSP validated against exact artifact.
 - [ ] `/api/leads` proxy target is correct without exposing credentials.
 - [ ] Release directory uploaded before symlink switch; local deterministic switch proof passes through `pnpm verify:rollout`.
 - [ ] Previous verified release remains available.
 - [ ] `current` switch and required Nginx reload/cache step are defined.
-- [ ] Operator supplied archive, checksum, deploy root, release ID, exact SHA and smoke URL to `ops/deploy/deploy.sh`; no value was committed.
-- [ ] Failed-deploy restoration behavior was preserved; failed releases are retained for diagnosis or removed only after they are no longer referenced.
+- [ ] Required `OPERATIONS.md` inputs and exact-SHA evidence are recorded without committed values.
+- [ ] Atomic rollout result and any automatic restoration are recorded.
 
 ## 10. Live Smoke
 
-- [ ] `/`, `/impuls/`, `/pixel/`, `/zashchita/` return expected production HTML.
-- [ ] `/page` redirects once to `/page/`.
+Run the versioned HTTP matrix from `OPERATIONS.md`, then record these
+human/browser and integration checks.
+
+- [ ] Versioned HTTP contract smoke passes for the exact release.
 - [ ] Header/footer/mobile navigation work.
 - [ ] Representative case, article and KB page work.
 - [ ] 404 works.
@@ -148,12 +153,12 @@ remediation proof through EPIC-19, but production release is still blocked.
 
 ## 11. Rollback
 
+Use the rollback procedure in `OPERATIONS.md`; record evidence here.
+
 - [ ] Previous release ID is recorded.
-- [ ] Rollback is a symlink switch, not a rebuild; `pnpm verify:rollout` covers the no-build/no-install/no-git-pull invariant.
-- [ ] Post-rollback smoke checklist is available and referenced by the rollout proof.
+- [ ] Rollback target and post-rollback smoke evidence are recorded.
 - [ ] Lead path remains safe during rollback.
-- [ ] `ops/deploy/rollback.sh` target exists under `releases/` and both Nginx validation and post-switch smoke pass.
-- [ ] Retention keeps `current` plus at least one previous verified release; pruning happens only after successful smoke.
+- [ ] Retention evidence confirms `current` plus at least one previous verified release.
 
 ## 12. Post-release
 

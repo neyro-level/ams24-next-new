@@ -455,7 +455,7 @@ Critical browser checks: home/navigation, representative product page, article, 
 ```text
 SourceCraft canonical main
   -> verified static artifact out/
-  -> release directory /var/www/ams24/releases/<release-id>/
+  -> release directory <deploy-root>/releases/<release-id>/
   -> atomic current symlink switch
   -> Nginx reload/cache step
   -> live smoke
@@ -467,13 +467,15 @@ Production identity, server path, artifact store and Nginx configuration are `TO
 
 ### Operations/runbook ownership
 
-This project intentionally has no separate `RUNBOOK.md` while production
-identity is unresolved. Ownership is split as follows:
+The independently complex operator procedure is parameterized in
+`OPERATIONS.md`; unresolved production identity remains outside Git. Ownership
+is split as follows:
 
 | Surface | Owner | Not owned here |
 |---|---|---|
 | Production topology and invariants | `03_ARCHITECTURE.md` | step-by-step release proof |
-| Release gate, rollout proof, live smoke and rollback checklist | `05_RELEASE_CHECKLIST.md` | new architecture decisions |
+| Parameterized Nginx/TLS, artifact, rollout, smoke, retention and rollback procedure | `OPERATIONS.md` | architecture decisions or release verdicts |
+| Release gates and recorded rollout/live/rollback evidence | `05_RELEASE_CHECKLIST.md` | operator procedure |
 | Executable Nginx and atomic rollout artifacts | `ops/nginx/*`, `ops/deploy/*` | product, SEO or release readiness claims |
 | External production identity, credentials and host paths | Secret Master / owner-approved release context | repository docs with secrets |
 
@@ -484,22 +486,11 @@ invent server identity. Production remains blocked until the owner explicitly
 starts release and the unresolved release identity fields are filled without
 exposing secrets.
 
-### Atomic rollout operator contract
-
-`ops/deploy/deploy.sh` accepts an archive, checksum file, deployment root,
-release ID, exact 40-character SHA and smoke URL. It verifies the checksum,
-unpacks into `releases/<release-id>/out`, writes non-secret release metadata,
-validates Nginx, stages a symlink and switches `current` atomically with
-`ln -sfn` plus `mv -T`. Reload and smoke happen only after the switch. A failed
-post-switch validation or smoke restores the previously recorded target.
-
-`ops/deploy/rollback.sh` accepts the deployment root, an existing verified
-release ID and smoke URL. It performs the same staged atomic switch, Nginx
-validation/reload and smoke without Git, dependency installation or rebuild.
-Both scripts require production identity and commands from the explicit release
-context; none are stored in Git. Keep the current and at least one previous
-verified release. Prune older releases only after successful smoke and never
-remove a target referenced by `current` or the recorded rollback evidence.
+The atomic rollout invariants remain: checksum before switch, release directory
+per ID, staged atomic `current` symlink, Nginx validation/reload, post-switch
+smoke, automatic restoration on failure, no host rebuild, and retention of the
+current plus at least one prior verified release. The executable procedure and
+inputs are owned by `OPERATIONS.md`.
 
 ## 17. Content Management Evolution
 

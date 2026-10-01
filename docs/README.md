@@ -17,6 +17,7 @@ Updated: 2026-09-30
 | стек, content/data boundaries, modules, security, delivery и production | `03_ARCHITECTURE.md` |
 | мастер-план, эпики, задачи, зависимости и текущий фокус | `04_BACKLOG.md` |
 | release gate, rollout, live proof и rollback | `05_RELEASE_CHECKLIST.md` |
+| пошаговая эксплуатация Nginx/TLS, artifact, rollout, smoke и rollback | `OPERATIONS.md` |
 | визуальная система и UI-policy | `06_DESIGN_SYSTEM.md` |
 | SEO policy, intent ownership, indexability and search artifact contracts | `07_SEO_SYSTEM.md` |
 | конкурентное и SEO-evidence | `research/COMPETITOR_SEO_BASELINE.md` |
@@ -58,10 +59,11 @@ Updated: 2026-09-30
 
 ## Operations ownership
 
-Операционный контракт не дублируется отдельным runbook-файлом:
+Операционный контракт разделён без дублирования:
 
 - `03_ARCHITECTURE.md` owns production topology, release-directory model, rollback contract and open production identity gaps;
-- `05_RELEASE_CHECKLIST.md` owns the executable release/runbook checklist, rollout proof, live smoke and rollback evidence;
+- `OPERATIONS.md` owns the parameterized operator procedure;
+- `05_RELEASE_CHECKLIST.md` owns release gates and recorded evidence;
 - `ops/nginx/*` files own only validated Nginx configuration artifacts.
 
 Until an explicit production command, operations work remains repository-side
