@@ -69,4 +69,4 @@ workflows:
                 corepack prepare pnpm@12.8.1 --activate
                 node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
-                corepack pnpm verify
+                corepack pnpm verify:release

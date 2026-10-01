@@ -137,6 +137,19 @@ function analyzeSourcecraftCi(source, contract) {
     if (!/node scripts\/verify-runtime-versions\.mjs/.test(block)) {
       errors.push(`${workflow} must run the runtime version guard`)
     }
+
+    if (workflow === 'merge-standard') {
+      if (!/corepack pnpm verify\s*(?:\r?\n|$)/.test(block)) {
+        errors.push('merge-standard must run the smaller verify proof')
+      }
+      if (/corepack pnpm verify:release/.test(block)) {
+        errors.push('merge-standard must not duplicate the RISKY release proof')
+      }
+    }
+
+    if (workflow === 'merge-risky' && !/corepack pnpm verify:release/.test(block)) {
+      errors.push('merge-risky must run corepack pnpm verify:release')
+    }
   }
 
   return errors
@@ -163,6 +176,7 @@ function buildValidFixture(contract) {
                 corepack prepare ${contract.packageManager} --activate
                 node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
+                corepack pnpm verify
   merge-risky:
     inputs:
       expected_commit_sha:
@@ -184,6 +198,7 @@ function buildValidFixture(contract) {
                 corepack prepare ${contract.packageManager} --activate
                 node scripts/verify-runtime-versions.mjs
                 corepack pnpm install --frozen-lockfile
+                corepack pnpm verify:release
 `
 }
 
@@ -196,6 +211,29 @@ async function runSelfTest() {
     ['floating node image', valid.replaceAll(`node:${contract.nodeVersion}-alpine`, 'node:24-alpine'), 2],
     ['missing frozen install', valid.replaceAll('corepack pnpm install --frozen-lockfile', 'corepack pnpm install'), 2],
     ['missing exact-head script', valid.replaceAll('node scripts/verify-sourcecraft-head.mjs', ''), 2],
+    [
+      'missing manual-event assertion',
+      valid.replaceAll('test "$SOURCECRAFT_EVENT" = "manual"', ''),
+      2,
+    ],
+    [
+      'missing exact-SHA comparison',
+      valid.replaceAll(
+        'test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"',
+        '',
+      ),
+      2,
+    ],
+    [
+      'risky gate lacks release proof',
+      valid.replace('corepack pnpm verify:release', 'corepack pnpm verify'),
+      1,
+    ],
+    [
+      'standard gate duplicates release proof',
+      valid.replace('corepack pnpm verify\n  merge-risky:', 'corepack pnpm verify:release\n  merge-risky:'),
+      2,
+    ],
     [
       'wrong package manager activation',
       valid.replaceAll(`corepack prepare ${contract.packageManager} --activate`, `corepack prepare pnpm@${Number(contract.pnpmVersion.split('.')[0]) - 1}.0.0 --activate`),
