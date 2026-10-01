@@ -2,16 +2,13 @@ import {
   buildArticleEditorialMetadata,
   getRepresentativeArticleContract,
 } from '@/core/content/services/editorial-contracts'
-import { getContentRepository } from '@/core/content/services/repository'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
 
 export const dynamicParams = false
 const representativeArticleContract = getRepresentativeArticleContract()
 
-export async function generateStaticParams() {
-  return (await getContentRepository().getArticles())
-    .filter((article) => article.status === 'published')
-    .map((article) => ({ slug: article.slug }))
+export function generateStaticParams() {
+  return [{ slug: representativeArticleContract.slug }]
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {

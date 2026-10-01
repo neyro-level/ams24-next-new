@@ -1,4 +1,5 @@
 export * from './metadata'
 export * from './redirects'
+export * from './route-artifact-manifest'
 export * from './routes'
 export * from './structured-data'

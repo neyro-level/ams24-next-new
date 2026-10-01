@@ -2,16 +2,16 @@ import {
   buildKnowledgeEditorialMetadata,
   getRepresentativeKnowledgeContract,
 } from '@/core/content/services/editorial-contracts'
-import { getContentRepository } from '@/core/content/services/repository'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
 
 export const dynamicParams = false
 const representativeKnowledgeContract = getRepresentativeKnowledgeContract()
 
-export async function generateStaticParams() {
-  return (await getContentRepository().getKnowledgeArticles())
-    .filter((article) => article.status === 'published')
-    .map((article) => ({ product: article.productRef, slug: article.slug }))
+export function generateStaticParams() {
+  return [{
+    product: representativeKnowledgeContract.product,
+    slug: representativeKnowledgeContract.slug,
+  }]
 }
 
 export async function generateMetadata({

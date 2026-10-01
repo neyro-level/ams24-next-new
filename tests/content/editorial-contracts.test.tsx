@@ -45,11 +45,14 @@ describe('article and knowledge editorial contracts', () => {
     })
   })
 
-  it('keeps editorial drafts noindex and outside generated static routes', async () => {
+  it('keeps editorial drafts noindex while exporting only representative noindex routes', async () => {
     expect(localContent.articles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
     expect(localContent.knowledgeArticles.every((article) => article.status === 'draft' && article.seo.robots === 'noindex')).toBe(true)
-    await expect(generateArticleParams()).resolves.toEqual([])
-    await expect(generateKnowledgeParams()).resolves.toEqual([])
+    expect(generateArticleParams()).toEqual([{ slug: representativeArticleContract.slug }])
+    expect(generateKnowledgeParams()).toEqual([{
+      product: representativeKnowledgeContract.product,
+      slug: representativeKnowledgeContract.slug,
+    }])
   })
 
   it('renders editorial typography and different layouts', () => {

@@ -4,6 +4,12 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 
 const projectRoot = process.cwd()
+const allowedStaticRouteHandlers = new Set(['src/app/ams-routes.json/route.ts'])
+const requiredStaticRouteHandlerPatterns = [
+  ['force-static route config', /export\s+const\s+dynamic\s*=\s*['"]force-static['"]/],
+  ['GET-only handler', /export\s+(?:async\s+)?function\s+GET\s*\(/],
+]
+const forbiddenStaticRouteHandlerMethods = /export\s+(?:async\s+)?function\s+(?:POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\s*\(/
 
 const forbiddenFilePatterns = [
   /(^|[/\\])middleware\.(?:js|jsx|mjs|ts|tsx)$/,
@@ -194,8 +200,9 @@ async function assertStaticSources(root, errors) {
     const platformPath = relativePath.replaceAll('/', path.sep)
 
     for (const pattern of forbiddenFilePatterns) {
-      if (pattern.test(platformPath) || pattern.test(relativePath)) {
+      if (!allowedStaticRouteHandlers.has(relativePath) && (pattern.test(platformPath) || pattern.test(relativePath))) {
         errors.push(`${relativePath} is forbidden in the static export contract`)
+        break
       }
     }
 
@@ -204,6 +211,15 @@ async function assertStaticSources(root, errors) {
     }
 
     const source = await readFile(filePath, 'utf8')
+
+    if (allowedStaticRouteHandlers.has(relativePath)) {
+      for (const [name, pattern] of requiredStaticRouteHandlerPatterns) {
+        if (!pattern.test(source)) errors.push(`${relativePath} must include ${name}`)
+      }
+      if (forbiddenStaticRouteHandlerMethods.test(source)) {
+        errors.push(`${relativePath} must expose only GET`)
+      }
+    }
 
     for (const rule of forbiddenSourcePatterns) {
       if (rule.pattern.test(source)) {
@@ -253,10 +269,27 @@ async function runSelfTest() {
         name: 'valid baseline',
         setup(root) {
           mkdirSync(path.join(root, 'src', 'app'), { recursive: true })
+          mkdirSync(path.join(root, 'src', 'app', 'ams-routes.json'), { recursive: true })
           writeValidNextConfig(root)
           writeFileSync(path.join(root, 'src', 'app', 'page.tsx'), 'export default function Page() { return <main>ok</main> }\n')
+          writeFileSync(
+            path.join(root, 'src', 'app', 'ams-routes.json', 'route.ts'),
+            "export const dynamic = 'force-static'\nexport function GET() { return Response.json({ ok: true }) }\n",
+          )
         },
         expected: [],
+      },
+      {
+        name: 'invalid static artifact route handler',
+        setup(root) {
+          mkdirSync(path.join(root, 'src', 'app', 'ams-routes.json'), { recursive: true })
+          writeValidNextConfig(root)
+          writeFileSync(
+            path.join(root, 'src', 'app', 'ams-routes.json', 'route.ts'),
+            'export function POST() { return Response.json({ ok: true }) }\n',
+          )
+        },
+        expected: ['force-static route config', 'GET-only handler', 'must expose only GET'],
       },
       {
         name: 'missing static config',
