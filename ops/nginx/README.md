@@ -14,6 +14,10 @@ hostnames, credentials or upstream secrets:
 
 - `{{PRODUCTION_SERVER_NAME}}`
 - `{{STAGING_SERVER_NAME}}`
+- `{{PRODUCTION_CERTIFICATE}}`
+- `{{PRODUCTION_CERTIFICATE_KEY}}`
+- `{{STAGING_CERTIFICATE}}`
+- `{{STAGING_CERTIFICATE_KEY}}`
 - `{{RELEASE_CURRENT}}`
 - `{{NGINX_SNIPPETS_DIR}}`
 - `{{LEADS_API_UPSTREAM}}`
@@ -26,3 +30,11 @@ values.
 Every context that declares its own `add_header` must include the applicable
 production or staging security-header snippet because Nginx does not inherit
 parent `add_header` directives into such a context.
+
+Port 80 servers only redirect to HTTPS. HSTS is emitted only by the HTTPS
+application servers through their security-header snippets. Keep
+`max-age=31536000` without `includeSubDomains` or `preload`, and enable this
+template for the canonical production host only after release preflight proves
+that the host is fully HTTPS-capable. Certificate placeholders are resolved by
+the release environment and must never be replaced with workstation paths or
+secrets in Git.

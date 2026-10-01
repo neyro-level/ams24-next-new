@@ -35,6 +35,9 @@ const requiredPatterns = [
   ['short HTML/static cache', /location\s+\/\s+\{[\s\S]*?Cache-Control\s+"public, max-age=60"/],
   ['staging basic auth', /auth_basic\s+"AMS24 staging";[\s\S]*?auth_basic_user_file\s+\{\{STAGING_BASIC_AUTH_FILE\}\};/],
   ['Nginx snippets placeholder', /\{\{NGINX_SNIPPETS_DIR\}\}/],
+  ['HTTP to HTTPS redirect', /return\s+301\s+https:\/\/\$host\$request_uri;/],
+  ['HTTPS listener', /listen\s+443\s+ssl;/],
+  ['HTTP2 enablement', /http2\s+on;/],
 ]
 
 const commonHeaderPatterns = [
@@ -44,6 +47,7 @@ const commonHeaderPatterns = [
   ['frame policy header', /add_header\s+X-Frame-Options\s+"SAMEORIGIN"\s+always;/],
   ['referrer policy header', /add_header\s+Referrer-Policy\s+"strict-origin-when-cross-origin"\s+always;/],
   ['permissions policy header', /add_header\s+Permissions-Policy\s+"/],
+  ['one-year HSTS header', /add_header\s+Strict-Transport-Security\s+"max-age=31536000"\s+always;/],
 ]
 
 const forbiddenPatterns = [
@@ -52,6 +56,8 @@ const forbiddenPatterns = [
   ['secret-like token', /\b(?:TOKEN|SECRET|PASSWORD|API_KEY|PRIVATE_KEY)\s*[:=]/i],
   ['legacy host-rebuilding redirect', /return\s+308\s+\$scheme:\/\/\$host\$1\/;/],
   ['unsafe eval CSP capability', /(?:script-src|default-src)[^;]*'unsafe-eval'/],
+  ['broad HSTS scope', /Strict-Transport-Security\s+"[^"]*(?:includeSubDomains|preload)[^"]*"/i],
+  ['hardcoded certificate path', /ssl_certificate(?:_key)?\s+(?!\{\{(?:PRODUCTION|STAGING)_CERTIFICATE(?:_KEY)?\}\})[^;]+;/],
 ]
 
 function stripComment(line) {
@@ -151,6 +157,10 @@ function validateHeaderInheritance(source) {
   const serverBlocks = extractBlocks(source, /^server\s+\{/)
 
   for (const block of serverBlocks) {
+    if (!/listen\s+443\s+ssl;/.test(block)) {
+      continue
+    }
+
     const staging = block.includes('server_name {{STAGING_SERVER_NAME}};')
     const expectedInclude = staging ? stagingInclude : productionInclude
     const contextName = staging ? 'staging' : 'production'
@@ -164,6 +174,36 @@ function validateHeaderInheritance(source) {
         const firstLine = location.split(/\r?\n/, 1)[0].trim()
         errors.push(`${contextName} ${firstLine} declares add_header without security-header include`)
       }
+    }
+  }
+
+  return errors
+}
+
+function validateTlsRoles(source) {
+  const errors = []
+  const serverBlocks = extractBlocks(source, /^server\s+\{/)
+  const roles = [
+    ['production', '{{PRODUCTION_SERVER_NAME}}', '{{PRODUCTION_CERTIFICATE}}', '{{PRODUCTION_CERTIFICATE_KEY}}'],
+    ['staging', '{{STAGING_SERVER_NAME}}', '{{STAGING_CERTIFICATE}}', '{{STAGING_CERTIFICATE_KEY}}'],
+  ]
+
+  for (const [name, serverName, certificate, certificateKey] of roles) {
+    const matching = serverBlocks.filter((block) => block.includes(`server_name ${serverName};`))
+    const http = matching.filter((block) => /listen\s+80;/.test(block))
+    const https = matching.filter((block) => /listen\s+443\s+ssl;/.test(block))
+
+    if (http.length !== 1 || !/return\s+301\s+https:\/\/\$host\$request_uri;/.test(http[0] ?? '')) {
+      errors.push(`${name} must have exactly one redirect-only HTTP server`)
+    }
+    if (http[0] && /\b(?:root|ssl_certificate|add_header|include\s+\{\{NGINX_SNIPPETS_DIR\}\})\b/.test(http[0])) {
+      errors.push(`${name} HTTP redirect server must not contain application, TLS or security-header directives`)
+    }
+    if (https.length !== 1 || !/http2\s+on;/.test(https[0] ?? '')) {
+      errors.push(`${name} must have exactly one HTTP2 HTTPS application server`)
+    }
+    if (!https[0]?.includes(`ssl_certificate ${certificate};`) || !https[0]?.includes(`ssl_certificate_key ${certificateKey};`)) {
+      errors.push(`${name} HTTPS server must use certificate placeholders`)
     }
   }
 
@@ -189,10 +229,11 @@ function analyzeNginxContract(source, snippets) {
   errors.push(...validateHeaderSnippet('production header snippet', snippets.production))
   errors.push(...validateHeaderSnippet('staging header snippet', snippets.staging, { staging: true }))
   errors.push(...validateHeaderInheritance(source))
+  errors.push(...validateTlsRoles(source))
 
   const serverBlockCount = [...source.matchAll(/^server\s+\{/gm)].length
-  if (serverBlockCount !== 2) {
-    errors.push(`expected exactly 2 server blocks (production and staging), got ${serverBlockCount}`)
+  if (serverBlockCount !== 4) {
+    errors.push(`expected exactly 4 server blocks (HTTP redirect and HTTPS application per host), got ${serverBlockCount}`)
   }
 
   const leadProxyCount = [...source.matchAll(/location\s+=\s+\/api\/leads\s+\{/g)].length
@@ -223,6 +264,9 @@ async function runSelfTest() {
     ['missing staging noindex', valid, { ...validSnippets, staging: validSnippets.staging.replace('add_header X-Robots-Tag "noindex, nofollow" always;', '') }, 1],
     ['missing static Next inline script policy', valid, { production: validSnippets.production.replace("'unsafe-inline' https://mc.yandex.ru", 'https://mc.yandex.ru'), staging: validSnippets.staging }, 1],
     ['unsafe eval CSP capability', valid, { production: validSnippets.production.replace("script-src 'self'", "script-src 'self' 'unsafe-eval'"), staging: validSnippets.staging }, 2],
+    ['missing HSTS', valid, { production: validSnippets.production.replace('add_header Strict-Transport-Security "max-age=31536000" always;', ''), staging: validSnippets.staging }, 1],
+    ['forbidden HSTS preload', valid, { production: validSnippets.production.replace('max-age=31536000', 'max-age=31536000; includeSubDomains; preload'), staging: validSnippets.staging }, 2],
+    ['hardcoded certificate path', valid.replace('ssl_certificate {{PRODUCTION_CERTIFICATE}};', 'ssl_certificate /etc/ssl/private/example.pem;'), validSnippets, 2],
     ['missing location security include', valid.replace(new RegExp(`    ${productionInclude.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\r?\\n    add_header Cache-Control "public, max-age=31536000, immutable" always;`), '    add_header Cache-Control "public, max-age=31536000, immutable" always;'), validSnippets, 1],
     ['redirect rewrites file-like paths', valid.replaceAll('^/(?!_next(?:/|$))(?:.*/)?[^./]+$', '^(.+[^/])$').replaceAll('return 301 $uri/$is_args$args;', 'return 308 $scheme://$host$1/;'), validSnippets, 3],
     ['redirect drops query string', valid.replaceAll('return 301 $uri/$is_args$args;', 'return 301 $uri/;'), validSnippets, 1],
