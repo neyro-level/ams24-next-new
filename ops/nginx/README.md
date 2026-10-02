@@ -26,6 +26,18 @@ hostnames, credentials or upstream secrets:
 Replacement is a release-time operation and must not be committed with secret
 values.
 
+## Browser parity fixture
+
+`pnpm test:e2e:nginx` renders this same template with temporary local-only
+values, mounts the exact built `out/` artifact read-only and runs Chromium in an
+ephemeral Docker network. It does not maintain a second Nginx configuration and
+does not prove or contact production.
+
+SourceCraft executors do not expose nested Docker. Manual exact-head RISKY and
+release workflows use the guarded `sourcecraft-no-nested-docker` mode and report
+browser E2E as `NOT RUN`; a successful local container run for that exact SHA
+remains required before merge.
+
 `{{NGINX_SNIPPETS_DIR}}` points to the deployed copy of `ops/nginx/snippets/`.
 Every context that declares its own `add_header` must include the applicable
 production or staging security-header snippet because Nginx does not inherit

@@ -9,6 +9,7 @@ import { localContent } from '@/project/content/local-content'
 const packageJson = JSON.parse(readFileSync('package.json', 'utf8')) as {
   scripts: Record<string, string>
 }
+const sourceCraftCi = readFileSync('.sourcecraft/ci.yaml', 'utf8')
 
 const requiredDailyVerifySteps = [
   'pnpm verify:runtime:self-test',
@@ -36,6 +37,7 @@ const requiredReleaseVerifySteps = [
   'pnpm build',
   'pnpm generate:precompressed',
   'pnpm guard:artifact',
+  'pnpm test:e2e:nginx',
 ] as const
 
 function validateChainedScript(script: string, requiredSteps: readonly string[]) {
@@ -71,7 +73,7 @@ describe('daily verification command trace', () => {
     expect(verify).not.toContain(' & ')
   })
 
-  it('keeps release verification as one verify, one build and one artifact guard', () => {
+  it('keeps release verification as one verify, one build, one artifact guard and one browser proof', () => {
     const release = packageJson.scripts['verify:release']
     const steps = release.split(' && ')
 
@@ -79,8 +81,15 @@ describe('daily verification command trace', () => {
     expect(release.match(/pnpm verify/g) ?? []).toHaveLength(1)
     expect(release.match(/pnpm build/g) ?? []).toHaveLength(1)
     expect(release.match(/pnpm guard:artifact/g) ?? []).toHaveLength(1)
+    expect(release.match(/pnpm test:e2e:nginx/g) ?? []).toHaveLength(1)
     expect(release).not.toMatch(/(?:^|[^&]);/)
     expect(release).not.toContain(' & ')
+  })
+
+  it('allows the browser step to skip only in exact-head SourceCraft workflows without nested Docker', () => {
+    expect(sourceCraftCi.match(/AMS24_E2E_MODE=sourcecraft-no-nested-docker/g) ?? []).toHaveLength(2)
+    expect(sourceCraftCi).toContain('test "$SOURCECRAFT_EVENT" = "manual"')
+    expect(sourceCraftCi).toContain('test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"')
   })
 
   it('rejects seeded omissions from daily and release verification scripts', () => {

@@ -7,6 +7,7 @@ import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
 import { SectionHeader } from '@/ui/shared/section-header'
+import { ErrorBoundaryProbe } from '@/ui/testing/error-boundary-probe'
 
 const trustFacts = [
   '1,5 года рабочей практики',
@@ -57,6 +58,7 @@ export default async function HomePage() {
 
   return (
     <main>
+      <ErrorBoundaryProbe />
       <HomeHeroSection products={products} />
       <TrustFactsSection />
       <ProductRoutesSection products={products} />

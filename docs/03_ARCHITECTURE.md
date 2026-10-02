@@ -441,6 +441,18 @@ Hard failures include invalid schema, duplicate ID/path, broken link/ref, missin
 
 Critical browser checks: home/navigation, representative product page, article, 404, mobile menu, trailing slash, lead form states and submission path.
 
+`pnpm test:e2e:nginx` is the repeatable browser proof for the release artifact. It
+renders the canonical `ops/nginx/ams24-site.conf.template` into a temporary
+fixture, mounts the already-built `out/` read-only, and runs pinned Chromium in
+an isolated Docker network. The fixture is removed after the run; only concise
+Playwright trace/screenshot/video artifacts survive a failure. This is not a
+second deployment topology and does not contact production.
+
+SourceCraft cubes do not expose nested Docker. Their manual exact-head RISKY
+and release proofs therefore record the browser step as `NOT RUN` through a
+fail-closed CI-only mode; the same SHA must already have a successful local
+container E2E result before merge.
+
 ## 15. Delivery Profile
 
 `DELIVERY_PROFILE=CRITICAL`:

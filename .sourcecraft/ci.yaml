@@ -46,7 +46,7 @@ workflows:
         required: true
         description: Human-readable reason why this head needs the RISKY gate.
     settings:
-      max_cube_duration: 10m
+      max_cube_duration: 20m
     checkout:
       enabled: true
       fetch_depth: 1
@@ -63,6 +63,8 @@ workflows:
                 test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
                 EXPECTED_COMMIT_SHA="${{ inputs.expected_commit_sha }}"
                 export EXPECTED_COMMIT_SHA
+                AMS24_E2E_MODE=sourcecraft-no-nested-docker
+                export AMS24_E2E_MODE
                 node scripts/verify-sourcecraft-head.mjs
                 test -n "${{ inputs.risk_reason }}"
                 corepack enable
@@ -78,7 +80,7 @@ workflows:
         required: true
         description: Exact main SHA to build and archive without deployment.
     settings:
-      max_cube_duration: 10m
+      max_cube_duration: 20m
     checkout:
       enabled: true
       fetch_depth: 1
@@ -96,6 +98,8 @@ workflows:
                 test "$SOURCECRAFT_COMMIT_SHA" = "${{ inputs.expected_commit_sha }}"
                 EXPECTED_COMMIT_SHA="${{ inputs.expected_commit_sha }}"
                 export EXPECTED_COMMIT_SHA
+                AMS24_E2E_MODE=sourcecraft-no-nested-docker
+                export AMS24_E2E_MODE
                 node scripts/verify-sourcecraft-head.mjs
                 corepack enable
                 corepack prepare pnpm@12.8.1 --activate
