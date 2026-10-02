@@ -13,6 +13,5 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
       allow: '/',
     },
     sitemap: new URL('/sitemap.xml', site.siteOrigin).toString(),
-    host: site.siteOrigin,
   }
 }

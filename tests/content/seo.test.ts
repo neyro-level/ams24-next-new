@@ -97,7 +97,6 @@ describe('SEO, routes and redirects', () => {
         allow: '/',
       },
       sitemap: 'https://ams24.ru/sitemap.xml',
-      host: 'https://ams24.ru',
     })
   })
 

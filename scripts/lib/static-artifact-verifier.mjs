@@ -143,9 +143,10 @@ export function verifyStaticArtifact(artifactDir = join(process.cwd(), 'out')) {
   if (!existsSync(robotsPath)) findings.push('out/robots.txt is required for static SEO artifact proof')
   else {
     const robots = readFileSync(robotsPath, 'utf8')
-    for (const line of ['User-Agent: *', 'Allow: /', `Sitemap: ${new URL('/sitemap.xml', manifest.site.origin)}`, `Host: ${manifest.site.origin}`]) {
+    for (const line of ['User-Agent: *', 'Allow: /', `Sitemap: ${new URL('/sitemap.xml', manifest.site.origin)}`]) {
       if (!robots.includes(line)) findings.push(`out/robots.txt is missing "${line}"`)
     }
+    if (/^Host:/im.test(robots)) findings.push('out/robots.txt must not contain the non-standard Host directive')
   }
 
   return findings.map((finding) => finding.split(sep).join('/'))

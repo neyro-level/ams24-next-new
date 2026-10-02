@@ -34,7 +34,7 @@ async function createFixture() {
   await writeCompressed(path.join(root, 'index.html'), html('https://example.test/'))
   await writeCompressed(path.join(root, 'hidden', 'index.html'), html('https://example.test/hidden/', 'noindex, follow'))
   await writeCompressed(path.join(root, 'sitemap.xml'), '<urlset><url><loc>https://example.test/</loc></url></urlset>')
-  await writeCompressed(path.join(root, 'robots.txt'), 'User-Agent: *\nAllow: /\nSitemap: https://example.test/sitemap.xml\nHost: https://example.test\n')
+  await writeCompressed(path.join(root, 'robots.txt'), 'User-Agent: *\nAllow: /\nSitemap: https://example.test/sitemap.xml\n')
   return root
 }
 
@@ -45,6 +45,16 @@ afterEach(async () => {
 describe('static artifact verifier', () => {
   it('accepts a complete manifest-bound artifact', async () => {
     expect(verifyStaticArtifact(await createFixture())).toEqual([])
+  })
+
+  it('rejects the non-standard robots Host directive', async () => {
+    const root = await createFixture()
+    await writeCompressed(
+      path.join(root, 'robots.txt'),
+      'User-Agent: *\nAllow: /\nSitemap: https://example.test/sitemap.xml\nHost: https://example.test\n',
+    )
+
+    expect(verifyStaticArtifact(root)).toContain('out/robots.txt must not contain the non-standard Host directive')
   })
 
   it('fails for a missing canonical route', async () => {
