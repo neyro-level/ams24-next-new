@@ -9,17 +9,6 @@ export type JsonLdObject = {
   [key: string]: JsonLdValue | undefined
 }
 
-export type OrganizationStructuredDataFacts = {
-  name: string
-  url: string
-  contactPoint?: {
-    contactType: string
-    telephone?: string
-    email?: string
-  }
-  sameAs?: string[]
-}
-
 export type FaqStructuredDataFacts = {
   questions: Array<{
     question: string
@@ -56,27 +45,21 @@ export function serializeJsonLd(value: JsonLdObject | JsonLdObject[]) {
     .replace(/\u2029/g, '\\u2029')
 }
 
-export function buildOrganizationStructuredData(
-  settingsInput: SiteSettingsDTO,
-  facts: Partial<OrganizationStructuredDataFacts> = {},
-): JsonLdObject[] {
+export function buildOrganizationStructuredData(settingsInput: SiteSettingsDTO): JsonLdObject[] {
   const settings = requireSiteSettings(settingsInput)
+  const organization = settings.organization
 
   return [
     {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: facts.name ?? settings.siteName,
-      url: facts.url ?? settings.domain,
-      contactPoint: facts.contactPoint
-        ? {
-            '@type': 'ContactPoint',
-            contactType: facts.contactPoint.contactType,
-            telephone: facts.contactPoint.telephone,
-            email: facts.contactPoint.email,
-          }
-        : undefined,
-      sameAs: facts.sameAs,
+      name: organization.name,
+      legalName: organization.legalName,
+      url: new URL('/', settings.domain).toString(),
+      logo: new URL(organization.logo, settings.domain).toString(),
+      taxID: organization.taxID,
+      telephone: organization.telephone,
+      email: organization.email,
     },
   ]
 }
@@ -138,6 +121,10 @@ export async function buildStructuredDataForPath(repository: ContentRepository, 
 
   if (article) {
     return buildArticleStructuredData(article, settings)
+  }
+
+  if (path === '/') {
+    return buildOrganizationStructuredData(settings)
   }
 
   return []

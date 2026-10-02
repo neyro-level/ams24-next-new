@@ -219,6 +219,17 @@ export const siteSettingsSchema = z.object({
     .string()
     .trim()
     .regex(/^\/[a-z0-9][a-z0-9/_-]*\.(?:png|jpe?g|webp)$/, 'Default OG image must be a project-owned raster path'),
+  organization: z.object({
+    name: z.string().trim().min(2),
+    legalName: z.string().trim().min(5),
+    taxID: z.string().regex(/^\d{12}$/, 'Individual entrepreneur tax ID must contain 12 digits'),
+    telephone: z.string().trim().regex(/^\+7 \d{3} \d{3} \d{4}$/, 'Telephone must use the approved +7 format'),
+    email: z.string().trim().email(),
+    logo: z
+      .string()
+      .trim()
+      .regex(/^\/[a-z0-9][a-z0-9/_-]*\.(?:png|svg)$/, 'Organization logo must be a project-owned PNG or SVG path'),
+  }),
   defaultSeo: seoSchema,
 })
 

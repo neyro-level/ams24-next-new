@@ -31,6 +31,21 @@ Updated: 2026-09-30
 
 Длинные варианты `/identifikatsiya-posetiteley-sayta/` и `/zashchita-ot-perekhvata-lidov/` не используются как canonical.
 
+### Organization identity
+
+Главная `/` публикует одну сущность `Organization` из канонических Site Settings.
+Утверждённые владельцем публичные реквизиты:
+
+- brand name: `Импульс`;
+- legal name: `ИП Скрицкая Юлия Викторовна`;
+- ИНН: `231295699557`;
+- telephone: `+7 918 320 9996`;
+- email: `integrator-p@yandex.ru`;
+- canonical URL: `https://ams24.ru/`;
+- logo: `/images/impuls-logo.png`, направление №2 — абстрактная кириллическая «И».
+
+Неутверждённые адрес, профили `sameAs` и иные реквизиты не добавляются.
+
 ## 3. Sitemap
 
 ```text

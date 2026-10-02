@@ -18,6 +18,24 @@ describe('structured data eligibility and serialization', () => {
     await expect(buildStructuredDataForPath(repository, '/stati/impuls-dlya-kogo-podhodit/')).resolves.toEqual([])
   })
 
+  it('emits the approved Organization entity only for the homepage', async () => {
+    const repository = createContentRepository(localContent)
+
+    await expect(buildStructuredDataForPath(repository, '/')).resolves.toEqual([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Импульс',
+        legalName: 'ИП Скрицкая Юлия Викторовна',
+        url: 'https://ams24.ru/',
+        logo: 'https://ams24.ru/images/impuls-logo.png',
+        taxID: '231295699557',
+        telephone: '+7 918 320 9996',
+        email: 'integrator-p@yandex.ru',
+      },
+    ])
+  })
+
   it('allows only substantive published indexable articles with a publication date', async () => {
     const draftArticle = localContent.articles.find((article) => article.status === 'draft')!
     const repository = createContentRepository({
@@ -57,31 +75,20 @@ describe('structured data eligibility and serialization', () => {
     ).toBe(`https://example.test${draftArticle.path}`)
   })
 
-  it('uses canonical Site Settings for organization defaults', async () => {
+  it('uses only canonical Site Settings for organization facts', async () => {
     const settings = await createContentRepository(localContent).getSiteSettings()
-
-    expect(
-      buildOrganizationStructuredData(settings, {
-        name: 'AMS24',
-        url: 'https://ams24.ru/',
-        sameAs: ['https://example.com/ams24'],
-      }),
-    ).toEqual([
-      {
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: 'AMS24',
-        url: 'https://ams24.ru/',
-        sameAs: ['https://example.com/ams24'],
-      },
-    ])
 
     expect(buildOrganizationStructuredData(settings)).toEqual([
       {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: settings.siteName,
-        url: settings.domain,
+        name: settings.organization.name,
+        legalName: settings.organization.legalName,
+        url: 'https://ams24.ru/',
+        logo: 'https://ams24.ru/images/impuls-logo.png',
+        taxID: settings.organization.taxID,
+        telephone: settings.organization.telephone,
+        email: settings.organization.email,
       },
     ])
   })

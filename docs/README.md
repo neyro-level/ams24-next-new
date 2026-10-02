@@ -35,7 +35,7 @@ Updated: 2026-10-02
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
 | `03_ARCHITECTURE.md` | Active | статический Next.js contract, pinned stack, SEO artifacts, Nginx/rollout repository contracts and remaining production blockers recorded |
 | `04_BACKLOG.md` | Approved / execution | exact technical-completion plan `AMS24-TECHNICAL-COMPLETION-2026 v4` импортирован в Task Manager; source hash сохраняется неизменным |
-| `DELIVERY_STATE.yaml` | Active / Blocked | reconcile `CLEAN`, 321/325 узлов закрыты; только T7.5 ожидает подтверждённые владельцем Organization facts |
+| `DELIVERY_STATE.yaml` | Complete | reconcile `CLEAN`, 325/325 узлов закрыты; T7.5 завершает утверждённый технический план |
 | `05_RELEASE_CHECKLIST.md` | Draft / Blocked | remediation proof through EPIC-19 recorded; production still requires explicit command and release-only checks |
 | `06_DESIGN_SYSTEM.md` | Active | Northline адаптирован; CR-18/CR-19 record accessibility, performance and zero-P0/P1 UI drift proof |
 | `07_SEO_SYSTEM.md` | Active | source priority, intent ownership, indexability, sitemap/robots/metadata artifact proof and release crawl rules recorded |
@@ -43,7 +43,7 @@ Updated: 2026-10-02
 
 ## Текущий фокус
 
-Execution graphs `AMS24-IMPULSE-2026 v4` и `AMS24-CONSTITUTION-REMEDIATION-2026 v3` закрыты. По exact plan `AMS24-TECHNICAL-COMPLETION-2026 v4 APPROVED` Task Manager имеет reconcile `CLEAN`: 321/325 узлов закрыты, ready implementation отсутствует. Единственный незавершённый scope — T7.5; он заблокирован решением владельца `ams24t-tc-od-org` о legal name, canonical URL, logo и допустимых contact/requisite fields. До этого Organization JSON-LD не создаётся. Production не разрешён.
+Execution graphs `AMS24-IMPULSE-2026 v4`, `AMS24-CONSTITUTION-REMEDIATION-2026 v3` и exact plan `AMS24-TECHNICAL-COMPLETION-2026 v4 APPROVED` закрыты. Task Manager имеет reconcile `CLEAN`: 325/325 узлов закрыты. T7.5 публикует на главной одну Organization JSON-LD сущность из утверждённых владельцем Site Settings и использует официальный знак «Импульса» направления №2. Production не разрешён без отдельной явной команды владельца.
 
 ## Как читать
 

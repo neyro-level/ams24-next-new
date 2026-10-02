@@ -2,7 +2,7 @@ import { getContentRepository } from '@/core/content/services/repository'
 import { getPublicClaimsForProduct, type ProductClaim } from '@/core/content/services/product-claims'
 import { getRequiredPageByPath, getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import type { ProductDTO } from '@/core/content/schemas'
-import { buildMetadata } from '@/core/seo'
+import { buildMetadata, buildStructuredDataForPath, serializeJsonLd } from '@/core/seo'
 import { Button } from '@/ui/primitives/button'
 import { LeadForm } from '@/ui/forms/lead-form'
 import { Container } from '@/ui/shared/container'
@@ -49,20 +49,29 @@ const productRouteSummaries = {
 
 export default async function HomePage() {
   const repository = getContentRepository()
-  const products = await repository.getProducts()
+  const [products, structuredData] = await Promise.all([
+    repository.getProducts(),
+    buildStructuredDataForPath(repository, '/'),
+  ])
   const trustClaims = getPublicClaimsForProduct('platform')
 
   return (
-    <main>
-      <ErrorBoundaryProbe />
-      <HomeHeroSection products={products} />
-      <TrustFactsSection claims={trustClaims} />
-      <ProductRoutesSection products={products} />
-      <SystemFlowSection />
-      <ProofPreviewSection />
-      <KnowledgePreviewSection />
-      <HomeLeadSection />
-    </main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }}
+      />
+      <main>
+        <ErrorBoundaryProbe />
+        <HomeHeroSection products={products} />
+        <TrustFactsSection claims={trustClaims} />
+        <ProductRoutesSection products={products} />
+        <SystemFlowSection />
+        <ProofPreviewSection />
+        <KnowledgePreviewSection />
+        <HomeLeadSection />
+      </main>
+    </>
   )
 }
 
