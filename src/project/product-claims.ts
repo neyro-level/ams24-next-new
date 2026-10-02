@@ -15,7 +15,7 @@ type EvidenceStatus =
 type PublicationStatus = 'allowed' | 'needs-review' | 'hidden'
 
 type ClaimRisk = 'low' | 'medium' | 'high'
-type ClaimProductId = ProductId | 'platform'
+export type ClaimProductId = ProductId | 'platform'
 
 export type ProductClaim = {
   id: string

@@ -1,4 +1,5 @@
 import { getContentRepository } from '@/core/content/services/repository'
+import { getPublicClaimsForProduct, type ProductClaim } from '@/core/content/services/product-claims'
 import { getRequiredPageByPath, getRequiredSiteSettings } from '@/core/content/services/site-settings'
 import type { ProductDTO } from '@/core/content/schemas'
 import { buildMetadata } from '@/core/seo'
@@ -8,12 +9,6 @@ import { Container } from '@/ui/shared/container'
 import { Section } from '@/ui/shared/section'
 import { SectionHeader } from '@/ui/shared/section-header'
 import { ErrorBoundaryProbe } from '@/ui/testing/error-boundary-probe'
-
-const trustFacts = [
-  '1,5 года рабочей практики',
-  'Кейсы в трёх нишах',
-  'Три продукта в одной системе',
-] as const
 
 export async function generateMetadata() {
   const repository = getContentRepository()
@@ -55,12 +50,13 @@ const productRouteSummaries = {
 export default async function HomePage() {
   const repository = getContentRepository()
   const products = await repository.getProducts()
+  const trustClaims = getPublicClaimsForProduct('platform')
 
   return (
     <main>
       <ErrorBoundaryProbe />
       <HomeHeroSection products={products} />
-      <TrustFactsSection />
+      <TrustFactsSection claims={trustClaims} />
       <ProductRoutesSection products={products} />
       <SystemFlowSection />
       <ProofPreviewSection />
@@ -123,15 +119,15 @@ function HomeHeroSection({ products }: { products: readonly HomeProduct[] }) {
   )
 }
 
-function TrustFactsSection() {
+function TrustFactsSection({ claims }: { claims: readonly ProductClaim[] }) {
   return (
     <Section spacing="sm" className="bg-surface">
       <Container>
         <div className="grid gap-3 md:grid-cols-3">
-          {trustFacts.map((fact) => (
-            <div className="rounded-card border border-border bg-surface-elevated p-5 shadow-card" key={fact}>
+          {claims.map((claim) => (
+            <div className="rounded-card border border-border bg-surface-elevated p-5 shadow-card" key={claim.id}>
               <p className="text-label font-bold uppercase text-primary">Подтверждение</p>
-              <p className="mt-4 font-display text-h3 font-bold text-foreground">{fact}</p>
+              <p className="mt-4 font-display text-h3 font-bold text-foreground">{claim.claim}</p>
             </div>
           ))}
         </div>

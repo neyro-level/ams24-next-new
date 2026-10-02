@@ -14,6 +14,24 @@ import {
 import { proofEvidenceInventory, validateProofEvidenceInventory } from '@/project/proof-inventory'
 
 describe('unsupported publication regressions', () => {
+  it('routes homepage trust facts through the publication gate', async () => {
+    const html = renderToStaticMarkup(await HomePage())
+    const publicPlatformClaims = getPublicClaimsForProduct('platform')
+    const deniedPlatformClaims = productClaims.filter(
+      (claim) => claim.product === 'platform' && claim.publicationStatus !== 'allowed',
+    )
+
+    expect(publicPlatformClaims).not.toHaveLength(0)
+    for (const claim of publicPlatformClaims) {
+      expect(html).toContain(claim.claim)
+    }
+    for (const claim of deniedPlatformClaims) {
+      expect(html).not.toContain(claim.claim)
+    }
+    expect(html).not.toContain('needs-review')
+    expect(html).not.toContain('unsupported-hidden')
+  })
+
   it('keeps denied claims and internal review routes out of indexable UI', async () => {
     const deniedClaims = productClaims.filter((claim) => claim.publicationStatus !== 'allowed')
     const indexableRoutes = [
