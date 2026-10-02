@@ -215,6 +215,10 @@ export const siteSettingsSchema = z.object({
   locale: localeSchema,
   siteName: z.string().trim().min(2),
   domain: z.string().url(),
+  defaultOgImage: z
+    .string()
+    .trim()
+    .regex(/^\/[a-z0-9][a-z0-9/_-]*\.(?:png|jpe?g|webp)$/, 'Default OG image must be a project-owned raster path'),
   defaultSeo: seoSchema,
 })
 

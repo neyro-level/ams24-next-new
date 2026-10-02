@@ -46,7 +46,7 @@ function readManifest(artifactDir, findings) {
   try {
     const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'))
     if (manifest.schema !== 'ams-route-artifact-v1') throw new Error('unsupported schema')
-    if (!manifest.site?.origin || !manifest.site?.locale || !manifest.site?.siteName) throw new Error('site settings are incomplete')
+    if (!manifest.site?.origin || !manifest.site?.locale || !manifest.site?.siteName || !manifest.site?.defaultOgImage) throw new Error('site settings are incomplete')
     if (!Array.isArray(manifest.routes) || manifest.routes.length === 0) throw new Error('routes must be a non-empty array')
     return manifest
   } catch (error) {
@@ -117,6 +117,14 @@ export function verifyStaticArtifact(artifactDir = join(process.cwd(), 'out')) {
       `<meta property="og:url" content="${route.canonicalUrl}"/>`,
       `<meta property="og:site_name" content="${manifest.site.siteName}"/>`,
     ]) if (!html.includes(fragment)) findings.push(`${relative(artifactDir, filePath)} is missing ${fragment}`)
+    const ogImages = extractAll(html, /<meta property="og:image" content="([^"]+)"\/>/g)
+    if (ogImages.length !== 1) findings.push(`${relative(artifactDir, filePath)} must contain exactly one og:image; found ${ogImages.length}`)
+    for (const imageUrl of ogImages) {
+      const image = new URL(imageUrl)
+      if (image.origin !== manifest.site.origin) findings.push(`${relative(artifactDir, filePath)} og:image must use the canonical site origin: ${imageUrl}`)
+      const imagePath = join(artifactDir, decodeURIComponent(image.pathname).replace(/^\//, ''))
+      if (!existsSync(imagePath)) findings.push(`${relative(artifactDir, filePath)} references missing og:image artifact ${image.pathname}`)
+    }
     if (!html.includes(`<html lang="${route.locale.split('-')[0]}"`)) findings.push(`${relative(artifactDir, filePath)} has unexpected locale; expected ${route.locale}`)
   }
 

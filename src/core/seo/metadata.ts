@@ -17,6 +17,7 @@ export function buildMetadata(
   const settings = requireSiteSettings(settingsInput)
   const seo = seoInput ?? settings.defaultSeo
   const canonical = new URL(seo.canonicalPath, settings.domain).toString()
+  const ogImage = new URL(seo.ogImage ?? settings.defaultOgImage, settings.domain).toString()
 
   return {
     title: seo.title,
@@ -31,7 +32,7 @@ export function buildMetadata(
       siteName: settings.siteName,
       locale: settings.locale.replace('-', '_'),
       type: options.type ?? 'website',
-      images: seo.ogImage ? [seo.ogImage] : undefined,
+      images: [ogImage],
     },
     robots: {
       index: (seo.robots ?? 'index') === 'index',

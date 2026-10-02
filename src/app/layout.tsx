@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Manrope } from 'next/font/google'
 
-import { getSiteSettingsViewModel } from '@/core/content/services/view-models'
+import { getRequiredSiteSettings } from '@/core/content/services/site-settings'
+import { buildMetadata } from '@/core/seo'
 import { SiteShell } from '@/ui/shell/site-shell'
 
 import { AnalyticsBridge } from './_integrations/analytics-bridge'
@@ -15,13 +16,8 @@ const manrope = Manrope({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSiteSettingsViewModel()
-
-  return {
-    metadataBase: new URL(site.siteOrigin),
-    title: site.defaultSeo.title,
-    description: site.defaultSeo.description,
-  }
+  const site = await getRequiredSiteSettings()
+  return { metadataBase: new URL(site.domain), ...buildMetadata(undefined, site) }
 }
 
 export default function RootLayout({

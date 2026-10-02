@@ -16,7 +16,7 @@ async function writeCompressed(file, content) {
 }
 
 function html(canonical, robots = 'index, follow', h1 = '<h1>Title</h1>') {
-  return `<html lang="ru"><head><link rel="canonical" href="${canonical}"/><meta name="robots" content="${robots}"/><meta property="og:url" content="${canonical}"/><meta property="og:site_name" content="Example"/></head><body>${h1}</body></html>`
+  return `<html lang="ru"><head><link rel="canonical" href="${canonical}"/><meta name="robots" content="${robots}"/><meta property="og:url" content="${canonical}"/><meta property="og:site_name" content="Example"/><meta property="og:image" content="https://example.test/images/og-default.png"/></head><body>${h1}</body></html>`
 }
 
 async function createFixture() {
@@ -24,7 +24,7 @@ async function createFixture() {
   fixtures.push(root)
   const manifest = {
     schema: 'ams-route-artifact-v1',
-    site: { origin: 'https://example.test', locale: 'ru-RU', siteName: 'Example' },
+    site: { origin: 'https://example.test', locale: 'ru-RU', siteName: 'Example', defaultOgImage: 'https://example.test/images/og-default.png' },
     routes: [
       { path: '/', canonicalUrl: 'https://example.test/', locale: 'ru-RU', indexPolicy: 'index', h1: { count: 1 } },
       { path: '/hidden/', canonicalUrl: 'https://example.test/hidden/', locale: 'ru-RU', indexPolicy: 'noindex', h1: { count: 1 } },
@@ -35,6 +35,8 @@ async function createFixture() {
   await writeCompressed(path.join(root, 'hidden', 'index.html'), html('https://example.test/hidden/', 'noindex, follow'))
   await writeCompressed(path.join(root, 'sitemap.xml'), '<urlset><url><loc>https://example.test/</loc></url></urlset>')
   await writeCompressed(path.join(root, 'robots.txt'), 'User-Agent: *\nAllow: /\nSitemap: https://example.test/sitemap.xml\n')
+  await mkdir(path.join(root, 'images'), { recursive: true })
+  await writeFile(path.join(root, 'images', 'og-default.png'), 'fixture')
   return root
 }
 
@@ -45,6 +47,13 @@ afterEach(async () => {
 describe('static artifact verifier', () => {
   it('accepts a complete manifest-bound artifact', async () => {
     expect(verifyStaticArtifact(await createFixture())).toEqual([])
+  })
+
+  it('fails when an OG image artifact is missing', async () => {
+    const root = await createFixture()
+    await unlink(path.join(root, 'images', 'og-default.png'))
+
+    expect(verifyStaticArtifact(root)).toContain('index.html references missing og:image artifact /images/og-default.png')
   })
 
   it('rejects the non-standard robots Host directive', async () => {

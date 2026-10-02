@@ -24,6 +24,7 @@ describe('SEO, routes and redirects', () => {
     expect(metadata.title).toBe('Импульс — маркетинговые продукты AMS24')
     expect(metadata.alternates?.canonical).toBe('https://ams24.ru/')
     expect(metadata.robots).toMatchObject({ index: true, follow: true })
+    expect(metadata.openGraph?.images).toEqual(['https://ams24.ru/images/impuls-og-default.png'])
 
     const customMetadata = buildMetadata(page.seo, {
       ...(await repository.getSiteSettings()),
@@ -32,6 +33,7 @@ describe('SEO, routes and redirects', () => {
     })
     expect(customMetadata.alternates?.canonical).toBe('https://example.test/')
     expect(customMetadata.openGraph?.siteName).toBe('Example Site')
+    expect(customMetadata.openGraph?.images).toEqual(['https://example.test/images/impuls-og-default.png'])
 
     const defaultMetadata = buildMetadata(undefined, await repository.getSiteSettings())
     expect(defaultMetadata.title).toBe((await repository.getSiteSettings()).defaultSeo.title)

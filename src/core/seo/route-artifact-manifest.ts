@@ -20,6 +20,7 @@ export type RouteArtifactManifest = {
     origin: string
     locale: Locale
     siteName: string
+    defaultOgImage: string
   }
   routes: RouteArtifactEntry[]
 }
@@ -83,7 +84,12 @@ export async function buildRouteArtifactManifest(
 
   return {
     schema: 'ams-route-artifact-v1',
-    site: { origin: settings.domain, locale: settings.locale, siteName: settings.siteName },
+    site: {
+      origin: settings.domain,
+      locale: settings.locale,
+      siteName: settings.siteName,
+      defaultOgImage: new URL(settings.defaultOgImage, settings.domain).toString(),
+    },
     routes,
   }
 }

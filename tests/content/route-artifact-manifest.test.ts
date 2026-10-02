@@ -10,7 +10,12 @@ describe('repository-derived route artifact manifest', () => {
     const paths = manifest.routes.map((route) => route.path)
 
     expect(manifest.schema).toBe('ams-route-artifact-v1')
-    expect(manifest.site).toEqual({ origin: 'https://ams24.ru', locale: 'ru-RU', siteName: 'Импульс' })
+    expect(manifest.site).toEqual({
+      origin: 'https://ams24.ru',
+      locale: 'ru-RU',
+      siteName: 'Импульс',
+      defaultOgImage: 'https://ams24.ru/images/impuls-og-default.png',
+    })
     expect(paths).toEqual([
       '/',
       '/baza-znaniy/',
