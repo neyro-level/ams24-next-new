@@ -1,5 +1,6 @@
 import {
   buildArticleEditorialMetadata,
+  toPublicArticleDTO,
 } from '@/core/content/services/editorial-contracts'
 import { getContentRepository } from '@/core/content/services/repository'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
@@ -27,5 +28,5 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  return <ArticleEditorialTemplate article={await getArticle(slug)} />
+  return <ArticleEditorialTemplate article={toPublicArticleDTO(await getArticle(slug))} />
 }

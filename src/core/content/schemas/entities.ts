@@ -140,6 +140,25 @@ export const knowledgeArticleSchema = z.object({
   }
 })
 
+export const publicArticleSchema = z
+  .object({
+    path: pathSchema,
+    title: z.string().trim().min(5),
+    description: z.string().trim().min(20),
+    body: richTextSchema,
+  })
+  .strict()
+
+export const publicKnowledgeArticleSchema = z
+  .object({
+    path: pathSchema,
+    productRef: productIdSchema,
+    title: z.string().trim().min(5),
+    description: z.string().trim().min(20),
+    body: richTextSchema,
+  })
+  .strict()
+
 export const heroPageBlockSchema = z.object({
   blockType: z.literal('hero'),
   eyebrow: z.string().optional(),
@@ -213,6 +232,8 @@ export type ReviewDTO = z.infer<typeof reviewSchema>
 export type CalculationExampleDTO = z.infer<typeof calculationExampleSchema>
 export type ArticleDTO = z.infer<typeof articleSchema>
 export type KnowledgeArticleDTO = z.infer<typeof knowledgeArticleSchema>
+export type PublicArticleDTO = z.infer<typeof publicArticleSchema>
+export type PublicKnowledgeArticleDTO = z.infer<typeof publicKnowledgeArticleSchema>
 export type PageBlockDTO = z.infer<typeof pageBlockSchema>
 export type PageDTO = z.infer<typeof pageSchema>
 export type NavigationInput = z.input<typeof navigationSchema>

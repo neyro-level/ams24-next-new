@@ -1,5 +1,6 @@
 import {
   buildKnowledgeEditorialMetadata,
+  toPublicKnowledgeArticleDTO,
 } from '@/core/content/services/editorial-contracts'
 import { getContentRepository } from '@/core/content/services/repository'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
@@ -37,5 +38,5 @@ export default async function KnowledgeDetailPage({
   params: Promise<{ product: string; slug: string }>
 }) {
   const { product, slug } = await params
-  return <KnowledgeEditorialTemplate article={await getKnowledgeArticle(product, slug)} />
+  return <KnowledgeEditorialTemplate article={toPublicKnowledgeArticleDTO(await getKnowledgeArticle(product, slug))} />
 }

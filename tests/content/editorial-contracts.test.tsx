@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
@@ -8,7 +9,10 @@ import { redirects } from '@/project/redirects'
 import {
   buildArticleEditorialMetadata,
   buildKnowledgeEditorialMetadata,
+  toPublicArticleDTO,
+  toPublicKnowledgeArticleDTO,
 } from '@/core/content/services/editorial-contracts'
+import { publicArticleSchema, publicKnowledgeArticleSchema } from '@/core/content/schemas'
 import { createContentRepository } from '@/core/content/repository'
 import { ArticleEditorialTemplate } from '@/ui/content/article-editorial-template'
 import { KnowledgeEditorialTemplate } from '@/ui/content/knowledge-editorial-template'
@@ -53,6 +57,36 @@ describe('article and knowledge editorial contracts', () => {
     })
   })
 
+  it('maps repository entities to strict public DTOs before template rendering', async () => {
+    const article = await repository.getArticleByPath('/stati/kak-vybrat-produkt/')
+    const knowledge = await repository.getKnowledgeArticleByPath('/baza-znaniy/impuls/kak-podgotovit-raschet/')
+    if (!article) throw new Error('Expected repository-backed article')
+    if (!knowledge) throw new Error('Expected repository-backed knowledge article')
+
+    const publicArticle = toPublicArticleDTO(article)
+    const publicKnowledge = toPublicKnowledgeArticleDTO(knowledge)
+    const forbiddenFields = ['outline', 'sourceLedger', 'targetCommercialPage', 'readerQuestion', 'sectionJob']
+
+    expect(Object.keys(publicArticle).sort()).toEqual(['body', 'description', 'path', 'title'])
+    expect(Object.keys(publicKnowledge).sort()).toEqual(['body', 'description', 'path', 'productRef', 'title'])
+    for (const field of forbiddenFields) {
+      expect(publicArticle).not.toHaveProperty(field)
+      expect(publicKnowledge).not.toHaveProperty(field)
+    }
+    expect(publicArticleSchema.safeParse({ ...publicArticle, outline: ['internal'] }).success).toBe(false)
+    expect(publicKnowledgeArticleSchema.safeParse({ ...publicKnowledge, sectionJob: 'internal' }).success).toBe(false)
+  })
+
+  it('types public templates against the narrow DTO boundary', () => {
+    const articleTemplate = readFileSync('src/ui/content/article-editorial-template.tsx', 'utf8')
+    const knowledgeTemplate = readFileSync('src/ui/content/knowledge-editorial-template.tsx', 'utf8')
+
+    expect(articleTemplate).toContain('PublicArticleDTO')
+    expect(articleTemplate).not.toMatch(/\bArticleDTO\b/)
+    expect(knowledgeTemplate).toContain('PublicKnowledgeArticleDTO')
+    expect(knowledgeTemplate).not.toMatch(/\bKnowledgeArticleDTO\b/)
+  })
+
   it('keeps editorial drafts noindex while exporting only representative noindex routes', async () => {
     const draftArticles = localContent.articles.filter((article) => article.status === 'draft')
     expect(draftArticles).toHaveLength(3)
@@ -74,10 +108,10 @@ describe('article and knowledge editorial contracts', () => {
     if (!article) throw new Error('Expected repository-backed article')
     if (!knowledge) throw new Error('Expected repository-backed knowledge article')
     const articleHtml = renderToStaticMarkup(
-      <ArticleEditorialTemplate article={article} />,
+      <ArticleEditorialTemplate article={toPublicArticleDTO(article)} />,
     )
     const kbHtml = renderToStaticMarkup(
-      <KnowledgeEditorialTemplate article={knowledge} />,
+      <KnowledgeEditorialTemplate article={toPublicKnowledgeArticleDTO(knowledge)} />,
     )
 
     expect(articleHtml).toContain('Статья')

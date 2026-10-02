@@ -187,6 +187,10 @@ ui reusable layers -> DTO/ViewModel only
 ```
 
 Reusable UI must not depend on raw Markdown, file system, analytics provider or lead persistence.
+Editorial repository entities and research evidence never cross directly into
+public templates. `core/content/services/editorial-contracts` maps them through
+strict `PublicArticleDTO` / `PublicKnowledgeArticleDTO` schemas that contain
+only the route, public title/description, product context where needed and body.
 
 ### 7.1 Current Source Inventory and Import Baseline
 
