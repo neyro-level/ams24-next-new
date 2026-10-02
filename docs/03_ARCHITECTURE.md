@@ -2,7 +2,7 @@
 
 Status: Active  
 Version: 1.0  
-Updated: 2026-09-30
+Updated: 2026-10-02
 
 ## 1. Project Identity
 
@@ -50,12 +50,12 @@ CMS, PostgreSQL, Prisma, Payload, auth, worker, Redis и Docker не входя�
 | analytics | Яндекс Метрика, typed events, no PII |
 | forms | target contract: relative `/api/leads` -> Nginx -> AMS Leads API; current frontend renders this canonical relative endpoint while live submission remains disabled |
 
-Exact foundation versions pinned during EPIC-01.2:
+Exact versions currently pinned; the foundation set was selected during EPIC-01.2 and Next.js was patch-updated by T7.6:
 
 ```text
 Node: 24.20.0
 pnpm: 12.8.1
-Next.js: 16.3.7
+Next.js: 16.3.8
 React / React DOM: 19.3.0
 TypeScript: 6.0.3
 Tailwind CSS / @tailwindcss/postcss: 4.3.3

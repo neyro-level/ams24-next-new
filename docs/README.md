@@ -2,7 +2,7 @@
 
 Status: Active  
 Version: 1.0  
-Updated: 2026-09-30
+Updated: 2026-10-02
 
 ## Назначение
 
@@ -20,6 +20,7 @@ Updated: 2026-09-30
 | пошаговая эксплуатация Nginx/TLS, artifact, rollout, smoke и rollback | `OPERATIONS.md` |
 | визуальная система и UI-policy | `06_DESIGN_SYSTEM.md` |
 | SEO policy, intent ownership, indexability and search artifact contracts | `07_SEO_SYSTEM.md` |
+| installed/target stack versions, official release sources and security-advisory applicability | `VERSION_MATRIX.md` |
 | конкурентное и SEO-evidence | `research/COMPETITOR_SEO_BASELINE.md` |
 | external preflight: leads/legal/analytics/CAPTCHA/current URLs | `research/EXTERNAL_PREFLIGHT_EPIC_01_5.md` |
 | remediation baseline classification | `research/BASELINE_CLAIMS_REGISTER_CR_00_1.md` |
@@ -36,6 +37,7 @@ Updated: 2026-09-30
 | `05_RELEASE_CHECKLIST.md` | Draft / Blocked | remediation proof through EPIC-19 recorded; production still requires explicit command and release-only checks |
 | `06_DESIGN_SYSTEM.md` | Active | Northline адаптирован; CR-18/CR-19 record accessibility, performance and zero-P0/P1 UI drift proof |
 | `07_SEO_SYSTEM.md` | Active | source priority, intent ownership, indexability, sitemap/robots/metadata artifact proof and release crawl rules recorded |
+| `VERSION_MATRIX.md` | Active | Next.js patch level, official security sources, repository applicability and pre-release recheck contract |
 
 ## Текущий фокус
 

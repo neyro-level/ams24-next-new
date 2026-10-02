@@ -2,7 +2,7 @@
 
 Status: Draft  
 Version: 0.1  
-Updated: 2026-09-30
+Updated: 2026-10-02
 
 Release is allowed only after an explicit owner command. This checklist does not authorize merge or production.
 
@@ -56,6 +56,7 @@ remediation proof through EPIC-19, but production release is still blocked.
 - [ ] Exact release SHA is recorded.
 - [ ] Release artifact is linked to that SHA.
 - [ ] `DELIVERY_PROFILE=CRITICAL` gate evidence is available for exact head.
+- [ ] `docs/VERSION_MATRIX.md` has been rechecked on the release date against the official Next.js blog, release and GitHub advisories; any newer safe compatible 16.3 patch is applied and proven before release.
 - [ ] Production identity and target path are recorded without exposing secrets.
 
 ## 2. Product

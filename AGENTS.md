@@ -34,7 +34,7 @@
 ## Команды и версии
 
 - Package manager: `pnpm@12.8.1` через Corepack.
-- Runtime stack зафиксирован lockfile: Next.js `16.3.7`, React `19.3.0`, TypeScript `6.0.3`.
+- Runtime stack зафиксирован lockfile: Next.js `16.3.8`, React `19.3.0`, TypeScript `6.0.3`.
 - `corepack pnpm dev` — локальный запуск.
 - `corepack pnpm build` — статический export.
 - `corepack pnpm verify` — основной локальный proof перед handoff/merge.
