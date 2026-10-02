@@ -53,6 +53,7 @@ describe('lead form, legal guard and analytics hardening', () => {
       expect(leadFormRuntime.submissionEnabled).toBe(false)
       expect(html).not.toContain('action=')
       expect(html).not.toContain('method=')
+      expect(html).not.toContain('aria-disabled="false"')
       expect(html).toContain('disabled=""')
       expect(html).toContain('data-analytics-event="lead_form_submit_blocked"')
     } finally {

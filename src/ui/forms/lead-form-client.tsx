@@ -35,6 +35,10 @@ type LeadFormAction =
 
 const initialState: LeadFormState = { status: 'default', fieldErrors: {}, message: '' }
 
+export function isLeadFormDisabled(submissionEnabled: boolean, status: LeadFormStatus) {
+  return !submissionEnabled || status === 'submitting'
+}
+
 export function leadFormReducer(state: LeadFormState, action: LeadFormAction): LeadFormState {
   switch (action.type) {
     case 'VALIDATION_ERROR':
@@ -98,7 +102,7 @@ export function LeadFormClient({ availability, context, description, headingLeve
   const [consentAccepted, setConsentAccepted] = useState(false)
   const [startedAt, setStartedAt] = useState(() => Date.now())
   const isDark = surface === 'dark'
-  const disabled = !availability.submissionEnabled || state.status === 'submitting'
+  const disabled = isLeadFormDisabled(availability.submissionEnabled, state.status)
   const Heading = headingLevel
 
   const cardClass = isDark

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import { leadConsentContract, leadConsentTargets, type LeadRequestPayload } from '@/core/leads'
-import { leadFormReducer, sendLeadRequest } from '@/ui/forms/lead-form-client'
+import { isLeadFormDisabled, leadFormReducer, sendLeadRequest } from '@/ui/forms/lead-form-client'
 
 const payload: LeadRequestPayload = {
   name: 'Анна',
@@ -69,5 +69,14 @@ describe('T5.1 lead form client state machine', () => {
     const fetcher = vi.fn().mockResolvedValue({ ok: false })
 
     await expect(sendLeadRequest(true, payload, fetcher)).resolves.toEqual({ status: 'server-error' })
+  })
+})
+
+describe('T5.2 native fallback guard', () => {
+  it('derives disabled accessibility state from runtime availability and submission state', () => {
+    expect(isLeadFormDisabled(false, 'default')).toBe(true)
+    expect(isLeadFormDisabled(true, 'default')).toBe(false)
+    expect(isLeadFormDisabled(true, 'submitting')).toBe(true)
+    expect(isLeadFormDisabled(true, 'server-error')).toBe(false)
   })
 })
