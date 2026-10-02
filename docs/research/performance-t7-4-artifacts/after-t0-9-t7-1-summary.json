@@ -1,0 +1,41 @@
+{
+  "label": "after-t0-9-t7-1",
+  "checkoutSha": "ffedde6a781168d1f405d1353963f5e2d38ffd29",
+  "profile": {
+    "preset": "perf",
+    "formFactor": "mobile",
+    "throttlingMethod": "simulate",
+    "viewport": "390x844@3x",
+    "lighthouseVersion": "13.0.1",
+    "nginxImage": "docker.io/library/nginx:1.28.0-alpine@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284",
+    "playwrightImage": "mcr.microsoft.com/playwright:v1.63.0-noble@sha256:eff16c30e6f3f4af0a03fa4b706120d5e9b0891c344a27d64559aff5900a4a27"
+  },
+  "results": [
+    {
+      "route": "/",
+      "url": "https://production.test/",
+      "performanceScore": 0.72,
+      "fcpMs": 1515.354,
+      "lcpMs": 2242.3540000000003,
+      "cls": 0,
+      "tbtMs": 1352.5000000000002,
+      "speedIndexMs": 3415.535107089713,
+      "totalByteWeight": 330454,
+      "lighthouseVersion": "13.0.1",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36"
+    },
+    {
+      "route": "/impuls/",
+      "url": "https://production.test/impuls/",
+      "performanceScore": 0.98,
+      "fcpMs": 907.918,
+      "lcpMs": 1957.9180000000001,
+      "cls": 0,
+      "tbtMs": 115.5,
+      "speedIndexMs": 1211.7268454437954,
+      "totalByteWeight": 346907,
+      "lighthouseVersion": "13.0.1",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36"
+    }
+  ]
+}
