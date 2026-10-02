@@ -412,6 +412,10 @@ Raw lead fields, wrapped form payloads, contact values, consent payloads and
 idempotency keys are rejected by contract tests.
 
 Reusable UI emits semantic callbacks/events and does not own provider-specific business dispatch.
+`LeadFormClient` emits only the strict non-PII `ams24:lead-form-lifecycle`
+contract. `src/app/_integrations/analytics-bridge.tsx` owns conversion and
+dispatch to the analytics adapter; disabled submission states are ignored for
+all submit lifecycle stages rather than reported as synthetic attempts.
 
 ## 13. Security
 

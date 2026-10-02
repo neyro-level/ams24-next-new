@@ -41,6 +41,17 @@ export const leadContextSchema = z.object({
   ctaId: z.string().regex(/^[a-z0-9-]+$/),
 })
 
+export const leadFormLifecycleEventName = 'ams24:lead-form-lifecycle'
+
+export const leadFormLifecycleEventSchema = z
+  .object({
+    stage: z.enum(['view', 'submit-started', 'submit-succeeded', 'submit-failed']),
+    submissionEnabled: z.boolean(),
+    formId: z.string().regex(/^[a-z0-9-]+$/),
+    context: leadContextSchema,
+  })
+  .strict()
+
 export const leadConsentSchema = z
   .object({
     accepted: z.literal(true),
@@ -86,6 +97,7 @@ export const leadRequestPayloadSchema = z
   .strict()
 
 export type LeadContext = z.infer<typeof leadContextSchema>
+export type LeadFormLifecycleEvent = z.infer<typeof leadFormLifecycleEventSchema>
 export type LeadConsent = z.infer<typeof leadConsentSchema>
 export type LeadAntiSpamSignal = z.infer<typeof leadAntiSpamSignalSchema>
 export type LeadDraft = z.infer<typeof leadDraftSchema>
@@ -97,6 +109,10 @@ export function validateLeadDraft(input: unknown) {
 
 export function validateLeadRequestPayload(input: unknown) {
   return leadRequestPayloadSchema.safeParse(input)
+}
+
+export function createLeadFormLifecycleEvent(input: unknown): LeadFormLifecycleEvent {
+  return leadFormLifecycleEventSchema.parse(input)
 }
 
 export function buildDisabledLeadRequest(input: LeadDraft) {

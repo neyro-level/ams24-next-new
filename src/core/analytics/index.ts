@@ -25,7 +25,9 @@ export const analyticsForbiddenPayloadKeys = [
 export const analyticsEventNameSchema = z.enum([
   'cta_click',
   'lead_form_view',
-  'lead_form_submit_blocked',
+  'lead_form_submit_started',
+  'lead_form_submit_succeeded',
+  'lead_form_submit_failed',
   'legal_link_click',
 ])
 

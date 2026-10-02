@@ -21,7 +21,7 @@ const allowedEvents = [
     formId: 'ams24-lead-form',
   },
   {
-    name: 'lead_form_submit_blocked',
+    name: 'lead_form_submit_started',
     product: 'zashchita',
     route: '/zashchita/',
     formId: 'ams24-lead-form',
@@ -38,7 +38,7 @@ const deniedEvents = [
   {
     reason: 'raw lead full name',
     event: {
-      name: 'lead_form_submit_blocked',
+      name: 'lead_form_submit_started',
       product: 'site',
       route: '/',
       formId: 'ams24-lead-form',
@@ -48,7 +48,7 @@ const deniedEvents = [
   {
     reason: 'raw contact',
     event: {
-      name: 'lead_form_submit_blocked',
+      name: 'lead_form_submit_started',
       product: 'site',
       route: '/',
       formId: 'ams24-lead-form',
@@ -58,7 +58,7 @@ const deniedEvents = [
   {
     reason: 'raw task text',
     event: {
-      name: 'lead_form_submit_blocked',
+      name: 'lead_form_submit_started',
       product: 'impuls',
       route: '/impuls/',
       formId: 'ams24-lead-form',
@@ -68,7 +68,7 @@ const deniedEvents = [
   {
     reason: 'consent/idempotency payload',
     event: {
-      name: 'lead_form_submit_blocked',
+      name: 'lead_form_submit_started',
       product: 'site',
       route: '/',
       formId: 'ams24-lead-form',
@@ -79,7 +79,7 @@ const deniedEvents = [
   {
     reason: 'wrapped raw payload',
     event: {
-      name: 'lead_form_submit_blocked',
+      name: 'lead_form_submit_started',
       product: 'site',
       route: '/',
       formId: 'ams24-lead-form',

@@ -1,12 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { type FormEvent, useReducer, useState } from 'react'
+import { type FormEvent, useCallback, useEffect, useReducer, useState } from 'react'
 
 import {
   buildLeadRequest,
+  createLeadFormLifecycleEvent,
   leadConsentContract,
   leadConsentTargets,
+  leadFormLifecycleEventName,
   type LeadContext,
   type LeadRequestPayload,
   validateLeadDraft,
@@ -105,6 +107,21 @@ export function LeadFormClient({ availability, context, description, headingLeve
   const disabled = isLeadFormDisabled(availability.submissionEnabled, state.status)
   const Heading = headingLevel
 
+  const emitLifecycle = useCallback((stage: 'view' | 'submit-started' | 'submit-succeeded' | 'submit-failed') => {
+    window.dispatchEvent(new CustomEvent(leadFormLifecycleEventName, {
+      detail: createLeadFormLifecycleEvent({
+        stage,
+        submissionEnabled: availability.submissionEnabled,
+        formId: availability.formId,
+        context,
+      }),
+    }))
+  }, [availability.formId, availability.submissionEnabled, context])
+
+  useEffect(() => {
+    emitLifecycle('view')
+  }, [emitLifecycle])
+
   const cardClass = isDark
     ? 'border-surface-dark-faint bg-surface-dark-elevated text-surface-dark-foreground'
     : 'border-border bg-surface-elevated text-foreground'
@@ -162,16 +179,19 @@ export function LeadFormClient({ availability, context, description, headingLeve
     }
 
     dispatch({ type: 'SUBMIT' })
+    emitLifecycle('submit-started')
     try {
       const result = await sendLeadRequest(availability.submissionEnabled, payload)
       dispatch({ type: result.status === 'success' ? 'SUCCESS' : 'SERVER_ERROR' })
       if (result.status === 'success') {
+        emitLifecycle('submit-succeeded')
         form.reset()
         setConsentAccepted(false)
         setStartedAt(Date.now())
-      }
+      } else emitLifecycle('submit-failed')
     } catch {
       dispatch({ type: 'SERVER_ERROR' })
+      emitLifecycle('submit-failed')
     }
   }
 
@@ -185,7 +205,6 @@ export function LeadFormClient({ availability, context, description, headingLeve
       aria-describedby={`${availability.formId}-status`}
       aria-label="Форма расчёта"
       className={`rounded-large border p-5 shadow-panel sm:p-7 ${cardClass}`}
-      data-analytics-event="lead_form_view"
       data-endpoint={availability.endpoint}
       data-form-id={availability.formId}
       data-product={context.product}
@@ -258,7 +277,6 @@ export function LeadFormClient({ availability, context, description, headingLeve
       <Button
         aria-disabled={disabled}
         className="mt-6 w-full"
-        data-analytics-event={availability.submissionEnabled ? 'lead_form_submit' : 'lead_form_submit_blocked'}
         disabled={disabled}
         size="xl"
         type="submit"

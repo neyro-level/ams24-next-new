@@ -55,7 +55,7 @@ describe('lead form, legal guard and analytics hardening', () => {
       expect(html).not.toContain('method=')
       expect(html).not.toContain('aria-disabled="false"')
       expect(html).toContain('disabled=""')
-      expect(html).toContain('data-analytics-event="lead_form_submit_blocked"')
+      expect(html).not.toContain('data-analytics-')
     } finally {
       globalThis.fetch = originalFetch
     }

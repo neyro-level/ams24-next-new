@@ -4,6 +4,8 @@ import { Manrope } from 'next/font/google'
 import { getSiteSettingsViewModel } from '@/core/content/services/view-models'
 import { SiteShell } from '@/ui/shell/site-shell'
 
+import { AnalyticsBridge } from './_integrations/analytics-bridge'
+
 import './globals.css'
 
 const manrope = Manrope({
@@ -31,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={manrope.variable}>
       <body>
+        <AnalyticsBridge />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

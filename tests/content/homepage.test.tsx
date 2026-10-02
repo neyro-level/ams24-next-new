@@ -14,7 +14,7 @@ describe('representative homepage', () => {
     expect(html).toContain('Материал')
     expect(html).toContain('aria-label="Форма расчёта"')
     expect(html).toContain('data-form-id="ams24-lead-form"')
-    expect(html).toContain('data-analytics-event="lead_form_view"')
+    expect(html).not.toContain('data-analytics-')
   })
 
   it('keeps design-intake accessibility and mobile invariants measurable', async () => {
