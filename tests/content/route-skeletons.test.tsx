@@ -36,7 +36,7 @@ describe('route skeleton visibility controls', () => {
       expect(metadata.robots).toMatchObject({ index: false, follow: true })
       expect(sitemapPaths).not.toContain(route.path)
       expect(html).toContain('Страница готовится')
-      expect(html).toContain('Публикация')
+      expect(html).toContain('Что появится здесь')
     }
   })
 

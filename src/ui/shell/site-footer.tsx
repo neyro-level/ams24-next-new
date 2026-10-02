@@ -16,8 +16,8 @@ export async function SiteFooter() {
               Импульс
             </Link>
             <p className="mt-5 max-w-md text-body text-surface-dark-muted">
-              Платформа AMS24 для привлечения, определения и защиты лидов. Публичный сайт
-              собирается как статический Next export.
+              Платформа AMS24 для привлечения, определения и защиты лидов — от первого
+              касания до контроля качества обращения.
             </p>
             <Button asChild className="mt-7" size="xl">
               <Link href={primaryCta.path}>{primaryCta.label}</Link>

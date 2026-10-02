@@ -112,6 +112,7 @@ remediation proof through EPIC-19, but production release is still blocked.
 - [ ] `pnpm verify` passes.
 - [ ] Production static build succeeds.
 - [ ] `out/` validation passes.
+- [ ] Built visible text, titles and metadata pass `pnpm verify:public-copy` without a public-copy allowlist.
 - [ ] No unsupported dynamic runtime API exists.
 - [ ] No secret-like value exists in repository, HTML, JS or artifact.
 - [ ] Artifact is stored durably before rollout.

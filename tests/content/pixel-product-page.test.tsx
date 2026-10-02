@@ -34,7 +34,7 @@ describe('/pixel/ product page', () => {
     const html = renderToStaticMarkup(await PixelProductPage())
 
     expect(html).toContain('aria-label="Краткая карточка продукта Импульс Пиксель"')
-    expect(html).toContain('aria-label="Контекст будущей заявки на пиксель"')
+    expect(html).toContain('aria-label="Контекст заявки на проверку пикселя"')
     expect(html).toContain('sm:grid-cols')
     expect(html).toContain('lg:grid-cols')
     expect(html).not.toMatch(/каждого посетителя|обход(?:ить)? соглас|без соглас/i)

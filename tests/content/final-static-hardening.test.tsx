@@ -52,7 +52,7 @@ describe('final static SEO/security hardening', () => {
 
     for (const metadata of [policyMetadata, consentMetadata, dataProcessingMetadata]) {
       expect(metadata.robots).toMatchObject({ index: false, follow: true })
-      expect(metadata.title).toContain('черновая страница')
+      expect(metadata.title).toContain('согласование документа')
     }
   })
 

@@ -34,7 +34,7 @@ describe('/zashchita/ product page', () => {
     const html = renderToStaticMarkup(await ZashchitaProductPage())
 
     expect(html).toContain('aria-label="Краткая карточка продукта Импульс Защита"')
-    expect(html).toContain('aria-label="Контекст будущей заявки на аудит защиты"')
+    expect(html).toContain('aria-label="Контекст заявки на аудит защиты"')
     expect(html).toContain('sm:grid-cols')
     expect(html).toContain('lg:grid-cols')
     expect(html).not.toMatch(/гарантируем|абсолютная защита|100%|навсегда защищ/i)

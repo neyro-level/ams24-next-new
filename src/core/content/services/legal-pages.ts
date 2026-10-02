@@ -24,7 +24,7 @@ export async function buildLegalMetadata(page: LegalPageDTO) {
   const settings = await getRequiredSiteSettings()
 
   return buildNoindexMetadata({
-    title: `${page.title} — черновая страница`,
+    title: `${page.title} — согласование документа`,
     description: `${page.title}: страница зарезервирована под утверждённую юридическую редакцию и не индексируется до финального согласования.`,
     canonicalPath: page.path,
   }, settings)

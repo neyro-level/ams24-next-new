@@ -443,6 +443,12 @@ all submit lifecycle stages rather than reported as synthetic attempts.
 
 Hard failures include invalid schema, duplicate ID/path, broken link/ref, missing media, unknown block, published page without required SEO, PII form without legal/consent, and unsupported dynamic Next runtime feature.
 
+`pnpm verify:public-copy` scans the built `out/` HTML at the three public
+surfaces that can reach a visitor or search engine: visible text, `<title>` and
+`<meta content>`. Its maintained forbidden vocabulary is fail-closed and has no
+allowlist for rendered public copy; documented false positives may only be
+excluded when they are outside those surfaces.
+
 Critical browser checks: home/navigation, representative product page, article, 404, mobile menu, trailing slash, lead form states and submission path.
 
 `pnpm test:e2e:nginx` is the repeatable browser proof for the release artifact. It

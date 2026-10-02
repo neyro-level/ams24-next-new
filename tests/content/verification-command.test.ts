@@ -34,7 +34,9 @@ const requiredDailyVerifySteps = [
 const requiredReleaseVerifySteps = [
   'pnpm verify',
   'pnpm generate:precompressed:self-test',
+  'pnpm verify:public-copy:self-test',
   'pnpm build',
+  'pnpm verify:public-copy',
   'pnpm generate:precompressed',
   'pnpm guard:artifact',
   'pnpm test:e2e:nginx',
@@ -78,7 +80,7 @@ describe('daily verification command trace', () => {
     const steps = release.split(' && ')
 
     expect(steps).toEqual(requiredReleaseVerifySteps)
-    expect(release.match(/pnpm verify/g) ?? []).toHaveLength(1)
+    expect(steps.filter((step) => step === 'pnpm verify')).toHaveLength(1)
     expect(release.match(/pnpm build/g) ?? []).toHaveLength(1)
     expect(release.match(/pnpm guard:artifact/g) ?? []).toHaveLength(1)
     expect(release.match(/pnpm test:e2e:nginx/g) ?? []).toHaveLength(1)

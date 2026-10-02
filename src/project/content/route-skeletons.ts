@@ -10,14 +10,14 @@ export const staticRouteSkeletons: RouteSkeleton[] = [
   {
     path: '/stati/',
     title: 'Статьи',
-    role: 'editorial hub',
+    role: 'подбор материалов',
     intent: 'изучить рынок и подходы',
     nextStep: 'Страница будет наполнена статьями после подготовки материалов.',
   },
   {
     path: '/baza-znaniy/',
     title: 'База знаний',
-    role: 'support hub',
+    role: 'помощь по продуктам',
     intent: 'найти инструкцию по продукту',
     nextStep: 'Страница будет наполнена инструкциями по продуктовым веткам.',
   },

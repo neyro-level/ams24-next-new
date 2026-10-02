@@ -147,9 +147,9 @@ describe('lead form, legal guard and analytics hardening', () => {
 
       expect(page.metadata.robots).toMatchObject({ index: false, follow: true })
       expect(html).toContain(page.title)
-      expect(html).toContain('legal-draft-2026-09-29')
-      expect(html).toContain('ждёт согласования')
-      expect(html).toContain('юридического согласования')
+      expect(html).not.toContain('legal-draft-2026-09-29')
+      expect(html).not.toContain('черновик')
+      expect(html).toContain('юридическое согласование')
     }
   })
 
