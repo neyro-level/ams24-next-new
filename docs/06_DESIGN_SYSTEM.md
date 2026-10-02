@@ -151,7 +151,8 @@ Implementation status:
 
 - Cyrillic coverage: verified against official Manrope/Google font sources;
 - license/source: SIL Open Font License 1.1, loaded through `next/font/google`;
-- selected weights: `400`, `500`, `600`, `700`, `800`;
+- delivery: one variable Manrope axis (`200 800`) per emitted Unicode subset;
+- semantic weights used by the UI: `400`, `500`, `600`, `700`, `800`;
 - canonical variable: `--font-app-sans`, bound to `--font-sans` and `--font-display`.
 
 Approved semantic roles:
