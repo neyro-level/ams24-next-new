@@ -16,6 +16,7 @@ Updated: 2026-10-02
 | страницы, URL, пользовательские маршруты, SEO-кластеры | `02_PRODUCT_STRUCTURE.md` |
 | стек, content/data boundaries, modules, security, delivery и production | `03_ARCHITECTURE.md` |
 | мастер-план, эпики, задачи, зависимости и текущий фокус | `04_BACKLOG.md` |
+| текущее состояние большой программы и следующий безопасный шаг | `DELIVERY_STATE.yaml` |
 | release gate, rollout, live proof и rollback | `05_RELEASE_CHECKLIST.md` |
 | пошаговая эксплуатация Nginx/TLS, artifact, rollout, smoke и rollback | `OPERATIONS.md` |
 | визуальная система и UI-policy | `06_DESIGN_SYSTEM.md` |
@@ -33,7 +34,8 @@ Updated: 2026-10-02
 | `01_PRD.md` | Draft | продуктовые формулировки, KPI, тарифы, кейсы и юридические claims требуют подтверждения владельца |
 | `02_PRODUCT_STRUCTURE.md` | Active | верхнеуровневая архитектура и короткие URL согласованы владельцем |
 | `03_ARCHITECTURE.md` | Active | статический Next.js contract, pinned stack, SEO artifacts, Nginx/rollout repository contracts and remaining production blockers recorded |
-| `04_BACKLOG.md` | Approved | remediation plan `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем; прежний v4 завершён и сохранён в Git/закрытом Task Manager |
+| `04_BACKLOG.md` | Approved / execution | exact technical-completion plan `AMS24-TECHNICAL-COMPLETION-2026 v4` импортирован в Task Manager; source hash сохраняется неизменным |
+| `DELIVERY_STATE.yaml` | Active / Blocked | reconcile `CLEAN`, 321/325 узлов закрыты; только T7.5 ожидает подтверждённые владельцем Organization facts |
 | `05_RELEASE_CHECKLIST.md` | Draft / Blocked | remediation proof through EPIC-19 recorded; production still requires explicit command and release-only checks |
 | `06_DESIGN_SYSTEM.md` | Active | Northline адаптирован; CR-18/CR-19 record accessibility, performance and zero-P0/P1 UI drift proof |
 | `07_SEO_SYSTEM.md` | Active | source priority, intent ownership, indexability, sitemap/robots/metadata artifact proof and release crawl rules recorded |
@@ -41,15 +43,16 @@ Updated: 2026-10-02
 
 ## Текущий фокус
 
-Предыдущий execution graph `AMS24-IMPULSE-2026 v4` закрыт: 57/57 задач завершены, production не выполнялся. Remediation-план `AMS24-CONSTITUTION-REMEDIATION-2026 v3` утверждён владельцем и импортирован в Task Manager cleanly. Текущий фокус — Wave 20 final documentation reconciliation and closeout. EPIC-18/EPIC-19 integrated proof merged to `main`; production пока не разрешён.
+Execution graphs `AMS24-IMPULSE-2026 v4` и `AMS24-CONSTITUTION-REMEDIATION-2026 v3` закрыты. По exact plan `AMS24-TECHNICAL-COMPLETION-2026 v4 APPROVED` Task Manager имеет reconcile `CLEAN`: 321/325 узлов закрыты, ready implementation отсутствует. Единственный незавершённый scope — T7.5; он заблокирован решением владельца `ams24t-tc-od-org` о legal name, canonical URL, logo и допустимых contact/requisite fields. До этого Organization JSON-LD не создаётся. Production не разрешён.
 
 ## Как читать
 
 1. `AGENTS.md` в корне.
 2. Этот файл.
-3. Релевантный раздел PRD, Product Structure и Architecture.
-4. Текущая READY-задача из Backlog.
-5. Design System для UI-задач.
+3. `DELIVERY_STATE.yaml` для текущего этапа большой программы.
+4. Релевантный раздел PRD, Product Structure и Architecture.
+5. Текущая READY-задача из Backlog.
+6. Design System для UI-задач.
 
 ## Входные нормативы
 

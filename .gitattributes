@@ -1,1 +1,5 @@
 *.sh text eol=lf
+
+# Preserve byte-stable Task Manager source snapshots on Windows.
+docs/04_BACKLOG.md text eol=lf
+docs/task-manager-technical-completion-inventory.json text eol=lf

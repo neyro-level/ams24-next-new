@@ -1,0 +1,46 @@
+schema_version: 1
+updated: "2026-10-02"
+
+program:
+  id: "AMS24-TECHNICAL-COMPLETION-2026"
+  version: "v4"
+  plan_status: "APPROVED"
+  execution_status: "BLOCKED_OWNER_DECISION"
+
+source:
+  backlog: "docs/04_BACKLOG.md"
+  backlog_sha256: "5f84c36cda96d73e658c99d1dd450a94d693ed93ecf4cce00f321d0ea8fc5fa6"
+  inventory: "docs/task-manager-technical-completion-inventory.json"
+
+task_manager:
+  reconciliation: "CLEAN"
+  coverage: "54/54"
+  managed_nodes: 163
+  total_issues: 325
+  closed_issues: 321
+  open_issues: 4
+  blocked_issues: 3
+  in_progress_issues: 0
+  ready_implementation: []
+  ready_review: []
+
+current_blocker:
+  decision_id: "ams24t-tc-od-org"
+  implementation_id: "ams24t-tc-t7-5-i"
+  delivery_id: "ams24t-tc-t7-5-d"
+  source_anchor: "T7.5"
+  required_owner_facts:
+    - "legal name"
+    - "canonical URL"
+    - "logo"
+    - "approved contact/requisite fields"
+  safe_fallback: "Organization JSON-LD remains omitted"
+
+delivery:
+  canonical_primary: "SourceCraft"
+  implementation_verified_through_main_sha: "a2b0e1af53af860ba89f343de0a6b655418a64df"
+  latest_delivered_scope: "T7.6 Next.js 16.3.8 security patch"
+  github_role: "MIRROR"
+  production: "NOT_AUTHORIZED"
+
+next_safe_action: "Owner approves exact Organization facts; then Task Manager Developer resumes T7.5."
